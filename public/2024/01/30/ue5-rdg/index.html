@@ -23,15 +23,15 @@
 <meta property="og:site_name" content="Kevin&#39;s notes">
 <meta property="og:description" content="RDG 是什麼官方文件提到渲染依賴圖（Rendering Dependency Graph，RDG）是一種基於圖形的排程系統，旨在對渲染管線進行整幀優化。基本介紹 RDG 於 Unreal 4.22 引入  前身是 Frame Graph ，在 2017 年的 GDC 中由 Frostbite Engine 提出  RDG 的概念是不在 GPU 上立即執行通道 (Pass)，而是先收集所有需要渲染">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://933yee.github.io/notes/%5Cimages%5Cue5-rdg%5Crendering-systems-overview.png">
-<meta property="og:image" content="https://933yee.github.io/notes/%5Cimages%5Cue5-rdg%5Crdg-in-engine.png">
-<meta property="og:image" content="https://933yee.github.io/notes/%5Cimages%5Cue5-rdg%5Crdg-stages.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/ue5-rdg/rendering-systems-overview.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/ue5-rdg/rdg-in-engine.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/ue5-rdg/rdg-stages.png">
 <meta property="article:published_time" content="2024-01-30T12:26:44.000Z">
-<meta property="article:modified_time" content="2024-01-30T18:06:07.046Z">
+<meta property="article:modified_time" content="2024-02-08T12:22:58.617Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="UE5">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://933yee.github.io/notes/%5Cimages%5Cue5-rdg%5Crendering-systems-overview.png">
+<meta name="twitter:image" content="https://933yee.github.io/notes/images/ue5-rdg/rendering-systems-overview.png">
   
   
   
@@ -292,7 +292,7 @@
 </ul>
 </li>
 </ul>
-<p><img src="/notes/%5Cimages%5Cue5-rdg%5Crendering-systems-overview.png" srcset="/notes/info/loading.gif" lazyload alt="rendering systems overview" title="Rendering systems overview"></p>
+<p><img src="/notes/images/ue5-rdg/rendering-systems-overview.png" srcset="/notes/info/loading.gif" lazyload alt="rendering systems overview" title="Rendering systems overview"></p>
 <ul>
 <li><p>硬體的體系結構以及圖形 API 的優化擴展無法得到充分的利用</p>
 <ul>
@@ -311,7 +311,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="RDG-的原理"><a href="#RDG-的原理" class="headerlink" title="RDG 的原理"></a>RDG 的原理</h3><p><img src="/notes/%5Cimages%5Cue5-rdg%5Crdg-in-engine.png" srcset="/notes/info/loading.gif" lazyload alt="rdg in the game engine" title="RDG in the game engine"></p>
+<h3 id="RDG-的原理"><a href="#RDG-的原理" class="headerlink" title="RDG 的原理"></a>RDG 的原理</h3><p><img src="/notes/images/ue5-rdg/rdg-in-engine.png" srcset="/notes/info/loading.gif" lazyload alt="rdg in the game engine" title="RDG in the game engine"></p>
 <p>位於 RHI 和 Render Pass 的中間，RDG 作為 Pass 管理器，在搜集資源描述訊息後，對 Pass 和資源進行分析，並結合硬體特性，以最優的方式執行 Pass，主要有三個階段：</p>
 <ol>
 <li><p>Setup</p>
@@ -330,7 +330,7 @@
 </ul>
 </li>
 </ol>
-<p><img src="/notes/%5Cimages%5Cue5-rdg%5Crdg-stages.png" srcset="/notes/info/loading.gif" lazyload alt="Three stages of RDG" title="Three stages of RDG"></p>
+<p><img src="/notes/images/ue5-rdg/rdg-stages.png" srcset="/notes/info/loading.gif" lazyload alt="Three stages of RDG" title="Three stages of RDG"></p>
 <h3 id="FRDGBuilder"><a href="#FRDGBuilder" class="headerlink" title="FRDGBuilder"></a>FRDGBuilder</h3><ul>
 <li>RDG 系统的心臟和驅動器，同時也是管家，負責儲存數據、處理狀態轉換、自動管理資源生命週期和屏障 (barrier)、裁剪無效資源，和收集、編譯、執行Pass，提取紋理或緩衝等等功能。</li>
 </ul>
