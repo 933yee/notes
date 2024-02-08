@@ -21,7 +21,7 @@ categories: ['UE5', 'Render']
   
   - 隨著硬體性能日漸提升，各大廠商為了渲染出更出色的畫面效果，render pipeline 也日趨複雜。
   
-![rendering systems overview](\images\ue5-rdg\rendering-systems-overview.png "Rendering systems overview")
+![rendering systems overview](/images/ue5-rdg/rendering-systems-overview.png "Rendering systems overview")
 
 
 - 硬體的體系結構以及圖形 API 的優化擴展無法得到充分的利用
@@ -36,7 +36,7 @@ categories: ['UE5', 'Render']
       3. 盡早啟動屏障和佈局轉換，避免管線延遲。
 
 ### RDG 的原理
-![rdg in the game engine](\images\ue5-rdg\rdg-in-engine.png "RDG in the game engine")
+![rdg in the game engine](/images/ue5-rdg/rdg-in-engine.png "RDG in the game engine")
 
 位於 RHI 和 Render Pass 的中間，RDG 作為 Pass 管理器，在搜集資源描述訊息後，對 Pass 和資源進行分析，並結合硬體特性，以最優的方式執行 Pass，主要有三個階段：
 
@@ -49,7 +49,7 @@ categories: ['UE5', 'Render']
 3. Execute
    - 將 Command 提交到 CommandList (包含設置 Barrier、平行優化等)
 
-![Three stages of RDG](\images\ue5-rdg\rdg-stages.png "Three stages of RDG")
+![Three stages of RDG](/images/ue5-rdg/rdg-stages.png "Three stages of RDG")
 
 ### FRDGBuilder
 - RDG 系统的心臟和驅動器，同時也是管家，負責儲存數據、處理狀態轉換、自動管理資源生命週期和屏障 (barrier)、裁剪無效資源，和收集、編譯、執行Pass，提取紋理或緩衝等等功能。
