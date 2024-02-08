@@ -12,7 +12,7 @@ tags: [Flutter, App, ECHO]
 
 這個 package 的目的是讓 app 可以順利定位，取得定位的相關訊息 (經緯度、方向、速度等)，最重要的是它也支援**背景運行**，也就是當你 kill 這個 app (在 app switcher 裡 swipe up app)，這個 app 依然在背景中運行，並顯示在手機的 notification drawer 裡來提醒使用者。
 
-![Notification](\images\flutter-gps\notification.png)
+![Notification](/images/flutter-gps/notification.png)
 
 由於 `location_permissions` 似乎不再更新了，所以在測試的時候都會有問題，無法正確 import package，所以後來我改用 `permission_handler`，除了詢問 location 的權限，同時也可以要求 notification 的權限。
 
