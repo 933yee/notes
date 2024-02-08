@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>Push React App to Github Pages</title>
+    <link href="/notes/2024/02/08/react-github-pages/"/>
+    <url>/notes/2024/02/08/react-github-pages/</url>
+    
+    <content type="html"><![CDATA[<ul><li><p>安裝套件</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">npm install gh-pages --save-dev<br>yarn add -D gh-pages<br></code></pre></td></tr></table></figure></li><li><p>在 package.json 裡面新增</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;homepage&quot;</span> <span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;&#123;url to your website&#125;&quot;</span><br>  <span class="hljs-attr">&quot;scripts&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;predeploy&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;npm run build&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;deploy&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;gh-pages -d build&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure></li><li><p>要 push 的時候就打以下指令，就可以自動 push 到 branch gh-pages</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">npm run deploy<br></code></pre></td></tr></table></figure></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>React</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>React</tag>
+      
+      <tag>Gtihub</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>UE5 Resources</title>
     <link href="/notes/2024/01/31/ue5-resources/"/>
     <url>/notes/2024/01/31/ue5-resources/</url>
