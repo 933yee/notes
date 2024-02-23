@@ -1,5 +1,5 @@
 ---
-title: gpgpu
+title: GPGPU
 date: 2024-02-21 13:42:27
 tags: gpu
 category: GPU
@@ -100,3 +100,16 @@ __global__ void basic_mul(float* d_A, float* d_B, float* d_C){
   }
 }
 ```
+
+# 執行緒模型
+
+### 執行緒組織結構
+上面提到，主機端在啟動核心函數時，利用 <<<>>> 向 GPGPU 傳送兩個參數 gridDim 和 blockDim，這兩個參數構造了 GPGPU 計算所採用的執行緒結構。
+
+CUDA 和 OpenCL 都採用了層次化的執行緒結構，就是前面說的 thread grid、thread block、thread 和 NDRange、work-group、work-item，一一對應。同一個 Block 內的 Thread 可以互相通訊。
+
+![CUDA 的層次化執行緒結構](https://www.researchgate.net/publication/328752788/figure/fig3/AS:689781692432384@1541468179263/CUDA-programming-grid-of-thread-blocks-Source-NVIDIA.png)
+
+
+### 資料索引
+基於上面的執行緒層次，我們需要知道 Thread 在 Grid 中的具體位置，才能讀取合適的資料執行對應的計算。上面例子的 blockIdx、threadIdx 就是用來決定 Thread 的位置。
