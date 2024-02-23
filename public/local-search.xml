@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>gpgpu</title>
+    <link href="/notes/2024/02/21/gpgpu/"/>
+    <url>/notes/2024/02/21/gpgpu/</url>
+    
+    <content type="html"><![CDATA[<h1 id="名詞解釋"><a href="#名詞解釋" class="headerlink" title="名詞解釋"></a>名詞解釋</h1><ul><li><p>CUDA (Compute Unified Device Architecture)</p><ul><li>強大的平行計算平台，讓開發者能夠充分利用 NVIDIA GPU 的計算能力(NVIDIA 專用)，進行高效的計算任務處理</li></ul></li><li><p>OpenCL (Open Computing Language)</p><ul><li>用於編寫在多種處理器上運行的程序，包括 CPU、GPU、DSP（數字訊號處理器）和其他類型的處理器，主要用於通用計算，特別是那些可以利用平行計算的任務</li></ul></li></ul><h1 id="從-GPU-到-GPGPU"><a href="#從-GPU-到-GPGPU" class="headerlink" title="從 GPU 到 GPGPU"></a>從 GPU 到 GPGPU</h1><p>CPU 單核心性能的提高受到<strong>功耗</strong>、<strong>存取記憶體速度</strong>、<strong>設計複雜度</strong>等多重瓶頸的限制，而 GPU 僅侷限於處理圖形繪製的計算任務，是極大的資源浪費。</p><p>2006 年，NVIDIA 公布了統一著色器架構(unified shader architecture)，從此 GPU 進入了通用計算時代。 傳統的 GPU 通常採用固定比例的頂點著色器和像素著色器單元，但這種作法會導致單元使用率低下的問題。為解決這一問題，統一著色器架構整合了頂點著色器和像素著色器，這種無差別的著色器設計，使 GPU 成為一個多核心的通用處理器。</p><h1 id="計算模型"><a href="#計算模型" class="headerlink" title="計算模型"></a>計算模型</h1><h3 id="SIMT-Single-Instruction-Multiple-Threads-，單指令多執行緒"><a href="#SIMT-Single-Instruction-Multiple-Threads-，單指令多執行緒" class="headerlink" title="SIMT (Single Instruction Multiple Threads)，單指令多執行緒"></a>SIMT (Single Instruction Multiple Threads)，單指令多執行緒</h3><ul><li>一行指令被多個執行緒同時執行，與 SIMD 平行類似，在 GPGPU 中被稱為 SIMT 計算模型</li><li>ex: 矩陣乘法<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 從輸入矩陣 A 和 B 中讀取一部份向量 a, b</span><br><span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; N; i++)&#123;<br>  c += a[i] + b[i];<br>&#125;<br><span class="hljs-comment">// 將 c 寫回結果矩陣 C 的對應位置中</span><br></code></pre></td></tr></table></figure></li><li>CUDA 為 SIMT 計算模型引入 thread grid、thread block、thread，對等地，OpenCL 為 SIMT 計算模型引入 NDRange、work-group、work-item</li></ul><h3 id="裝置端和核心函數"><a href="#裝置端和核心函數" class="headerlink" title="裝置端和核心函數"></a>裝置端和核心函數</h3><p>在 CUDA 和 OpenCL 模型中，會把程式劃分成<strong>主機端 (host)</strong> 和<strong>裝置端 (device)</strong> ，分別在 CPU 和 GPGPU 上執行。 CPU 硬體執行主機端程式，GPGPU 硬體將根據程式設計人員給定的執行緒網格 (上面提到的 thread grid) 組織方式等參數，將裝置端程式進一步分發到執行緒中。每個執行緒執行相同的程式，但是是不同的資料。</p><p>以上面的矩陣乘法為例，主機端程式分成三個步驟：</p><h4 id="資料複製"><a href="#資料複製" class="headerlink" title="資料複製"></a>資料複製</h4><ul><li>CPU 將主記憶體資料複製到 GPGPU。主機端程式會先完成 GPGPU 的待處理資料宣告和前置處理，然後 CPU 呼叫 API 對 GPGPU 進行初始化和控制。<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 主記憶體的資料</span><br><span class="hljs-type">float</span> A[M * N], B[N * K], C[M * K];<br><span class="hljs-comment">// GPGPU 裝置端全域記憶體</span><br><span class="hljs-type">float</span>* d_A, * d_B, * d_C;<br><br><span class="hljs-type">int</span> size = M * N * <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">float</span>);<br><span class="hljs-comment">// CPU 呼叫 API 分配裝置端空間 </span><br>cudaMalloc((<span class="hljs-type">void</span>**)&amp; d_A, size);<br><span class="hljs-comment">// CPU 呼叫 API 控制 CPU 和 GPGPU 之間的通訊</span><br><span class="hljs-comment">// 將資料從主機端記憶體複製到 GPGPU 全域記憶體裡面</span><br>cudaMemcpy(d_A, A, size, cudaMemcpyHostToDevice);<br><br>size = N * K * <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">float</span>);<br>cudaMalloc((<span class="hljs-type">void</span>**)&amp; d_B, size);<br>cudaMemcpy(d_B, B, size, cudaMemcpyHostToDevice);<br><br>size = M * K * <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">float</span>);<br>cudaMalloc((<span class="hljs-type">void</span>**)&amp; d_C, size);<br></code></pre></td></tr></table></figure></li></ul><h4 id="GPGPU-啟動"><a href="#GPGPU-啟動" class="headerlink" title="GPGPU 啟動"></a>GPGPU 啟動</h4><ul><li>CPU 喚醒 GPGPU 執行緒進行運算，並將執行緒的組織方式和參數傳入 GPGPU 中。<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">unsigned</span> T_size = <span class="hljs-number">16</span>;<br>dim3 <span class="hljs-title function_">gridDim</span><span class="hljs-params">(M / T_size, K / T_size, <span class="hljs-number">1</span>)</span>;<br>dim3 <span class="hljs-title function_">blockDim</span><span class="hljs-params">(T_size, T_size, <span class="hljs-number">1</span>)</span>;<br><br><span class="hljs-comment">/// 喚醒對應的裝置端程式</span><br><span class="hljs-comment">/// 啟動名為 basic_mul 的裝置端函數</span><br>basic_mul &lt;&lt;&lt; gridDim, blockDim &gt;&gt;&gt; (d_A, d_B, d_C);<br><br><span class="hljs-comment">// 因為 CPU 和 GPGPU 是非同步執行，要使用此函數讓他們同步</span><br><span class="hljs-comment">// 不然可能 CPU 還沒等到 GPGPU 算完就繼續跑</span><br>cudaDeviceSynchronize();<br></code></pre></td></tr></table></figure></li></ul><h4 id="資料寫回"><a href="#資料寫回" class="headerlink" title="資料寫回"></a>資料寫回</h4><ul><li>GPGPU 運算完畢，並將結果寫回主機端記憶體中。<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c">size = M * K * <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">float</span>);<br><span class="hljs-comment">// 將裝置端記憶體 d_C 傳回 主機端記憶體 C</span><br>cudaMemcpy(C, d_C, size, cudaMemcpyDeviceToHost);<br><br><span class="hljs-comment">// GPGPU 裝置端空間釋放</span><br>cudaFree(d_A);<br>cudaFree(d_B);<br>cudaFree(d_C);<br><span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br></code></pre></td></tr></table></figure></li></ul><p>裝置端程式常常由多個函數組成，這些函數被稱為**核心函數 (kernel)**，這些核心函數會被分配到每個 GPGPU 的執行緒中執行。</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// __global__ 關鍵字定義了這個函數會作為核心函數在 GPGPU 上跑</span><br>__global__ <span class="hljs-type">void</span> <span class="hljs-title function_">basic_mul</span><span class="hljs-params">(<span class="hljs-type">float</span>* d_A, <span class="hljs-type">float</span>* d_B, <span class="hljs-type">float</span>* d_C)</span>&#123;<br>  <span class="hljs-type">int</span> row = threadIdx.x + blockIdx.x * blockDim.x;<br>  <span class="hljs-type">int</span> col = threadIdx.y + blockIdx.y * blockDim.y;<br>  <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; N; i++)&#123;<br>    d_C[row * K + col] += d_A[row * N + i] * d_B[col + i * k];<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>GPU</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>gpu</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>test-page</title>
     <link href="/notes/2024/02/08/test-page/"/>
     <url>/notes/2024/02/08/test-page/</url>
@@ -137,9 +162,9 @@
     
     <tags>
       
-      <tag>Algorithm</tag>
-      
       <tag>Recursion</tag>
+      
+      <tag>Algorithm</tag>
       
     </tags>
     
@@ -190,14 +215,14 @@
     
     <categories>
       
-      <category>others</category>
+      <category>Others</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>others</tag>
+      <tag>Others</tag>
       
     </tags>
     
@@ -224,9 +249,9 @@
     
     <tags>
       
-      <tag>Time Complexity</tag>
-      
       <tag>Algorithm</tag>
+      
+      <tag>Time Complexity</tag>
       
     </tags>
     

@@ -1,8 +1,8 @@
 ---
 date: 2023-09-06 08:30:01
 title: 學貸申請步驟
-category: others
-tags: others
+category: Others
+tags: Others
 ---
 
 到 **[校務資訊系統](https://www.ccxp.nthu.edu.tw/ccxp/INQUIRE)/ 繳費單相關作業(出納組)/ 繳費單列印/ 學雜費**，看學費多少，扣掉**不可貸款項目** (體育設施使用費)
