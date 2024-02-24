@@ -18,3 +18,4 @@ tags: UE5
 12. [UE5中的 Compute Shader使用及详解（二）](https://zhuanlan.zhihu.com/p/608724638?utm_id=0)
 13. [RDG 05 StructuredBuffer的用法](https://inlet511.github.io/posts/rdg-05-structured-buffer/#16-%E5%88%9B%E5%BB%BAsrv%E8%A7%86%E5%9B%BE)
 14. [UE4 RHICmdList](https://zhuanlan.zhihu.com/p/379638061)
+15. [Unreal Engine 4 Materials Tutorial——虚幻4引擎教程——材质](https://zhuanlan.zhihu.com/p/377411777)
