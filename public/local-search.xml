@@ -8,7 +8,7 @@
     <link href="/notes/2024/02/24/ue-notes/"/>
     <url>/notes/2024/02/24/ue-notes/</url>
     
-    <content type="html"><![CDATA[<h3 id="Texture-Object"><a href="#Texture-Object" class="headerlink" title="Texture Object"></a>Texture Object</h3><ul><li>有點像一個單獨的 Texture 的容器，包含很多資料，像是顏色、光澤度、粗糙度</li></ul><h3 id="Texture-Sample"><a href="#Texture-Sample" class="headerlink" title="Texture Sample"></a>Texture Sample</h3><ul><li>把 Texture Object 做 sample，得到某個數據，像是顏色</li><li>要傳入 UVs 和 Tex，這裡的 Tex 就是 Texture Object</li></ul>]]></content>
+    <content type="html"><![CDATA[<h3 id="Texture-Object"><a href="#Texture-Object" class="headerlink" title="Texture Object"></a>Texture Object</h3><ul><li>有點像一個單獨的 Texture 的容器，包含很多資料，像是顏色、光澤度、粗糙度</li></ul><h3 id="Texture-Sample"><a href="#Texture-Sample" class="headerlink" title="Texture Sample"></a>Texture Sample</h3><ul><li>把 Texture Object 做 sample，得到某個數據，像是顏色</li><li>要傳入 UVs 和 Tex，這裡的 Tex 就是 Texture Object</li></ul><h3 id="Dynamic-Material-Instances"><a href="#Dynamic-Material-Instances" class="headerlink" title="Dynamic Material Instances"></a>Dynamic Material Instances</h3><ul><li>可以在遊戲中動態改變的 Material</li><li>如何使用<ul><li><a href="https://www.youtube.com/watch?v=uSKzkg0dQpY&ab_channel=UnrealDevHub">UE5 Blueprint Tutorial - How to Create Dynamic Material Instances</a></li><li><a href="https://zhuanlan.zhihu.com/p/377411777">Unreal Engine 4 Materials Tutorial——虚幻4引擎教程——材质</a></li></ul></li></ul><h3 id="Set-Scalar-Parameter-Value"><a href="#Set-Scalar-Parameter-Value" class="headerlink" title="Set Scalar Parameter Value"></a>Set Scalar Parameter Value</h3><ul><li>有三個輸入，Target、Parameter Name 和 Value</li><li>改變 Target 的 Parameter 的值</li></ul>]]></content>
     
     
     <categories>
