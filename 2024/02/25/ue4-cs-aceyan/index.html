@@ -24,10 +24,10 @@
 <meta property="og:description" content="source code: https:&#x2F;&#x2F;github.com&#x2F;aceyan&#x2F;UE4_GPGPU_flocking&#x2F;tree&#x2F;ComputeShader GPU Instances這個專案使用 GPU Instances，一次渲染大量 Static Mesh。為了讓每個 instance 有區別，它賦予每個 instance 一個 CustomData，作為分辨的 ID。 12345678910U">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://933yee.github.io/notes/images/ue4-cs-aceyan/InstancedComponent.png">
-<meta property="og:image" content="https://933yee.github.io/notes/PositionRenderTarget.png">
-<meta property="og:image" content="https://933yee.github.io/notes/UpdateInstancePosition.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/ue4-cs-aceyan/PositionRenderTarget.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/ue4-cs-aceyan/UpdateInstancePosition.png">
 <meta property="article:published_time" content="2024-02-25T09:04:59.000Z">
-<meta property="article:modified_time" content="2024-02-25T09:40:19.146Z">
+<meta property="article:modified_time" content="2024-02-25T10:56:19.401Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="UE4, GPU">
 <meta name="twitter:card" content="summary_large_image">
@@ -284,10 +284,10 @@
 <p>然後藉由 PerInstanceCustomData[0]，取得不同的 Instance ID，然後更新它們各自的 Material 的 World Position Offset (相對位置) ，來達到移動的效果。</p>
 <h3 id="GPGPU"><a href="#GPGPU" class="headerlink" title="GPGPU"></a>GPGPU</h3><p>由於運算量龐大，可以藉由 GPGPU (Compute Shader) 來計算。那要怎麼直接把 GPGPU 算出的結果傳給 World Position Offset？</p>
 <p>這裡使用 Render Target (RT) 去除存每個 Instance 的位置、速度，所以每個 Texel 的 RGB 儲存的是 World Position Offset 的 XYZ。因此，遊戲開始的時候，儲存 Position 的 Render Target 會長這樣，五彩繽紛的顏色就代表各種 World Position Offset。</p>
-<p><img src="/notes/PositionRenderTarget.png" srcset="/notes/info/loading.gif" lazyload alt="Position Render Target"></p>
+<p><img src="/notes/./images/ue4-cs-aceyan/PositionRenderTarget.png" srcset="/notes/info/loading.gif" lazyload alt="Position Render Target"></p>
 <p>藉由這個方法，CPU 叫 GPU 算完可以直接渲染，不用再回傳到 CPU，所以整個邏輯是 GPGPU -&gt; RenderTarget -&gt; Material。</p>
 <p>最後，只要想辦法取出每個 Instance 對應到的 Texel 的顏色，傳到 World Position Offset 就好。</p>
-<p><img src="/notes/UpdateInstancePosition.png" srcset="/notes/info/loading.gif" lazyload alt="Update Instance Position"></p>
+<p><img src="/notes/./images/ue4-cs-aceyan/UpdateInstancePosition.png" srcset="/notes/info/loading.gif" lazyload alt="Update Instance Position"></p>
 <p>看起來很複雜，實際上就是根據 ID 算出對應的 Texel 的座標，左上是 (0, 0)，右下是 (1, 1)，再 Sample 出 Texture Object 某 Texel 的顏色。</p>
 
                 
