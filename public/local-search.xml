@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>Unreal Engine 4 - GPGPU flocking 解析</title>
+    <link href="/notes/2024/02/25/ue4-cs-aceyan/"/>
+    <url>/notes/2024/02/25/ue4-cs-aceyan/</url>
+    
+    <content type="html"><![CDATA[<p>source code: <a href="https://github.com/aceyan/UE4_GPGPU_flocking/tree/ComputeShader">https://github.com/aceyan/UE4_GPGPU_flocking/tree/ComputeShader</a></p><h3 id="GPU-Instances"><a href="#GPU-Instances" class="headerlink" title="GPU Instances"></a>GPU Instances</h3><p>這個專案使用 GPU Instances，一次渲染大量 Static Mesh。為了讓每個 instance 有區別，它賦予每個 instance 一個 CustomData，作為分辨的 ID。</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-built_in">UPROPERTY</span>(EditAnywhere, BlueprintReadWrite, Category = <span class="hljs-string">&quot;Flocking&quot;</span>)<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">UInstancedStaticMeshComponent</span>* InstancedComponent;<br><br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; instatnceNum; i++)<br>&#123;<br>FTransform t = <span class="hljs-built_in">FTransform</span>();<br>InstancedComponent-&gt;<span class="hljs-built_in">AddInstance</span>(t);<br>InstancedComponent-&gt;<span class="hljs-built_in">SetCustomDataValue</span>(i, <span class="hljs-number">0</span>, i);<br><span class="hljs-built_in">UE_LOG</span>(LogTemp, Warning, <span class="hljs-built_in">TEXT</span>(<span class="hljs-string">&quot;AddInstance %d&quot;</span>), i);<br>&#125;<br></code></pre></td></tr></table></figure><p><img src="/notes/./images/ue4-cs-aceyan/InstancedComponent.png" alt="Instanced Component"></p><p>然後藉由 PerInstanceCustomData[0]，取得不同的 Instance ID，然後更新它們各自的 Material 的 World Position Offset (相對位置) ，來達到移動的效果。</p><h3 id="GPGPU"><a href="#GPGPU" class="headerlink" title="GPGPU"></a>GPGPU</h3><p>由於運算量龐大，可以藉由 GPGPU (Compute Shader) 來計算。那要怎麼直接把 GPGPU 算出的結果傳給 World Position Offset？</p><p>這裡使用 Render Target (RT) 去除存每個 Instance 的位置、速度，所以每個 Texel 的 RGB 儲存的是 World Position Offset 的 XYZ。因此，遊戲開始的時候，儲存 Position 的 Render Target 會長這樣，五彩繽紛的顏色就代表各種 World Position Offset。</p><p><img src="/notes/PositionRenderTarget.png" alt="Position Render Target"></p><p>藉由這個方法，CPU 叫 GPU 算完可以直接渲染，不用再回傳到 CPU，所以整個邏輯是 GPGPU -&gt; RenderTarget -&gt; Material。</p><p>最後，只要想辦法取出每個 Instance 對應到的 Texel 的顏色，傳到 World Position Offset 就好。</p><p><img src="/notes/UpdateInstancePosition.png" alt="Update Instance Position"></p><p>看起來很複雜，實際上就是根據 ID 算出對應的 Texel 的座標，左上是 (0, 0)，右下是 (1, 1)，再 Sample 出 Texture Object 某 Texel 的顏色。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>UE4</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>UE4, GPU</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Unreal Engine Notes</title>
     <link href="/notes/2024/02/24/ue-notes/"/>
     <url>/notes/2024/02/24/ue-notes/</url>
