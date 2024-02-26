@@ -8,7 +8,7 @@ source code: https://github.com/aceyan/UE4_GPGPU_flocking/tree/ComputeShader
 
 ### GPU Instances
 
-這個專案使用 GPU Instances，一次渲染大量 Static Mesh。為了讓每個 instance 有區別，它賦予每個 instance 一個 CustomData，作為分辨的 ID。
+這個專案使用 GPU Instancing，一次渲染大量 Static Mesh。為了讓每個 instance 有區別，它賦予每個 instance 一個 CustomData，作為分辨的 ID。
 
 ```cpp
 UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Flocking")
