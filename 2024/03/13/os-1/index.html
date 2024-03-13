@@ -18,28 +18,28 @@
   
     <meta name="description" content="周志遠教授作業系統開放式課程  Natchos Machine Problem C++ Language Linux coding environment Code tracing  Course Contents Overview Process Management Process Coordination Memory Management Storage Management  Hist">
 <meta property="og:type" content="article">
-<meta property="og:title" content="os-1">
+<meta property="og:title" content="作業系統筆記 (1)">
 <meta property="og:url" content="https://933yee.github.io/notes/2024/03/13/os-1/index.html">
 <meta property="og:site_name" content="Kevin&#39;s notes">
 <meta property="og:description" content="周志遠教授作業系統開放式課程  Natchos Machine Problem C++ Language Linux coding environment Code tracing  Course Contents Overview Process Management Process Coordination Memory Management Storage Management  Hist">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://933yee.github.io/notes/images/BatchSystem.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/MainframeSystemSummary.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/ParallelSystems.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/MultiCoreProcessor.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/UMA.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/NUMA.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/SystemArchitecture.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/os-1/BatchSystem.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/os-1/MainframeSystemSummary.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/os-1/ParallelSystems.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/os-1/MultiCoreProcessor.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/os-1/UMA.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/os-1/NUMA.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/os-1/SystemArchitecture.png">
 <meta property="article:published_time" content="2024-03-13T02:43:41.000Z">
-<meta property="article:modified_time" content="2024-03-13T07:45:48.024Z">
+<meta property="article:modified_time" content="2024-03-13T07:53:36.017Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="OS">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://933yee.github.io/notes/images/BatchSystem.png">
+<meta name="twitter:image" content="https://933yee.github.io/notes/images/os-1/BatchSystem.png">
   
   
   
-  <title>os-1 - Kevin&#39;s notes</title>
+  <title>作業系統筆記 (1) - Kevin&#39;s notes</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -205,7 +205,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="os-1"></span>
+            <span id="subtitle" data-typed-text="作業系統筆記 (1)"></span>
           
         </div>
 
@@ -228,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          573 words
+          572 words
         
       </span>
     
@@ -276,7 +276,7 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">os-1</h1>
+            <h1 id="seo-header">作業系統筆記 (1)</h1>
             
             
               <div class="markdown-body">
@@ -331,7 +331,7 @@
 </ul>
 </li>
 </ul>
-<h4 id="Batch-Systems"><a href="#Batch-Systems" class="headerlink" title="Batch Systems"></a>Batch Systems</h4><p><img src="/notes/./images/BatchSystem.png" srcset="/notes/info/loading.gif" lazyload alt="Batch System"></p>
+<h4 id="Batch-Systems"><a href="#Batch-Systems" class="headerlink" title="Batch Systems"></a>Batch Systems</h4><p><img src="/notes/./images/os-1/BatchSystem.png" srcset="/notes/info/loading.gif" lazyload alt="Batch System"></p>
 <ul>
 <li>Process steps:<ul>
 <li>Users submit jobs (program, data, control card)</li>
@@ -394,7 +394,7 @@
 </ul>
 </li>
 </ul>
-<p><img src="/notes/./images/MainframeSystemSummary.png" srcset="/notes/info/loading.gif" lazyload alt="Mainframe System Summary"></p>
+<p><img src="/notes/./images/os-1/MainframeSystemSummary.png" srcset="/notes/info/loading.gif" lazyload alt="Mainframe System Summary"></p>
 <h3 id="Computer-system-Architecture"><a href="#Computer-system-Architecture" class="headerlink" title="Computer-system Architecture"></a>Computer-system Architecture</h3><h4 id="Desktop-Systems-PC"><a href="#Desktop-Systems-PC" class="headerlink" title="Desktop Systems: PC"></a>Desktop Systems: PC</h4><ul>
 <li>Single user</li>
 <li>GUI</li>
@@ -409,8 +409,8 @@
 <li>Usually communicate through <strong>shared memory</strong></li>
 </ul>
 </li>
-<li>Purpose<ul>
-<li>Throughput,<ul>
+<li>Purposes<ul>
+<li>Throughput<ul>
 <li>計算量增加</li>
 </ul>
 </li>
@@ -425,7 +425,7 @@
 </ul>
 </li>
 </ul>
-<p><img src="/notes/images/ParallelSystems.png" srcset="/notes/info/loading.gif" lazyload alt="Parallel Systems"></p>
+<p><img src="/notes/./images/os-1/ParallelSystems.png" srcset="/notes/info/loading.gif" lazyload alt="Parallel Systems"></p>
 <h5 id="Symmetric-multiprocessor-system-SMP"><a href="#Symmetric-multiprocessor-system-SMP" class="headerlink" title="Symmetric multiprocessor system (SMP)"></a>Symmetric multiprocessor system (SMP)</h5><ul>
 <li>每個 processor 角色都相同，都由 OS 控制</li>
 <li>現在幾乎都是 SMP</li>
@@ -443,8 +443,9 @@
 <h5 id="Multi-Core-Processor"><a href="#Multi-Core-Processor" class="headerlink" title="Multi-Core Processor"></a>Multi-Core Processor</h5><ul>
 <li>A CPU with <strong>multiple cores on the same die (chip)</strong></li>
 <li>On-chip communication 會比 between-chip communication 還要快</li>
-<li>One chip with multiple cores 會比 multiple single-core chips 還要省電<br><img src="/notes/./images/MultiCoreProcessor.png" srcset="/notes/info/loading.gif" lazyload alt="Multi-Core Processor"></li>
+<li>One chip with multiple cores 會比 multiple single-core chips 還要省電</li>
 </ul>
+<p><img src="/notes/./images/os-1/MultiCoreProcessor.png" srcset="/notes/info/loading.gif" lazyload alt="Multi-Core Processor"></p>
 <h5 id="Many-Core-Processor"><a href="#Many-Core-Processor" class="headerlink" title="Many-Core Processor"></a>Many-Core Processor</h5><ul>
 <li>GPGPU<ul>
 <li>Single Instruction Multiple Data (SIMD) 的操作</li>
@@ -455,23 +456,25 @@
 <li>TILE64</li>
 </ul>
 <h5 id="Memory-Access-Architecture"><a href="#Memory-Access-Architecture" class="headerlink" title="Memory Access Architecture"></a>Memory Access Architecture</h5><ul>
-<li><p>Uniform Memory Access (UMA)</p>
-<ul>
+<li>Uniform Memory Access (UMA)<ul>
 <li>每個 CPU access memory 的速度相同，使用者不用在乎現在是在哪個 CPU 上執行</li>
 <li>Identical processors</li>
-<li>most commodity computers<br><img src="/notes/./images/UMA.png" srcset="/notes/info/loading.gif" lazyload alt="UMA"></li>
+<li>most commodity computers</li>
 </ul>
 </li>
-<li><p>Non-Uniform Memory Access (NUMA)</p>
+</ul>
+<p><img src="/notes/./images/os-1/UMA.png" srcset="/notes/info/loading.gif" lazyload alt="UMA"></p>
 <ul>
+<li>Non-Uniform Memory Access (NUMA)<ul>
 <li>often made by physically linking two or more SMPs</li>
 <li>One SMP can directly access memory or another SMP</li>
 <li>Memory access across link 會比較慢</li>
 <li>hierarchy 的架構，可以建構更大的電腦</li>
-<li>高效能計算系統都是 NUMA<br><img src="/notes/./images/NUMA.png" srcset="/notes/info/loading.gif" lazyload alt="NUMA"></li>
+<li>高效能計算系統都是 NUMA</li>
 </ul>
 </li>
 </ul>
+<p><img src="/notes/./images/os-1/NUMA.png" srcset="/notes/info/loading.gif" lazyload alt="NUMA"></p>
 <h4 id="Distributed-Systems"><a href="#Distributed-Systems" class="headerlink" title="Distributed Systems"></a>Distributed Systems</h4><ul>
 <li>loosely coupled system</li>
 <li>每個 system 有自己的 local memory</li>
@@ -503,7 +506,7 @@
 <li>Local Area Network (LAN)，更快</li>
 <li>Asymmetric clustering, Symmetric clustering</li>
 </ul>
-<p><img src="/notes/./images/SystemArchitecture.png" srcset="/notes/info/loading.gif" lazyload alt="System Architecture"></p>
+<p><img src="/notes/./images/os-1/SystemArchitecture.png" srcset="/notes/info/loading.gif" lazyload alt="System Architecture"></p>
 
                 
               </div>
@@ -528,7 +531,7 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>os-1</div>
+      <div>作業系統筆記 (1)</div>
       <div>https://933yee.github.io/notes/2024/03/13/os-1/</div>
     </div>
     <div class="license-meta">
@@ -572,6 +575,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/notes/2024/03/13/%E7%B7%A8%E8%AD%AF%E5%99%A8/" title="">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
