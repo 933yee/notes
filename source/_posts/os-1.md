@@ -1,5 +1,5 @@
 ---
-title: os-1
+title: 作業系統筆記 (1)
 date: 2024-03-13 10:43:41
 tags: OS
 ---
@@ -44,7 +44,7 @@ tags: OS
   - 廣泛使用於醫院、銀行
 
 #### Batch Systems
-![Batch System](./images/BatchSystem.png)
+![Batch System](./images/os-1/BatchSystem.png)
 - Process steps:
   - Users submit jobs (program, data, control card)
   - Operator(人) sort jobs with similar requirements
@@ -87,7 +87,7 @@ tags: OS
   - File System and Disk Management
   - Process Synchronization and Deadlock
 
-![Mainframe System Summary](./images/MainframeSystemSummary.png)
+![Mainframe System Summary](./images/os-1/MainframeSystemSummary.png)
 
 
 ### Computer-system Architecture
@@ -101,15 +101,15 @@ tags: OS
 - **multiprocessor** or **tightly coupled system**
   - More than one CPU/core in close communication
   - Usually communicate through **shared memory**
-- Purpose
-  - Throughput,
+- Purposes
+  - Throughput
     - 計算量增加
   - Economical
     - 很多東西可以共用，memory、CPU、IO device、主機板...
   - Reliability
     - 一個 CPU 掛了，其他還能繼續工作
 
-![Parallel Systems](/images/ParallelSystems.png)
+![Parallel Systems](./images/os-1/ParallelSystems.png)
 
 ##### Symmetric multiprocessor system (SMP)
 - 每個 processor 角色都相同，都由 OS 控制
@@ -127,7 +127,8 @@ tags: OS
 - A CPU with **multiple cores on the same die (chip)**
 - On-chip communication 會比 between-chip communication 還要快
 - One chip with multiple cores 會比 multiple single-core chips 還要省電
-![Multi-Core Processor](./images/MultiCoreProcessor.png)
+  
+![Multi-Core Processor](./images/os-1/MultiCoreProcessor.png)
 
 ##### Many-Core Processor
 - GPGPU
@@ -141,7 +142,8 @@ tags: OS
   - 每個 CPU access memory 的速度相同，使用者不用在乎現在是在哪個 CPU 上執行
   - Identical processors
   - most commodity computers
-![UMA](./images/UMA.png)
+  
+![UMA](./images/os-1/UMA.png)
 
 
 - Non-Uniform Memory Access (NUMA)
@@ -150,7 +152,8 @@ tags: OS
   - Memory access across link 會比較慢
   - hierarchy 的架構，可以建構更大的電腦
   - 高效能計算系統都是 NUMA
-![NUMA](./images/NUMA.png)
+  
+![NUMA](./images/os-1/NUMA.png)
 
 
 #### Distributed Systems
@@ -179,4 +182,4 @@ tags: OS
 - Local Area Network (LAN)，更快
 - Asymmetric clustering, Symmetric clustering
 
-![System Architecture](./images/SystemArchitecture.png)
+![System Architecture](./images/os-1/SystemArchitecture.png)
