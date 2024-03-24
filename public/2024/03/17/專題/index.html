@@ -23,10 +23,13 @@
 <meta property="og:site_name" content="Kevin&#39;s notes">
 <meta property="og:description" content="Forward Rendering 對場景中每個物體進行光柵化，對每一個幾何體計算場景所有燈光 計算完後，我們不希望畫出被擋住的物體，所以進行深度測試 (Z-Buffering)，把被擋住的多邊形剔除 這樣對於被剃除的物體和當前看不到的燈光的計算會很浪費資源，而且計算樣很大，因此後來出現了 Deferred Rendering  Deferred Rendering (Deferred Shadi">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://miro.medium.com/v2/resize:fit:2000/format:webp/1*-u4CVI1XPzHpmSxy8aO6xw.png">
+<meta property="og:image" content="https://miro.medium.com/v2/resize:fit:2000/format:webp/1*6vVtE25KPwyJY0DQLO4Mhg.png">
 <meta property="article:published_time" content="2024-03-17T06:06:11.000Z">
-<meta property="article:modified_time" content="2024-03-17T12:17:06.387Z">
+<meta property="article:modified_time" content="2024-03-24T08:06:19.599Z">
 <meta property="article:author" content="Kevin Lee">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://miro.medium.com/v2/resize:fit:2000/format:webp/1*-u4CVI1XPzHpmSxy8aO6xw.png">
   
   
   
@@ -219,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          283 words
+          626 words
         
       </span>
     
@@ -230,7 +233,7 @@
         
         
         
-          3 mins
+          6 mins
         
       </span>
     
@@ -284,17 +287,44 @@
 <li>G-Buffer 生成後，開始計算光照。每個光照只會對他覆蓋的像素計算一次</li>
 </ul>
 <p>不一定 Forward Rendering 就比較爛，還是要看情況使用，像是 VR 就是使用 Forward Rendering，因為 Deferred Rendering 的 G-Buffer 很吃頻寬</p>
-<h2 id="primitive-component"><a href="#primitive-component" class="headerlink" title="primitive component"></a>primitive component</h2><h2 id="Shaders"><a href="#Shaders" class="headerlink" title="Shaders"></a>Shaders</h2><p>Unreal Engine 所有 shader 的 base class 是 FShader，主要有兩種</p>
-<ol>
-<li>FGlobalShader<ul>
-<li>只有一個存在</li>
+<h2 id="Graphics-API-Abstraction-Layer-Rendering-Hardware-Interface-RHI"><a href="#Graphics-API-Abstraction-Layer-Rendering-Hardware-Interface-RHI" class="headerlink" title="Graphics API Abstraction Layer: Rendering Hardware Interface (RHI)"></a>Graphics API Abstraction Layer: Rendering Hardware Interface (RHI)</h2><ul>
+<li>支援各種不同的 Graphics API</li>
+<li>Renderer 建立在這抽象層上面，抽象層隱藏不同資源對特定 API 的實現方式，大部分渲染的程式碼跟 API 無關，且不需要知道底層是用哪種 Graphics API</li>
 </ul>
-</li>
-<li>FMaterialShader<ul>
-<li>跟 Material 有關的<br>FShader 和 FShaderResource 綁定後，該 FShaderResource 會跟著該 Shader 運用 GPU 資源</li>
+<h3 id="FRHIResource"><a href="#FRHIResource" class="headerlink" title="FRHIResource"></a>FRHIResource</h3><ul>
+<li>RHI Resource 的基本類型，可以是 vertex buffers、index buffers 或是 blend states</li>
+<li>任何 graphic API 的資源都有一個 RHI 封裝</li>
 </ul>
-</li>
-</ol>
+<h3 id="FRenderResource"><a href="#FRenderResource" class="headerlink" title="FRenderResource"></a>FRenderResource</h3><ul>
+<li>定義了渲染資源的通用行為模式</li>
+<li>建立和封裝 FRHIResources</li>
+<li>我們可以直接建立和操作 RenderResource，它會幫我們建立所需的 FRHIResources(所以 interface 包含 InitRHI 和 ReleaseRHI 等初始化和釋放 RHIResource 的方法)</li>
+</ul>
+<h2 id="Vertex-Facrtories"><a href="#Vertex-Facrtories" class="headerlink" title="Vertex Facrtories"></a>Vertex Facrtories</h2><ul>
+<li>將特定類型的 Mesh 的頂點資訊從 CPU 傳給 GPU，然後被 Vertex Shader 使用</li>
+<li>是一種 FRenderResource，負責獲取資源和資源的數據，將其建立成 FRHIResources。Vertex Factory 封裝這些資源，當要渲染 Mesh 的時候，Renderer 通過 Mesh 的 Vertex Factory 獲取需要的數據。</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*r2ej5rO4Lmc5oj8PKWPOjQ.jpeg">Vertex Factory</a></p>
+<h3 id="FStaticMeshDataType"><a href="#FStaticMeshDataType" class="headerlink" title="FStaticMeshDataType"></a>FStaticMeshDataType</h3><ul>
+<li>包含 Vertex Factory 需要的 RHI 資源</li>
+</ul>
+<p>LocalVertexFactory 具有一個名為 FDataType 的本地類別，繼承自 FStaticMeshDataType，多了一個 SRV 指針，與 skinned meshes 一起使用。還有一個 Data，用於封裝建立資源所需的東西</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:2000/format:webp/1*-u4CVI1XPzHpmSxy8aO6xw.png" srcset="/notes/info/loading.gif" lazyload alt="The FStaticMeshDataType class"></p>
+<h3 id="FVertexStreamComponent"><a href="#FVertexStreamComponent" class="headerlink" title="FVertexStreamComponent"></a>FVertexStreamComponent</h3><ul>
+<li>FDataType 中最重要的 instance 是 Stream Component</li>
+<li>每個 Stream Component 都存一個 Vertex Buffer 的東西，且只有一種 attribute (Position, TextureCoordinates, etc)</li>
+<li>所以每個 stream 負責一種 vertex data 的 attribute   </li>
+<li>FVertexStreamComponent 就是其中一個，對 Vertex Buffer 和其他 metadata 進行封裝</li>
+</ul>
+<p><img src="https://miro.medium.com/v2/resize:fit:2000/format:webp/1*6vVtE25KPwyJY0DQLO4Mhg.png" srcset="/notes/info/loading.gif" lazyload alt="The FVertexStreamComponent structure"></p>
+<p>補充：上圖中的 Vertex Buffer 是一種 FRenderResource，建立和封裝 FRHIResourece，也就是 FRHIVertexBuffer</p>
+<h3 id="FVertexElement"><a href="#FVertexElement" class="headerlink" title="FVertexElement"></a>FVertexElement</h3><ul>
+<li>包含 stream 的 data</li>
+</ul>
+<h3 id="FRHIVertexDeclaration"><a href="#FRHIVertexDeclaration" class="headerlink" title="FRHIVertexDeclaration"></a>FRHIVertexDeclaration</h3><ul>
+<li>Vertex Declaration 等同於 RHI resource of an <strong>Input Layout</strong>，描述了不同 vertex data 的不同屬性，像是 position、normal、tangent…</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/361322348">创建虚幻自定义Mesh组件 | Part 1: 深度解释顶点工厂（Vertex Factory）</a></p>
 
                 
               </div>

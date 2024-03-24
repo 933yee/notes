@@ -16,18 +16,22 @@
   <meta name="author" content="Kevin Lee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="OpenGLOpenGL defines the function specification of each API and leaves the implementation to the vendors themselves  OpenGL 只有定 SPEC，具體怎麼做留給硬體廠商 每個硬體可能執行運算的方式不太一樣，像是做加法時，可能精度不一樣">
+    <meta name="description" content="參考 清華大學 李潤容老師 計算機圖學講義  Introduction to Computer GraphicsWhat is Computer Graphics   Input Output Category    Image Image Image Processing   Description Images Description Computer Vision&#x2F; Patter">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Computer Graphics">
 <meta property="og:url" content="https://933yee.github.io/notes/2024/03/13/CG/index.html">
 <meta property="og:site_name" content="Kevin&#39;s notes">
-<meta property="og:description" content="OpenGLOpenGL defines the function specification of each API and leaves the implementation to the vendors themselves  OpenGL 只有定 SPEC，具體怎麼做留給硬體廠商 每個硬體可能執行運算的方式不太一樣，像是做加法時，可能精度不一樣">
+<meta property="og:description" content="參考 清華大學 李潤容老師 計算機圖學講義  Introduction to Computer GraphicsWhat is Computer Graphics   Input Output Category    Image Image Image Processing   Description Images Description Computer Vision&#x2F; Patter">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://933yee.github.io/notes/image-2.png">
+<meta property="og:image" content="https://933yee.github.io/notes/image-3.png">
+<meta property="og:image" content="https://933yee.github.io/notes/image-4.png">
 <meta property="article:published_time" content="2024-03-13T10:37:15.000Z">
-<meta property="article:modified_time" content="2024-03-13T11:00:31.779Z">
+<meta property="article:modified_time" content="2024-03-24T09:50:51.582Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="CG">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://933yee.github.io/notes/image-2.png">
   
   
   
@@ -220,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          45 words
+          135 words
         
       </span>
     
@@ -231,7 +235,7 @@
         
         
         
-          1 mins
+          2 mins
         
       </span>
     
@@ -273,7 +277,125 @@
             
               <div class="markdown-body">
                 
-                <h2 id="OpenGL"><a href="#OpenGL" class="headerlink" title="OpenGL"></a>OpenGL</h2><p>OpenGL defines the function specification of each API and leaves the implementation to the vendors themselves</p>
+                <blockquote>
+<p>參考 清華大學 李潤容老師 計算機圖學講義</p>
+</blockquote>
+<h1 id="Introduction-to-Computer-Graphics"><a href="#Introduction-to-Computer-Graphics" class="headerlink" title="Introduction to Computer Graphics"></a>Introduction to Computer Graphics</h1><h2 id="What-is-Computer-Graphics"><a href="#What-is-Computer-Graphics" class="headerlink" title="What is Computer Graphics"></a>What is Computer Graphics</h2><table>
+<thead>
+<tr>
+<th align="center">Input</th>
+<th align="center">Output</th>
+<th align="center">Category</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Image</td>
+<td align="center">Image</td>
+<td align="center">Image Processing</td>
+</tr>
+<tr>
+<td align="center">Description Images</td>
+<td align="center">Description</td>
+<td align="center">Computer Vision&#x2F; Pattern Recognition</td>
+</tr>
+<tr>
+<td align="center">Description</td>
+<td align="center">Image</td>
+<td align="center">Computer Graphics</td>
+</tr>
+</tbody></table>
+<h3 id="Image-Processing"><a href="#Image-Processing" class="headerlink" title="Image Processing"></a>Image Processing</h3><ul>
+<li>Performing various types of operations on an input image, and output an image with some useful information</li>
+<li>Ex: Edge Detection, Image Compression</li>
+</ul>
+<h3 id="Computer-Vision-Pattern-Recognition"><a href="#Computer-Vision-Pattern-Recognition" class="headerlink" title="Computer Vision &#x2F; Pattern Recognition"></a>Computer Vision &#x2F; Pattern Recognition</h3><ul>
+<li>Computer Vision<ul>
+<li>Building a artificial system that obtain information from images</li>
+</ul>
+</li>
+<li>Pattern Recognition<ul>
+<li>Classify data based on either prior knowledge or on statistical information extracted from the patterns</li>
+</ul>
+</li>
+<li>Ex: Object Detection, Tracking, Classification, Recognition</li>
+</ul>
+<h3 id="Computer-Graphics"><a href="#Computer-Graphics" class="headerlink" title="Computer Graphics"></a>Computer Graphics</h3><ul>
+<li>Concern the pictorial synthesis of real or imaginary objects from their computer-based models</li>
+<li>2D graphics<ul>
+<li>Ex: Texts, 2D lines&#x2F; polygons&#x2F; images…</li>
+</ul>
+</li>
+<li>3D graphics<ul>
+<li>Project the objects onto 2D projection plane and render</li>
+</ul>
+</li>
+<li>Types<ul>
+<li>Passive Stereo<ul>
+<li>The 3D effect is achieved by presenting slightly different images to each eye using techniques such as polarization or color filtering.</li>
+<li>Ex:Anaglyphic 3D glasses (紅藍 3D 眼鏡)、Polarization 3D glasses (偏光 3D 眼鏡)</li>
+</ul>
+</li>
+<li>Active Stereo<ul>
+<li>Involve synchronizing shutter glasses or alternate-frame sequencing with the display to present different images to each eye at high speed.</li>
+<li>Ex: Shutter Glasses、VR display</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Graphics-Hardware-System"><a href="#Graphics-Hardware-System" class="headerlink" title="Graphics Hardware System"></a>Graphics Hardware System</h1><h2 id="GPU"><a href="#GPU" class="headerlink" title="GPU"></a>GPU</h2><ul>
+<li>Graphics Processing Unit</li>
+<li>Very high complexity with massively parallelism</li>
+</ul>
+<h2 id="Frame-Buffer"><a href="#Frame-Buffer" class="headerlink" title="Frame Buffer"></a>Frame Buffer</h2><ul>
+<li>Memory location for storing display data during processing<ul>
+<li>Front buffer (Current display buffer)</li>
+<li>Back buffer (Nexy display buffer)</li>
+</ul>
+</li>
+</ul>
+<h3 id="Screen-Display-Refresh"><a href="#Screen-Display-Refresh" class="headerlink" title="Screen&#x2F; Display Refresh"></a>Screen&#x2F; Display Refresh</h3><ul>
+<li>Retrieve <strong>front buffer</strong> pixels for displaying pixel colors on screen</li>
+<li>Constant refresh rate</li>
+<li>Scan-line based display<ul>
+<li>從左上往右，一行一行往下顯示</li>
+</ul>
+</li>
+</ul>
+<h3 id="Single-Buffering"><a href="#Single-Buffering" class="headerlink" title="Single Buffering"></a>Single Buffering</h3><ul>
+<li>Display after rendering complete<ul>
+<li>cannot render during display</li>
+</ul>
+</li>
+<li>Rendering during displaying<ul>
+<li>Display incomplete result</li>
+<li>畫面可能會有黑黑的</li>
+</ul>
+</li>
+<li>Not synchronzied with display refresh<ul>
+<li>??</li>
+</ul>
+</li>
+</ul>
+<p><img src="/notes/image-2.png" srcset="/notes/info/loading.gif" lazyload alt="alt text"></p>
+<h3 id="Double-Buffering"><a href="#Double-Buffering" class="headerlink" title="Double Buffering"></a>Double Buffering</h3><ul>
+<li>A techinique to prevent from displaying incomplete frame</li>
+</ul>
+<p><img src="/notes/image-3.png" srcset="/notes/info/loading.gif" lazyload alt="alt text"></p>
+<h3 id="Full-Screen-Display"><a href="#Full-Screen-Display" class="headerlink" title="Full Screen Display"></a>Full Screen Display</h3><ul>
+<li>Uses Double Buffering or Triple Buffering</li>
+<li>Flip display by changing <strong>display base address</strong> to corresponding buffer</li>
+</ul>
+<h3 id="Window-Mode-Display"><a href="#Window-Mode-Display" class="headerlink" title="Window Mode Display"></a>Window Mode Display</h3><ul>
+<li>Uses Double Buffering or Triple Buffering</li>
+<li>Flip display by using 2D bitblt to move <strong>back buffer</strong> frame on to <strong>front buffer</strong> display</li>
+</ul>
+<h1 id="3D-Graphics-Pipeline"><a href="#3D-Graphics-Pipeline" class="headerlink" title="3D Graphics Pipeline"></a>3D Graphics Pipeline</h1><ul>
+<li>Almost everything you see on the display is processed by the graphics pipeline</li>
+<li>It is realized by graphics hardware (GPU) or by software (CPU)</li>
+</ul>
+<h2 id="Graphics-Rendering-Process"><a href="#Graphics-Rendering-Process" class="headerlink" title="Graphics Rendering Process"></a>Graphics Rendering Process</h2><p><img src="/notes/image-4.png" srcset="/notes/info/loading.gif" lazyload alt="alt text"></p>
+<h2 id="OpenGL"><a href="#OpenGL" class="headerlink" title="OpenGL"></a>OpenGL</h2><p>OpenGL defines the function specification of each API and leaves the implementation to the vendors themselves</p>
 <ul>
 <li>OpenGL 只有定 SPEC，具體怎麼做留給硬體廠商</li>
 <li>每個硬體可能執行運算的方式不太一樣，像是做加法時，可能精度不一樣</li>
