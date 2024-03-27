@@ -16,24 +16,25 @@
   <meta name="author" content="Kevin Lee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Forward Rendering 對場景中每個物體進行光柵化，對每一個幾何體計算場景所有燈光 計算完後，我們不希望畫出被擋住的物體，所以進行深度測試 (Z-Buffering)，把被擋住的多邊形剔除 這樣對於被剃除的物體和當前看不到的燈光的計算會很浪費資源，而且計算樣很大，因此後來出現了 Deferred Rendering  Deferred Rendering (Deferred Shadi">
+    <meta name="description" content="a | a* b &#x3D; {a, b, ab, aab, aaab, …} (11 | 0)* (00 | 1)*奇數個 1 出現在奇數個 0 前面不能ex: 01010 不能 (1 | 01 | 001)* (e | 0 | 00)連續三個 0 不能 (D*.D | D.D*)D &#x3D; [0 ~ 9] 0.5, .5, 123.6, 9.2, 9.237, 9.  M &#x3D;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="專題">
-<meta property="og:url" content="https://933yee.github.io/notes/2024/03/17/%E5%B0%88%E9%A1%8C/index.html">
+<meta property="og:title" content="Compiler 筆記 (3)">
+<meta property="og:url" content="https://933yee.github.io/notes/2024/03/27/compiler-3/index.html">
 <meta property="og:site_name" content="Kevin&#39;s notes">
-<meta property="og:description" content="Forward Rendering 對場景中每個物體進行光柵化，對每一個幾何體計算場景所有燈光 計算完後，我們不希望畫出被擋住的物體，所以進行深度測試 (Z-Buffering)，把被擋住的多邊形剔除 這樣對於被剃除的物體和當前看不到的燈光的計算會很浪費資源，而且計算樣很大，因此後來出現了 Deferred Rendering  Deferred Rendering (Deferred Shadi">
+<meta property="og:description" content="a | a* b &#x3D; {a, b, ab, aab, aaab, …} (11 | 0)* (00 | 1)*奇數個 1 出現在奇數個 0 前面不能ex: 01010 不能 (1 | 01 | 001)* (e | 0 | 00)連續三個 0 不能 (D*.D | D.D*)D &#x3D; [0 ~ 9] 0.5, .5, 123.6, 9.2, 9.237, 9.  M &#x3D;">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://miro.medium.com/v2/resize:fit:2000/format:webp/1*-u4CVI1XPzHpmSxy8aO6xw.png">
-<meta property="og:image" content="https://miro.medium.com/v2/resize:fit:2000/format:webp/1*6vVtE25KPwyJY0DQLO4Mhg.png">
-<meta property="article:published_time" content="2024-03-17T06:06:11.000Z">
-<meta property="article:modified_time" content="2024-03-24T08:06:19.599Z">
+<meta property="og:image" content="https://933yee.github.io/notes/image.png">
+<meta property="og:image" content="https://933yee.github.io/notes/image-1.png">
+<meta property="article:published_time" content="2024-03-27T12:27:05.000Z">
+<meta property="article:modified_time" content="2024-03-27T12:27:43.424Z">
 <meta property="article:author" content="Kevin Lee">
+<meta property="article:tag" content="Compilier">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://miro.medium.com/v2/resize:fit:2000/format:webp/1*-u4CVI1XPzHpmSxy8aO6xw.png">
+<meta name="twitter:image" content="https://933yee.github.io/notes/image.png">
   
   
   
-  <title>專題 - Kevin&#39;s notes</title>
+  <title>Compiler 筆記 (3) - Kevin&#39;s notes</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -199,7 +200,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="專題"></span>
+            <span id="subtitle" data-typed-text="Compiler 筆記 (3)"></span>
           
         </div>
 
@@ -210,8 +211,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-03-17 14:06" pubdate>
-          March 17, 2024 pm
+        <time datetime="2024-03-27 20:27" pubdate>
+          March 27, 2024 pm
         </time>
       </span>
     
@@ -222,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          626 words
+          197 words
         
       </span>
     
@@ -233,7 +234,7 @@
         
         
         
-          6 mins
+          2 mins
         
       </span>
     
@@ -270,61 +271,53 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">專題</h1>
+            <h1 id="seo-header">Compiler 筆記 (3)</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="Forward-Rendering"><a href="#Forward-Rendering" class="headerlink" title="Forward Rendering"></a>Forward Rendering</h2><ul>
-<li>對場景中每個物體進行光柵化，對每一個幾何體計算場景所有燈光</li>
-<li>計算完後，我們不希望畫出被擋住的物體，所以進行深度測試 (Z-Buffering)，把被擋住的多邊形剔除</li>
-<li>這樣對於被剃除的物體和當前看不到的燈光的計算會很浪費資源，而且計算樣很大，因此後來出現了 Deferred Rendering</li>
+                <p>a | a* b &#x3D; {a, b, ab, aab, aaab, …}</p>
+<p>(11 | 0)* (00 | 1)*<br>奇數個 1 出現在奇數個 0 前面不能<br>ex: 01010 不能</p>
+<p>(1 | 01 | 001)* (e | 0 | 00)<br>連續三個 0 不能</p>
+<p>(D*.D | D.D*)<br>D &#x3D; [0 ~ 9]</p>
+<p>0.5, .5, 123.6, 9.2, 9.237, 9.</p>
+<hr>
+<p>M &#x3D; (Q, $\Sigma$, $\delta$, $q_{0}$, F)</p>
+<p>Q &#x3D; {$q_{0}, q_{5}, q_{10}, q_{15}, q_{20}$}</p>
+<p>$\Sigma$ &#x3D; {5, 10}</p>
+<p>F &#x3D; {$q_{20}$}</p>
+<p>$\delta$($q_{0}$, 5) &#x3D; $q_{5}$ </p>
+<p>$\delta$($q_{5}$, 5) &#x3D; $q_{10}$</p>
+<p>$\delta$($q_{10}$, 5) &#x3D; $q_{15}$</p>
+<p>$\delta$($q_{15}$, 5) &#x3D; $q_{20}$</p>
+<p>$\delta$($q_{0}$, 10) &#x3D; $q_{10}$</p>
+<p>$\delta$($q_{10}$, 10) &#x3D; $q_{20}$</p>
+<hr>
+<p><img src="/notes/image.png" srcset="/notes/info/loading.gif" lazyload alt="alt text"></p>
+<p>M &#x3D; (Q, $\Sigma$, $\delta$, $q_{0}$, F)</p>
+<p>Q &#x3D; {$q_{0}, q_{1}, q_{2}$}</p>
+<p>$\Sigma$ &#x3D; {0, 1}</p>
+<p>$\delta$($q_{0}$, 0) &#x3D; {$q_{1}, q_{2}$}</p>
+<p>$\delta$($q_{1}$, 0) &#x3D; {$q_{1}$}</p>
+<p>$\delta$($q_{2}$, 1) &#x3D; {$q_{2}$}</p>
+<hr>
+<p><img src="/notes/image-1.png" srcset="/notes/info/loading.gif" lazyload alt="alt text"></p>
+<ul>
+<li>字串長度 0</li>
+<li>空集合</li>
 </ul>
-<h2 id="Deferred-Rendering-Deferred-Shading"><a href="#Deferred-Rendering-Deferred-Shading" class="headerlink" title="Deferred Rendering (Deferred Shading)"></a>Deferred Rendering (Deferred Shading)</h2><ul>
-<li>前面有說被剃除的物體和當前看不到的燈光的計算會很浪費資源，延遲渲染就是不要去計算它們</li>
-<li>增加了一個 Geometric Buffer (G-Buffer)</li>
-<li>物體先進行深度測試，再把各種數據光柵化到 G-Buffer，光照延遲到最後計算</li>
-<li>G-Buffer 生成後，開始計算光照。每個光照只會對他覆蓋的像素計算一次</li>
+<hr>
+<p>Relation</p>
+<ul>
+<li><p>Reflexive<br>if (a, b) &#x2F;belongs R for every a &#x2F;belongs A<br>aRa</p>
+</li>
+<li><p>Symmetry<br>aRb &#x3D; bRa</p>
+</li>
+<li><p>transitinity<br>aRb, bRc -&gt; aRc</p>
+</li>
 </ul>
-<p>不一定 Forward Rendering 就比較爛，還是要看情況使用，像是 VR 就是使用 Forward Rendering，因為 Deferred Rendering 的 G-Buffer 很吃頻寬</p>
-<h2 id="Graphics-API-Abstraction-Layer-Rendering-Hardware-Interface-RHI"><a href="#Graphics-API-Abstraction-Layer-Rendering-Hardware-Interface-RHI" class="headerlink" title="Graphics API Abstraction Layer: Rendering Hardware Interface (RHI)"></a>Graphics API Abstraction Layer: Rendering Hardware Interface (RHI)</h2><ul>
-<li>支援各種不同的 Graphics API</li>
-<li>Renderer 建立在這抽象層上面，抽象層隱藏不同資源對特定 API 的實現方式，大部分渲染的程式碼跟 API 無關，且不需要知道底層是用哪種 Graphics API</li>
-</ul>
-<h3 id="FRHIResource"><a href="#FRHIResource" class="headerlink" title="FRHIResource"></a>FRHIResource</h3><ul>
-<li>RHI Resource 的基本類型，可以是 vertex buffers、index buffers 或是 blend states</li>
-<li>任何 graphic API 的資源都有一個 RHI 封裝</li>
-</ul>
-<h3 id="FRenderResource"><a href="#FRenderResource" class="headerlink" title="FRenderResource"></a>FRenderResource</h3><ul>
-<li>定義了渲染資源的通用行為模式</li>
-<li>建立和封裝 FRHIResources</li>
-<li>我們可以直接建立和操作 RenderResource，它會幫我們建立所需的 FRHIResources(所以 interface 包含 InitRHI 和 ReleaseRHI 等初始化和釋放 RHIResource 的方法)</li>
-</ul>
-<h2 id="Vertex-Facrtories"><a href="#Vertex-Facrtories" class="headerlink" title="Vertex Facrtories"></a>Vertex Facrtories</h2><ul>
-<li>將特定類型的 Mesh 的頂點資訊從 CPU 傳給 GPU，然後被 Vertex Shader 使用</li>
-<li>是一種 FRenderResource，負責獲取資源和資源的數據，將其建立成 FRHIResources。Vertex Factory 封裝這些資源，當要渲染 Mesh 的時候，Renderer 通過 Mesh 的 Vertex Factory 獲取需要的數據。</li>
-</ul>
-<p><a target="_blank" rel="noopener" href="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*r2ej5rO4Lmc5oj8PKWPOjQ.jpeg">Vertex Factory</a></p>
-<h3 id="FStaticMeshDataType"><a href="#FStaticMeshDataType" class="headerlink" title="FStaticMeshDataType"></a>FStaticMeshDataType</h3><ul>
-<li>包含 Vertex Factory 需要的 RHI 資源</li>
-</ul>
-<p>LocalVertexFactory 具有一個名為 FDataType 的本地類別，繼承自 FStaticMeshDataType，多了一個 SRV 指針，與 skinned meshes 一起使用。還有一個 Data，用於封裝建立資源所需的東西</p>
-<p><img src="https://miro.medium.com/v2/resize:fit:2000/format:webp/1*-u4CVI1XPzHpmSxy8aO6xw.png" srcset="/notes/info/loading.gif" lazyload alt="The FStaticMeshDataType class"></p>
-<h3 id="FVertexStreamComponent"><a href="#FVertexStreamComponent" class="headerlink" title="FVertexStreamComponent"></a>FVertexStreamComponent</h3><ul>
-<li>FDataType 中最重要的 instance 是 Stream Component</li>
-<li>每個 Stream Component 都存一個 Vertex Buffer 的東西，且只有一種 attribute (Position, TextureCoordinates, etc)</li>
-<li>所以每個 stream 負責一種 vertex data 的 attribute   </li>
-<li>FVertexStreamComponent 就是其中一個，對 Vertex Buffer 和其他 metadata 進行封裝</li>
-</ul>
-<p><img src="https://miro.medium.com/v2/resize:fit:2000/format:webp/1*6vVtE25KPwyJY0DQLO4Mhg.png" srcset="/notes/info/loading.gif" lazyload alt="The FVertexStreamComponent structure"></p>
-<p>補充：上圖中的 Vertex Buffer 是一種 FRenderResource，建立和封裝 FRHIResourece，也就是 FRHIVertexBuffer</p>
-<h3 id="FVertexElement"><a href="#FVertexElement" class="headerlink" title="FVertexElement"></a>FVertexElement</h3><ul>
-<li>包含 stream 的 data</li>
-</ul>
-<h3 id="FRHIVertexDeclaration"><a href="#FRHIVertexDeclaration" class="headerlink" title="FRHIVertexDeclaration"></a>FRHIVertexDeclaration</h3><ul>
-<li>Vertex Declaration 等同於 RHI resource of an <strong>Input Layout</strong>，描述了不同 vertex data 的不同屬性，像是 position、normal、tangent…</li>
-</ul>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/361322348">创建虚幻自定义Mesh组件 | Part 1: 深度解释顶点工厂（Vertex Factory）</a></p>
+<p>Back tracking is not that powerful<br>Parsar with no back tracking<br>(frist set, follow set, selection set)</p>
+<p><a target="_blank" rel="noopener" href="https://www.google.com/url?sa=i&url=https://www.geeksforgeeks.org/ambiguous-grammar/&psig=AOvVaw16puthtwLbOpQ45_NJxyBy&ust=1711547242637000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCKCr_LyIkoUDFQAAAAAdAAAAABAE">Ambiguous Grammar</a></p>
 
                 
               </div>
@@ -334,6 +327,13 @@
               <div class="post-metas my-3">
   
   
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/notes/tags/Compilier/" class="print-no-link">#Compilier</a>
+      
+    </div>
+  
 </div>
 
 
@@ -342,8 +342,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>專題</div>
-      <div>https://933yee.github.io/notes/2024/03/17/專題/</div>
+      <div>Compiler 筆記 (3)</div>
+      <div>https://933yee.github.io/notes/2024/03/27/compiler-3/</div>
     </div>
     <div class="license-meta">
       
@@ -355,7 +355,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>March 17, 2024</div>
+          <div>March 27, 2024</div>
         </div>
       
       
@@ -387,18 +387,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/notes/2024/03/26/compiler-2/" title="Compiler 筆記 (2)">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Compiler 筆記 (2)</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/notes/2024/03/13/CG/" title="Computer Graphics">
-                        <span class="hidden-mobile">Computer Graphics</span>
+                      <a href="/notes/2024/03/27/python-notes/" title="Python 筆記">
+                        <span class="hidden-mobile">Python 筆記</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

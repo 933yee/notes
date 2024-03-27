@@ -1,5 +1,5 @@
 ---
-title: Compiler 筆記
+title: Compiler 筆記 (1)
 date: 2024-03-07 15:51:12
 tags: Compilier
 category: 
@@ -40,7 +40,7 @@ Compilation 可以分成兩個部分
 - Syntax Analysis
 - Semantic Analysis
 
-![Analysis Phases Example](./images/compiler/AnalysisPhasesExample.png)
+![Analysis Phases Example](./images/compilier-1/AnalysisPhasesExample.png)
 
 ### Intermediate Code Generation
 - Two properties
@@ -52,19 +52,19 @@ Compilation 可以分成兩個部分
   - Three-address code
     - 每條指令最多有三個 operands
 
-![Intermediate Code Generation Example](./images/compiler/IntermediateCodeGenerationExample.png)
+![Intermediate Code Generation Example](./images/compilier-1/IntermediateCodeGenerationExample.png)
 
 ### Code Optimization
 - Attempts to improve the intermediate code
   - So the faster-running machine code will result
   
-![Code Optimization Example](./images/compiler/CodeOptimizationExample.png)
+![Code Optimization Example](./images/compilier-1/CodeOptimizationExample.png)
 
 ### Code Generation
 - Generates target code
   - Consisting of reocatable machine code or assembly code
   
-![Code Generation Example](./images/compiler/CodeGenerationExample.png)
+![Code Generation Example](./images/compilier-1/CodeGenerationExample.png)
 
 ### Counsins of the Compilier
 - Preprocessors
@@ -449,94 +449,3 @@ program parameter-passing;
 |observation point|6|10|0|3|-|
 
 
-
----
-
-2 + 3 + 2
-E 
-E        + term
-E + term + expo
-
-
-
-
----
-任何left recursion都可以用數學轉換成right recursion
-# ex1
-S -> Sa|B
----
-S -> BS'
-S' -> aS'|e
-
-# ex2
-E -> E + T | T
-T -> T * F | F
-F -> NUM | (E)
----
-E -> TE'
-E' -> TE'|e
-T -> FT'
-T' -> *FT'|e
-F -> (E)|id
-
----
-
-a | a* b = {a, b, ab, aab, aaab, ...}
-
-
-(11 | 0)* (00 | 1)*
-奇數個 1 出現在奇數個 0 前面不能
-ex: 01010 不能
-
-
-(1 | 01 | 001)* (e | 0 | 00)
-連續三個 0 不能
-
-
-(D*.D | D.D*)
-D = [0 ~ 9]
-
-0.5, .5, 123.6, 9.2, 9.237, 9.
-
----
-
-M = (Q, $\Sigma$, $\delta$, $q_{0}$, F)
-
-Q = {$q_{0}, q_{5}, q_{10}, q_{15}, q_{20}$}
-
-$\Sigma$ = {5, 10}
-
-F = {$q_{20}$}
-
-$\delta$($q_{0}$, 5) = $q_{5}$ 
-
-$\delta$($q_{5}$, 5) = $q_{10}$
-
-$\delta$($q_{10}$, 5) = $q_{15}$
-
-$\delta$($q_{15}$, 5) = $q_{20}$
-
-$\delta$($q_{0}$, 10) = $q_{10}$
-
-$\delta$($q_{10}$, 10) = $q_{20}$
-
----
-
-![alt text](image.png)
-
-M = (Q, $\Sigma$, $\delta$, $q_{0}$, F)
-
-Q = {$q_{0}, q_{1}, q_{2}$}
-
-$\Sigma$ = {0, 1}
-
-$\delta$($q_{0}$, 0) = {$q_{1}, q_{2}$}
-
-$\delta$($q_{1}$, 0) = {$q_{1}$}
-
-$\delta$($q_{2}$, 1) = {$q_{2}$}
-
----
-![alt text](image-1.png)
-- 字串長度 0
-- 空集合
