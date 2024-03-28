@@ -1,7 +1,7 @@
 ---
 title: Compiler 筆記 (1)
 date: 2024-03-07 15:51:12
-tags: Compilier
+tags: compiler
 category: 
 math: true
 ---
@@ -9,9 +9,9 @@ math: true
 > 參考 清華大學 李政崑老師 編譯器設計講義
 
 
-## Compiliers and Assemblers
+## compilers and Assemblers
 High-level language program (C) 
-⇒ C compilier 
+⇒ C compiler 
 ⇒ Assembly language program (for MIPS) 
 ⇒ Assembler 
 ⇒ Binary machine language program (for MIPS)
@@ -28,7 +28,7 @@ Compilation 可以分成兩個部分
 ![Analysis-Synthesis Model](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjy5NjmBdRfsrfg96b3KYpevQqRBAygBtuvsszgZpXmPhyy7M9VH81zkvqd-uhdJBBtWL_u0_iaHC8nhSWK1gW7_0DNHxSofoPpj5CD76mp5wCRN7fSz5cDkzZmns_HZ12pRbBD37q9jYY/s1600/aandSmodel.bmp)
 
 ## Phase of a Compiler
-![Phase of a Compilier](https://cdn1.byjus.com/wp-content/uploads/2022/03/phase-of-compiler.png)
+![Phase of a compiler](https://cdn1.byjus.com/wp-content/uploads/2022/03/phase-of-compiler.png)
 
 ### Symbol-Table Management
 - Essential function of a compiler
@@ -44,7 +44,7 @@ Compilation 可以分成兩個部分
 - Syntax Analysis
 - Semantic Analysis
 
-![Analysis Phases Example](./images/compilier-1/AnalysisPhasesExample.png)
+![Analysis Phases Example](./images/compiler-1/AnalysisPhasesExample.png)
 
 ### Intermediate Code Generation
 - Two properties
@@ -56,21 +56,21 @@ Compilation 可以分成兩個部分
   - Three-address code
     - 每條指令最多有三個 operands
 
-![Intermediate Code Generation Example](./images/compilier-1/IntermediateCodeGenerationExample.png)
+![Intermediate Code Generation Example](./images/compiler-1/IntermediateCodeGenerationExample.png)
 
 ### Code Optimization
 - Attempts to improve the intermediate code
   - So the faster-running machine code will result
   
-![Code Optimization Example](./images/compilier-1/CodeOptimizationExample.png)
+![Code Optimization Example](./images/compiler-1/CodeOptimizationExample.png)
 
 ### Code Generation
 - Generates target code
   - Consisting of reocatable machine code or assembly code
   
-![Code Generation Example](./images/compilier-1/CodeGenerationExample.png)
+![Code Generation Example](./images/compiler-1/CodeGenerationExample.png)
 
-### Counsins of the Compilier
+### Counsins of the compiler
 - Preprocessors
   - Produce input to compilers
   - Macro processing
