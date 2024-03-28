@@ -16,12 +16,12 @@
   <meta name="author" content="Kevin Lee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Compiliers and AssemblersHigh-level language program (C)⇒ C compilier⇒ Assembly language program (for MIPS)⇒ Assembler⇒ Binary machine language program (for MIPS) Analysis-Synthesis ModelCompilation 可">
+    <meta name="description" content="參考 清華大學 李政崑老師 編譯器設計講義  Compiliers and AssemblersHigh-level language program (C)⇒ C compilier⇒ Assembly language program (for MIPS)⇒ Assembler⇒ Binary machine language program (for MIPS) Analysis-Synt">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Compiler 筆記 (1)">
 <meta property="og:url" content="https://933yee.github.io/notes/2024/03/07/compiler-1/index.html">
 <meta property="og:site_name" content="Kevin&#39;s notes">
-<meta property="og:description" content="Compiliers and AssemblersHigh-level language program (C)⇒ C compilier⇒ Assembly language program (for MIPS)⇒ Assembler⇒ Binary machine language program (for MIPS) Analysis-Synthesis ModelCompilation 可">
+<meta property="og:description" content="參考 清華大學 李政崑老師 編譯器設計講義  Compiliers and AssemblersHigh-level language program (C)⇒ C compilier⇒ Assembly language program (for MIPS)⇒ Assembler⇒ Binary machine language program (for MIPS) Analysis-Synt">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjy5NjmBdRfsrfg96b3KYpevQqRBAygBtuvsszgZpXmPhyy7M9VH81zkvqd-uhdJBBtWL_u0_iaHC8nhSWK1gW7_0DNHxSofoPpj5CD76mp5wCRN7fSz5cDkzZmns_HZ12pRbBD37q9jYY/s1600/aandSmodel.bmp">
 <meta property="og:image" content="https://cdn1.byjus.com/wp-content/uploads/2022/03/phase-of-compiler.png">
@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://933yee.github.io/notes/images/compilier-1/CodeOptimizationExample.png">
 <meta property="og:image" content="https://933yee.github.io/notes/images/compilier-1/CodeGenerationExample.png">
 <meta property="article:published_time" content="2024-03-07T07:51:12.000Z">
-<meta property="article:modified_time" content="2024-03-26T07:05:53.610Z">
+<meta property="article:modified_time" content="2024-03-27T12:32:16.332Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="Compilier">
 <meta name="twitter:card" content="summary_large_image">
@@ -238,7 +238,7 @@
         
         
         
-          15 mins
+          16 mins
         
       </span>
     
@@ -280,7 +280,10 @@
             
               <div class="markdown-body">
                 
-                <h2 id="Compiliers-and-Assemblers"><a href="#Compiliers-and-Assemblers" class="headerlink" title="Compiliers and Assemblers"></a>Compiliers and Assemblers</h2><p>High-level language program (C)<br>⇒ C compilier<br>⇒ Assembly language program (for MIPS)<br>⇒ Assembler<br>⇒ Binary machine language program (for MIPS)</p>
+                <blockquote>
+<p>參考 清華大學 李政崑老師 編譯器設計講義</p>
+</blockquote>
+<h2 id="Compiliers-and-Assemblers"><a href="#Compiliers-and-Assemblers" class="headerlink" title="Compiliers and Assemblers"></a>Compiliers and Assemblers</h2><p>High-level language program (C)<br>⇒ C compilier<br>⇒ Assembly language program (for MIPS)<br>⇒ Assembler<br>⇒ Binary machine language program (for MIPS)</p>
 <h2 id="Analysis-Synthesis-Model"><a href="#Analysis-Synthesis-Model" class="headerlink" title="Analysis-Synthesis Model"></a>Analysis-Synthesis Model</h2><p>Compilation 可以分成兩個部分</p>
 <ul>
 <li>Analysis (front end)<ul>
