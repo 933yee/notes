@@ -1,0 +1,1122 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/notes/info/fluid.png">
+  <link rel="icon" href="/notes/info/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Kevin Lee">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="周志遠教授作業系統開放式課程  Course Contents Overview Process Management Process Coordination Memory Management Storage Management  Historical Prospective Mainframe Systems  Batch Multi-programming Time-sharing">
+<meta property="og:type" content="article">
+<meta property="og:title" content="作業系統筆記">
+<meta property="og:url" content="https://933yee.github.io/notes/2024/03/13/os-1/index.html">
+<meta property="og:site_name" content="Kevin&#39;s notes">
+<meta property="og:description" content="周志遠教授作業系統開放式課程  Course Contents Overview Process Management Process Coordination Memory Management Storage Management  Historical Prospective Mainframe Systems  Batch Multi-programming Time-sharing">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://933yee.github.io/notes/images/os-1/BatchSystem.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/os-1/MainframeSystemSummary.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/os-1/ParallelSystems.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/os-1/MultiCoreProcessor.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/os-1/UMA.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/os-1/NUMA.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/os-1/SystemArchitecture.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/os-1/GeneralPurposeOperatingSystems.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/os-1/ComputerSystemOrganization.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/os-1/DeviceController.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/os-1/InterruptTimeline.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/os-1/InterruptDrivenIO.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/os-1/Hardwareinterrupt.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/os-1/Softwareinterrupt.png">
+<meta property="og:image" content="https://933yee.github.io/notes/image/os-1/StorageDeviceHierarchy.png">
+<meta property="article:published_time" content="2024-03-13T02:43:41.000Z">
+<meta property="article:modified_time" content="2024-03-28T13:29:09.203Z">
+<meta property="article:author" content="Kevin Lee">
+<meta property="article:tag" content="OS">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://933yee.github.io/notes/images/os-1/BatchSystem.png">
+  
+  
+  
+  <title>作業系統筆記 - Kevin&#39;s notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/notes/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/notes/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/notes/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"933yee.github.io","root":"/notes/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/info/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/notes/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/notes/js/utils.js" ></script>
+  <script  src="/notes/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/notes/">
+      <strong>Kevin&#39;s Notes</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/notes/info/default.gif') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.7)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="作業系統筆記"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-03-13 10:43" pubdate>
+          March 13, 2024 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.2k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          11 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">作業系統筆記</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>周志遠教授作業系統開放式課程</p>
+</blockquote>
+<h1 id="Course-Contents"><a href="#Course-Contents" class="headerlink" title="Course Contents"></a>Course Contents</h1><ul>
+<li>Overview</li>
+<li>Process Management</li>
+<li>Process Coordination</li>
+<li>Memory Management</li>
+<li>Storage Management</li>
+</ul>
+<h1 id="Historical-Prospective"><a href="#Historical-Prospective" class="headerlink" title="Historical Prospective"></a>Historical Prospective</h1><ul>
+<li><p>Mainframe Systems</p>
+<ul>
+<li>Batch</li>
+<li>Multi-programming</li>
+<li>Time-sharing</li>
+</ul>
+</li>
+<li><p>Computer-system Architecture</p>
+<ul>
+<li>Desktop Systems: single processor</li>
+<li>Parellel Systems: tightly coupled</li>
+<li>Distributed Systems: loosely coupled</li>
+</ul>
+</li>
+<li><p>Special-purpose Systems</p>
+<ul>
+<li>Real-Time Systems</li>
+<li>Multimedia Systems</li>
+<li>Handheld Systems</li>
+</ul>
+</li>
+</ul>
+<h2 id="Mainframe-Systems"><a href="#Mainframe-Systems" class="headerlink" title="Mainframe Systems"></a>Mainframe Systems</h2><ul>
+<li>最早的電腦，體積很大，用於科學計算</li>
+<li>IO device 很慢<ul>
+<li>card reader&#x2F;printer, tape drivers</li>
+</ul>
+</li>
+<li>Evolution:<ul>
+<li>Batch -&gt; Multi-programming -&gt; Time-sharing</li>
+</ul>
+</li>
+<li>現在說的 Mainframe 是指專門做某工作的機器<ul>
+<li>For critical application with better <strong>reliability &amp; security</strong></li>
+<li>Bulk data processing</li>
+<li>廣泛使用於醫院、銀行</li>
+</ul>
+</li>
+</ul>
+<h3 id="Batch-Systems"><a href="#Batch-Systems" class="headerlink" title="Batch Systems"></a>Batch Systems</h3><p><img src="/notes/./images/os-1/BatchSystem.png" srcset="/notes/info/loading.gif" lazyload alt="Batch System"></p>
+<ul>
+<li>Process steps:<ul>
+<li>Users submit jobs (program, data, control card)</li>
+<li>Operator(人) sort jobs with similar requirements</li>
+<li><strong>OS simply transfer control from one job to the next</strong></li>
+</ul>
+</li>
+<li>缺點<ul>
+<li>一次只能做一個工作</li>
+<li>user 和 jobs 之間無法互動，執行過程中不能做其他事情</li>
+<li><strong>CPU 常常耍廢</strong><ul>
+<li>資源使用率很低</li>
+<li>IO 速度 &lt;&lt; CPU 速度</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Multi-programming-Systems"><a href="#Multi-programming-Systems" class="headerlink" title="Multi-programming Systems"></a>Multi-programming Systems</h3><ul>
+<li>Overlaps the I&#x2F;O and computation of jobs<ul>
+<li>某 program 在做 IO 時，CPU 不用等他做完，先做其他的 program</li>
+</ul>
+</li>
+<li>Spooling (Simultaneous Peripheral Operation On-Line)<ul>
+<li>做 IO 的過程不需要 CPU 參與</li>
+<li>只需要 IO 做完再 notify CPU</li>
+<li>靠 interrupt 達成</li>
+</ul>
+</li>
+<li>Load 很多 jobs 到 Main memory，讓 CPU 決定現在要執行哪個</li>
+<li>以上的工作包含<ul>
+<li>Memory Management</li>
+<li>CPU Scheduling</li>
+<li>I&#x2F;O System</li>
+</ul>
+</li>
+</ul>
+<h3 id="Multi-tasking-Systems"><a href="#Multi-tasking-Systems" class="headerlink" title="Multi-tasking Systems"></a>Multi-tasking Systems</h3><ul>
+<li>Multi-programming 雖然 CPU 的使用率提高了，但不是 <strong>interactive</strong>，最大問題就是依然只能一次執行一個</li>
+<li>Time-sharing<ul>
+<li>CPU 執行時，可以很頻繁的偵測 IO device 有沒有 input，就可以偵測使用者的互動</li>
+<li>每個 job 只執行幾個 millisecond，就切換其他 job，讓使用者覺得每個程式好像同時在執行</li>
+<li>螢幕、鍵盤都是這種概念</li>
+</ul>
+</li>
+<li>可以讓多個使用者分享同個電腦</li>
+<li>Switch jobs when<ul>
+<li>finish</li>
+<li>waiting IO</li>
+<li>a short time peroid</li>
+</ul>
+</li>
+<li>以上的工作包含<ul>
+<li>Virtual Memory<ul>
+<li>讓 memory 越大越好，可以 Load 更多 programs</li>
+</ul>
+</li>
+<li>File System and Disk Management</li>
+<li>Process Synchronization and Deadlock</li>
+</ul>
+</li>
+</ul>
+<p><img src="/notes/./images/os-1/MainframeSystemSummary.png" srcset="/notes/info/loading.gif" lazyload alt="Mainframe System Summary"></p>
+<h2 id="Computer-system-Architecture"><a href="#Computer-system-Architecture" class="headerlink" title="Computer-system Architecture"></a>Computer-system Architecture</h2><h3 id="Desktop-Systems-PC"><a href="#Desktop-Systems-PC" class="headerlink" title="Desktop Systems: PC"></a>Desktop Systems: PC</h3><ul>
+<li>Single user</li>
+<li>GUI</li>
+<li>lack of file and OS protection<ul>
+<li>那時候沒有考慮到後來出現的網路</li>
+</ul>
+</li>
+</ul>
+<h3 id="Parallel-Systems"><a href="#Parallel-Systems" class="headerlink" title="Parallel Systems"></a>Parallel Systems</h3><ul>
+<li><strong>multiprocessor</strong> or <strong>tightly coupled system</strong><ul>
+<li>More than one CPU&#x2F;core in close communication</li>
+<li>Usually communicate through <strong>shared memory</strong></li>
+</ul>
+</li>
+<li>Purposes<ul>
+<li>Throughput<ul>
+<li>計算量增加</li>
+</ul>
+</li>
+<li>Economical<ul>
+<li>很多東西可以共用，memory、CPU、IO device、主機板…</li>
+</ul>
+</li>
+<li>Reliability<ul>
+<li>一個 CPU 掛了，其他還能繼續工作</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/notes/./images/os-1/ParallelSystems.png" srcset="/notes/info/loading.gif" lazyload alt="Parallel Systems"></p>
+<h4 id="Symmetric-multiprocessor-system-SMP"><a href="#Symmetric-multiprocessor-system-SMP" class="headerlink" title="Symmetric multiprocessor system (SMP)"></a>Symmetric multiprocessor system (SMP)</h4><ul>
+<li>每個 processor 角色都相同，都由 OS 控制</li>
+<li>現在幾乎都是 SMP</li>
+<li>Require <strong>extensive synchronization</strong><ul>
+<li>overhead 會比較大</li>
+</ul>
+</li>
+</ul>
+<h4 id="Asymmetric-multiprocessor-system"><a href="#Asymmetric-multiprocessor-system" class="headerlink" title="Asymmetric multiprocessor system"></a>Asymmetric multiprocessor system</h4><ul>
+<li>有一個 Master CPU 和很多 multiple slave CPUs</li>
+<li>每個 processor 會被 assign 特定工作</li>
+<li>Master CPU 無法用來計算，只能用來管理</li>
+<li>通常用在比較大的 system</li>
+</ul>
+<h4 id="Multi-Core-Processor"><a href="#Multi-Core-Processor" class="headerlink" title="Multi-Core Processor"></a>Multi-Core Processor</h4><ul>
+<li>A CPU with <strong>multiple cores on the same die (chip)</strong></li>
+<li>On-chip communication 會比 between-chip communication 還要快</li>
+<li>One chip with multiple cores 會比 multiple single-core chips 還要省電</li>
+</ul>
+<p><img src="/notes/./images/os-1/MultiCoreProcessor.png" srcset="/notes/info/loading.gif" lazyload alt="Multi-Core Processor"></p>
+<h4 id="Many-Core-Processor"><a href="#Many-Core-Processor" class="headerlink" title="Many-Core Processor"></a>Many-Core Processor</h4><ul>
+<li>GPGPU<ul>
+<li>Single Instruction Multiple Data (SIMD) 的操作</li>
+<li>上千個 core</li>
+</ul>
+</li>
+<li>Intel Xeon Phi</li>
+<li>TILE64</li>
+</ul>
+<h4 id="Memory-Access-Architecture"><a href="#Memory-Access-Architecture" class="headerlink" title="Memory Access Architecture"></a>Memory Access Architecture</h4><ul>
+<li>Uniform Memory Access (UMA)<ul>
+<li>每個 CPU access memory 的速度相同，使用者不用在乎現在是在哪個 CPU 上執行</li>
+<li>Identical processors</li>
+<li>most commodity computers</li>
+</ul>
+</li>
+</ul>
+<p><img src="/notes/./images/os-1/UMA.png" srcset="/notes/info/loading.gif" lazyload alt="UMA"></p>
+<ul>
+<li>Non-Uniform Memory Access (NUMA)<ul>
+<li>often made by physically linking two or more SMPs</li>
+<li>One SMP can directly access memory or another SMP</li>
+<li>Memory access across link 會比較慢</li>
+<li>hierarchy 的架構，可以建構更大的電腦</li>
+<li>高效能計算系統都是 NUMA</li>
+</ul>
+</li>
+</ul>
+<p><img src="/notes/./images/os-1/NUMA.png" srcset="/notes/info/loading.gif" lazyload alt="NUMA"></p>
+<h3 id="Distributed-Systems"><a href="#Distributed-Systems" class="headerlink" title="Distributed Systems"></a>Distributed Systems</h3><ul>
+<li>loosely coupled system</li>
+<li>每個 system 有自己的 local memory</li>
+<li>Easy to scale</li>
+<li>Purposes<ul>
+<li>Resource sharing</li>
+<li>Load sharing<ul>
+<li>某電腦工作量太大可以分給別台做</li>
+</ul>
+</li>
+<li>Reliability<ul>
+<li>一台電腦壞掉不會影響其他台</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Client-Server"><a href="#Client-Server" class="headerlink" title="Client-Server"></a>Client-Server</h4><ul>
+<li>Eaiser to manage and control resources</li>
+<li>Server 可能會變成 bottleneck 和 single failure point</li>
+<li>FTP</li>
+</ul>
+<h4 id="Peer-to-Peer"><a href="#Peer-to-Peer" class="headerlink" title="Peer-to-Peer"></a>Peer-to-Peer</h4><ul>
+<li>Decentralized</li>
+<li>ppStream, bitTorrent, Internet</li>
+</ul>
+<h4 id="Clustered-Systems"><a href="#Clustered-Systems" class="headerlink" title="Clustered Systems"></a>Clustered Systems</h4><ul>
+<li>Cluster computers share storage</li>
+<li>Local Area Network (LAN)，更快</li>
+<li>Asymmetric clustering, Symmetric clustering</li>
+</ul>
+<p><img src="/notes/./images/os-1/SystemArchitecture.png" srcset="/notes/info/loading.gif" lazyload alt="System Architecture"></p>
+<h2 id="Special-purpose-Systems"><a href="#Special-purpose-Systems" class="headerlink" title="Special-purpose Systems"></a>Special-purpose Systems</h2><h3 id="Real-Time-Operating-Systems"><a href="#Real-Time-Operating-Systems" class="headerlink" title="Real-Time Operating Systems"></a>Real-Time Operating Systems</h3><ul>
+<li>Well-defined <strong>fixed-time contraints</strong><ul>
+<li>Real-time 代表會在 deadlines 之前做完，跟速度沒關係</li>
+</ul>
+</li>
+<li>Soft real-time<ul>
+<li>Missing the deadline is unwanted, but is not immediately critical</li>
+<li>Critical real-time task gets <strong>priority</strong> over others</li>
+<li>Ex: multimedia streaming<ul>
+<li>畫面不是馬上畫出來，可能會先出現線條，然後顏色，最後高解析度</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Hard real-time<ul>
+<li>Fundamental failure</li>
+<li>Secondary storage limited or absent<ul>
+<li>沒有 harddrive，因為讀取太慢，而且讀取時間不好掌握</li>
+</ul>
+</li>
+<li>Ex: nuclear power plant controller</li>
+</ul>
+</li>
+</ul>
+<h3 id="Multimedia-Systems"><a href="#Multimedia-Systems" class="headerlink" title="Multimedia Systems"></a>Multimedia Systems</h3><ul>
+<li>A wide range of applications including audio and video files</li>
+<li>Issues<ul>
+<li>Timing contraints</li>
+<li>On-demand&#x2F;live streaming</li>
+<li>Compression</li>
+</ul>
+</li>
+</ul>
+<h3 id="Handheld-Embedded-Systems"><a href="#Handheld-Embedded-Systems" class="headerlink" title="Handheld&#x2F;Embedded Systems"></a>Handheld&#x2F;Embedded Systems</h3><ul>
+<li>Hardware specialized OS</li>
+<li>Issues<ul>
+<li>Limited memory</li>
+<li>Slow processors</li>
+<li>Battery consumption</li>
+<li>Samll display screens</li>
+</ul>
+</li>
+</ul>
+<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><ul>
+<li>What is an Operating System?</li>
+<li>Computer-System Organization</li>
+<li>Hardware Protection</li>
+</ul>
+<h2 id="What-is-an-Operating-System"><a href="#What-is-an-Operating-System" class="headerlink" title="What is an Operating System"></a>What is an Operating System</h2><ul>
+<li><p>Computer System</p>
+<ul>
+<li>Hardware<ul>
+<li>provides basic <strong>computing resources</strong></li>
+<li>CPU, memory, I&#x2F;O devices…</li>
+</ul>
+</li>
+<li>OS<ul>
+<li><strong>controls</strong> and <strong>coordinates</strong> the use of the <strong>hardware&#x2F;resources</strong></li>
+</ul>
+</li>
+<li>Application<ul>
+<li>define the ways in which the system resources are used to solve computer problems</li>
+</ul>
+</li>
+<li>User<ul>
+<li>people, machines, other computers</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>An OS is the <strong>permanent</strong> software that <strong>controls&#x2F;abstract</strong> hardware resources for user applications</p>
+<ul>
+<li>把下層的 hardware 變成一堆 API 讓使用者用，virtual 的概念</li>
+</ul>
+</li>
+<li><p>Multi-tasking Operating Systems</p>
+<ul>
+<li>Manages resources and processes to support different user applications</li>
+<li>Provides API for user applications</li>
+</ul>
+</li>
+<li><p>General-Purpose Operating Systems</p>
+<ul>
+<li>使用 printf 的時候要印到螢幕，是 OS 負責的，所以要 system call</li>
+<li>user call printf -&gt; printf call system call -&gt; system call call driver…</li>
+<li>Device drivers 是 OS 的一部分<br><img src="/notes/./images/os-1/GeneralPurposeOperatingSystems.png" srcset="/notes/info/loading.gif" lazyload alt="General-Purpose Operating Systems"></li>
+</ul>
+</li>
+<li><p>Definition of an Operating System</p>
+<ul>
+<li>Resource allocator<ul>
+<li><strong>manages</strong> and <strong>allocates resources</strong> to insure efficiency and fairness</li>
+</ul>
+</li>
+<li>Control program<ul>
+<li><strong>controls</strong> the execution of user <strong>programs</strong> and operations of <strong>I&#x2F;O devices</strong> to prevent errors and improper use of computer</li>
+</ul>
+</li>
+<li>Kernel<ul>
+<li>the one program running at all times</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Goals of an Operating Systems</p>
+<ul>
+<li>Convenience<ul>
+<li>make computer system easy to use and compute</li>
+<li>in particular for small PC</li>
+</ul>
+</li>
+<li>Efficiency<ul>
+<li>use computer hardware in an efficient manner</li>
+<li>especially for large, shared, multiuser systems</li>
+</ul>
+</li>
+<li>Two goals are sometimes contradictory</li>
+</ul>
+</li>
+<li><p>Importance of an Operating Systems</p>
+<ul>
+<li>System API are the <strong>only</strong> interface between user applications and hardware<ul>
+<li>API are designed for general-purpose, not performance driven</li>
+</ul>
+</li>
+<li>OS code cannot allow any bug<ul>
+<li>Any break causes reboot</li>
+<li>有 bug 代表整台電腦都毀了</li>
+</ul>
+</li>
+<li>The owner of OS technology controls the software &amp; hardware industry<ul>
+<li>ex: hardware 和 software 都要 fllow microsoft 的 API、Mac hardware 都自己做</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Computer-System-Organization"><a href="#Computer-System-Organization" class="headerlink" title="Computer-System Organization"></a>Computer-System Organization</h2><ul>
+<li>One or more CPUs, device controllers connect through <strong>common bus</strong> providing access to <strong>shared memory</strong></li>
+<li>Goal: <strong>Concurrent</strong> execution of CPUs and devices competing for memory cycles<ul>
+<li>OS 要負責不讓 access memory 出問題，不讓它發生衝突</li>
+</ul>
+</li>
+</ul>
+<p><img src="/notes/./images/os-1/ComputerSystemOrganization.png" srcset="/notes/info/loading.gif" lazyload alt="Computer-System Organization"></p>
+<h3 id="Device-Controller"><a href="#Device-Controller" class="headerlink" title="Device Controller"></a>Device Controller</h3><ul>
+<li>Each device controller is in charge of a particular device type</li>
+<li>Status reg 用來記錄現在 device controller 是 busy 還是 idle</li>
+<li>Data reg 和 buffer 都是用來存資料，會先寫到 reg 再寫到 buffer</li>
+<li>Device controller 有自己的 CPU 去 access disk 資料到自己的 buffer</li>
+<li>Memory 是 CPU 在用的，所以 CPU 負責 moves data from&#x2F;to memory to&#x2F;from local buffers in device controllers</li>
+</ul>
+<p><img src="/notes/./images/os-1/DeviceController.png" srcset="/notes/info/loading.gif" lazyload alt="Device Controller"></p>
+<h3 id="Busy-wait-output"><a href="#Busy-wait-output" class="headerlink" title="Busy&#x2F;wait output"></a>Busy&#x2F;wait output</h3><ul>
+<li>Simplest way to program device<ul>
+<li>Use instructions to test when device is ready</li>
+</ul>
+</li>
+<li>浪費 CPU，常常 IDLE<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">define</span> OUT_CHAR 0x1000 <span class="hljs-comment">// device data register</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> OUT_STATUS 0x1001 <span class="hljs-comment">// device status register</span></span><br><br>current_char = mystring;<br><span class="hljs-keyword">while</span> (*current_char != <span class="hljs-string">&#x27;\0&#x27;</span>) &#123;<br>  <span class="hljs-built_in">poke</span>(OUT_CHAR,*current_char); <span class="hljs-comment">// 寫到 device controller 的 buffer</span><br>  <span class="hljs-keyword">while</span> (<span class="hljs-built_in">peek</span>(OUT_STATUS) != <span class="hljs-number">0</span>); <span class="hljs-comment">// busy waiting</span><br>  current_char++;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="Interrupt-I-O"><a href="#Interrupt-I-O" class="headerlink" title="Interrupt I&#x2F;O"></a>Interrupt I&#x2F;O</h3><ul>
+<li>Busy&#x2F;wait 很沒效率<ul>
+<li>CPU can’t do other work while testing device</li>
+<li>Hard to do simultaneous I&#x2F;O</li>
+</ul>
+</li>
+<li>Interrupts allow a device to <strong>change the flow of control in the CPU</strong><ul>
+<li>讓 CPU 可以做其他程式的事情，而不是等 IO 做完</li>
+<li>Causes subroutine call to handle device</li>
+</ul>
+</li>
+</ul>
+<h4 id="Interrupt-I-O-Timeline"><a href="#Interrupt-I-O-Timeline" class="headerlink" title="Interrupt I&#x2F;O Timeline"></a>Interrupt I&#x2F;O Timeline</h4><ul>
+<li>Interrupt time line for I&#x2F;O on a single process<br><img src="/notes/./images/os-1/InterruptTimeline.png" srcset="/notes/info/loading.gif" lazyload alt="Interrupt I/O Timeline"><br>可以看到在做 IO 時 CPU 在做其他事情，等 IO 做完後 call 一個 interrupt 打斷 CPU 原本在做的事，讓 CPU 先過來搬資料，interrupt 結束後 CPU 又回去做它原本的事情</li>
+</ul>
+<h4 id="Interrupt-Driven-I-O"><a href="#Interrupt-Driven-I-O" class="headerlink" title="Interrupt-Driven I&#x2F;O"></a>Interrupt-Driven I&#x2F;O</h4><p><img src="/notes/./images/os-1/InterruptDrivenIO.png" srcset="/notes/info/loading.gif" lazyload alt="Interrupt-Driven I/O"></p>
+<h4 id="Interrupt"><a href="#Interrupt" class="headerlink" title="Interrupt"></a>Interrupt</h4><ul>
+<li>現在每個 OS 都是 interrupt driven</li>
+<li>可能是 Hardware interrupt 或 Software interrupt<ul>
+<li><strong>Hardware</strong> may trigger an interrupt at any time by sending a <strong>signal</strong> to CPU<ul>
+<li>比較被動</li>
+</ul>
+</li>
+<li><strong>Software</strong> may trigger an interrupt either by an <strong>error</strong> or by a user request for an operating system serivce (system call)<ul>
+<li>error 像是 division by zero 或 invalid memory access，會讓 program counter reset 到可以印出錯誤訊息的地方，而不是 crash，比較被動</li>
+<li>system call 就是要叫 OS 做事，呼叫 OS 的 API，比較主動<ul>
+<li>間接處理，可以區分使用者的 function call 和 OS 的 function call</li>
+</ul>
+</li>
+<li>Software interrupt 叫作 <strong>trap</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Hardware-interrupt"><a href="#Hardware-interrupt" class="headerlink" title="Hardware interrupt"></a>Hardware interrupt</h4><p><img src="/notes/./images/os-1/Hardwareinterrupt.png" srcset="/notes/info/loading.gif" lazyload alt="Hardware interrupt"></p>
+<ul>
+<li>interrupt vector 是 array of function pointers，array 大小是固定的</li>
+<li>signal 都會有一個 singal number，根據這個 number 去找 vector 上的欄位</li>
+<li>每個 port 的 hardware 有燒死的 singal number， 裝 driver 的時候會 overwrite 那個欄位的 pointer 的位置，去執行你要處理的程式碼</li>
+</ul>
+<h4 id="Software-interrupt"><a href="#Software-interrupt" class="headerlink" title="Software interrupt"></a>Software interrupt</h4><ul>
+<li>是用 switch case 而不是 array，因為軟體有無限的可能性，跟硬體無關，可以任意增加不同的 system call</li>
+<li>流程跟 hardware interrupt 差不多</li>
+</ul>
+<p><img src="/notes/./images/os-1/Softwareinterrupt.png" srcset="/notes/info/loading.gif" lazyload alt="Software interrupt"></p>
+<h4 id="Common-Functions-of-Interrupts"><a href="#Common-Functions-of-Interrupts" class="headerlink" title="Common Functions of Interrupts"></a>Common Functions of Interrupts</h4><ul>
+<li>Interrupt transfers control to the interrupt service routine generally, through the <strong>interrupt vector</strong>, which contains the <strong>addresses</strong> (function pointer) of all the <strong>service (i.e. interrupt handler) routines</strong></li>
+<li>Interrupt architecture must save the address of the interrupted instruction<ul>
+<li>才能在 interrupt 結束後執行原本的程式</li>
+</ul>
+</li>
+<li>Incoming interrupts are <strong>disabled</strong> while another interrupt is being processed to prevent a lost interrupt<ul>
+<li>避免發生很多 synchronize 的問題，這些問題需要大量的 overhead 去處理</li>
+</ul>
+</li>
+</ul>
+<h3 id="Storage-Device-Hierarchy"><a href="#Storage-Device-Hierarchy" class="headerlink" title="Storage-Device Hierarchy"></a>Storage-Device Hierarchy</h3><p><img src="/notes/./image/os-1/StorageDeviceHierarchy.png" srcset="/notes/info/loading.gif" lazyload alt="Storage-Device Hierarchy"></p>
+<ul>
+<li><p>真正的大型的系統最後還是用 tapes，因為非常 reliable</p>
+</li>
+<li><p>這是最傳統的架構，現在有很多其他的 storage device 會插在中間</p>
+</li>
+<li><p>Storage systems organized in hierarchy</p>
+<ul>
+<li>speed, cost, volatility</li>
+<li>volatile 關掉會遺失</li>
+</ul>
+</li>
+<li><p><strong>Main memory</strong> only large storage media that the <strong>CPU can access directly</strong></p>
+</li>
+<li><p>Secondary storage</p>
+<ul>
+<li>memory 以下都叫做 secondary storage</li>
+<li><strong>large nonvolatile storage</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="Random-Access-Memory"><a href="#Random-Access-Memory" class="headerlink" title="Random-Access Memory"></a>Random-Access Memory</h4><ul>
+<li><p>DRAM (Dynamic RAM)</p>
+<ul>
+<li>one transistor</li>
+<li>less power</li>
+<li>must be periodically refreshed </li>
+<li>體積小，速度比較慢</li>
+<li>因為 CPU 有很多 core， RAM 的速度其實就那樣，channel 的 bus 其實才是真正的 bottleneck</li>
+</ul>
+</li>
+<li><p>SRAM (Static Ram)</p>
+<ul>
+<li>six transistors</li>
+<li>more power</li>
+<li>cache memory</li>
+</ul>
+</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/notes/tags/OS/" class="print-no-link">#OS</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>作業系統筆記</div>
+      <div>https://933yee.github.io/notes/2024/03/13/os-1/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Kevin Lee</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>March 13, 2024</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/notes/2024/03/13/CG/" title="Computer Graphics">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Computer Graphics</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/notes/2024/03/07/compiler-1/" title="Compiler 筆記 (1)">
+                        <span class="hidden-mobile">Compiler 筆記 (1)</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/notes/js/events.js" ></script>
+<script  src="/notes/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/notes/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/notes/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/notes/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
