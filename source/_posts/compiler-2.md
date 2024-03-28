@@ -6,6 +6,9 @@ category:
 math: true
 ---
 
+> 參考 清華大學 李政崑老師 編譯器設計講義
+
+
 ## Terminlogy
 - Gramma
   - $X \in G $ iff $ G \rightarrow X$

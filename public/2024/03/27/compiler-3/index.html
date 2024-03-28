@@ -16,21 +16,26 @@
   <meta name="author" content="Kevin Lee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="a | a* b &#x3D; {a, b, ab, aab, aaab, …} (11 | 0)* (00 | 1)*奇數個 1 出現在奇數個 0 前面不能ex: 01010 不能 (1 | 01 | 001)* (e | 0 | 00)連續三個 0 不能 (D*.D | D.D*)D &#x3D; [0 ~ 9] 0.5, .5, 123.6, 9.2, 9.237, 9.  M &#x3D;">
+    <meta name="description" content="參考 清華大學 李政崑老師 編譯器設計講義   Regular Expression A Language is a set of strings that can beformed from the given alphabet Grammar defines a Language  Example 1 a | b denotes {a, b} (a | b)(a | b) denotes {">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Compiler 筆記 (3)">
 <meta property="og:url" content="https://933yee.github.io/notes/2024/03/27/compiler-3/index.html">
 <meta property="og:site_name" content="Kevin&#39;s notes">
-<meta property="og:description" content="a | a* b &#x3D; {a, b, ab, aab, aaab, …} (11 | 0)* (00 | 1)*奇數個 1 出現在奇數個 0 前面不能ex: 01010 不能 (1 | 01 | 001)* (e | 0 | 00)連續三個 0 不能 (D*.D | D.D*)D &#x3D; [0 ~ 9] 0.5, .5, 123.6, 9.2, 9.237, 9.  M &#x3D;">
+<meta property="og:description" content="參考 清華大學 李政崑老師 編譯器設計講義   Regular Expression A Language is a set of strings that can beformed from the given alphabet Grammar defines a Language  Example 1 a | b denotes {a, b} (a | b)(a | b) denotes {">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://933yee.github.io/notes/image.png">
-<meta property="og:image" content="https://933yee.github.io/notes/image-1.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/compiler-3/Relation.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/compiler-3/VendingMachine.png">
+<meta property="og:image" content="https://www.researchgate.net/publication/2659477/figure/fig1/AS:647496795713537@1531386674269/NFA-and-DFA-for-Pattern-Matching-of-any-counterexample-Angluin-and-Kharitonov-1991.png">
+<meta property="og:image" content="https://i.stack.imgur.com/hXhcF.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/compiler-3/epsilon.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/compiler-3/phi.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/compiler-3/EpsilonClosureExample.png">
 <meta property="article:published_time" content="2024-03-27T12:27:05.000Z">
-<meta property="article:modified_time" content="2024-03-27T12:27:43.424Z">
+<meta property="article:modified_time" content="2024-03-28T05:57:11.272Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="Compilier">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://933yee.github.io/notes/image.png">
+<meta name="twitter:image" content="https://933yee.github.io/notes/images/compiler-3/Relation.png">
   
   
   
@@ -223,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          197 words
+          726 words
         
       </span>
     
@@ -234,7 +239,7 @@
         
         
         
-          2 mins
+          7 mins
         
       </span>
     
@@ -276,37 +281,128 @@
             
               <div class="markdown-body">
                 
-                <p>a | a* b &#x3D; {a, b, ab, aab, aaab, …}</p>
-<p>(11 | 0)* (00 | 1)*<br>奇數個 1 出現在奇數個 0 前面不能<br>ex: 01010 不能</p>
-<p>(1 | 01 | 001)* (e | 0 | 00)<br>連續三個 0 不能</p>
-<p>(D*.D | D.D*)<br>D &#x3D; [0 ~ 9]</p>
-<p>0.5, .5, 123.6, 9.2, 9.237, 9.</p>
-<hr>
-<p>M &#x3D; (Q, $\Sigma$, $\delta$, $q_{0}$, F)</p>
-<p>Q &#x3D; {$q_{0}, q_{5}, q_{10}, q_{15}, q_{20}$}</p>
-<p>$\Sigma$ &#x3D; {5, 10}</p>
-<p>F &#x3D; {$q_{20}$}</p>
-<p>$\delta$($q_{0}$, 5) &#x3D; $q_{5}$ </p>
-<p>$\delta$($q_{5}$, 5) &#x3D; $q_{10}$</p>
-<p>$\delta$($q_{10}$, 5) &#x3D; $q_{15}$</p>
-<p>$\delta$($q_{15}$, 5) &#x3D; $q_{20}$</p>
-<p>$\delta$($q_{0}$, 10) &#x3D; $q_{10}$</p>
-<p>$\delta$($q_{10}$, 10) &#x3D; $q_{20}$</p>
-<hr>
-<p><img src="/notes/image.png" srcset="/notes/info/loading.gif" lazyload alt="alt text"></p>
-<p>M &#x3D; (Q, $\Sigma$, $\delta$, $q_{0}$, F)</p>
-<p>Q &#x3D; {$q_{0}, q_{1}, q_{2}$}</p>
-<p>$\Sigma$ &#x3D; {0, 1}</p>
-<p>$\delta$($q_{0}$, 0) &#x3D; {$q_{1}, q_{2}$}</p>
-<p>$\delta$($q_{1}$, 0) &#x3D; {$q_{1}$}</p>
-<p>$\delta$($q_{2}$, 1) &#x3D; {$q_{2}$}</p>
-<hr>
-<p><img src="/notes/image-1.png" srcset="/notes/info/loading.gif" lazyload alt="alt text"></p>
-<ul>
-<li>字串長度 0</li>
-<li>空集合</li>
+                <blockquote>
+<p>參考 清華大學 李政崑老師 編譯器設計講義</p>
+</blockquote>
+<p><img src="/notes/./images/compiler-3/Relation.png" srcset="/notes/info/loading.gif" lazyload alt="Relations"></p>
+<h2 id="Regular-Expression"><a href="#Regular-Expression" class="headerlink" title="Regular Expression"></a>Regular Expression</h2><ul>
+<li>A Language is a set of strings that can be<br>formed from the given alphabet</li>
+<li>Grammar defines a Language</li>
 </ul>
-<hr>
+<h3 id="Example-1"><a href="#Example-1" class="headerlink" title="Example 1"></a>Example 1</h3><ul>
+<li>a | b denotes {a, b}</li>
+<li>(a | b)(a | b) denotes {ab, aa, ba, bb}</li>
+<li>a* &#x3D; {$\epsilon$, a, aa, aaa, …}</li>
+<li>a$^+$ &#x3D; {a, aa, aaa, …}</li>
+<li>(a | b) &#x3D; {a, b}</li>
+<li>a | a* b &#x3D; {a, b, ab, aab, aaab, …}</li>
+</ul>
+<h3 id="Example-2"><a href="#Example-2" class="headerlink" title="Example 2"></a>Example 2</h3><h4 id="11-0-00-1"><a href="#11-0-00-1" class="headerlink" title="(11 + 0)* (00 + 1)*"></a>(11 + 0)* (00 + 1)*</h4><p>不能奇數個 1 出現在奇數個 0 前面，像是 01010 就不可能</p>
+<h3 id="Example-3"><a href="#Example-3" class="headerlink" title="Example 3"></a>Example 3</h3><h4 id="1-01-001-epsilon-0-00"><a href="#1-01-001-epsilon-0-00" class="headerlink" title="(1 + 01 + 001)* ($\epsilon$ + 0 + 00)*"></a>(1 + 01 + 001)* ($\epsilon$ + 0 + 00)*</h4><p>不能連續三個 0，像是 000</p>
+<h3 id="Example-4"><a href="#Example-4" class="headerlink" title="Example 4"></a>Example 4</h3><h4 id="D-D-D-D"><a href="#D-D-D-D" class="headerlink" title="(D*.D | D.D*)"></a>(D*.D | D.D*)</h4><p>D &#x3D; [0 ~ 9]<br>0.5, .5, 123.6, 9.2, 9.237, 9.</p>
+<h2 id="Finite-State-Automata-FSA"><a href="#Finite-State-Automata-FSA" class="headerlink" title="Finite State Automata (FSA)"></a>Finite State Automata (FSA)</h2><ul>
+<li>FSA is a 5-tuple (Q, $\Sigma$, $\delta$, $q_0$, F)</li>
+<li>Q is a set of states</li>
+<li>$\Sigma$ is an input alphabet, symbol</li>
+<li>$\delta$ is a transition function</li>
+<li>$q_0$ is the initial state</li>
+<li>F is a set of final states</li>
+</ul>
+<h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><h4 id="Vending-Machine"><a href="#Vending-Machine" class="headerlink" title="Vending Machine"></a>Vending Machine</h4><p><img src="/notes/./images/compiler-3/VendingMachine.png" srcset="/notes/info/loading.gif" lazyload alt="Vending Machine"></p>
+<ul>
+<li>M &#x3D; (Q, $\Sigma$, $\delta$, $q_{0}$, F)</li>
+<li>Q &#x3D; {$q_{0}, q_{5}, q_{10}, q_{15}, q_{20}$}</li>
+<li>$\Sigma$ &#x3D; {5, 10}</li>
+<li>F &#x3D; {$q_{20}$}</li>
+<li>$\delta$($q_{0}$, 5) &#x3D; $q_{5}$, $\delta$($q_{5}$, 5) &#x3D; $q_{10}$</li>
+<li>$\delta$($q_{10}$, 5) &#x3D; $q_{15}$, $\delta$($q_{15}$, 5) &#x3D; $q_{20}$</li>
+<li>$\delta$($q_{0}$, 10) &#x3D; $q_{10}$, $\delta$($q_{10}$, 10) &#x3D; $q_{20}$</li>
+</ul>
+<h3 id="NFA-non-deterministic-Finite-State-Automata"><a href="#NFA-non-deterministic-Finite-State-Automata" class="headerlink" title="NFA (non-deterministic Finite State Automata)"></a>NFA (non-deterministic Finite State Automata)</h3><ul>
+<li>可能有多個 Next State </li>
+<li>NFA with empty string move ($\epsilon$)<ul>
+<li>$\epsilon$ 允許到新狀態的變換不消耗任何輸入符號。例如，如果它處於狀態 1，下一個輸入符號是 a，它可以移動到狀態 2 而不消耗任何輸入符號，因此就有了歧義：在消耗字母 a 之前系統是處於狀態 1 還是狀態 2 呢 ? 由於這種歧義性，可以更加方便的談論系統可以處在的可能狀態的集合。因此在消耗字母 a 之前，NFA-ε 可以處於集合 {1,2} 內的狀態中的任何一個。等價的說，你可以想像這個 NFA 同時處於狀態 1 和狀態 2: 這給出了對冪集構造的非正式提示：等價於這個 NFA 的 DFA 被定義為此時處於狀態 q&#x3D;{1,2} 中<ul>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-tw/%E9%9D%9E%E7%A1%AE%E5%AE%9A%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E8%87%AA%E5%8A%A8%E6%9C%BA">非確定有限狀態自動機</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>NFA without empty string move</li>
+</ul>
+<h3 id="DFA-Deterministic-Finite-State-Automata"><a href="#DFA-Deterministic-Finite-State-Automata" class="headerlink" title="DFA (Deterministic Finite State Automata)"></a>DFA (Deterministic Finite State Automata)</h3><ul>
+<li>只有一個 Next State</li>
+<li>一定知道 next state 是甚麼</li>
+</ul>
+<p><img src="https://www.researchgate.net/publication/2659477/figure/fig1/AS:647496795713537@1531386674269/NFA-and-DFA-for-Pattern-Matching-of-any-counterexample-Angluin-and-Kharitonov-1991.png" srcset="/notes/info/loading.gif" lazyload alt="NFA vs DFA"></p>
+<h4 id="Example-of-NFA"><a href="#Example-of-NFA" class="headerlink" title="Example of NFA"></a>Example of NFA</h4><p><img src="https://i.stack.imgur.com/hXhcF.png" srcset="/notes/info/loading.gif" lazyload alt="Example of NFA"></p>
+<h4 id="epsilon-and-phi"><a href="#epsilon-and-phi" class="headerlink" title="$\epsilon$ and $\phi$"></a>$\epsilon$ and $\phi$</h4><ul>
+<li>$\epsilon$ is a 0 length string</li>
+<li>$\phi$ is a null, i.e. no string.</li>
+</ul>
+<h5 id="r-epsilon"><a href="#r-epsilon" class="headerlink" title="r &#x3D; $\epsilon$"></a>r &#x3D; $\epsilon$</h5><ul>
+<li>You can insert any number of epsilons between two alphabets of input string</li>
+<li>Ex: <code>aeeeeeeeeeb</code>, it won’t make any difference</li>
+<li>If we want to denote a null move, I.e.. one state going to other state without any input symbol, then epsilon is used<ul>
+<li><a target="_blank" rel="noopener" href="https://www.quora.com/What-is-the-difference-between-epsilon-and-phi-in-Automata">What is the difference between epsilon and phi in Automata?</a></li>
+</ul>
+</li>
+</ul>
+<p><img src="/notes/./images/compiler-3/epsilon.png" srcset="/notes/info/loading.gif" lazyload alt="epsilon"></p>
+<h5 id="r-phi"><a href="#r-phi" class="headerlink" title="r &#x3D; $\phi$"></a>r &#x3D; $\phi$</h5><ul>
+<li>Denotes empty i.e. no input string exists.</li>
+</ul>
+<p><img src="/notes/./images/compiler-3/phi.png" srcset="/notes/info/loading.gif" lazyload alt="phi"></p>
+<h3 id="Conversion-of-NFA-without-epsilon-transition-to-DFA"><a href="#Conversion-of-NFA-without-epsilon-transition-to-DFA" class="headerlink" title="Conversion of NFA without $\epsilon$-transition to DFA"></a>Conversion of NFA without $\epsilon$-transition to DFA</h3><ul>
+<li><p>Every DFA is an NFA, but not vice versa</p>
+</li>
+<li><p>There is an equivalent DFA for every NFA</p>
+</li>
+<li><p>M &#x3D; (Q, $\Sigma$, $\delta$, $q_0$, F)</p>
+</li>
+<li><p>M’ &#x3D; (Q’, $\Sigma$, $\delta$’, $q_0’$, F’)</p>
+<ul>
+<li>Q’ &#x3D; $2^Q$</li>
+<li>The state of M’ are all the <strong>subset</strong> of the set of states of M</li>
+<li>F’ is the set of all states in Q’ constructing a <strong>final states of M</strong></li>
+<li>$\delta$’([$q_1$, $q_2$, …, $q_i$], a) &#x3D; [$p_1$, $p_2$, …, $p_j$] iff $\delta$({$q_1$, $q_2$, …, $q_i$}, a) &#x3D; {$p_1$, $p_2$, …, $p_j$}</li>
+<li>Note: $2^Q$ is <strong>Power Set</strong>, meaning that the set of all subsets of Q<ul>
+<li>Q &#x3D; {a, b, c}</li>
+<li>$2^Q$ &#x3D; {$\Phi$, {a}, {b}, {c}, {a, b}, {b, c}, {a, c}, {a, b, c}}</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=i-fk9o46oVY">Conversion of NFA to DFA (Example 2)</a></p>
+</li>
+</ul>
+<h3 id="Convert-NFA-with-epsilon-transition-to-NFA-without-epsilon-transition"><a href="#Convert-NFA-with-epsilon-transition-to-NFA-without-epsilon-transition" class="headerlink" title="Convert NFA with $\epsilon$-transition to NFA without $\epsilon$-transition"></a>Convert NFA with $\epsilon$-transition to NFA without $\epsilon$-transition</h3><ul>
+<li>$\delta$’(q, a) &#x3D; $\epsilon$-closure($\delta$($\epsilon$-closure (q), a))</li>
+</ul>
+<h4 id="epsilon-closure"><a href="#epsilon-closure" class="headerlink" title="$\epsilon$-closure"></a>$\epsilon$-closure</h4><ul>
+<li>The set of states that can be reachable by making $\epsilon$-transitions from a given set of start states is called a $\epsilon$-closure</li>
+</ul>
+<h5 id="Epsilon-closure-Example"><a href="#Epsilon-closure-Example" class="headerlink" title="Epsilon-closure Example"></a>Epsilon-closure Example</h5><ul>
+<li>$\epsilon$-closure($q_0$) &#x3D; {$q_0, q_1, q_2, q_4, q_7$}</li>
+<li>$\epsilon$-closure($q_1$) &#x3D; {$q_1, q_2, q_4$}</li>
+<li>$\epsilon$-closure($q_2$) &#x3D; {$q_2$}</li>
+<li>$\epsilon$-closure($q_3$) &#x3D; {$q_1, q_2, q_3, q_4, q_6, q_7$}</li>
+<li>$\epsilon$-closure($q_4$) &#x3D; {$q_4$}</li>
+<li>$\epsilon$-closure($q_5$) &#x3D; {$q_1, q_2, q_3, q_4, q_5, q_6, q_7$}</li>
+<li>$\epsilon$-closure($q_6$) &#x3D; {$q_1, q_2, q_4, q_6, q_7$}</li>
+<li>$\epsilon$-closure($q_7$) &#x3D; {$q_7$}</li>
+<li>$\epsilon$-closure($q_8$) &#x3D; {$q_8$}</li>
+<li>$\epsilon$-closure($q_9$) &#x3D; {$q_9$}</li>
+<li>$\epsilon$-closure($q_10$) &#x3D; {$q_10$}</li>
+</ul>
+<p><img src="/notes/./images/compiler-3/EpsilonClosureExample.png" srcset="/notes/info/loading.gif" lazyload alt="Epsilon-Closure Example"></p>
+<h4 id="Conversion-Example"><a href="#Conversion-Example" class="headerlink" title="Conversion Example"></a>Conversion Example</h4><p>[P35]的圖</p>
+<ul>
+<li>$\epsilon$-closure($q_0$) &#x3D; {$q_0, q_1, q_2$}</li>
+<li>$\delta$($q_0$, 0) &#x3D; $\epsilon$-closure($\delta$($\epsilon$-closure($q_0$), 0))</li>
+</ul>
+<p>$$<br>  \begin{align}<br>    \epsilon\text{-closure}(q_0) &#x3D; {q_0, q_1, q_2} \newline<br>    \delta(q_0, 0) &amp;&#x3D; \epsilon\text{-closure}(\delta(\epsilon\text{-closure}(q_0), 0)) \newline<br>    &amp;&#x3D; \epsilon\text{-closure}(\delta({q_0, q_1, q_2}, 0)) \newline<br>    &amp;&#x3D; \epsilon\text{-closure}({q_0}) \newline<br>    &amp;&#x3D; {q_0, q_1, q_2}<br>$$</p>
+<p>[P36]的圖</p>
+<h3 id="Minimizing-the-number-of-states-of-a-DFA"><a href="#Minimizing-the-number-of-states-of-a-DFA" class="headerlink" title="Minimizing the number of states of a DFA"></a>Minimizing the number of states of a DFA</h3><p>$\epsilon$</p>
 <p>Relation</p>
 <ul>
 <li><p>Reflexive<br>if (a, b) &#x2F;belongs R for every a &#x2F;belongs A<br>aRa</p>
