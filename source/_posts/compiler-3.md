@@ -67,7 +67,6 @@ D = [0 ~ 9]
 
 ### DFA (Deterministic Finite State Automata)
 - 只有一個 Next State
-- 一定知道 next state 是甚麼
 
 ![NFA vs DFA](https://www.researchgate.net/publication/2659477/figure/fig1/AS:647496795713537@1531386674269/NFA-and-DFA-for-Pattern-Matching-of-any-counterexample-Angluin-and-Kharitonov-1991.png)
 
