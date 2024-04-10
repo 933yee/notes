@@ -4,8 +4,12 @@ date: 2024-04-10 13:40:34
 tags: Unity
 ---
 
+在這次教學中，我們將學習 Unity 相較於 Unreal Engine 有哪些優勢，以及如何下載和建立一個新的 Unity 專案
+
 ## 為什麼要用 Unity？
-在遊戲開發的世界裡，Unity 是一個非常受歡迎的遊戲引擎，擁有許多獨特的優勢使它成為許多開發者的首選。儘管 Epic Games 開發的 Unreal Engine 因 Fortnite 的成功而聲名大噪，使他成為當今最熱門的遊戲引擎之一，許多 3A 大作也都是出自於 Unreal，那為什麼我們還要考慮使用 Unity 呢？讓我們來看看 Unity 有哪些 Unreal 沒有的優勢：
+在遊戲開發的世界裡，Unity 是一個非常受歡迎的遊戲引擎，擁有許多獨特的優勢使它成為許多開發者的首選。儘管 Epic Games 開發的 Unreal Engine 因 Fortnite 的成功而聲名大噪，使他成為當今最熱門的遊戲引擎之一，許多 3A 大作也都是出自於 Unreal
+
+說了那麼多，為什麼我們還要考慮使用 Unity 呢？讓我們來看看 Unity 有哪些 Unreal 沒有的優勢：
 
 1. **簡單好上手**
 對於新手來說，Unity 提供了一個相對輕鬆的入門門檻。它的介面設計和操作方式相對更直觀，學習曲線也比 Unreal 穩定許多。此外，個人覺得 C# 會比 C++ 更好上手，不用處理一堆指標的問題，會更適合新手去學習，不過 C++ 能夠壓榨出更多硬體效能就是了～
@@ -75,4 +79,6 @@ Unity Editor 版本就相當於你的 Unity 版本，不同版本之間使用上
 
 ![Unity Editor](./images/unity-tutorial/UnityEditor.png)
 
-這就是 Unity 的簡單介紹，還有它下載和建立專案的過程，下一篇教學會教你怎麼在 3D 場景中執行一些操作，那我們就下一篇教學再見囉～
+到目前為止，你應該大致理解 Unity 有哪些好處，還有 Unity 下載的流程是什麼。
+
+下一篇教學會介紹如何在 3D 場景中執行一些操作，下次再見～[Unity 新手教學 - 介面介紹和基本操作](https://933yee.github.io/notes/2024/04/10/unity-tutorial-2/)

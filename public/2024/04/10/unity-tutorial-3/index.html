@@ -1,0 +1,687 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/notes/info/fluid.png">
+  <link rel="icon" href="/notes/info/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Kevin Lee">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="在這次教學中，我們將學習如何導入自己的圖片、音樂，或是將來自 Sketchfab 和 Unity Asset Store 的酷炫 3D 物件導入到你的 Unity 專案中 導入自己的物件導入自己的物件非常簡單，可以在 Project View 空白處點擊右鍵，Import New Asset，然後選擇要導入的物件即可  還有另一個方法，可以直接把那個東西拉進來就好（我都這樣，因為我很懶 XD  導">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity 新手教學 - 導入物件">
+<meta property="og:url" content="https://933yee.github.io/notes/2024/04/10/unity-tutorial-3/index.html">
+<meta property="og:site_name" content="Kevin&#39;s notes">
+<meta property="og:description" content="在這次教學中，我們將學習如何導入自己的圖片、音樂，或是將來自 Sketchfab 和 Unity Asset Store 的酷炫 3D 物件導入到你的 Unity 專案中 導入自己的物件導入自己的物件非常簡單，可以在 Project View 空白處點擊右鍵，Import New Asset，然後選擇要導入的物件即可  還有另一個方法，可以直接把那個東西拉進來就好（我都這樣，因為我很懶 XD  導">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://933yee.github.io/notes/images/unity-tutorial-3/ImportNewAsset.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/unity-tutorial-3/ImportDemo.gif">
+<meta property="og:image" content="https://933yee.github.io/notes/images/unity-tutorial-3/Texture.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/unity-tutorial-3/AddNewAsset.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/unity-tutorial-3/AddNewAsset2.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/unity-tutorial-3/PackageManager.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/unity-tutorial-3/PackageManager2.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/unity-tutorial-3/PackageManager3.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/unity-tutorial-3/ProjectView.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/unity-tutorial-3/DemoScene.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/unity-tutorial-3/SketchfabModel.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/unity-tutorial-3/SketchfabModel2.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/unity-tutorial-3/SketchfabModel3.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/unity-tutorial-3/Blender.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/unity-tutorial-3/Blender2.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/unity-tutorial-3/CatModel.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/unity-tutorial-3/CatInspector.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/unity-tutorial-3/CatModelTexture.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/unity-tutorial-3/Prefab.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/unity-tutorial-3/CatArmy.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/unity-tutorial-3/ModifyPrefab.gif">
+<meta property="og:image" content="https://933yee.github.io/notes/images/unity-tutorial-3/CreatePrefab.gif">
+<meta property="article:published_time" content="2024-04-10T08:43:15.000Z">
+<meta property="article:modified_time" content="2024-04-10T13:15:02.572Z">
+<meta property="article:author" content="Kevin Lee">
+<meta property="article:tag" content="Unity">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://933yee.github.io/notes/images/unity-tutorial-3/ImportNewAsset.png">
+  
+  
+  
+  <title>Unity 新手教學 - 導入物件 - Kevin&#39;s notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/notes/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/notes/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/notes/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"933yee.github.io","root":"/notes/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/info/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/notes/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/notes/js/utils.js" ></script>
+  <script  src="/notes/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/notes/">
+      <strong>Kevin&#39;s Notes</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/notes/info/default.gif') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.7)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Unity 新手教學 - 導入物件"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-04-10 16:43" pubdate>
+          April 10, 2024 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          9 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Unity 新手教學 - 導入物件</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>在這次教學中，我們將學習如何導入自己的圖片、音樂，或是將來自 Sketchfab 和 Unity Asset Store 的酷炫 3D 物件導入到你的 Unity 專案中</p>
+<h2 id="導入自己的物件"><a href="#導入自己的物件" class="headerlink" title="導入自己的物件"></a>導入自己的物件</h2><p>導入自己的物件非常簡單，可以在 Project View 空白處點擊右鍵，Import New Asset，然後選擇要導入的物件即可</p>
+<p><img src="/notes/./images/unity-tutorial-3/ImportNewAsset.png" srcset="/notes/info/loading.gif" lazyload alt="Import New Asset"></p>
+<p>還有另一個方法，可以直接把那個東西拉進來就好（我都這樣，因為我很懶 XD</p>
+<p><img src="/notes/./images/unity-tutorial-3/ImportDemo.gif" srcset="/notes/info/loading.gif" lazyload alt="Import Demo"></p>
+<h3 id="導入圖片"><a href="#導入圖片" class="headerlink" title="導入圖片"></a>導入圖片</h3><p>值得一提的是，導入的圖片會自動變成 Texture，所以可以直接用在 3D 模型、UI 元素、粒子效果上面<br><img src="/notes/./images/unity-tutorial-3/Texture.png" srcset="/notes/info/loading.gif" lazyload alt="Texture"></p>
+<h2 id="Unity-Asset-Store"><a href="#Unity-Asset-Store" class="headerlink" title="Unity Asset Store"></a>Unity Asset Store</h2><h3 id="什麼是-Unity-Asset-Store？"><a href="#什麼是-Unity-Asset-Store？" class="headerlink" title="什麼是 Unity Asset Store？"></a>什麼是 Unity Asset Store？</h3><p><a target="_blank" rel="noopener" href="https://assetstore.unity.com/zh-CN">Unity Asset Store</a> 是 Unity 官方提供的一個平台，類似於 APP store，但是專注於 Unity 開發的資源。這裡有各種各樣的資源，包括 2D pixel art、3D 模型、材質、音效、程式碼，甚至是完整的專案模板、各種輔助型的工具。無論你是需要一個小工具還是一個完整的遊戲框架，Unity Asset Store 都能滿足你的需求。</p>
+<h3 id="如何使用？"><a href="#如何使用？" class="headerlink" title="如何使用？"></a>如何使用？</h3><p>我這邊隨便選擇一個 <a target="_blank" rel="noopener" href="https://assetstore.unity.com/packages/3d/environments/landscapes/mars-landscape-3d-175814">Mars Landscape 3D</a> 的 Package，點擊右邊的 <strong>Add to My Assets</strong>，它應該會叫你先登入帳號</p>
+<p><img src="/notes/./images/unity-tutorial-3/AddNewAsset.png" srcset="/notes/info/loading.gif" lazyload alt="Add New Asset"></p>
+<p>登入並 <strong>Add to My Assets</strong> 後，就成功加入了到你帳號的 Assets 裡面了</p>
+<p><img src="/notes/./images/unity-tutorial-3/AddNewAsset2.png" srcset="/notes/info/loading.gif" lazyload alt="Add New Asset"></p>
+<p>接著點擊 <strong>Open In Unity</strong>，它會自動幫你打開 Unity 裡面的 Package Manager</p>
+<p><img src="/notes/./images/unity-tutorial-3/PackageManager.png" srcset="/notes/info/loading.gif" lazyload alt="Package Manager"></p>
+<p>Package Manager 會有你所有的 Assets，之後你想要檢視 Package Manager 的話，也可以從上方的 Windows 裡面打開</p>
+<p><img src="/notes/./images/unity-tutorial-3/PackageManager2.png" srcset="/notes/info/loading.gif" lazyload alt="Package Manager"></p>
+<p>點擊右上方的 <strong>Download</strong>，下載完後再點 <strong>Import</strong>，然後繼續點 <strong>Import</strong></p>
+<p><img src="/notes/./images/unity-tutorial-3/PackageManager3.png" srcset="/notes/info/loading.gif" lazyload alt="Package Manager"></p>
+<p>現在這個 Unity Asset Store 的 Package 就成功導入到你的專案中了！</p>
+<p><img src="/notes/./images/unity-tutorial-3/ProjectView.png" srcset="/notes/info/loading.gif" lazyload alt="Project View"></p>
+<p><img src="/notes/./images/unity-tutorial-3/DemoScene.png" srcset="/notes/info/loading.gif" lazyload alt="Demo Scene"></p>
+<h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><p>每次 Import Package 後，可以先去找這個 Package 所提供的 Demo Scene，執行看看有沒有問題，確保這個 Package 是和你現在的 Unity 專案相容的，避免未來出現問題卻找不到問題點在哪</p>
+<h2 id="Sketchfab"><a href="#Sketchfab" class="headerlink" title="Sketchfab"></a>Sketchfab</h2><h3 id="什麼是-Sketchfab？"><a href="#什麼是-Sketchfab？" class="headerlink" title="什麼是 Sketchfab？"></a>什麼是 Sketchfab？</h3><p><a target="_blank" rel="noopener" href="https://sketchfab.com/">Sketchfab</a> 是一個線上的平台，提供大量的 3D 模型資源，從建築到角色、動物等各種類型的物件都可以在這裡取得。這些模型通常由社群或專業的模型師製作，你可以在 Sketchfab 上瀏覽、分享，甚至購買這些模型來使用在你的專案中。</p>
+<h3 id="如何使用？-1"><a href="#如何使用？-1" class="headerlink" title="如何使用？"></a>如何使用？</h3><p>這邊隨便選擇一個 Pop cat 的 3D 模型，右上角兩個符號代表這模型有動畫，且是可以下載的</p>
+<p><img src="/notes/./images/unity-tutorial-3/SketchfabModel.png" srcset="/notes/info/loading.gif" lazyload alt="Sketchfab Model"></p>
+<p><img src="/notes/./images/unity-tutorial-3/SketchfabModel2.png" srcset="/notes/info/loading.gif" lazyload alt="alt text"></p>
+<p><img src="/notes/./images/unity-tutorial-3/SketchfabModel3.png" srcset="/notes/info/loading.gif" lazyload alt="alt text"></p>
+<p>可以看到這邊沒有 Unity 支援的 .fbx、.dae (Collada)、.dxf 和 .obj. 等格式，不過有提供 .blend，所以我們可以自己開 blender 轉換成 .fbx</p>
+<p><img src="/notes/./images/unity-tutorial-3/Blender.png" srcset="/notes/info/loading.gif" lazyload alt="Blender"></p>
+<p>導出成 .fbx 的時候，記得把右上角的 Path Mode 改成 Copy，並點擊右邊的 Embed Textures，之後導入進 Unity 中才能生成對應的 Texture</p>
+<p><img src="/notes/./images/unity-tutorial-3/Blender2.png" srcset="/notes/info/loading.gif" lazyload alt="Blender"></p>
+<p>按照先前說的方式導入模型進 Unity 後，你會發現它沒有 Texture</p>
+<p><img src="/notes/./images/unity-tutorial-3/CatModel.png" srcset="/notes/info/loading.gif" lazyload alt="Cat Model"></p>
+<p>這時候只要點選剛剛導入進 Assets 的模型，在右邊 Inspector 中的 Materials 裡面點擊 Extract Textures…，就可以順利加上 Texture 了</p>
+<p><img src="/notes/./images/unity-tutorial-3/CatInspector.png" srcset="/notes/info/loading.gif" lazyload alt="Cat Model"></p>
+<p>這樣就模型就有 Texture 了！</p>
+<p><img src="/notes/./images/unity-tutorial-3/CatModelTexture.png" srcset="/notes/info/loading.gif" lazyload alt="Cat Model Texture"></p>
+<h2 id="Prefab-是什麼？"><a href="#Prefab-是什麼？" class="headerlink" title="Prefab 是什麼？"></a>Prefab 是什麼？</h2><p>你可能有注意到，當你從 Unity Asset Store 或 Sketchfab 導入模型後，在 Hierarchy View 中看到一些藍色的物件。這些藍色物件被稱為 Prefab（預製配件）。Prefab 是 Unity 中的一種特殊、可以重複使用的物件。</p>
+<p><img src="/notes/./images/unity-tutorial-3/Prefab.png" srcset="/notes/info/loading.gif" lazyload alt="Prefab"></p>
+<p>舉個例子，假如你在場景中有大量一樣的石頭，這時候你就可以把石頭做成一個 Prefab，這就有點像是這顆石頭的 <strong>藍圖</strong>，你可以根據這個藍圖去建立一大堆石頭。當你想要一次修改時，就可以改這個藍圖就好，不用每一顆慢慢去修改。</p>
+<p><img src="/notes/./images/unity-tutorial-3/CatArmy.png" srcset="/notes/info/loading.gif" lazyload alt="Cat Army"></p>
+<p><img src="/notes/./images/unity-tutorial-3/ModifyPrefab.gif" srcset="/notes/info/loading.gif" lazyload alt="Modify Prefab"></p>
+<p>這邊我想要更改 Cat 模型的 Scale，只需要更改藍圖就好，這樣場景中所有根據這個 Prefab 建立的物件就會一起更新。</p>
+<h3 id="如何建立-Prefab？"><a href="#如何建立-Prefab？" class="headerlink" title="如何建立 Prefab？"></a>如何建立 Prefab？</h3><p>非常簡單，只要把你 Inspector View 中的物件拉進你的 Project View 裡面就好。像是我這邊建立一個 Cube 到場景中，把它拉進下方就成功囉～</p>
+<p><img src="/notes/./images/unity-tutorial-3/CreatePrefab.gif" srcset="/notes/info/loading.gif" lazyload alt="Create Prefab"></p>
+<p>到目前為止，你已經已經知道怎麼導入其它人作好的素材，還有為什麼會需要 Prefab 這個東西。</p>
+<p>下一篇教學會教你怎麼在 3D 場景中執行一些操作，那我們就下一篇教學再見～</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/notes/tags/Unity/" class="print-no-link">#Unity</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Unity 新手教學 - 導入物件</div>
+      <div>https://933yee.github.io/notes/2024/04/10/unity-tutorial-3/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Kevin Lee</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>April 10, 2024</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/notes/2024/04/10/unity-tutorial-2/" title="Unity 新手教學 - 介面介紹和基本操作">
+                        <span class="hidden-mobile">Unity 新手教學 - 介面介紹和基本操作</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/notes/js/events.js" ></script>
+<script  src="/notes/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/notes/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/notes/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/notes/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
