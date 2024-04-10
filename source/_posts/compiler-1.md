@@ -249,12 +249,35 @@ private:
 - Ex: C 的函式呼叫，它在編譯時期就將函式內容綁定到識別符上，而無法在執行時期變更。
 
 ### Dynamic Binding
-- 綁定發生在執行時期，而不是在編譯時
+- 綁定發生在 runtime，而不是在編譯時
 - Ex: C++ 的虛擬方法呼叫，由於多型的機制，物件的型別無法在編譯時期得知，所以綁定會在執行時期處理。
   
 ### Fluid Binding
-- 這三小
+- AKA dynamic assignment
+- Assignments with dynamic extent to bindings that have lexical scope
+- Syntax
+  - var := expr during stmt-body
+  
+```scheme
+(define x 10)  ; 定義變數 x，並賦值為 10
 
+(displayln "在動態賦值之前：")
+(displayln x)  ; 輸出當前變數 x 的值
+
+; 在這個程式碼塊內，我們動態地改變變數 x 的值
+(let ((x := 20 during
+       (begin
+         (displayln "在動態賦值內部：")
+         (displayln x)  ; 輸出改變後的 x 的值
+         (set! x (* x 2))  ; 修改 x 的值
+         (displayln "在動態賦值內部修改後：")
+         (displayln x)  ; 輸出修改後的 x 的值
+       )))
+  ; 這裡的 x 仍然是原始值
+  (displayln "在動態賦值之後：")
+  (displayln x)  ; 輸出原始值
+)
+```
 ### Example
 ```
 program parameter-passing;
@@ -333,24 +356,24 @@ program parameter-passing;
   end
 ```
 - If by assuming **Call-by-Text**, what's the value in the array a and the variable i?
-||a[1]|a[2]|a[3]|i|v|
-|:-:|:-:|:-:|:-:|:-:|:-:|
-|before mess|0|10|0|2|-|
-|v := v + 1;|0|11|0|2|a[i] (a[2])|
-|a[i] := 5;|0|5|0|2|a[i] (a[2])|
-|i := 3  |0|5|0|3|a[i] (a[3])|
-|v := v + 1 |0|5|1|3|a[i] (a[3])|
-|observation point|0|5|1|3|-|
+|                   | a[1]  | a[2]  | a[3]  |   i   |      v      |
+| :---------------: | :---: | :---: | :---: | :---: | :---------: |
+|    before mess    |   0   |  10   |   0   |   2   |      -      |
+|    v := v + 1;    |   0   |  11   |   0   |   2   | a[i] (a[2]) |
+|    a[i] := 5;     |   0   |   5   |   0   |   2   | a[i] (a[2]) |
+|      i := 3       |   0   |   5   |   0   |   3   | a[i] (a[3]) |
+|    v := v + 1     |   0   |   5   |   1   |   3   | a[i] (a[3]) |
+| observation point |   0   |   5   |   1   |   3   |      -      |
 
 - If by assuming **Call-by-Reference**, what's the value in the array a and the variable i?
-||a[1]|a[2]|a[3]|i|v|
-|:-:|:-:|:-:|:-:|:-:|:-:|
-|before mess|0|10|0|2|-|
-|v := v + 1;|0|11|0|2|a[2]|
-|a[i] := 5;|0|5|0|2|a[2]|
-|i := 3  |0|5|0|3|a[2]|
-|v := v + 1 |0|6|0|3|a[2]|
-|observation point|0|6|0|3|-|
+|                   | a[1]  | a[2]  | a[3]  |   i   |   v   |
+| :---------------: | :---: | :---: | :---: | :---: | :---: |
+|    before mess    |   0   |  10   |   0   |   2   |   -   |
+|    v := v + 1;    |   0   |  11   |   0   |   2   | a[2]  |
+|    a[i] := 5;     |   0   |   5   |   0   |   2   | a[2]  |
+|      i := 3       |   0   |   5   |   0   |   3   | a[2]  |
+|    v := v + 1     |   0   |   6   |   0   |   3   | a[2]  |
+| observation point |   0   |   6   |   0   |   3   |   -   |
 
 ```
 program parameter-passing;
@@ -376,37 +399,37 @@ program parameter-passing;
 ```
 
 - If by assuming **Call-by-Name**, what's the value in the array a and the variable i?
-||a[1]|a[2]|a[3]|i (caller)|i (callee)|v|
-|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-|before mess|0|10|0|2|-|-|
-|i := 1|0|10|0|2|1|a[2]|
-|v := v + 1;|0|11|0|2|1|a[2]|
-|a[i] := 5;|5|11|0|2|1|a[2]|
-|i := 3  |5|11|0|2|3|a[2]|
-|v := v + 1 |5|12|0|2|3|a[2]|
-|observation point|5|12|0|2|-|-|
+|                   | a[1]  | a[2]  | a[3]  | i (caller) | i (callee) |   v   |
+| :---------------: | :---: | :---: | :---: | :--------: | :--------: | :---: |
+|    before mess    |   0   |  10   |   0   |     2      |     -      |   -   |
+|      i := 1       |   0   |  10   |   0   |     2      |     1      | a[2]  |
+|    v := v + 1;    |   0   |  11   |   0   |     2      |     1      | a[2]  |
+|    a[i] := 5;     |   5   |  11   |   0   |     2      |     1      | a[2]  |
+|      i := 3       |   5   |  11   |   0   |     2      |     3      | a[2]  |
+|    v := v + 1     |   5   |  12   |   0   |     2      |     3      | a[2]  |
+| observation point |   5   |  12   |   0   |     2      |     -      |   -   |
 
 - If by assuming **Call-by-Text**, what's the value in the array a and the variable i?
-||a[1]|a[2]|a[3]|i (caller)|i (callee)|v|
-|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-|before mess|0|10|0|2|-|-|
-|i := 1|0|10|0|2|1|a[i(callee)] (a[1])|
-|v := v + 1;|1|10|0|2|1|a[i(callee)] (a[1])|
-|a[i] := 5;|5|10|0|2|1|a[i(callee)] (a[1])|
-|i := 3  |5|10|0|2|3|a[i(callee)] (a[3])|
-|v := v + 1 |5|10|1|2|3|a[i(callee)] (a[3])|
-|observation point|5|10|1|2|-|-|
+|                   | a[1]  | a[2]  | a[3]  | i (caller) | i (callee) |          v          |
+| :---------------: | :---: | :---: | :---: | :--------: | :--------: | :-----------------: |
+|    before mess    |   0   |  10   |   0   |     2      |     -      |          -          |
+|      i := 1       |   0   |  10   |   0   |     2      |     1      | a[i(callee)] (a[1]) |
+|    v := v + 1;    |   1   |  10   |   0   |     2      |     1      | a[i(callee)] (a[1]) |
+|    a[i] := 5;     |   5   |  10   |   0   |     2      |     1      | a[i(callee)] (a[1]) |
+|      i := 3       |   5   |  10   |   0   |     2      |     3      | a[i(callee)] (a[3]) |
+|    v := v + 1     |   5   |  10   |   1   |     2      |     3      | a[i(callee)] (a[3]) |
+| observation point |   5   |  10   |   1   |     2      |     -      |          -          |
 
 - If by assuming **Call-by-Need**, what's the value in the array a and the variable i?
-||a[1]|a[2]|a[3]|i (caller)|i (callee)|v|
-|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-|before mess|0|10|0|2|-|-|
-|i := 1|0|10|0|2|1|-|
-|v := v + 1;|0|11|0|2|1|a[i(caller)] (a[2])|
-|a[i] := 5;|5|11|0|2|1|a[2]|
-|i := 3  |5|11|0|2|3|a[2]|
-|v := v + 1 |5|12|0|2|3|a[2]|
-|observation point|5|12|0|2|-|-|
+|                   | a[1]  | a[2]  | a[3]  | i (caller) | i (callee) |          v          |
+| :---------------: | :---: | :---: | :---: | :--------: | :--------: | :-----------------: |
+|    before mess    |   0   |  10   |   0   |     2      |     -      |          -          |
+|      i := 1       |   0   |  10   |   0   |     2      |     1      |          -          |
+|    v := v + 1;    |   0   |  11   |   0   |     2      |     1      | a[i(caller)] (a[2]) |
+|    a[i] := 5;     |   5   |  11   |   0   |     2      |     1      |        a[2]         |
+|      i := 3       |   5   |  11   |   0   |     2      |     3      |        a[2]         |
+|    v := v + 1     |   5   |  12   |   0   |     2      |     3      |        a[2]         |
+| observation point |   5   |  12   |   0   |     2      |     -      |          -          |
 
 ```
 program parameter-passing;
@@ -431,25 +454,25 @@ program parameter-passing;
 ```
 
 - If by assuming **Call-by-Name**, what's the value in the array a and the variable i?
-||a[1]|a[2]|a[3]|i|v|
-|:-:|:-:|:-:|:-:|:-:|:-:|
-|before mess|0|10|0|2|-|
-|i := 1|0|10|0|1|-|
-|v := v + 1;|1|10|0|1|a[i] (a[1])|
-|a[i] := 5;|5|10|0|1|a[i] (a[1])|
-|i := 3  |5|10|0|3|a[i] (a[3])|
-|v := v + 1 |5|10|1|3|a[i] (a[3])|
-|observation point|5|10|1|3|-|
+|                   | a[1]  | a[2]  | a[3]  |   i   |      v      |
+| :---------------: | :---: | :---: | :---: | :---: | :---------: |
+|    before mess    |   0   |  10   |   0   |   2   |      -      |
+|      i := 1       |   0   |  10   |   0   |   1   |      -      |
+|    v := v + 1;    |   1   |  10   |   0   |   1   | a[i] (a[1]) |
+|    a[i] := 5;     |   5   |  10   |   0   |   1   | a[i] (a[1]) |
+|      i := 3       |   5   |  10   |   0   |   3   | a[i] (a[3]) |
+|    v := v + 1     |   5   |  10   |   1   |   3   | a[i] (a[3]) |
+| observation point |   5   |  10   |   1   |   3   |      -      |
 
 - If by assuming **Call-by-Need**, what's the value in the array a and the variable i?
-||a[1]|a[2]|a[3]|i|v|
-|:-:|:-:|:-:|:-:|:-:|:-:|
-|before mess|0|10|0|2|-|
-|i := 1|0|10|0|1|-|
-|v := v + 1;|1|10|0|1|a[i] (a[1])|
-|a[i] := 5;|5|10|0|1|a[1]|
-|i := 3  |5|10|0|3|a[1]|
-|v := v + 1 |6|10|0|3|a[1]|
-|observation point|6|10|0|3|-|
+|                   | a[1]  | a[2]  | a[3]  |   i   |      v      |
+| :---------------: | :---: | :---: | :---: | :---: | :---------: |
+|    before mess    |   0   |  10   |   0   |   2   |      -      |
+|      i := 1       |   0   |  10   |   0   |   1   |      -      |
+|    v := v + 1;    |   1   |  10   |   0   |   1   | a[i] (a[1]) |
+|    a[i] := 5;     |   5   |  10   |   0   |   1   |    a[1]     |
+|      i := 3       |   5   |  10   |   0   |   3   |    a[1]     |
+|    v := v + 1     |   6   |  10   |   0   |   3   |    a[1]     |
+| observation point |   6   |  10   |   0   |   3   |      -      |
 
 

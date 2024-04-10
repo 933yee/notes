@@ -16,12 +16,12 @@
   <meta name="author" content="Kevin Lee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="參考 清華大學 李政崑老師 編譯器設計講義   Regular Expression A Language is a set of strings that can beformed from the given alphabet Grammar defines a Language  Example 1 a | b denotes {a, b} (a | b)(a | b) denotes {">
+    <meta name="description" content="參考 清華大學 李政崑老師 編譯器設計講義   Regular Expression A Language is a set of strings that can be formed from the given alphabet Grammar defines a Language  Example 1 a | b denotes {a, b} (a | b)(a | b) denotes">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Compiler 筆記 (3)">
 <meta property="og:url" content="https://933yee.github.io/notes/2024/03/27/compiler-3/index.html">
 <meta property="og:site_name" content="Kevin&#39;s notes">
-<meta property="og:description" content="參考 清華大學 李政崑老師 編譯器設計講義   Regular Expression A Language is a set of strings that can beformed from the given alphabet Grammar defines a Language  Example 1 a | b denotes {a, b} (a | b)(a | b) denotes {">
+<meta property="og:description" content="參考 清華大學 李政崑老師 編譯器設計講義   Regular Expression A Language is a set of strings that can be formed from the given alphabet Grammar defines a Language  Example 1 a | b denotes {a, b} (a | b)(a | b) denotes">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://933yee.github.io/notes/images/compiler-3/Relation.png">
 <meta property="og:image" content="https://933yee.github.io/notes/images/compiler-3/VendingMachine.png">
@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://933yee.github.io/notes/images/compiler-3/phi.png">
 <meta property="og:image" content="https://933yee.github.io/notes/images/compiler-3/EpsilonClosureExample.png">
 <meta property="article:published_time" content="2024-03-27T12:27:05.000Z">
-<meta property="article:modified_time" content="2024-03-28T13:54:17.401Z">
+<meta property="article:modified_time" content="2024-04-08T03:17:02.584Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="Compilier">
 <meta name="twitter:card" content="summary_large_image">
@@ -228,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          719 words
+          784 words
         
       </span>
     
@@ -239,7 +239,7 @@
         
         
         
-          6 mins
+          7 mins
         
       </span>
     
@@ -286,7 +286,7 @@
 </blockquote>
 <p><img src="/notes/./images/compiler-3/Relation.png" srcset="/notes/info/loading.gif" lazyload alt="Relations"></p>
 <h2 id="Regular-Expression"><a href="#Regular-Expression" class="headerlink" title="Regular Expression"></a>Regular Expression</h2><ul>
-<li>A Language is a set of strings that can be<br>formed from the given alphabet</li>
+<li>A Language is a set of strings that can be formed from the given alphabet</li>
 <li>Grammar defines a Language</li>
 </ul>
 <h3 id="Example-1"><a href="#Example-1" class="headerlink" title="Example 1"></a>Example 1</h3><ul>
@@ -366,7 +366,7 @@
 <li>$\delta$’([$q_1$, $q_2$, …, $q_i$], a) &#x3D; [$p_1$, $p_2$, …, $p_j$] iff $\delta$({$q_1$, $q_2$, …, $q_i$}, a) &#x3D; {$p_1$, $p_2$, …, $p_j$}</li>
 <li>Note: $2^Q$ is <strong>Power Set</strong>, meaning that the set of all subsets of Q<ul>
 <li>Q &#x3D; {a, b, c}</li>
-<li>$2^Q$ &#x3D; {$\Phi$, {a}, {b}, {c}, {a, b}, {b, c}, {a, c}, {a, b, c}}</li>
+<li>$2^Q$ &#x3D; {$\phi$, {a}, {b}, {c}, {a, b}, {b, c}, {a, c}, {a, b, c}}</li>
 </ul>
 </li>
 </ul>
@@ -413,7 +413,31 @@
 </ul>
 <p>Back tracking is not that powerful<br>Parsar with no back tracking<br>(frist set, follow set, selection set)</p>
 <p><a target="_blank" rel="noopener" href="https://www.google.com/url?sa=i&url=https://www.geeksforgeeks.org/ambiguous-grammar/&psig=AOvVaw16puthtwLbOpQ45_NJxyBy&ust=1711547242637000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCKCr_LyIkoUDFQAAAAAdAAAAABAE">Ambiguous Grammar</a></p>
-
+<h3 id="會考的"><a href="#會考的" class="headerlink" title="會考的"></a>會考的</h3><ul>
+<li>bindings</li>
+<li>First class object<ul>
+<li>可以 assign 到 variable</li>
+<li>AMP</li>
+<li>lambda</li>
+</ul>
+</li>
+<li>call-by-reference, call-by-name, call-by-text, call-by-need (lazy binding)</li>
+</ul>
+<h3 id="Finite-State-Machine-vs-Push-Down-Automata"><a href="#Finite-State-Machine-vs-Push-Down-Automata" class="headerlink" title="Finite State Machine vs Push Down Automata"></a>Finite State Machine vs Push Down Automata</h3><h4 id="FSM"><a href="#FSM" class="headerlink" title="FSM"></a>FSM</h4><ul>
+<li>$M &#x3D; (Q, \Sigma, \delta, g_0, F)$</li>
+<li>$\delta(q_0, a) &#x3D; q_2$</li>
+</ul>
+<h4 id="PDA"><a href="#PDA" class="headerlink" title="PDA"></a>PDA</h4><ul>
+<li>$M &#x3D; (Q, \Sigma, \Gamma, \delta, q_0, Z_0, F)$<ul>
+<li>$Z_0$: initial</li>
+<li>$\Gamma$: all the state of symbols</li>
+</ul>
+</li>
+<li>$\delta(q_0, Z_a, a) &#x3D; q_1$, (push, pop, e)</li>
+</ul>
+<h5 id="Example-2-1"><a href="#Example-2-1" class="headerlink" title="Example 2"></a>Example 2</h5><p>丟進stack<br>b<br>b<br>b<br>a<br>a<br>a</p>
+<p>丟進c 消光 b<br>丟進d 消光 a</p>
+<h4 id=""><a href="#" class="headerlink" title=""></a></h4>
                 
               </div>
             
@@ -481,6 +505,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/notes/2024/04/10/unity-tutorial/" title="Unity 新手教學 - WHY and HOW">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Unity 新手教學 - WHY and HOW</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">

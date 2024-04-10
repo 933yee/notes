@@ -11,8 +11,7 @@ math: true
 ![Relations](./images/compiler-3/Relation.png)
 
 ## Regular Expression
-- A Language is a set of strings that can be 
-formed from the given alphabet
+- A Language is a set of strings that can be formed from the given alphabet
 - Grammar defines a Language
 
 ### Example 1
@@ -102,7 +101,7 @@ D = [0 ~ 9]
   - $\delta$'([$q_1$, $q_2$, ..., $q_i$], a) = [$p_1$, $p_2$, ..., $p_j$] iff $\delta$({$q_1$, $q_2$, ..., $q_i$}, a) = {$p_1$, $p_2$, ..., $p_j$}
   - Note: $2^Q$ is **Power Set**, meaning that the set of all subsets of Q
     - Q = {a, b, c}
-    - $2^Q$ = {$\Phi$, {a}, {b}, {c}, {a, b}, {b, c}, {a, c}, {a, b, c}}
+    - $2^Q$ = {$\phi$, {a}, {b}, {c}, {a, b}, {b, c}, {a, c}, {a, b, c}}
 
 - [Conversion of NFA to DFA (Example 2)](https://www.youtube.com/watch?v=i-fk9o46oVY)
 
@@ -171,3 +170,37 @@ Parsar with no back tracking
 
 
 [Ambiguous Grammar](https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.geeksforgeeks.org%2Fambiguous-grammar%2F&psig=AOvVaw16puthtwLbOpQ45_NJxyBy&ust=1711547242637000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCKCr_LyIkoUDFQAAAAAdAAAAABAE)
+
+
+### 會考的
+- bindings
+- First class object
+  - 可以 assign 到 variable
+  - AMP
+  - lambda
+- call-by-reference, call-by-name, call-by-text, call-by-need (lazy binding)
+
+### Finite State Machine vs Push Down Automata
+#### FSM
+- $M = (Q, \Sigma, \delta, g_0, F)$
+- $\delta(q_0, a) = q_2$
+
+#### PDA
+- $M = (Q, \Sigma, \Gamma, \delta, q_0, Z_0, F)$
+  - $Z_0$: initial
+  - $\Gamma$: all the state of symbols
+- $\delta(q_0, Z_a, a) = q_1$, (push, pop, e)
+
+##### Example 2
+丟進stack
+b
+b
+b
+a
+a
+a
+
+丟進c 消光 b
+丟進d 消光 a
+
+####
