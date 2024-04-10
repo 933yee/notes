@@ -64,9 +64,9 @@ Package Manager 會有你所有的 Assets，之後你想要檢視 Package Manage
 
 ![Sketchfab Model](./images/unity-tutorial-3/SketchfabModel.png)
 
-![alt text](./images/unity-tutorial-3/SketchfabModel2.png)
+![Sketchfab Model](./images/unity-tutorial-3/SketchfabModel2.png)
 
-![alt text](./images/unity-tutorial-3/SketchfabModel3.png)
+![Sketchfab Model](./images/unity-tutorial-3/SketchfabModel3.png)
 
 可以看到這邊沒有 Unity 支援的 .fbx、.dae (Collada)、.dxf 和 .obj. 等格式，不過有提供 .blend，所以我們可以自己開 blender 轉換成 .fbx
 
