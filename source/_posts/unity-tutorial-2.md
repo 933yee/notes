@@ -14,7 +14,7 @@ tags: Unity
 ### Hierarchy View
 預設位於介面的左上方，這裡顯示了場景中的所有物體的層次結構。你可以在這裡看到物體之間的父子關係，還有它們的名稱。
 
-在預設場景中，Unity 會幫你新增兩個物件，Main Camera 和 Direction Light。Camera 可以想像成有人扛著攝影機負責轉播現在遊戲的情況，所以玩家看到的遊戲畫面都至少有一個 Camera 負責。Direction Light 則負責場景中的光照方向。
+在預設場景中，Unity 會幫你新增兩個物件，Main Camera 和 Direction Light。Camera 可以想像成有人扛著攝影機負責轉播現在遊戲的情況，所以玩家看到的遊戲畫面都至少有一個 Camera 負責。Direction Light 則負責場景中的光照。
 
 #### 補充
 - 請記得把所有物件都以英文命名，不然在程式碼中尋找中文名稱的物件時，極有可能發生找不到的問題
