@@ -79,6 +79,8 @@ Unity Editor 版本就相當於你的 Unity 版本，不同版本之間使用上
 
 ![Unity Editor](./images/unity-tutorial/UnityEditor.png)
 
+---
+
 到目前為止，你應該大致理解 Unity 有哪些好處，還有 Unity 下載的流程是什麼。
 
 下一篇教學會介紹如何在 3D 場景中執行一些操作，下次再見～[Unity 新手教學 - 介面介紹和基本操作](https://933yee.github.io/notes/2024/04/10/unity-tutorial-2/)
