@@ -172,6 +172,9 @@ Parsar with no back tracking
 [Ambiguous Grammar](https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.geeksforgeeks.org%2Fambiguous-grammar%2F&psig=AOvVaw16puthtwLbOpQ45_NJxyBy&ust=1711547242637000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCKCr_LyIkoUDFQAAAAAdAAAAABAE)
 
 
+
+
+
 ### 會考的
 - bindings
 - First class object

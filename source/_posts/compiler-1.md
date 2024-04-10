@@ -278,6 +278,7 @@ private:
   (displayln x)  ; 輸出原始值
 )
 ```
+
 ### Example
 ```
 program parameter-passing;
@@ -311,8 +312,6 @@ program parameter-passing;
 
 - Suppose dynamic binding is used for variable scopes. What's the printout value of y?
 > 我猜 mess 裡面 i 是 2、a[i] 是 7，所以 y = 7 + 5 = 12
-
-上面都是我亂猜的
 
 ## Parameter Passing Schemes
 ### Call-by-reference
@@ -356,6 +355,7 @@ program parameter-passing;
   end
 ```
 - If by assuming **Call-by-Text**, what's the value in the array a and the variable i?
+  
 |                   | a[1]  | a[2]  | a[3]  |   i   |      v      |
 | :---------------: | :---: | :---: | :---: | :---: | :---------: |
 |    before mess    |   0   |  10   |   0   |   2   |      -      |
@@ -366,6 +366,7 @@ program parameter-passing;
 | observation point |   0   |   5   |   1   |   3   |      -      |
 
 - If by assuming **Call-by-Reference**, what's the value in the array a and the variable i?
+  
 |                   | a[1]  | a[2]  | a[3]  |   i   |   v   |
 | :---------------: | :---: | :---: | :---: | :---: | :---: |
 |    before mess    |   0   |  10   |   0   |   2   |   -   |
@@ -399,6 +400,7 @@ program parameter-passing;
 ```
 
 - If by assuming **Call-by-Name**, what's the value in the array a and the variable i?
+  
 |                   | a[1]  | a[2]  | a[3]  | i (caller) | i (callee) |   v   |
 | :---------------: | :---: | :---: | :---: | :--------: | :--------: | :---: |
 |    before mess    |   0   |  10   |   0   |     2      |     -      |   -   |
@@ -410,6 +412,7 @@ program parameter-passing;
 | observation point |   5   |  12   |   0   |     2      |     -      |   -   |
 
 - If by assuming **Call-by-Text**, what's the value in the array a and the variable i?
+  
 |                   | a[1]  | a[2]  | a[3]  | i (caller) | i (callee) |          v          |
 | :---------------: | :---: | :---: | :---: | :--------: | :--------: | :-----------------: |
 |    before mess    |   0   |  10   |   0   |     2      |     -      |          -          |
@@ -421,6 +424,7 @@ program parameter-passing;
 | observation point |   5   |  10   |   1   |     2      |     -      |          -          |
 
 - If by assuming **Call-by-Need**, what's the value in the array a and the variable i?
+  
 |                   | a[1]  | a[2]  | a[3]  | i (caller) | i (callee) |          v          |
 | :---------------: | :---: | :---: | :---: | :--------: | :--------: | :-----------------: |
 |    before mess    |   0   |  10   |   0   |     2      |     -      |          -          |
@@ -454,6 +458,7 @@ program parameter-passing;
 ```
 
 - If by assuming **Call-by-Name**, what's the value in the array a and the variable i?
+  
 |                   | a[1]  | a[2]  | a[3]  |   i   |      v      |
 | :---------------: | :---: | :---: | :---: | :---: | :---------: |
 |    before mess    |   0   |  10   |   0   |   2   |      -      |
@@ -465,6 +470,7 @@ program parameter-passing;
 | observation point |   5   |  10   |   1   |   3   |      -      |
 
 - If by assuming **Call-by-Need**, what's the value in the array a and the variable i?
+  
 |                   | a[1]  | a[2]  | a[3]  |   i   |      v      |
 | :---------------: | :---: | :---: | :---: | :---: | :---------: |
 |    before mess    |   0   |  10   |   0   |   2   |      -      |
