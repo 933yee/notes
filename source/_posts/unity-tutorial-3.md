@@ -6,7 +6,7 @@ tags: Unity
 
 在這次教學中，我們將學習如何導入自己的圖片、音樂，或是將來自 Sketchfab 和 Unity Asset Store 的酷炫 3D 物件導入到你的 Unity 專案中
 
-## 導入自己的物件
+## 導入自己的資源
 導入自己的物件非常簡單，可以在 Project View 空白處點擊右鍵，Import New Asset，然後選擇要導入的物件即可
 
 ![Import New Asset](./images/unity-tutorial-3/ImportNewAsset.png)
@@ -25,7 +25,7 @@ tags: Unity
 [Unity Asset Store](https://assetstore.unity.com/zh-CN) 是 Unity 官方提供的一個平台，類似於 APP store，但是專注於 Unity 開發的資源。這裡有各種各樣的資源，包括 2D pixel art、3D 模型、材質、音效、程式碼，甚至是完整的專案模板、各種輔助型的工具。無論你是需要一個小工具還是一個完整的遊戲框架，Unity Asset Store 都能滿足你的需求。
 
 ### 如何使用？
-我這邊隨便選擇一個 [Mars Landscape 3D](https://assetstore.unity.com/packages/3d/environments/landscapes/mars-landscape-3d-175814) 的 Package，點擊右邊的 **Add to My Assets**，它應該會叫你先登入帳號
+我這邊隨便選擇一個 [Mars Landscape 3D](https://assetstore.unity.com/packages/3d/environments/landscapes/mars-landscape-3d-175814) 的 Package，確認右邊的 **Original Unity version** 符合當前版本後，點擊右邊的 **Add to My Assets**，它應該會叫你先登入帳號
 
 ![Add New Asset](./images/unity-tutorial-3/AddNewAsset.png)
 
@@ -50,6 +50,50 @@ Package Manager 會有你所有的 Assets，之後你想要檢視 Package Manage
 ![Project View](./images/unity-tutorial-3/ProjectView.png)
 
 ![Demo Scene](./images/unity-tutorial-3/DemoScene.png)
+
+不喜歡這個場景中的天空？沒問題！這邊再導入另一個在 Unity Asset Store 上的 Package - [Skybox Series Free](https://assetstore.unity.com/packages/2d/textures-materials/sky/skybox-series-free-103633)，這 Package 提供許多精緻好看的 Skybox Material
+
+![Skybox Unity Asset Store](./images/unity-tutorial-3/SkyboxUnityAssetStore.png)
+
+#### Skybox
+Unity Skybox 是一種用於創建場景背景的特殊 Material，Unity 提供了幾種預設的 Skybox Shader，像是 6 Sided、Cubemap、Procedural 等，想要有更多動態效果，也可以自定義 Skybox Shader，不過這會比較進階一點
+
+##### 6 Sided
+我們可以在 Assets 中新增一個 Material
+
+![New Material](./images/unity-tutorial-3/NewMaterial.png)
+
+在這個材質的 Inspector 中，把上方的 Shader 改成 6 Sided
+
+![Six Sided](./images/unity-tutorial-3/SixSided.png)
+![Material Inspector](./images/unity-tutorial-3/MaterialInspector.png)
+
+可以看到它要我們放六張 Texture 進去，分別對應到正方體的六個面，就可以做出一個 Skybox
+
+![Skybox](https://opengameart.org/sites/default/files/Sorsele.jpg)
+
+這邊我就直接拿導入的 Skybox Material 來演示怎麼改變場景中的天空
+
+##### 全域改變
+
+![Lighting](./images/unity-tutorial-3/Lighting.png)
+
+在上方 Window 裡面的 Rendering 中可以找到 Lighting，點選後會跳出一個視窗
+
+![Lighting Inspector](./images/unity-tutorial-3/LightingInspector.png)
+
+在這個視窗上方的 Environment 中會找到一個 **Skybox Material**，可以直接把剛剛導入的 Package 中的 Material 拖曳進去，或是直接拖曳到場景中也可以，都是做全域的改變，會影響所有場景的 Camera 的 Skybox
+
+![Global Skybox](./images/unity-tutorial-3/GlobalSkybox.gif)
+
+##### 局部改變
+比較好的做法是在 Camera 裡面新增一個 Skybox Component
+
+![Camera Inspector](./images/unity-tutorial-3/CameraInspector.png)
+
+一樣把想要的 Skybox Material 拖曳進去，這樣只會影響這個 Camera，且會 Override Lighting Tab 的設定
+
+![Local Skybox](./images/unity-tutorial-3/LocalSkybox.gif)
 
 #### 注意
 每次 Import Package 後，可以先去找這個 Package 所提供的 Demo Scene，執行看看有沒有問題，確保這個 Package 是和你現在的 Unity 專案相容的，避免未來出現問題卻找不到問題點在哪

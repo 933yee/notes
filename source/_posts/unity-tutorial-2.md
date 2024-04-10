@@ -79,6 +79,11 @@ tags: Unity
 
 ![Inspector View](./images/unity-tutorial-2/InspectorView.gif)
 
+#### 按住右鍵 + W/A/S/D/Q/E/滾輪
+按住右鍵加上 W (前進)、A (往左)、S (後退)、D (往右)、 Q (往下)、E (往上)、滾輪 (調整移動速度)，可以快速在 Scene View 裡面移動，就跟你正在以第一人稱在遊戲場景中移動一樣，非常方便
+
+![Combo](./images/unity-tutorial-2/Combo.gif)
+
 #### F
 快速在場景中找到某物件。當遊戲場景很大的時候，這個功能會變得很好用，不用慢慢自己找
 ![R](./images/unity-tutorial-2/F.gif)
