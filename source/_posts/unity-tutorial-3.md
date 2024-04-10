@@ -102,7 +102,7 @@ Package Manager 會有你所有的 Assets，之後你想要檢視 Package Manage
 這邊我想要更改 Cat 模型的 Scale，只需要更改藍圖就好，這樣場景中所有根據這個 Prefab 建立的物件就會一起更新。
 
 ### 如何建立 Prefab？
-非常簡單，只要把你 Inspector View 中的物件拉進你的 Project View 裡面就好。像是我這邊建立一個 Cube 到場景中，把它拉進下方就成功囉～
+非常簡單，只要把你 Hierarchy View 中的物件拉進你的 Project View 裡面就好。像是我這邊建立一個 Cube 到場景中，把它拉進下方就成功囉～
 
 ![Create Prefab](./images/unity-tutorial-3/CreatePrefab.gif)
 
