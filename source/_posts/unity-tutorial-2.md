@@ -87,7 +87,7 @@ tags: Unity
 Undo 和 Redo，這應該不用多說什麼
 
 #### Ctrl + S
-儲存檔案。請**務必**養成做完任何改動都點一下 Ctrl + S 的習慣，Unity 並不會自動幫你儲存。有時候做完大幅度的改動後 Unity 突然崩潰，所有努力直接化為泡影，當下欲哭無淚 QAQ
+儲存檔案。請**務必**養成做完任何改動都點一下 Ctrl + S 的習慣，Unity 並不會自動幫你儲存。有時候做完大幅度的改動後 Unity 突然崩潰，所有努力直接化為泡影，當下真的欲哭無淚 QAQ
 
 ![Unity Crash](./images/unity-tutorial-2/UnityCrash.png)
 每次看到這畫面心都會抖一下... 
