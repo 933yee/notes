@@ -30,8 +30,10 @@
 <meta property="og:image" content="https://933yee.github.io/notes/images/compiler-3/epsilon.png">
 <meta property="og:image" content="https://933yee.github.io/notes/images/compiler-3/phi.png">
 <meta property="og:image" content="https://933yee.github.io/notes/images/compiler-3/EpsilonClosureExample.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/compiler-3/Epsilon-closureConversion.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/compiler-3/Epsilon-closureConversion2.png">
 <meta property="article:published_time" content="2024-03-27T12:27:05.000Z">
-<meta property="article:modified_time" content="2024-04-10T13:57:08.589Z">
+<meta property="article:modified_time" content="2024-04-11T08:13:32.654Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="Compilier">
 <meta name="twitter:card" content="summary_large_image">
@@ -228,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          784 words
+          917 words
         
       </span>
     
@@ -239,7 +241,7 @@
         
         
         
-          7 mins
+          8 mins
         
       </span>
     
@@ -394,15 +396,30 @@
 <li>$\epsilon$-closure($q_10$) &#x3D; {$q_10$}</li>
 </ul>
 <p><img src="/notes/./images/compiler-3/EpsilonClosureExample.png" srcset="/notes/info/loading.gif" lazyload alt="Epsilon-Closure Example"></p>
-<h4 id="Conversion-Example"><a href="#Conversion-Example" class="headerlink" title="Conversion Example"></a>Conversion Example</h4><p>[P35]的圖</p>
+<h4 id="Conversion-Example"><a href="#Conversion-Example" class="headerlink" title="Conversion Example"></a>Conversion Example</h4><p><img src="/notes/./images/compiler-3/Epsilon-closureConversion.png" srcset="/notes/info/loading.gif" lazyload alt="Epsilon-closure Conversion"></p>
 <ul>
 <li>$\epsilon$-closure($q_0$) &#x3D; {$q_0, q_1, q_2$}</li>
 <li>$\delta$($q_0$, 0) &#x3D; $\epsilon$-closure($\delta$($\epsilon$-closure($q_0$), 0))</li>
 </ul>
-<p>$$<br>  \begin{align}<br>    \epsilon\text{-closure}(q_0) &#x3D; {q_0, q_1, q_2} \newline<br>    \delta(q_0, 0) &amp;&#x3D; \epsilon\text{-closure}(\delta(\epsilon\text{-closure}(q_0), 0)) \newline<br>    &amp;&#x3D; \epsilon\text{-closure}(\delta({q_0, q_1, q_2}, 0)) \newline<br>    &amp;&#x3D; \epsilon\text{-closure}({q_0}) \newline<br>    &amp;&#x3D; {q_0, q_1, q_2}<br>$$</p>
-<p>[P36]的圖</p>
-<h3 id="Minimizing-the-number-of-states-of-a-DFA"><a href="#Minimizing-the-number-of-states-of-a-DFA" class="headerlink" title="Minimizing the number of states of a DFA"></a>Minimizing the number of states of a DFA</h3><p>$\epsilon$</p>
-<p>Relation</p>
+<p>$$<br>  \begin{align}<br>    \epsilon\text{-closure}(q_0) &amp;&#x3D; {q_0, q_1, q_2} \newline<br>    \delta(q_0, 0) &amp;&#x3D; \epsilon\text{-closure}(\delta(\epsilon\text{-closure}(q_0), 0)) \newline<br>    &amp;&#x3D; \epsilon\text{-closure}(\delta({q_0, q_1, q_2}, 0)) \newline<br>    &amp;&#x3D; \epsilon\text{-closure}({q_0}) \newline<br>    &amp;&#x3D; {q_0, q_1, q_2}<br>  \end{align}<br>$$</p>
+<ul>
+<li>對每個 State 都做一次上面的操作</li>
+</ul>
+<p><img src="/notes/./images/compiler-3/Epsilon-closureConversion2.png" srcset="/notes/info/loading.gif" lazyload alt="Epsilon-closure Conversion"></p>
+<h3 id="Minimizing-the-number-of-states-of-a-DFA"><a href="#Minimizing-the-number-of-states-of-a-DFA" class="headerlink" title="Minimizing the number of states of a DFA"></a>Minimizing the number of states of a DFA</h3><ul>
+<li>一開始把 Final states 和不是 Final states 的 state 分成兩組<ul>
+<li>ex: {A, B, C}, {D, E}</li>
+</ul>
+</li>
+<li>每次比較同組的兩個 state，比較所有 inpts 的 next state 是否在同組，不同的話就分開<ul>
+<li>ex: A 輸入 a 變成 C (C 在第一組)、B 輸入 a 變成 D (D 在第二組)，C 和 D 在上一次操作中位於不同組別，所以要把 A、B 分成不同組，變成 {A, C}, {B}, {D, E}</li>
+<li>接著就持續比 AC、DE</li>
+</ul>
+</li>
+<li>持續執行上述操作，直到沒有改變</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=0XaGAkY09Wc">Minimization of DFA (Example 1)</a></p>
+<h3 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h3><p>Relation</p>
 <ul>
 <li><p>Reflexive<br>if (a, b) &#x2F;belongs R for every a &#x2F;belongs A<br>aRa</p>
 </li>

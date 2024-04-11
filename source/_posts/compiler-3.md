@@ -129,26 +129,37 @@ D = [0 ~ 9]
 ![Epsilon-Closure Example](./images/compiler-3/EpsilonClosureExample.png)
 
 #### Conversion Example 
-[P35]的圖
+
+![Epsilon-closure Conversion](./images/compiler-3/Epsilon-closureConversion.png)
 
 - $\epsilon$-closure($q_0$) = {$q_0, q_1, q_2$}
 - $\delta$($q_0$, 0) = $\epsilon$-closure($\delta$($\epsilon$-closure($q_0$), 0))
 
-
 $$
   \begin{align}
-    \epsilon\text{-closure}(q_0) = {q_0, q_1, q_2} \newline
+    \epsilon\text{-closure}(q_0) &= {q_0, q_1, q_2} \newline
     \delta(q_0, 0) &= \epsilon\text{-closure}(\delta(\epsilon\text{-closure}(q_0), 0)) \newline
     &= \epsilon\text{-closure}(\delta({q_0, q_1, q_2}, 0)) \newline
     &= \epsilon\text{-closure}({q_0}) \newline
     &= {q_0, q_1, q_2}
+  \end{align}
 $$
 
-[P36]的圖
+- 對每個 State 都做一次上面的操作
+
+![Epsilon-closure Conversion](./images/compiler-3/Epsilon-closureConversion2.png)
 
 ### Minimizing the number of states of a DFA
+- 一開始把 Final states 和不是 Final states 的 state 分成兩組
+  - ex: {A, B, C}, {D, E}
+- 每次比較同組的兩個 state，比較所有 inpts 的 next state 是否在同組，不同的話就分開
+  - ex: A 輸入 a 變成 C (C 在第一組)、B 輸入 a 變成 D (D 在第二組)，C 和 D 在上一次操作中位於不同組別，所以要把 A、B 分成不同組，變成 {A, C}, {B}, {D, E}
+  - 接著就持續比 AC、DE 
+- 持續執行上述操作，直到沒有改變
 
-$\epsilon$
+[Minimization of DFA (Example 1)](https://www.youtube.com/watch?v=0XaGAkY09Wc)
+
+### 其它
 
 Relation
 - Reflexive
