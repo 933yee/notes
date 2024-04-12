@@ -132,7 +132,8 @@ Unity Skybox 是一種用於創建場景背景的特殊 Material，Unity 提供�
 
 ![Cat Model Texture](./images/unity-tutorial-3/CatModelTexture.png)
 
-## Prefab 是什麼？
+## Prefab
+### 什麼是 Prefab？
 你可能有注意到，當你從 Unity Asset Store 或 Sketchfab 導入模型後，在 Hierarchy View 中看到一些藍色的物件。這些藍色物件被稱為 Prefab（預製配件）。Prefab 是 Unity 中的一種特殊、可以重複使用的物件。
 
 ![Prefab](./images/unity-tutorial-3/Prefab.png)

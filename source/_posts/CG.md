@@ -331,3 +331,8 @@ Image and texture
 - A simple wavefront obj file loader
 - Not the OpenGL Mathematics Library
 - http://devernay.free.fr/hacks/glm/
+
+
+## OpenGL Application Framework
+[P42]
+
