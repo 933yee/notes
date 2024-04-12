@@ -85,7 +85,7 @@ tags: Unity
 ![Combo](./images/unity-tutorial-2/Combo.gif)
 
 #### F
-快速在場景中找到某物件。當遊戲場景很大的時候，這個功能會變得很好用，不用慢慢自己找
+快速在場景中找到某物件。在 Hierarchy View 裡面找到目標物件，點擊 F 可以瞬間到它旁邊。當遊戲場景很大的時候，這個功能會變得很好用，不用在場景中慢慢自己找。用滑鼠點兩下也可以
 ![R](./images/unity-tutorial-2/F.gif)
 
 #### Ctrl + Z / Ctrl + Y
