@@ -64,15 +64,13 @@ category:
 - Rendering during displaying
   - Display incomplete result
   - 畫面可能會有黑黑的
-- Not synchronzied with display refresh
-  - ??
 
-![alt text](image-2.png)
+![Single Buffering](./images/computer-graphics/SingleBuffering.png)
 
 ### Double Buffering
 - A techinique to prevent from displaying incomplete frame
   
-![alt text](image-3.png)
+![Double Buffering](./images/computer-graphics/DoubleBuffering.png)
 
 ### Full Screen Display
 - Uses Double Buffering or Triple Buffering
@@ -91,7 +89,7 @@ category:
   - 用 hardware 可以比較快，但如果沒有 GPU 加速，用 software (CPU) 也可以算
   
 ## Graphics Rendering Process
-![alt text](image.png)
+![Graphics Rendering Process](./images/computer-graphics/GraphicsRenderingProcess.png)
 ### 3D Graphics Engine
 - 屬於硬體，Graphics pipeline 就在這邊
   
@@ -110,10 +108,10 @@ category:
 
 ![OpenGL ESv2.0](https://cg2010studio.com/wp-content/uploads/2011/09/opengles_2x_pipeline.gif)
 
-![Overview of a 3D Graphics Pipeline](image-1.png)
+![Overview of a 3D Graphics Pipeline](./images/computer-graphics/Overviewofa3DGraphicsPipeline.png)
 
 #### Modeling
-![Modeling](image-3.png)
+![Modeling](./images/computer-graphics/Modeling.png)
 
 #### Transform
 放大、縮小、平移、旋轉
@@ -121,18 +119,17 @@ category:
 - From **Object Space** to **World Space**
   - 每個物體有自己的座標系
 
-![Geometrical Transformation](image-2.png)
+![Geometrical Transformation](./images/computer-graphics/GeometricalTransformation.png)
 
 2. Viewing Transformation
 - From **World Space** to **View Space**
 
-![Viewing Transformation](image-4.png)
+![Viewing Transformation](./images/computer-graphics/ViewingTransformation.png)
 
 3. Projection Transformation
 - From **View Space** to **Screen Space**
 
-![Projection Transformation](image-5.png)
-
+![Projection Transformation](./images/computer-graphics/ProjectionTransformation.png)
 
 #### Lighting
 Simulate the Effect of Light-Object Interaction
@@ -145,16 +142,16 @@ Simulate the Effect of Light-Object Interaction
 #### Triangle Setup
 對於一個三角形，算出每邊的斜率，三個頂點的座標不一定是整數，但是畫的點座標必須是整數，所以要得到三角形內部的所有整數座標
 
-![Triangle Setup](image-6.png)
+![Triangle Setup](./images/computer-graphics/TriangleSetup.png)
 
 #### Rasterization
 - 根據頂點的顏色，用內插法算出三角形內部的顏色
   
-![Triangle Rasterization](image-8.png)
+![Triangle Rasterization](./images/computer-graphics/TriangleRasterization.png)
 
 - Line Rasterization
   
-![Line Rasterization](image-7.png)
+![Line Rasterization](./images/computer-graphics/LineRasterization.png)
 
 #### Hidden Surface Removal
 移除被擋住、看不到的地方
@@ -168,17 +165,18 @@ Simulate the Effect of Light-Object Interaction
 #### Rendering
 ##### Color Composition
 Render with lighting and texturing
-![Color Composition](image-9.png)
+![Color Composition](./images/computer-graphics/ColorComposition.png)
 
 ##### Blending
 Translucent Effect
-![Blending](image-10.png)
+![Blending](./images/computer-graphics/Blending.png)
 物體透明度和桌子透明度都變 50%，然後混合
 
 #### Advanced Features
 ##### Shadow
 - Hard Shadow
 - Soft Shadow
+  
 ![Shadow](https://www.peachpit.com/content/images/chap3_0321316312/elementLinks/dir2_03_22.jpg)
 
 
@@ -187,7 +185,7 @@ Smooth out the Jaggy Edges
 ![Anti-Aliasing](https://camo.githubusercontent.com/d02e9089abb4f56ece4a30705261fd7d9554947a8dc2f4e3006b358bb5700ca1/68747470733a2f2f686172647a6f6e652e65732f6170702f75706c6f6164732d686172647a6f6e652e65732f323032302f30342f416e74692d416c696173696e672d312e6a7067)
 
 ##### Shader
-![Shader](image-11.png)
+![Shader](./images/computer-graphics/Shader.png)
 
 ###### Vertex Shader
 - Process vertices
@@ -232,7 +230,7 @@ Smooth out the Jaggy Edges
 - Mantle
 
 ## OpenGL vs. Direct3D
-![OpenGL vs. Direct3D](image-12.png)
+![OpenGL vs. Direct3D](./images/computer-graphics/OpenGLvsDirect3D.png)
 
 ## OpenGL Extension
 硬體廠商可以寫自己的 OpenGL Extension，像是 AMD、NVDIA...
@@ -254,17 +252,17 @@ Smooth out the Jaggy Edges
   - OpenGL, OpenGL ES, WebGL
 
 ## Convention of an OpenGL API
-![Convention of an OpenGL API](image-13.png)
+![Convention of an OpenGL API](./images/computer-graphics/ConventionofanOpenGLAPI.png)
 
 ### Data Types
 C++ data types 和 OpenGL data types 大部分一樣，但還是有些許不同
-![OpenGL Data Types](image-14.png)
+![OpenGL Data Types](./images/computer-graphics/OpenGLDataTypes.png)
 
 ## OpenGL Pipeline
-![OpenGL Pipeline](http://romain.vergne.free.fr/teaching/IS/imgs03/pipeline-v4.png)
+![OpenGL Pipeline](./images/computer-graphics/OpenGLPipeline.png)
 [Image synthesis and OpenGL: graphics pipeline](http://romain.vergne.free.fr/teaching/IS/SI03-pipeline.html)
 
-![OpenGL Pipeline](image-15.png)
+![OpenGL Pipeline](./images/computer-graphics/OpenGLPipeline2.png)
 - 紅色代表 programmable，虛線代表可以不需要，但還是建議要寫 fragment shader 比較好
 
 ## OpenGL Shading Language
