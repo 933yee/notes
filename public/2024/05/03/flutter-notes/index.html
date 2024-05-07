@@ -1,0 +1,715 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/notes/info/fluid.png">
+  <link rel="icon" href="/notes/info/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Kevin Lee">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364import &#x27;package:flutter&#x2F;material.dart&#x27;;void main() &#123;  runApp(const">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flutter 筆記">
+<meta property="og:url" content="https://933yee.github.io/notes/2024/05/03/flutter-notes/index.html">
+<meta property="og:site_name" content="Kevin&#39;s notes">
+<meta property="og:description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364import &#x27;package:flutter&#x2F;material.dart&#x27;;void main() &#123;  runApp(const">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://933yee.github.io/notes/images/flutter-notes/demo1.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/flutter-notes/demo2.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/flutter-notes/demo3.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/flutter-notes/demo4.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/flutter-notes/demo5.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/flutter-notes/demo6.png">
+<meta property="article:published_time" content="2024-05-03T15:37:31.000Z">
+<meta property="article:modified_time" content="2024-05-07T12:06:59.651Z">
+<meta property="article:author" content="Kevin Lee">
+<meta property="article:tag" content="Flutter">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://933yee.github.io/notes/images/flutter-notes/demo1.png">
+  
+  
+  
+  <title>Flutter 筆記 - Kevin&#39;s notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/notes/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/notes/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/notes/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"933yee.github.io","root":"/notes/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/info/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/notes/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/notes/js/utils.js" ></script>
+  <script  src="/notes/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/notes/">
+      <strong>Kevin&#39;s Notes</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/notes/info/default.gif') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.7)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Flutter 筆記"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-05-03 23:37" pubdate>
+          May 3, 2024 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          885 words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          8 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Flutter 筆記</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:flutter/material.dart&#x27;</span>;<br><br><span class="hljs-keyword">void</span> main() &#123;<br>  runApp(<span class="hljs-keyword">const</span> MyApp());<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyApp</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatelessWidget</span> </span>&#123;<br>  <span class="hljs-keyword">const</span> MyApp(&#123;Key? key&#125;) : <span class="hljs-keyword">super</span>(key: key);<br><br>  <span class="hljs-meta">@override</span><br>  Widget build(BuildContext context) &#123;<br>    <span class="hljs-keyword">return</span> MaterialApp(<br>      debugShowCheckedModeBanner: <span class="hljs-keyword">false</span>,<br>      home: Scaffold(<br>          backgroundColor: Colors.deepPurple[<span class="hljs-number">200</span>],<br>          appBar: AppBar(<br>              title: <span class="hljs-keyword">const</span> Text(<span class="hljs-string">&quot;Hello World&quot;</span>),<br>              backgroundColor: Colors.deepPurple[<span class="hljs-number">400</span>],<br>              elevation: <span class="hljs-number">0</span>,<br>              leading: IconButton(<br>                icon: <span class="hljs-keyword">const</span> Icon(Icons.menu),<br>                onPressed: () &#123;&#125;,<br>              )),<br>          body: Center(<br>              child: Container(<br>            height: <span class="hljs-number">500</span>,<br>            width: <span class="hljs-number">300</span>,<br>            decoration: BoxDecoration(<br>              color: Colors.deepPurple,<br>              borderRadius: BorderRadius.circular(<span class="hljs-number">20</span>),<br>            ),<br>            padding: <span class="hljs-keyword">const</span> EdgeInsets.all(<span class="hljs-number">20</span>),<br>            child: Column(<br>              mainAxisAlignment: MainAxisAlignment.spaceEvenly,<br>              children: [<br>                <span class="hljs-keyword">const</span> Text(<br>                  <span class="hljs-string">&quot;Hello World&quot;</span>,<br>                  style: TextStyle(<br>                    color: Colors.white,<br>                    fontSize: <span class="hljs-number">30</span>,<br>                  ),<br>                ),<br>                Expanded(<br>                  child: Container(<br>                    color: Colors.deepPurple[<span class="hljs-number">100</span>],<br>                  ),<br>                ),<br>                Expanded(<br>                  flex: <span class="hljs-number">2</span>,<br>                  child: Container(<br>                    color: Colors.deepPurple[<span class="hljs-number">200</span>],<br>                  ),<br>                ),<br>                Expanded(<br>                  child: Container(<br>                    color: Colors.deepPurple[<span class="hljs-number">300</span>],<br>                  ),<br>                )<br>              ],<br>            ),<br>          ))),<br>    );<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/notes/./images/flutter-notes/demo1.png" srcset="/notes/info/loading.gif" lazyload alt="demo 1"></p>
+<h3 id="ListView-and-GridView"><a href="#ListView-and-GridView" class="headerlink" title="ListView and GridView"></a>ListView and GridView</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyApp</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatelessWidget</span> </span>&#123;<br>  MyApp(&#123;Key? key&#125;) : <span class="hljs-keyword">super</span>(key: key);<br>  <span class="hljs-keyword">final</span> <span class="hljs-built_in">List</span> names = [<br>    <span class="hljs-string">&#x27;John&#x27;</span>,<br>    <span class="hljs-string">&#x27;Doe&#x27;</span>,<br>    <span class="hljs-string">&#x27;Smith&#x27;</span>,<br>    <span class="hljs-string">&#x27;Alex&#x27;</span>,<br>    <span class="hljs-string">&#x27;James&#x27;</span>,<br>    <span class="hljs-string">&#x27;Robert&#x27;</span>,<br>    <span class="hljs-string">&#x27;William&#x27;</span>,<br>    <span class="hljs-string">&#x27;David&#x27;</span>,<br>    <span class="hljs-string">&#x27;Richard&#x27;</span>,<br>    <span class="hljs-string">&#x27;Joseph&#x27;</span><br>  ];<br>  <span class="hljs-meta">@override</span><br>  Widget build(BuildContext context) &#123;<br>    <span class="hljs-keyword">return</span> MaterialApp(<br>        debugShowCheckedModeBanner: <span class="hljs-keyword">false</span>,<br>        home: Scaffold(<br>            body: Column(<br>          children: [<br>            Expanded(<br>              child: ListView.builder(<br>                  itemCount: <span class="hljs-number">10</span>,<br>                  itemBuilder: (context, index) =&gt; ListTile(<br>                        title: Text(<span class="hljs-string">&#x27;Item <span class="hljs-subst">$index</span>&#x27;</span>),<br>                      )),<br>            ),<br>            Expanded(<br>              flex: <span class="hljs-number">2</span>,<br>              child: GridView.builder(<br>                itemCount: <span class="hljs-number">64</span>,<br>                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(<br>                    crossAxisCount: <span class="hljs-number">8</span>),<br>                itemBuilder: (count, index) =&gt; Container(<br>                    color: Colors.deepPurple, margin: EdgeInsets.all(<span class="hljs-number">2</span>)),<br>              ),<br>            ),<br>            Expanded(<br>              child: ListView.builder(<br>                  itemCount: names.length,<br>                  itemBuilder: (context, index) =&gt;<br>                      ListTile(title: Text(names[index]))),<br>            ),<br>          ],<br>        )));<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+<p><img src="/notes/./images/flutter-notes/demo2.png" srcset="/notes/info/loading.gif" lazyload alt="demo 2"></p>
+<h3 id="Stack-and-GestureDetector"><a href="#Stack-and-GestureDetector" class="headerlink" title="Stack and GestureDetector"></a>Stack and GestureDetector</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyApp</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatelessWidget</span> </span>&#123;<br>  MyApp(&#123;Key? key&#125;) : <span class="hljs-keyword">super</span>(key: key);<br><br>  <span class="hljs-keyword">void</span> userTapped() &#123;<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;User tapped the container&quot;</span>);<br>  &#125;<br><br>  <span class="hljs-meta">@override</span><br>  Widget build(BuildContext context) &#123;<br>    <span class="hljs-keyword">return</span> MaterialApp(<br>        debugShowCheckedModeBanner: <span class="hljs-keyword">false</span>,<br>        home: Scaffold(<br>          body: Center(<br>            child: Stack(<br>              alignment: Alignment.center,<br>              children: [<br>                Container(<br>                  height: <span class="hljs-number">300</span>,<br>                  width: <span class="hljs-number">300</span>,<br>                  color: Colors.deepPurple,<br>                ),<br>                Container(<br>                  height: <span class="hljs-number">200</span>,<br>                  width: <span class="hljs-number">200</span>,<br>                  color: Colors.deepPurple[<span class="hljs-number">400</span>],<br>                ),<br>                GestureDetector(<br>                  onTap: userTapped,<br>                  child: Container(<br>                    height: <span class="hljs-number">100</span>,<br>                    width: <span class="hljs-number">100</span>,<br>                    color: Colors.deepPurple[<span class="hljs-number">200</span>],<br>                    child: Center(child: Text(<span class="hljs-string">&quot;Tap me!&quot;</span>)),<br>                  ),<br>                )<br>              ],<br>            ),<br>          ),<br>        ));<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+<p><img src="/notes/./images/flutter-notes/demo3.png" srcset="/notes/info/loading.gif" lazyload alt="demo 3"></p>
+<h3 id="Navigation"><a href="#Navigation" class="headerlink" title="Navigation"></a>Navigation</h3><h4 id="Main"><a href="#Main" class="headerlink" title="Main"></a>Main</h4><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">void</span> main() &#123;<br>  runApp(MyApp());<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyApp</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatelessWidget</span> </span>&#123;<br>  <span class="hljs-keyword">const</span> MyApp(&#123;Key? key&#125;) : <span class="hljs-keyword">super</span>(key: key);<br><br>  <span class="hljs-meta">@override</span><br>  Widget build(BuildContext context) &#123;<br>    <span class="hljs-keyword">return</span> MaterialApp(<br>      debugShowCheckedModeBanner: <span class="hljs-keyword">false</span>,<br>      home: FirstPage(),<br>      routes: &#123;<br>        <span class="hljs-string">&#x27;/second&#x27;</span>: (context) =&gt; <span class="hljs-keyword">const</span> SecondPage(),<br>      &#125;,<br>    );<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="First-Page"><a href="#First-Page" class="headerlink" title="First Page"></a>First Page</h4><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FirstPage</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatelessWidget</span> </span>&#123;<br>  <span class="hljs-keyword">const</span> FirstPage(&#123;<span class="hljs-keyword">super</span>.key&#125;);<br><br>  <span class="hljs-meta">@override</span><br>  Widget build(BuildContext context) &#123;<br>    <span class="hljs-keyword">return</span> Scaffold(<br>      appBar: AppBar(title: <span class="hljs-keyword">const</span> Text(<span class="hljs-string">&#x27;First Page&#x27;</span>)),<br>      body: Center(<br>          child: ElevatedButton(<br>        child: Text(<span class="hljs-string">&quot;Go to Second Page&quot;</span>),<br>        onPressed: () &#123;<br>          Navigator.pushNamed(context, <span class="hljs-string">&#x27;/second&#x27;</span>);<br>        &#125;,<br>      )),<br>    );<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="Second-Page"><a href="#Second-Page" class="headerlink" title="Second Page"></a>Second Page</h4><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SecondPage</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatelessWidget</span> </span>&#123;<br>  <span class="hljs-keyword">const</span> SecondPage(&#123;<span class="hljs-keyword">super</span>.key&#125;);<br><br>  <span class="hljs-meta">@override</span><br>  Widget build(BuildContext context) &#123;<br>    <span class="hljs-keyword">return</span> Scaffold(<br>      appBar: AppBar(title: <span class="hljs-keyword">const</span> Text(<span class="hljs-string">&#x27;Second Page&#x27;</span>)),<br>    );<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="Drawer-And-Navigation"><a href="#Drawer-And-Navigation" class="headerlink" title="Drawer And Navigation"></a>Drawer And Navigation</h3><h4 id="Main-1"><a href="#Main-1" class="headerlink" title="Main"></a>Main</h4><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">void</span> main() &#123;<br>  runApp(MyApp());<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyApp</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatelessWidget</span> </span>&#123;<br>  <span class="hljs-keyword">const</span> MyApp(&#123;Key? key&#125;) : <span class="hljs-keyword">super</span>(key: key);<br><br>  <span class="hljs-meta">@override</span><br>  Widget build(BuildContext context) &#123;<br>    <span class="hljs-keyword">return</span> MaterialApp(<br>      debugShowCheckedModeBanner: <span class="hljs-keyword">false</span>,<br>      home: FirstPage(),<br>      routes: &#123;<br>        <span class="hljs-string">&#x27;/firstpage&#x27;</span>: (context) =&gt; FirstPage(),<br>        <span class="hljs-string">&#x27;/homepage&#x27;</span>: (context) =&gt; HomePage(),<br>        <span class="hljs-string">&#x27;/settingspage&#x27;</span>: (context) =&gt; SettingsPage(),<br>      &#125;,<br>    );<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="First-Page-1"><a href="#First-Page-1" class="headerlink" title="First Page"></a>First Page</h4><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FirstPage</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatelessWidget</span> </span>&#123;<br>  <span class="hljs-keyword">const</span> FirstPage(&#123;<span class="hljs-keyword">super</span>.key&#125;);<br><br>  <span class="hljs-meta">@override</span><br>  Widget build(BuildContext context) &#123;<br>    <span class="hljs-keyword">return</span> Scaffold(<br>      appBar: AppBar(title: <span class="hljs-keyword">const</span> Text(<span class="hljs-string">&#x27;First Page&#x27;</span>)),<br>      drawer: Drawer(<br>          backgroundColor: Colors.deepPurple[<span class="hljs-number">100</span>],<br>          child: Column(<br>            children: [<br>              DrawerHeader(<br>                  child: Icon(<br>                Icons.favorite,<br>                size: <span class="hljs-number">48</span>,<br>              )),<br>              ListTile(<br>                leading: Icon(Icons.home),<br>                title: <span class="hljs-keyword">const</span> Text(<span class="hljs-string">&#x27;Home&#x27;</span>),<br>                onTap: () &#123;<br>                  Navigator.pop(context);<br>                  Navigator.pushNamed(context, <span class="hljs-string">&#x27;/homepage&#x27;</span>);<br>                &#125;,<br>              ),<br>              ListTile(<br>                leading: Icon(Icons.settings),<br>                title: <span class="hljs-keyword">const</span> Text(<span class="hljs-string">&#x27;Settings&#x27;</span>),<br>                onTap: () &#123;<br>                  Navigator.pop(context);<br>                  Navigator.pushNamed(context, <span class="hljs-string">&#x27;/settingspage&#x27;</span>);<br>                &#125;,<br>              ),<br>            ],<br>          )),<br>    );<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="Home"><a href="#Home" class="headerlink" title="Home"></a>Home</h4><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HomePage</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatelessWidget</span> </span>&#123;<br>  <span class="hljs-keyword">const</span> HomePage(&#123;<span class="hljs-keyword">super</span>.key&#125;);<br><br>  <span class="hljs-meta">@override</span><br>  Widget build(BuildContext context) &#123;<br>    <span class="hljs-keyword">return</span> Scaffold(<br>      appBar: AppBar(title: <span class="hljs-keyword">const</span> Text(<span class="hljs-string">&#x27;Home Page&#x27;</span>)),<br>    );<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/notes/./images/flutter-notes/demo4.png" srcset="/notes/info/loading.gif" lazyload alt="demo 4"></p>
+<h3 id="Bottom-Navigation"><a href="#Bottom-Navigation" class="headerlink" title="Bottom Navigation"></a>Bottom Navigation</h3><h4 id="Main-2"><a href="#Main-2" class="headerlink" title="Main"></a>Main</h4><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">void</span> main() &#123;<br>  runApp(MyApp());<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyApp</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatelessWidget</span> </span>&#123;<br>  <span class="hljs-keyword">const</span> MyApp(&#123;Key? key&#125;) : <span class="hljs-keyword">super</span>(key: key);<br><br>  <span class="hljs-meta">@override</span><br>  Widget build(BuildContext context) &#123;<br>    <span class="hljs-keyword">return</span> MaterialApp(<br>      debugShowCheckedModeBanner: <span class="hljs-keyword">false</span>,<br>      home: FirstPage(),<br>      routes: &#123;<br>        <span class="hljs-string">&#x27;/firstpage&#x27;</span>: (context) =&gt; FirstPage(),<br>        <span class="hljs-string">&#x27;/homepage&#x27;</span>: (context) =&gt; HomePage(),<br>        <span class="hljs-string">&#x27;/settingspage&#x27;</span>: (context) =&gt; SettingsPage(),<br>      &#125;,<br>    );<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="First-Page-StateFul"><a href="#First-Page-StateFul" class="headerlink" title="First Page (StateFul)"></a>First Page (StateFul)</h4><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FirstPage</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatefulWidget</span> </span>&#123;<br>  FirstPage(&#123;<span class="hljs-keyword">super</span>.key&#125;);<br><br>  <span class="hljs-meta">@override</span><br>  State&lt;FirstPage&gt; createState() =&gt; _FirstPageState();<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">_FirstPageState</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">State</span>&lt;<span class="hljs-title">FirstPage</span>&gt; </span>&#123;<br>  <span class="hljs-built_in">int</span> _selectedIndex = <span class="hljs-number">0</span>;<br><br>  <span class="hljs-keyword">void</span> _navigateBottomBar(<span class="hljs-built_in">int</span> index) &#123;<br>    setState(() &#123;<br>      _selectedIndex = index;<br>    &#125;);<br>  &#125;<br><br>  <span class="hljs-keyword">final</span> <span class="hljs-built_in">List</span> _pages = [<br>    HomePage(),<br>    ProfilePage(),<br>    SettingsPage(),<br>  ];<br><br>  <span class="hljs-meta">@override</span><br>  Widget build(BuildContext context) &#123;<br>    <span class="hljs-keyword">return</span> Scaffold(<br>      appBar: AppBar(title: <span class="hljs-keyword">const</span> Text(<span class="hljs-string">&#x27;First Page&#x27;</span>)),<br>      body: _pages[_selectedIndex],<br>      bottomNavigationBar: BottomNavigationBar(<br>        currentIndex: _selectedIndex,<br>        onTap: _navigateBottomBar,<br>        items: [<br>          BottomNavigationBarItem(icon: Icon(Icons.home), label: <span class="hljs-string">&#x27;Home&#x27;</span>),<br>          BottomNavigationBarItem(icon: Icon(Icons.person), label: <span class="hljs-string">&#x27;Profile&#x27;</span>),<br>          BottomNavigationBarItem(<br>              icon: Icon(Icons.settings), label: <span class="hljs-string">&#x27;Settings&#x27;</span>),<br>        ],<br>      ),<br>    );<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="Hone"><a href="#Hone" class="headerlink" title="Hone"></a>Hone</h4><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HomePage</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatelessWidget</span> </span>&#123;<br>  <span class="hljs-keyword">const</span> HomePage(&#123;<span class="hljs-keyword">super</span>.key&#125;);<br><br>  <span class="hljs-meta">@override</span><br>  Widget build(BuildContext context) &#123;<br>    <span class="hljs-keyword">return</span> Scaffold(<br>      body: Center(child: Text(<span class="hljs-string">&#x27;Home Page&#x27;</span>)),<br>      backgroundColor: Colors.amber[<span class="hljs-number">100</span>],<br>    );<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/notes/./images/flutter-notes/demo5.png" srcset="/notes/info/loading.gif" lazyload alt="demo 5"></p>
+<h3 id="Counter-App"><a href="#Counter-App" class="headerlink" title="Counter App"></a>Counter App</h3><h4 id="Main-3"><a href="#Main-3" class="headerlink" title="Main"></a>Main</h4><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">void</span> main() &#123;<br>  runApp(<span class="hljs-keyword">const</span> MyApp());<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyApp</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatelessWidget</span> </span>&#123;<br>  <span class="hljs-keyword">const</span> MyApp(&#123;<span class="hljs-keyword">super</span>.key&#125;);<br><br>  <span class="hljs-meta">@override</span><br>  Widget build(BuildContext context) &#123;<br>    <span class="hljs-keyword">return</span> MaterialApp(<br>      debugShowCheckedModeBanner: <span class="hljs-keyword">false</span>,<br>      home: CounterPage(),<br>    );<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="Counter-Page"><a href="#Counter-Page" class="headerlink" title="Counter Page"></a>Counter Page</h4><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CounterPage</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatefulWidget</span> </span>&#123;<br>  <span class="hljs-keyword">const</span> CounterPage(&#123;<span class="hljs-keyword">super</span>.key&#125;);<br><br>  <span class="hljs-meta">@override</span><br>  State&lt;CounterPage&gt; createState() =&gt; _CounterPageState();<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">_CounterPageState</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">State</span>&lt;<span class="hljs-title">CounterPage</span>&gt; </span>&#123;<br>  <span class="hljs-built_in">int</span> _counter = <span class="hljs-number">0</span>;<br>  <span class="hljs-keyword">void</span> _incrementCounter() &#123;<br>    setState(() &#123;<br>      _counter++;<br>    &#125;);<br>  &#125;<br><br>  <span class="hljs-meta">@override</span><br>  Widget build(BuildContext context) &#123;<br>    <span class="hljs-keyword">return</span> Scaffold(<br>      body: Center(<br>        child: Column(<br>          mainAxisAlignment: MainAxisAlignment.center,<br>          children: [<br>            Text(<span class="hljs-string">&quot;You pushed the button this many times:&quot;</span>),<br>            Text(<br>              <span class="hljs-string">&#x27;<span class="hljs-subst">$_counter</span>&#x27;</span>,<br>              style: TextStyle(fontSize: <span class="hljs-number">40</span>),<br>            ),<br>            ElevatedButton(<br>                onPressed: _incrementCounter, child: Text(<span class="hljs-string">&quot;Increment&quot;</span>))<br>          ],<br>        ),<br>      ),<br>    );<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="TextField"><a href="#TextField" class="headerlink" title="TextField"></a>TextField</h3><h4 id="Main-4"><a href="#Main-4" class="headerlink" title="Main"></a>Main</h4><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">void</span> main() &#123;<br>  runApp(<span class="hljs-keyword">const</span> MyApp());<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyApp</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatelessWidget</span> </span>&#123;<br>  <span class="hljs-keyword">const</span> MyApp(&#123;<span class="hljs-keyword">super</span>.key&#125;);<br><br>  <span class="hljs-meta">@override</span><br>  Widget build(BuildContext context) &#123;<br>    <span class="hljs-keyword">return</span> MaterialApp(<br>      debugShowCheckedModeBanner: <span class="hljs-keyword">false</span>,<br>      home: ToDoPage(),<br>    );<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="ToDoPage"><a href="#ToDoPage" class="headerlink" title="ToDoPage"></a>ToDoPage</h4><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ToDoPage</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatefulWidget</span> </span>&#123;<br>  <span class="hljs-keyword">const</span> ToDoPage(&#123;<span class="hljs-keyword">super</span>.key&#125;);<br><br>  <span class="hljs-meta">@override</span><br>  State&lt;ToDoPage&gt; createState() =&gt; _ToDoPageState();<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">_ToDoPageState</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">State</span>&lt;<span class="hljs-title">ToDoPage</span>&gt; </span>&#123;<br>  TextEditingController myController = TextEditingController();<br>  <span class="hljs-built_in">String</span> greetingMessage = <span class="hljs-string">&quot;&quot;</span>;<br><br>  <span class="hljs-keyword">void</span> greetUser() &#123;<br>    setState(() &#123;<br>      greetingMessage = <span class="hljs-string">&quot;Hello, <span class="hljs-subst">$&#123;myController.text&#125;</span>&quot;</span>;<br>    &#125;);<br>  &#125;<br><br>  <span class="hljs-meta">@override</span><br>  Widget build(BuildContext context) &#123;<br>    <span class="hljs-keyword">return</span> Scaffold(<br>      body: Center(<br>        child: Padding(<br>          padding: <span class="hljs-keyword">const</span> EdgeInsets.all(<span class="hljs-number">25.0</span>),<br>          child: Column(<br>            mainAxisAlignment: MainAxisAlignment.center,<br>            children: [<br>              Text(greetingMessage),<br>              TextField(<br>                controller: myController,<br>                decoration: InputDecoration(<br>                  border: OutlineInputBorder(),<br>                  labelText: <span class="hljs-string">&quot;Enter your name&quot;</span>,<br>                ),<br>              ),<br>              ElevatedButton(onPressed: greetUser, child: Text(<span class="hljs-string">&quot;Tap&quot;</span>))<br>            ],<br>          ),<br>        ),<br>      ),<br>    );<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+<p><img src="/notes/./images/flutter-notes/demo6.png" srcset="/notes/info/loading.gif" lazyload alt="demo 6"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/notes/tags/Flutter/" class="print-no-link">#Flutter</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Flutter 筆記</div>
+      <div>https://933yee.github.io/notes/2024/05/03/flutter-notes/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Kevin Lee</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>May 3, 2024</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/notes/2024/04/27/%E5%B0%88%E9%A1%8C/" title="專題">
+                        <span class="hidden-mobile">專題</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/notes/js/events.js" ></script>
+<script  src="/notes/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/notes/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/notes/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/notes/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
