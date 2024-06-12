@@ -320,7 +320,7 @@ void CSMain (uint3 id : SV_DispatchThreadID)
 ```
 我們在 Start() 的地方宣告一個 Buffer，內容包含剛開始所有物件的位置，接著就是傳入資料，啟動 Compute Shader。在 Update() 裡面的 `GetData()` 可以 Block 下面的程式碼，也就是直到 GPU 算好後才繼續往下執行操作，避免發生 GPU 還沒算好 CPU 就讀取的情況。
 
-注意，這裡我宣告 16 個 Thread Group，每個 Thread Group 有 1024 個 Thread，一共有 16 * 1024 = 16384 個 Thread，剛剛好等於我們擁有的物件數量，也就是說每個 Thread 就負責一個物件的位置。
+注意，這裡我宣告 16 個 Thread Group，每個 Thread Group 有 1024 個 Thread，一共有 16 * 1024 = 16384 個 Thread，剛剛好等於我們擁有的物件數量，也就是說每個 Thread 就負責處理一個物件的位置。
 
 只要最後數量對就好，有幾個 Thread Group、每個 Thread Group 有幾個 Thread 不是很重要。為了方便，我只宣告在 X 象限，這樣讀取 Buffer 的時候可以直接用 `CubeBuffer[id.x]` 就好，不用管 id.y、id.z
 
