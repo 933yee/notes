@@ -1,0 +1,752 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/notes/info/fluid.png">
+  <link rel="icon" href="/notes/info/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Kevin Lee">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="參考 清華大學 李政崑老師 編譯器設計講義  leftmost and rightmost derivationsleftmost and rightmost derivations  介紹 leftmost 和 rightmost derivations  A left-recursive grammar might cause a recursive-decent parser, even">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Compiler 筆記 (4)">
+<meta property="og:url" content="https://933yee.github.io/notes/2024/05/16/compiler-4/index.html">
+<meta property="og:site_name" content="Kevin&#39;s notes">
+<meta property="og:description" content="參考 清華大學 李政崑老師 編譯器設計講義  leftmost and rightmost derivationsleftmost and rightmost derivations  介紹 leftmost 和 rightmost derivations  A left-recursive grammar might cause a recursive-decent parser, even">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-05-16T11:43:15.000Z">
+<meta property="article:modified_time" content="2024-05-20T05:06:02.916Z">
+<meta property="article:author" content="Kevin Lee">
+<meta property="article:tag" content="Compilier">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Compiler 筆記 (4) - Kevin&#39;s notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/notes/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/notes/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/notes/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"933yee.github.io","root":"/notes/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/info/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/notes/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/notes/js/utils.js" ></script>
+  <script  src="/notes/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/notes/">
+      <strong>Kevin&#39;s Notes</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/notes/info/default.gif') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.7)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Compiler 筆記 (4)"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-05-16 19:43" pubdate>
+          May 16, 2024 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          285 words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          3 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Compiler 筆記 (4)</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>參考 清華大學 李政崑老師 編譯器設計講義</p>
+</blockquote>
+<h2 id="leftmost-and-rightmost-derivations"><a href="#leftmost-and-rightmost-derivations" class="headerlink" title="leftmost and rightmost derivations"></a>leftmost and rightmost derivations</h2><p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=K_aMajzrKF4">leftmost and rightmost derivations</a></p>
+<ul>
+<li><p>介紹 leftmost 和 rightmost derivations</p>
+</li>
+<li><p>A left-recursive grammar might cause a recursive-decent parser, even one with back-tracking, into an infinite loop.</p>
+<ul>
+<li>That is, when we try to expand A, we may eventually find ourselves again trying to expand A without having consumed any input.</li>
+</ul>
+</li>
+</ul>
+<h2 id="Push-Down-Automata"><a href="#Push-Down-Automata" class="headerlink" title="Push Down Automata"></a>Push Down Automata</h2><p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?app=desktop&v=4ejIAmp_Atw">Pushdown Automata (Introduction)</a></p>
+<ul>
+<li>PDA &#x3D; Finite State Machine + A Stack</li>
+<li>PDA &#x3D; A input tape + A finite control unit + A stack with infinite size</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=JtRyd7Svlew">Pushdown Automata (Formal Definition)</a></p>
+<ul>
+<li>介紹 $M &#x3D; (Q, \Sigma, \Gamma, \delta, q_0, Z_0, F)$</li>
+<li>介紹 $\delta$ 的 input 和 output</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=eY7fwj5jvC4">Pushdown Automata (Graphical Notation)</a></p>
+<ul>
+<li>介紹 PDA 的 Graph </li>
+<li>介紹簡單範例: L &#x3D; {$0^n 1^n$ | n $\ge$ 0}</li>
+<li>一個 language 會被 accept 一旦它能達到 final state 或讓 stack 變空</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=TEQcJybMMFU">Pushdown Automata Example (Even Palindrome) PART-1</a></p>
+<ul>
+<li>介紹 Palindrome 的範例</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=BxA-aI2dyRo">Pushdown Automata Example (Even Palindrome) PART-2</a></p>
+<ul>
+<li>繼續上一部的 Palindrome 範例，詳細介紹 epsilon 是怎麼運作的</li>
+</ul>
+<h2 id="Parsers"><a href="#Parsers" class="headerlink" title="Parsers"></a>Parsers</h2><p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=OIKL6wFjFOo">Introduction to Parsers</a></p>
+<ul>
+<li>介紹 Bottom-up Parser vs. Top-Down Parser</li>
+<li>整個 Parser 的生態結構</li>
+</ul>
+<h3 id="Top-Down-Parsers"><a href="#Top-Down-Parsers" class="headerlink" title="Top Down Parsers"></a>Top Down Parsers</h3><p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=iddRD8tJi44">Top Down Parsers - Recursive Descent Parsers</a></p>
+<ul>
+<li>介紹 Recursive Descent Parsers</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=v_wvcuJ6mGY">Top Down Parsers - LL(1) Parsers</a></p>
+<ul>
+<li>介紹 Recursive Descent Parsers 的名稱由來</li>
+<li>介紹 LL(1) 的名稱由來</li>
+<li>簡單介紹 FIRST() 和 FOLLOW()</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=oOCromcWnfc">FIRST() and FOLLOW() Functions</a></p>
+<ul>
+<li>非常重要的影片，多看幾次</li>
+<li>計算 FIRST() 從下往上，計算 FOLLOW() 從上往下</li>
+<li>FISRT() 要包含 epsilon，FOLLOW() 不用</li>
+<li>計算 FOLLOW() 前最好把 FIRST() 都列好，比較好算</li>
+<li>FOLLOW() 大概可以分成三種 case，就算遇到 epsilon 也一樣方法：<ol>
+<li>The <strong>following terminal symbol</strong> will be selected as FOLLOW</li>
+<li>The <strong>FIRST of the following non-terminal</strong> will be selected as FOLLOW</li>
+<li>If it is the right most in the RHS, the <strong>FOLLOW of the LHS</strong> will be selected</li>
+</ol>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=jv4dwxukVvU">FIRST() and FOLLOW() Functions – Solved Problems (Set 1)</a></p>
+<ul>
+<li>更多 FIRST FOLLOW 的範例</li>
+<li>不確定 Q2 Q3 的 FIRST(S) 要不要有 epsilon<ul>
+<li>不用，如果全部產生的 non-terminals FIRST 都有 epsilon 才要</li>
+</ul>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Wo4bafMawFA">FIRST() and FOLLOW() Functions – Solved Problems (Set 2)</a></p>
+<ul>
+<li>更多 FIRST FOLLOW 的範例</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=DT-cbznw9aY">LL(1) Parsing Table</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=clkHOgZUGWU">LL(1) Parsing</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/notes/tags/Compilier/" class="print-no-link">#Compilier</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Compiler 筆記 (4)</div>
+      <div>https://933yee.github.io/notes/2024/05/16/compiler-4/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Kevin Lee</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>May 16, 2024</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/notes/2024/06/12/unity-render-1/" title="Unity Compute Shader">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Unity Compute Shader</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/notes/2024/05/03/flutter-notes/" title="Flutter 筆記">
+                        <span class="hidden-mobile">Flutter 筆記</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/notes/js/events.js" ></script>
+<script  src="/notes/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/notes/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/notes/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/notes/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
