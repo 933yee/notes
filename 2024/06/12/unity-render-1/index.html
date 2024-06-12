@@ -48,7 +48,7 @@
 <meta property="og:image" content="https://933yee.github.io/notes/images/unity-render-1/IndirectRendering.gif">
 <meta property="og:image" content="https://933yee.github.io/notes/images/unity-render-1/Culling.gif">
 <meta property="article:published_time" content="2024-06-12T00:33:04.000Z">
-<meta property="article:modified_time" content="2024-06-12T18:20:35.197Z">
+<meta property="article:modified_time" content="2024-06-12T18:36:32.559Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="Unity">
 <meta name="twitter:card" content="summary_large_image">
@@ -377,7 +377,7 @@
 <h4 id="結果"><a href="#結果" class="headerlink" title="結果"></a>結果</h4><p><img src="/notes/./images/unity-render-1/ComputeShaderDemo3.gif" srcset="/notes/info/loading.gif" lazyload alt="Compute Shader Demo"></p>
 <p>現在你已經知道怎麼在 Unity 中建立並啟動 Compute Shader，並輸出一個簡單的結果，你也可以試著改改看 Compute Shader 的內容，輸出各種不同的結果</p>
 <p><img src="/notes/./images/unity-render-1/MoreComputeShaderExample.gif" srcset="/notes/info/loading.gif" lazyload alt="More Compute Shader Example"></p>
-<p>以上這些都是透過 GPU 去計算出來的結果，更多範例可以參考 <a target="_blank" rel="noopener" href="https://www.shadertoy.com/">Shader Toy</a>，不過要注意的是這網站使用的語言是 <strong>GLSL</strong>，而且是寫在 <strong>Fragment Shader</strong> 上面，這裡提供的例子是使用的語言 <strong>HLSL</strong>，而且是寫在<strong>Compute Shader</strong>上面。接下來會介紹更多 Compute Shader 的應用方式</p>
+<p>以上這些都是透過 GPU 去計算出來的結果，更多範例可以參考 <a target="_blank" rel="noopener" href="https://www.shadertoy.com/">Shader Toy</a>，不過要注意的是這網站使用的語言是 <strong>GLSL</strong>，而且是寫在 <strong>Fragment Shader</strong> 上面，這裡提供的例子使用的語言是 <strong>HLSL</strong>，而且是寫在<strong>Compute Shader</strong>上面。接下來會介紹更多 Compute Shader 的應用方式</p>
 <h2 id="移動大量物體"><a href="#移動大量物體" class="headerlink" title="移動大量物體"></a>移動大量物體</h2><p>現在，先定個目標：我希望在場景中渲染 16384 個物件，並同時移動它們，某物件的下一個位置是根據當前位置去計算的，因此彼此之間不會互相影響。</p>
 <p>這裡我提供四種不同的方法，逐漸優化遊戲的效能。</p>
 <h3 id="一般寫法"><a href="#一般寫法" class="headerlink" title="一般寫法"></a>一般寫法</h3><p>最一般的寫法很直覺，直接在 Start() 建立 16384 個物件並儲存起來。接著，在 Update() 中開個 for 迴圈遍歷所有物件，根據當前位置去改變物件下一偵的位置</p>
