@@ -16,12 +16,12 @@
   <meta name="author" content="Kevin Lee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="相信大家在遊戲中都有看過一些很複雜炫泡的特效，一定會很好奇到底怎麼做到不會 lag 的效果的，像是各種複雜的粒子效果、大量物體同時移動、物理模擬等等。   這些酷酷特效的背後到底做了哪些工作呢？這篇文章將來探討如何在 Unity 使用 Compute Shader 加速計算，還會提及一些比較常見的優化遊戲效能的技術。 本文非常長，且內容有點 Hardcore，內容涉及到 CPU 和 GPU 的協作">
+    <meta name="description" content="相信大家在遊戲中都有看過一些很複雜炫泡的特效，一定會很好奇到底怎麼做到不會 lag 的效果的，像是各種複雜的粒子效果、大量物體同時移動、物理模擬等等。   這些酷酷特效的背後到底做了哪些工作呢？這篇文章將來探討如何在 Unity 使用 Compute Shader 加速計算，還會提及一些比較常見的優化遊戲效能的技術。 本文非常長，而且內容有點 Hardcore，涉及到 CPU 和 GPU 的協作、">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Unity Compute Shader">
 <meta property="og:url" content="https://933yee.github.io/notes/2024/06/12/unity-render-1/index.html">
 <meta property="og:site_name" content="Kevin&#39;s notes">
-<meta property="og:description" content="相信大家在遊戲中都有看過一些很複雜炫泡的特效，一定會很好奇到底怎麼做到不會 lag 的效果的，像是各種複雜的粒子效果、大量物體同時移動、物理模擬等等。   這些酷酷特效的背後到底做了哪些工作呢？這篇文章將來探討如何在 Unity 使用 Compute Shader 加速計算，還會提及一些比較常見的優化遊戲效能的技術。 本文非常長，且內容有點 Hardcore，內容涉及到 CPU 和 GPU 的協作">
+<meta property="og:description" content="相信大家在遊戲中都有看過一些很複雜炫泡的特效，一定會很好奇到底怎麼做到不會 lag 的效果的，像是各種複雜的粒子效果、大量物體同時移動、物理模擬等等。   這些酷酷特效的背後到底做了哪些工作呢？這篇文章將來探討如何在 Unity 使用 Compute Shader 加速計算，還會提及一些比較常見的優化遊戲效能的技術。 本文非常長，而且內容有點 Hardcore，涉及到 CPU 和 GPU 的協作、">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://933yee.github.io/notes/images/unity-render-1/ComputeShaderDemo.gif">
 <meta property="og:image" content="https://933yee.github.io/notes/images/unity-render-1/ComputeShaderDemo1.gif">
@@ -48,7 +48,7 @@
 <meta property="og:image" content="https://933yee.github.io/notes/images/unity-render-1/IndirectRendering.gif">
 <meta property="og:image" content="https://933yee.github.io/notes/images/unity-render-1/Culling.gif">
 <meta property="article:published_time" content="2024-06-12T00:33:04.000Z">
-<meta property="article:modified_time" content="2024-06-12T18:43:30.715Z">
+<meta property="article:modified_time" content="2024-06-12T18:47:59.256Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="Unity">
 <meta name="twitter:card" content="summary_large_image">
@@ -302,7 +302,7 @@
 <p><img src="/notes/./images/unity-render-1/ComputeShaderDemo.gif" srcset="/notes/info/loading.gif" lazyload alt="Compute Shader Demo"></p>
 <p><img src="/notes/./images/unity-render-1/ComputeShaderDemo1.gif" srcset="/notes/info/loading.gif" lazyload alt="Compute Shader Demo"></p>
 <p>這些酷酷特效的背後到底做了哪些工作呢？這篇文章將來探討如何在 Unity 使用 Compute Shader 加速計算，還會提及一些比較常見的優化遊戲效能的技術。</p>
-<p>本文非常長，且內容有點 Hardcore，內容涉及到 CPU 和 GPU 的協作、Shader 的應用、HLSL 等等，可能需要一些圖學的背景知識會比較好理解，算是比較進階的教學。</p>
+<p>本文非常長，而且內容有點 Hardcore，涉及到 CPU 和 GPU 的協作、Shader 的應用、HLSL 等等，可能需要一些圖學的背景知識會比較好理解，算是比較進階的教學。</p>
 <h2 id="CPU、GPU-基本介紹"><a href="#CPU、GPU-基本介紹" class="headerlink" title="CPU、GPU 基本介紹"></a>CPU、GPU 基本介紹</h2><p>大家都知道，GPU (顯示卡) 是用來處理各種圖形渲染的工作，想要暢玩 3A 大作必定要先升級你的顯卡。那麼 GPU 為什麼有能力處理遊戲渲染呢？只用 CPU 不行嗎？</p>
 <p>事實上是可以的 XD，只是非常非常慢，下面這個影片就沒有用 GPU，單純用最猛的 CPU 去跑 GTA-5，結果是跑得動的，但是 FPS 低到不行，根本玩不下去</p>
 <iframe width = "100%" height = "315" src="//www.youtube.com/embed/oDIaHj-CGSI" frameborder="0" allowfullscreen></iframe>
