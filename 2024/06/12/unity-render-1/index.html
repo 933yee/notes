@@ -48,7 +48,7 @@
 <meta property="og:image" content="https://933yee.github.io/notes/images/unity-render-1/IndirectRendering.gif">
 <meta property="og:image" content="https://933yee.github.io/notes/images/unity-render-1/Culling.gif">
 <meta property="article:published_time" content="2024-06-12T00:33:04.000Z">
-<meta property="article:modified_time" content="2024-06-12T18:40:52.606Z">
+<meta property="article:modified_time" content="2024-06-12T18:41:47.909Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="Unity">
 <meta name="twitter:card" content="summary_large_image">
@@ -423,8 +423,8 @@
 
 <p>跟第三種作法不同的地方是，我的 GPU instancing 換成 <code>RenderMeshPrimitives</code>，因為我要自己寫移動 Vertex Shader 的程式碼，而且 <code>RenderMeshPrimitives</code> 沒有 Batch Size 的限制，會是更好的選擇。</p>
 <h4 id="效果-3"><a href="#效果-3" class="headerlink" title="效果"></a>效果</h4><p><img src="/notes/./images/unity-render-1/IndirectRendering.gif" srcset="/notes/info/loading.gif" lazyload alt="Indirect Rendering"></p>
-<p>透過這種作法，可以看到我的 FPS 上升到 400 左右，畫面順到不行，不說我還以為我的 CPU 特別猛（gif 看起來會比較卡，最後有附上影片）</p>
-<p>不過這種作法也有缺點，就是不能辨別碰撞、Culling 等等，因為<strong>實際上物體並沒有移動，只有物體的頂點移動而已</strong>，不過這也可以透過其他方式解決，只是原本 CPU 會幫你弄好，現在要自己寫比較麻煩而已，不過效能會好上許多。</p>
+<p>透過這種作法，可以看到我的 FPS 上升到 400 左右，畫面順到不行，不說我還以為我的 CPU 特別猛（GIF 看起來會比較卡，最後有附上影片）</p>
+<p>不過這種作法也有缺點，就是不能辨別碰撞、Culling 等等，因為<strong>實際上物體並沒有移動，只有物體的頂點移動而已</strong>，不過這也可以透過其他方式解決，只是原本 CPU 會幫你弄好，現在要自己寫比較麻煩而已，但是效能會好上許多。</p>
 <p><img src="/notes/./images/unity-render-1/Culling.gif" srcset="/notes/info/loading.gif" lazyload alt="Culling"></p>
 <p>像上面這個例子，物體原本的位置沒有移動，只有頂點在移動，因此當原本的位置跑到鏡頭外面，會直接被 Culling 掉，只能自己寫判斷了。</p>
 <hr>
