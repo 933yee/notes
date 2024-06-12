@@ -183,7 +183,7 @@ public class TestComputeShader : MonoBehaviour
 
 ![More Compute Shader Example](./images/unity-render-1/MoreComputeShaderExample.gif)
 
-以上這些都是透過 GPU 去計算出來的結果，更多範例可以參考 [Shader Toy](https://www.shadertoy.com/)，不過要注意的是這網站使用的語言是 **GLSL**，而且是寫在 **Fragment Shader** 上面，這裡提供的例子是使用的語言 **HLSL**，而且是寫在**Compute Shader**上面。接下來會介紹更多 Compute Shader 的應用方式
+以上這些都是透過 GPU 去計算出來的結果，更多範例可以參考 [Shader Toy](https://www.shadertoy.com/)，不過要注意的是這網站使用的語言是 **GLSL**，而且是寫在 **Fragment Shader** 上面，這裡提供的例子使用的語言是 **HLSL**，而且是寫在**Compute Shader**上面。接下來會介紹更多 Compute Shader 的應用方式
 
 ## 移動大量物體
 現在，先定個目標：我希望在場景中渲染 16384 個物件，並同時移動它們，某物件的下一個位置是根據當前位置去計算的，因此彼此之間不會互相影響。
