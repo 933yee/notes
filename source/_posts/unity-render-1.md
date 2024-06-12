@@ -542,7 +542,7 @@ void Update()
 
 感謝你看到這邊
 
-- 專案 Github: https://github.com/933yee/UnityIndirectRendering
+- 專案 Github: https://github.com/933yee/Unity-Compute-Shader
 
 <iframe width = "100%" height = "400" src="//www.youtube.com/embed/6tuy4PYs7Rc" frameborder="0" allowfullscreen></iframe>
 
