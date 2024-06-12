@@ -538,7 +538,9 @@ void Update()
 
 以上是本篇教學，花費我許多時間，不過我也因此學到很多東西。
 
-我認為 Computer Shader 真的是一項值得深入探討的技術，像是**原神**渲染技術分享中就有提到，有超過一半的 Feature 都有使用到 Compute Shader 優化。了解遊戲背後的技術是一件很有趣的事情，這樣玩遊戲跑圖的時候都可以想到一些有的沒的，感謝你看到這邊。
+我認為 Computer Shader 真的是一項值得深入探討的技術，像是**原神**渲染技術分享中就有提到，有超過一半的 Feature 都有使用到 Compute Shader 優化。了解遊戲背後的技術是一件很有趣的事情，這樣玩遊戲跑圖的時候都可以想到一些有的沒的，偷偷思考場景看到的特效背後的原理
+
+感謝你看到這邊
 
 - 專案 Github: https://github.com/933yee/UnityIndirectRendering
 
