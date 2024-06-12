@@ -470,7 +470,7 @@ v2f vert (appdata v, uint instanceID : SV_InstanceID)
 }
 ```
 
-這裡就不介紹 Vertex Shader 怎麼寫了，因此省略掉很多程式碼，只想表達我讀取 Buffer，並做成 Transform Matrix 去更新頂點位置的過程
+這裡就不介紹 Vertex Shader 怎麼寫了，因此省略掉很多程式碼，只是想表達我讀取 Buffer，並做成 Transform Matrix 去更新頂點位置的過程
 
 #### C# 端
 ```c#
