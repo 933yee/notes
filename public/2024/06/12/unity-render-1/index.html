@@ -16,12 +16,12 @@
   <meta name="author" content="Kevin Lee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="相信大家在遊戲中都有看過一些很複雜炫泡的特效，一定會很好奇到底怎麼做到不會 lag 的效果的，像是各種複雜的粒子效果、大量物體同時移動、物理模擬等等。   這些酷酷特效的背後到底做了哪些工作呢？這篇文章將來探討如何在 Unity 使用 Compute Shader 加速計算，還會提及一些比較常見的優化遊戲效能的技術。 本文非常長，而且內容有點 Hardcore，涉及到 CPU 和 GPU 的協作、">
+    <meta name="description" content="相信大家在遊戲中都有看過一些很複雜炫泡的特效，一定會很好奇為什麼這樣做不會 Lag，像是各種複雜的粒子效果、大量物體同時移動、物理模擬等等。   這些酷酷特效的背後到底做了哪些工作呢？這篇文章將來探討如何在 Unity 使用 Compute Shader 加速計算，還會提及一些比較常見的優化遊戲效能的技術。 本文有點長，而且內容有點 Hardcore，涉及到 CPU 和 GPU 的協作、Shade">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Unity Compute Shader">
 <meta property="og:url" content="https://933yee.github.io/notes/2024/06/12/unity-render-1/index.html">
 <meta property="og:site_name" content="Kevin&#39;s notes">
-<meta property="og:description" content="相信大家在遊戲中都有看過一些很複雜炫泡的特效，一定會很好奇到底怎麼做到不會 lag 的效果的，像是各種複雜的粒子效果、大量物體同時移動、物理模擬等等。   這些酷酷特效的背後到底做了哪些工作呢？這篇文章將來探討如何在 Unity 使用 Compute Shader 加速計算，還會提及一些比較常見的優化遊戲效能的技術。 本文非常長，而且內容有點 Hardcore，涉及到 CPU 和 GPU 的協作、">
+<meta property="og:description" content="相信大家在遊戲中都有看過一些很複雜炫泡的特效，一定會很好奇為什麼這樣做不會 Lag，像是各種複雜的粒子效果、大量物體同時移動、物理模擬等等。   這些酷酷特效的背後到底做了哪些工作呢？這篇文章將來探討如何在 Unity 使用 Compute Shader 加速計算，還會提及一些比較常見的優化遊戲效能的技術。 本文有點長，而且內容有點 Hardcore，涉及到 CPU 和 GPU 的協作、Shade">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://933yee.github.io/notes/images/unity-render-1/ComputeShaderDemo.gif">
 <meta property="og:image" content="https://933yee.github.io/notes/images/unity-render-1/ComputeShaderDemo1.gif">
@@ -48,7 +48,7 @@
 <meta property="og:image" content="https://933yee.github.io/notes/images/unity-render-1/IndirectRendering.gif">
 <meta property="og:image" content="https://933yee.github.io/notes/images/unity-render-1/Culling.gif">
 <meta property="article:published_time" content="2024-06-12T00:33:04.000Z">
-<meta property="article:modified_time" content="2024-06-12T18:47:59.256Z">
+<meta property="article:modified_time" content="2024-06-13T10:46:53.149Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="Unity">
 <meta name="twitter:card" content="summary_large_image">
@@ -245,7 +245,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.8k words
+          4.9k words
         
       </span>
     
@@ -298,11 +298,11 @@
             
               <div class="markdown-body">
                 
-                <p>相信大家在遊戲中都有看過一些很複雜炫泡的特效，一定會很好奇到底怎麼做到不會 lag 的效果的，像是各種複雜的粒子效果、大量物體同時移動、物理模擬等等。</p>
+                <p>相信大家在遊戲中都有看過一些很複雜炫泡的特效，一定會很好奇為什麼這樣做不會 Lag，像是各種複雜的粒子效果、大量物體同時移動、物理模擬等等。</p>
 <p><img src="/notes/./images/unity-render-1/ComputeShaderDemo.gif" srcset="/notes/info/loading.gif" lazyload alt="Compute Shader Demo"></p>
 <p><img src="/notes/./images/unity-render-1/ComputeShaderDemo1.gif" srcset="/notes/info/loading.gif" lazyload alt="Compute Shader Demo"></p>
 <p>這些酷酷特效的背後到底做了哪些工作呢？這篇文章將來探討如何在 Unity 使用 Compute Shader 加速計算，還會提及一些比較常見的優化遊戲效能的技術。</p>
-<p>本文非常長，而且內容有點 Hardcore，涉及到 CPU 和 GPU 的協作、Shader 的應用、HLSL 等等，可能需要一些圖學的背景知識會比較好理解，算是比較進階的教學。</p>
+<p>本文有點長，而且內容有點 Hardcore，涉及到 CPU 和 GPU 的協作、Shader 的應用、HLSL 等等，可能需要一些圖學的背景知識會比較好理解，算是比較進階的教學。</p>
 <h2 id="CPU、GPU-基本介紹"><a href="#CPU、GPU-基本介紹" class="headerlink" title="CPU、GPU 基本介紹"></a>CPU、GPU 基本介紹</h2><p>大家都知道，GPU (顯示卡) 是用來處理各種圖形渲染的工作，想要暢玩 3A 大作必定要先升級你的顯卡。那麼 GPU 為什麼有能力處理遊戲渲染呢？只用 CPU 不行嗎？</p>
 <p>事實上是可以的 XD，只是非常非常慢，下面這個影片就沒有用 GPU，單純用最猛的 CPU 去跑 GTA-5，結果是跑得動的，但是 FPS 低到不行，根本玩不下去</p>
 <iframe width = "100%" height = "315" src="//www.youtube.com/embed/oDIaHj-CGSI" frameborder="0" allowfullscreen></iframe>
@@ -313,19 +313,19 @@
 <p>至於為什麼會這樣，就要先了解兩者的工作差異，這邊就拿最近最紅的 NVDIA Demo 的範例來介紹</p>
 <p><img src="https://j.gifs.com/mL45Op.gif" srcset="/notes/info/loading.gif" lazyload alt="NVDIA CPU Example"></p>
 <p>CPU 就像是一個天才，什麼都會、什麼都能做，能夠精確地完成任務，但是只能一項一項做。</p>
-<p>在你的電腦中，CPU 扮演著大腦的角色，負責處理各種複雜的工作，處理作業系統和應用程式的所有運算任務，像是讓不斷切換正在執行的程式，讓它們看起來好像在同時執行一樣，或是處理你滑鼠點擊、鍵盤輸入等等，最底層的硬體都是 CPU 負責的。</p>
+<p>在你的電腦中，CPU 扮演著大腦的角色，負責處理各種複雜的工作，處理作業系統和應用程式的所有運算任務，像是不斷切換正在執行的程式，讓它們看起來好像在同時執行一樣，或是處理你滑鼠點擊、鍵盤輸入等等，最底層的硬體都是由 CPU 負責的。</p>
 <p><img src="https://miro.medium.com/v2/resize:fit:924/1*aQQcuLKQgFKEECPhkEKTqQ.gif" srcset="/notes/info/loading.gif" lazyload alt="NVDIA GPU Example"></p>
 <p>而 GPU 就像是一堆普通人，每個人只會做相同類型的普通計算，人與人之間的工作沒有關聯，不會影響彼此。這些人沒辦法做複雜的工作，但是它們可以<strong>同時工作</strong>，完成大量計算的任務。</p>
 <p>在圖形渲染中，以最簡單的例子來講，我們會需要去處理每個 Vertex 的 Transformation，把模型的每個 vertex 投影到螢幕上 (每個 vertex 要乘上相同的變換矩陣)。我們還要處理每個 Pixel 的 Lighting (每個 Pixel 要乘上相同的光照計算公式)…</p>
-<p>可以看到，每個 vertex、pixel 都要做相同的工作 (乘上某某東西)，這時候就可以利用 GPU 強大的平行計算能力，快速處理這些<strong>大量且相同的工作</strong>。</p>
+<p>可以看到，每個 vertex、pixel 都要做相同的工作 (乘上相同的某某東西)，這時候就可以利用 GPU 強大的平行計算能力，快速處理這些<strong>龐大且相同的工作</strong>。</p>
 <p><img src="https://angus945.github.io/learn/compute-shader/compute-shader-basis/cpu-vs-gpu.gif" srcset="/notes/info/loading.gif" lazyload alt="CPU vs GPU"></p>
-<p>事實上，現代 CPU 通常都有 4核、8核等等，也擁有平行計算的能力，但是跟 GPU 的上百、上千核來比還是相形見絀，當然這邊不是說 CPU 就比不上 GPU，只能說兩者擅長的工作不同。</p>
+<p>事實上，現代 CPU 通常都有 4核、8核等等，也擁有平行計算的能力，但是跟 GPU 的上百、上千核來比還是相形見絀，當然這邊不是說 CPU 就比不上 GPU，只是說兩者擅長的工作不同。</p>
 <h2 id="GPGPU-General-Purpose-GPU-computing"><a href="#GPGPU-General-Purpose-GPU-computing" class="headerlink" title="GPGPU (General-Purpose GPU computing)"></a>GPGPU (General-Purpose GPU computing)</h2><p>最近幾年 NVDIA 的市值蒸蒸日上，全因為 NVDIA 在十幾年前下的一步棋，也就是推出 CUDA (NVDIA 對 GPGPU 的正式名稱)。當時 NVDIA 投入了大量的資金成本在研發 CUDA，外界卻是質疑一片，完全沒人看好這個操作，誰知道在 2024 年的現在，這成為自駕車發展、加密貨幣挖礦、AI 時代的關鍵。</p>
 <p><img src="https://blogs.nvidia.com/wp-content/uploads/2018/05/AI-Revolution-Moores-Law.png" srcset="/notes/info/loading.gif" lazyload alt="CUDA"></p>
 <p>那麼 GPGPU 到底是什麼？簡單來說，在早期 GPU 主要用於圖形處理，用於加速電腦圖形渲染。後來人們開始意識到 GPU 具有強大的平行運算潛力，不應該僅僅局限於圖形處理。黃仁勳看準這點，於是 NVIDIA 於 2006 年推出了 CUDA 平台，開啟了 GPU 通用計算的大門。CUDA 允許開發者使用類 C 語言（CUDA C&#x2F;C++）編寫程式來利用 GPU 的平行運算能力，加速各種類型的應用程式。</p>
 <p>以前 GPU 都只拿來做圖形處理，要算數學都只能靠 CPU。現在，我們能夠把大量的數學丟給 GPU 做，利用他強大的平行計算能力快速出結果，不再侷限於圖形處理，這也是為什麼它叫做 GPGPU (圖形處理器通用計算)。</p>
 <p>介紹了那麼多背景知識，終於可以進入 Unity 的部分了</p>
-<h2 id="Compute-Shader"><a href="#Compute-Shader" class="headerlink" title="Compute Shader"></a>Compute Shader</h2><p>現在你已經了解 GPGPU 是什麼東西，而 Compute Shader 就是實現 GPGPU 技術之一，我們可以自己寫一些程式到 GPU 上面跑，也就是前面說的，<strong>我們能夠把大量的數學丟給 GPU 做，利用他強大的平行計算能力快速出結果</strong>，在 Unity 中我們就可以利用 Compute Shader，減少 CPU 的 loading，增加遊戲的效能。</p>
+<h2 id="Compute-Shader"><a href="#Compute-Shader" class="headerlink" title="Compute Shader"></a>Compute Shader</h2><p>現在你已經了解 GPGPU 是什麼東西，而 Compute Shader 就是在 Unity 中實現 GPGPU 技術之一，我們可以自己寫一些程式到 GPU 上面跑，也就是前面說的，<strong>我們能夠把大量的數學丟給 GPU 做，利用他強大的平行計算能力快速出結果</strong>，在 Unity 中我們就可以利用 Compute Shader，減少 CPU 的 loading，增加遊戲的效能。</p>
 <p>想像一下現在有個場景長這樣</p>
 <p><img src="/notes/./images/unity-render-1/ComputeShaderDemo2.gif" srcset="/notes/info/loading.gif" lazyload alt="Compute Shader Demo"></p>
 <p>場景共有 1000000 個粒子，如果把這些全部都塞在 Update() (CPU 端) 裡面去算會是多可怕的事情，因此我們勢必要直接丟給 GPU 去計算並直接渲染出來，這時候就可以用 Compute Shader 來達成這件事情，CPU 做的事情就只有準備 Data (記憶體要給多少之類的) 以及啟動 Compute Shader。</p>
@@ -430,7 +430,7 @@
 <hr>
 <p>以上是本篇教學，花費我許多時間，不過我也因此學到很多東西。</p>
 <p>我認為 Computer Shader 真的是一項值得深入探討的技術，像是<strong>原神</strong>渲染技術分享中就有提到，有超過一半的 Feature 都有使用到 Compute Shader 優化。了解遊戲背後的技術是一件很有趣的事情，這樣玩遊戲跑圖的時候都可以想到一些有的沒的，偷偷思考場景看到的特效背後的原理</p>
-<p>感謝你看到這邊</p>
+<p>後來發現上面的例子可能沒有真的到 16384 個物件，有些太遠的都被 Culling 掉了 qq，感謝你看到這邊</p>
 <ul>
 <li>專案 Github: <a target="_blank" rel="noopener" href="https://github.com/933yee/Unity-Compute-Shader">https://github.com/933yee/Unity-Compute-Shader</a></li>
 </ul>
