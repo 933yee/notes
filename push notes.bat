@@ -1,5 +1,4 @@
 @echo off
-cd D:\desktop\notes
 echo hexo clean begin..
 call cmd /c "hexo clean"
 
