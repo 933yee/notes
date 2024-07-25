@@ -16,30 +16,33 @@
   <meta name="author" content="Kevin Lee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="周志遠教授作業系統開放式課程  作業系統介於硬體和軟體之間，是不可或缺的 Mainframe Systems 最早的電腦，體積很大 IO 很慢，做的事情非常單一 演化順序：Batch -&gt; Multi-programming -&gt; Time-shared 現在仍然存在，意旨專門處理一件事情的機器，很多伺服器在用，負責大量資料的處理  Batch 電腦管理者要親自決定執行順序，決定哪個">
+    <meta name="description" content="周志遠教授作業系統開放式課程  OS ServicesUser InterfaceCLI (Command Line Interface) GUI 是 based on CLI，所以 GUI 能做到的是 CLI 一定可以  Shell: Command-line Interpreter (CSHELL, BASH)  不屬於 OS，你打的指令不是直接交給 OS，是交給 Shell，方便使用者使用">
 <meta property="og:type" content="article">
-<meta property="og:title" content="作業系統筆記 Historical Prospective">
-<meta property="og:url" content="https://933yee.github.io/notes/2024/07/02/os-chapter0/index.html">
+<meta property="og:title" content="作業系統筆記 OS Structure">
+<meta property="og:url" content="https://933yee.github.io/notes/2024/07/18/os-chapter2/index.html">
 <meta property="og:site_name" content="Kevin&#39;s notes">
-<meta property="og:description" content="周志遠教授作業系統開放式課程  作業系統介於硬體和軟體之間，是不可或缺的 Mainframe Systems 最早的電腦，體積很大 IO 很慢，做的事情非常單一 演化順序：Batch -&gt; Multi-programming -&gt; Time-shared 現在仍然存在，意旨專門處理一件事情的機器，很多伺服器在用，負責大量資料的處理  Batch 電腦管理者要親自決定執行順序，決定哪個">
+<meta property="og:description" content="周志遠教授作業系統開放式課程  OS ServicesUser InterfaceCLI (Command Line Interface) GUI 是 based on CLI，所以 GUI 能做到的是 CLI 一定可以  Shell: Command-line Interpreter (CSHELL, BASH)  不屬於 OS，你打的指令不是直接交給 OS，是交給 Shell，方便使用者使用">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter0/BatchSystem.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter0/MainframeSystemSummary.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter0/ParallelSystems.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter0/MultiCoreProcessor.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter0/UMA.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter0/NUMA.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter0/SystemArchitecture.png">
-<meta property="article:published_time" content="2024-07-02T06:48:31.000Z">
-<meta property="article:modified_time" content="2024-07-23T03:20:40.428Z">
+<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter2/Communication.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter2/OSInterface.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter2/SimpleOSArchitecture.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter2/LayeredOSArchitecture.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter2/MicrokernelOS.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter2/ModularOSArchitecture.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter2/VirtualMachine.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter2/FullVirtualization.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter2/Para-virtualization.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter2/JavaVirtualMachine.png">
+<meta property="article:published_time" content="2024-07-18T09:33:12.000Z">
+<meta property="article:modified_time" content="2024-07-24T03:53:06.951Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="OS">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://933yee.github.io/notes/images/os-chapter0/BatchSystem.png">
+<meta name="twitter:image" content="https://933yee.github.io/notes/images/os-chapter2/Communication.png">
   
   
   
-  <title>作業系統筆記 Historical Prospective - Kevin&#39;s notes</title>
+  <title>作業系統筆記 OS Structure - Kevin&#39;s notes</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -205,7 +208,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="作業系統筆記 Historical Prospective"></span>
+            <span id="subtitle" data-typed-text="作業系統筆記 OS Structure"></span>
           
         </div>
 
@@ -216,8 +219,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-07-02 14:48" pubdate>
-          July 2, 2024 pm
+        <time datetime="2024-07-18 17:33" pubdate>
+          July 18, 2024 pm
         </time>
       </span>
     
@@ -228,7 +231,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.1k words
+          881 words
         
       </span>
     
@@ -239,7 +242,7 @@
         
         
         
-          10 mins
+          8 mins
         
       </span>
     
@@ -276,7 +279,7 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">作業系統筆記 Historical Prospective</h1>
+            <h1 id="seo-header">作業系統筆記 OS Structure</h1>
             
             
               <div class="markdown-body">
@@ -284,198 +287,140 @@
                 <blockquote>
 <p>周志遠教授作業系統開放式課程</p>
 </blockquote>
-<p>作業系統介於硬體和軟體之間，是不可或缺的</p>
-<h1 id="Mainframe-Systems"><a href="#Mainframe-Systems" class="headerlink" title="Mainframe Systems"></a>Mainframe Systems</h1><ul>
-<li>最早的電腦，體積很大</li>
-<li>IO 很慢，做的事情非常單一</li>
-<li>演化順序：Batch -&gt; Multi-programming -&gt; Time-shared</li>
-<li>現在仍然存在，意旨專門處理一件事情的機器，很多伺服器在用，負責大量資料的處理</li>
+<h1 id="OS-Services"><a href="#OS-Services" class="headerlink" title="OS Services"></a>OS Services</h1><h2 id="User-Interface"><a href="#User-Interface" class="headerlink" title="User Interface"></a>User Interface</h2><h3 id="CLI-Command-Line-Interface"><a href="#CLI-Command-Line-Interface" class="headerlink" title="CLI (Command Line Interface)"></a>CLI (Command Line Interface)</h3><ul>
+<li><p>GUI 是 based on CLI，所以 GUI 能做到的是 CLI 一定可以</p>
+</li>
+<li><p><strong>Shell</strong>: Command-line Interpreter (CSHELL, BASH)</p>
+<ul>
+<li>不屬於 OS，你打的指令不是直接交給 OS，是交給 Shell，方便使用者使用指令</li>
+<li>一台電腦可能有很多使用者，每個使用者的喜好不同，介面、顏色、指令等等，可以做一些客製化的調整</li>
 </ul>
-<h2 id="Batch"><a href="#Batch" class="headerlink" title="Batch"></a>Batch</h2><ul>
-<li>電腦管理者要親自決定執行順序，決定哪個程式要先執行</li>
-<li>工作很單純，所以 OS 不需要做甚麼特別的事情，除了基本工作以外，只需要把一項工作切換到下一個</li>
-<li>缺點<ul>
-<li>一次只能處理一個程式</li>
-<li>沒有 <strong>interaction</strong>，在執行一個工作的過程中，使用者完全沒辦法做任何改變</li>
-<li>IO 非常慢，導致 CPU 常常掛機，浪費資源<ul>
-<li>IO 速度遠比 CPU 速度慢</li>
+</li>
 </ul>
+<h3 id="GUI-Graphic-User-Interface"><a href="#GUI-Graphic-User-Interface" class="headerlink" title="GUI (Graphic User Interface)"></a>GUI (Graphic User Interface)</h3><ul>
+<li>Microsoft 崛起的原因</li>
+</ul>
+<h2 id="Communication"><a href="#Communication" class="headerlink" title="Communication"></a>Communication</h2><ul>
+<li>不是單指跨電腦的網路，也可以是 Multi-thread、Multi-processor 等同一台電腦內部的溝通</li>
+</ul>
+<h3 id="Message-Passing"><a href="#Message-Passing" class="headerlink" title="Message Passing"></a>Message Passing</h3><ul>
+<li>為了先前提到的 Protection (Base register、Limit register)，程式之間不能直接互相影響，會先把資料複製到 OS，再從 OS 複製到另一支程式</li>
+<li>會比較慢</li>
+</ul>
+<h3 id="Shared-Memory"><a href="#Shared-Memory" class="headerlink" title="Shared Memory"></a>Shared Memory</h3><ul>
+<li>也需要透過 System Call 去建立這塊 Shared Memory，不過像是 Multi-thread 預設就有</li>
+<li>會有 Synchronization 的問題</li>
+</ul>
+<p><img src="/notes/./images/os-chapter2/Communication.png" srcset="/notes/info/loading.gif" lazyload alt="Communication"></p>
+<p>OS Service 除了 User interface 和 Communication 以外，還有</p>
+<ul>
+<li>Program Execution </li>
+<li>I&#x2F;O operations </li>
+<li>File-system manipulation</li>
+<li>Error detection </li>
+<li>Resource allocation</li>
+<li>Accounting</li>
+<li>Protection and security</li>
+</ul>
+<h1 id="OS-Application-Interface"><a href="#OS-Application-Interface" class="headerlink" title="OS-Application Interface"></a>OS-Application Interface</h1><h2 id="System-Calls"><a href="#System-Calls" class="headerlink" title="System Calls"></a>System Calls</h2><ul>
+<li>OS 提供很多 Services，要使用這些 Service 都會需要透過 System Call，所以 System Call 就是 OS 的 Interface</li>
+<li>也是一種 Software Interrupt，這樣才能去改變 Mode</li>
+<li>為了效能，是使用 Assembly Language 撰寫</li>
+</ul>
+<h2 id="API-Application-Program-Interface"><a href="#API-Application-Program-Interface" class="headerlink" title="API (Application Program Interface)"></a>API (Application Program Interface)</h2><ul>
+<li><p>直接使用 System Call 是一件很麻煩的事情，所以 User 的程式通常是使用 API 來做到這件事，而不是直接 Call System Call。大部分的 API 都是使用 C 語言做成的 Library</p>
+</li>
+<li><p>API 有可能包含很多 System Call，也有可能完全沒有 System Call</p>
+<ul>
+<li>沒有 System Call: 方便使用者使用，像是一些數學的計算</li>
+</ul>
+</li>
+<li><p>一些常見的 API</p>
+<ul>
+<li><p><strong>Win32</strong> API for <strong>Windows</strong></p>
+</li>
+<li><p><strong>POSIX</strong> API for <strong>POSIX-based Systems</strong> (UNIX、 Linux、Mac OS)</p>
+<ul>
+<li>POSIX: (Portable Operating System Interface for Unix)</li>
+<li>我在 Linux 上寫一個程式可以執行，直接拿到 Mac 上一定也可以跑，因為 Interface 的定義完全一樣 (Library 可能不一樣)</li>
+</ul>
+</li>
+<li><p><strong>Java</strong> API for <strong>Java Virtual Machine</strong> (JVM)</p>
 </li>
 </ul>
 </li>
 </ul>
-<p><img src="/notes/./images/os-chapter0/BatchSystem.png" srcset="/notes/info/loading.gif" lazyload alt="Batch System"></p>
-<h2 id="Multi-programming"><a href="#Multi-programming" class="headerlink" title="Multi-programming"></a>Multi-programming</h2><ul>
-<li>讓系統裡面放多個程式<ul>
-<li>當一個程式在做 IO 時，就可以切換到別的程式，overlap CPU 和 IO 的計算，保證 CPU 持續工作</li>
+<p><img src="/notes/./images/os-chapter2/OSInterface.png" srcset="/notes/info/loading.gif" lazyload alt="OS Interface"></p>
+<h1 id="OS-Structure"><a href="#OS-Structure" class="headerlink" title="OS Structure"></a>OS Structure</h1><h2 id="Simple-OS-Architecture"><a href="#Simple-OS-Architecture" class="headerlink" title="Simple OS Architecture"></a>Simple OS Architecture</h2><ul>
+<li>開發很快，但是系統裡面的架構全部混在一起</li>
+<li>定義不清楚，非常不安全，也不好維護</li>
 </ul>
+<p><img src="/notes/./images/os-chapter2/SimpleOSArchitecture.png" srcset="/notes/info/loading.gif" lazyload alt="Simple OS Architecture"></p>
+<h2 id="Layered-OS-Architecture"><a href="#Layered-OS-Architecture" class="headerlink" title="Layered OS Architecture"></a>Layered OS Architecture</h2><ul>
+<li>功能分割得很清楚，上層可以 Call 下層，下層無法 Call 上層</li>
+<li>很好 Debug、維護</li>
+<li>因為是 Layerd，可能涉及到許多 Memory Copy，效能不好</li>
+</ul>
+<p><img src="/notes/./images/os-chapter2/LayeredOSArchitecture.png" srcset="/notes/info/loading.gif" lazyload alt="Layered OS Architecture"></p>
+<h2 id="Microkernel-OS"><a href="#Microkernel-OS" class="headerlink" title="Microkernel OS"></a>Microkernel OS</h2><ul>
+<li><p>Kernel 的程式碼越少越好，比較 Reliable，不要有 bug 就好</p>
 </li>
-<li>Spooling (Simutaneous Peripheral Operation On-Line)<ul>
-<li>不用 CPU 干預就可以完成 I&#x2F;O 的工作</li>
-<li>CPU 只需要在 IO 做完的時候被通知就好</li>
-</ul>
+<li><p>Modularize 的概念，Kernel 只負責溝通不同 Module，Kernel 以外的全部在 User Space</p>
 </li>
-<li>CPU 在執行的時候只能讀取 memory，所以我們把多個程式同時 load 到 main memory<ul>
-<li>要 load disk 的哪些程式到 memory？-&gt; <strong>Job Scheduling</strong>  </li>
-<li>要 load memory 的哪些程式到 CPU？-&gt; <strong>CPU Scheduling</strong></li>
-</ul>
-</li>
-<li>在其中，OS 的工作包含：<ul>
-<li>Memory management，要分配多少記憶體給這些程式</li>
-<li>CPU Scheduling，CPU 要執行 memory 的哪些程式</li>
-<li>IO system，如何透過 interrupt，實現 Spooling</li>
-</ul>
-</li>
-</ul>
-<h2 id="Time-Sharing-System-Multi-tasking"><a href="#Time-Sharing-System-Multi-tasking" class="headerlink" title="Time-Sharing System (Multi-tasking)"></a>Time-Sharing System (Multi-tasking)</h2><ul>
-<li>Multi-programming 讓 CPU 的使用率變高，但是對於單一程式而言，可能會執行更慢</li>
-<li>使用者想要隨時與程式做互動，也希望可以很多使用者同時使用電腦</li>
-<li>用時間的觀念去切割資源，讓所有程式一起執行</li>
-<li>很頻繁切換 CPU 和 IO，就可以偵測使用者的 input，就有互動的感覺</li>
-<li>不是一次做完一個程式的計算，而是每個程式只計算幾毫秒，就切換到下一個程式，讓使用者以為所有程式同時在執行</li>
-<li>在其中，OS 的工作包含<ul>
-<li>Virtual memory，把 disk 當作 memory，因為我想要塞更多程式到 memory，但是 memory 不夠大</li>
-<li>File system 和 disk management，有了 interactive，使用者就可以直接管理檔案</li>
-<li>Process synchronization 和 deadlock，程式和程式之間可以溝通，當他們同時修改 memory 的內容時就會有問題</li>
+<li><p>效能比 Layered 還要更糟糕</p>
+<ul>
+<li>User Space 的東西之間要溝通，都需要 <strong>System Call</strong></li>
+<li>為了避免 Synchronization 的問題，都是透過 <strong>Message Passing</strong></li>
 </ul>
 </li>
 </ul>
-<p><img src="/notes/./images/os-chapter0/MainframeSystemSummary.png" srcset="/notes/info/loading.gif" lazyload alt="Mainframe System Summary"></p>
-<h1 id="Computer-system-architecture"><a href="#Computer-system-architecture" class="headerlink" title="Computer-system architecture"></a>Computer-system architecture</h1><h2 id="Desktop-Systems-single-processor"><a href="#Desktop-Systems-single-processor" class="headerlink" title="Desktop Systems: single processor"></a>Desktop Systems: single processor</h2><ul>
-<li>PC (Personal Computers)，只給一位 user 使用</li>
-<li>GUI (User <strong>convenience</strong> and <strong>responsiveness</strong>)</li>
-<li>I&#x2F;O devices</li>
-<li>Windows, MacOS, Unix, Linux</li>
+<p><img src="/notes/./images/os-chapter2/MicrokernelOS.png" srcset="/notes/info/loading.gif" lazyload alt="Microkernel OS"></p>
+<h2 id="Modular-OS-Architecture"><a href="#Modular-OS-Architecture" class="headerlink" title="Modular OS Architecture"></a>Modular OS Architecture</h2><ul>
+<li>很常見，現在大多是使用這種架構</li>
+<li>跟 Microkernel OS 的差別在，都是在 Kernel Space，方便 Module 之間溝通，跑起來更有效率</li>
 </ul>
-<h2 id="Parallel-Systems-tightly-coupled"><a href="#Parallel-Systems-tightly-coupled" class="headerlink" title="Parallel Systems: tightly coupled"></a>Parallel Systems: tightly coupled</h2><ul>
-<li>又稱為 <strong>Multiprocessor</strong> or <strong>tightly coupled system</strong></li>
-<li>很多 CPU 緊密在一起</li>
-<li>這些 CPU 用同個 <strong>shared memory</strong></li>
-<li>Purposes<ul>
-<li>Throughput<ul>
-<li>計算量增加</li>
+<p><img src="/notes/./images/os-chapter2/ModularOSArchitecture.png" srcset="/notes/info/loading.gif" lazyload alt="Modular OS Architecture"></p>
+<h2 id="Virtual-Machine"><a href="#Virtual-Machine" class="headerlink" title="Virtual Machine"></a>Virtual Machine</h2><ul>
+<li>一台電腦有很多使用者，每個人可能會需要自己的 OS</li>
+<li>VM 能夠做一個硬體抽象層，映射到原本電腦的硬體，讓 VM 使用</li>
 </ul>
-</li>
-<li>Economical<ul>
-<li>很多東西可以共用，memory、CPU、IO device、主機板…</li>
+<p><img src="/notes/./images/os-chapter2/VirtualMachine.png" srcset="/notes/info/loading.gif" lazyload alt="Virtual Machine"></p>
+<h3 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h3><ul>
+<li><p>VM 全部都是跑在 User Space，無法直接執行 Privileged Instruction</p>
+<ul>
+<li>需要送出一個 Intrucupt 到原本的 OS (Kernel Space)，然後原本的 OS 再幫它重複執行一次，才在 User Space 做 Kernel Space 的事情</li>
+<li>有些 CPU 會特別支援 Hardware Support，也就是多一個 bit 去記錄 User Mode、Kernel Mode 以及 Virtual Machine Mode，就可以直接執行 Privileged Instruction</li>
 </ul>
 </li>
-<li>Reliability<ul>
-<li>一個 CPU 掛了，其他還能繼續工作</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>現今所有系統都是這種系統</li>
-</ul>
-<p><img src="/notes/./images/os-chapter0/ParallelSystems.png" srcset="/notes/info/loading.gif" lazyload alt="Parallel Systems"></p>
-<h3 id="SMP-Symmetric-multiprocessor-system"><a href="#SMP-Symmetric-multiprocessor-system" class="headerlink" title="SMP (Symmetric multiprocessor system)"></a>SMP (Symmetric multiprocessor system)</h3><ul>
-<li>每個 CPU 的角色相同，都由 OS 控制，沒有 Master</li>
-<li>比較簡單，所以比較普及，我們手上有的系統幾乎都是這類</li>
-<li>需要 <strong>synchronization</strong>，增加 overhead</li>
-<li>Master CPU 無法用來計算，只能用來管理</li>
-</ul>
-<h3 id="AMP-Asymmetric-multiprocessor-system"><a href="#AMP-Asymmetric-multiprocessor-system" class="headerlink" title="AMP (Asymmetric multiprocessor system)"></a>AMP (Asymmetric multiprocessor system)</h3><ul>
-<li>超級電腦等需要大量計算的會用這類</li>
-<li>有一個 Master CPU，只用來管理其他 CPU ，所以 core 可以比較多</li>
-</ul>
-<h3 id="Multi-Core-Processor"><a href="#Multi-Core-Processor" class="headerlink" title="Multi-Core Processor"></a>Multi-Core Processor</h3><ul>
-<li>一個 CPU 裡面有很多 Core</li>
-</ul>
-<p><img src="/notes/./images/os-chapter0/MultiCoreProcessor.png" srcset="/notes/info/loading.gif" lazyload alt="Multi-Core Processor"></p>
-<h3 id="Many-Core-Processor"><a href="#Many-Core-Processor" class="headerlink" title="Many-Core Processor"></a>Many-Core Processor</h3><ul>
-<li>GPGPU<ul>
-<li>Single Instruction Multiple Data (SIMD) 的操作</li>
-<li>上千個 core</li>
-</ul>
-</li>
-<li>Intel Xeon Phi</li>
-<li>TILE64</li>
-</ul>
-<h3 id="Memory-Access-Architecture"><a href="#Memory-Access-Architecture" class="headerlink" title="Memory Access Architecture"></a>Memory Access Architecture</h3><h4 id="Uniform-Memory-Access-UMA"><a href="#Uniform-Memory-Access-UMA" class="headerlink" title="Uniform Memory Access (UMA)"></a>Uniform Memory Access (UMA)</h4><ul>
-<li>每個 CPU access memory 的速度相同，使用者不用在乎現在是在哪個 CPU 上執行</li>
-<li>CPU 增加時，memory 可能開始有 bottleneck</li>
-</ul>
-<p><img src="/notes/./images/os-chapter0/UMA.png" srcset="/notes/info/loading.gif" lazyload alt="UMA"></p>
-<h4 id="Non-Uniform-Memory-Access-NUMA"><a href="#Non-Uniform-Memory-Access-NUMA" class="headerlink" title="Non-Uniform Memory Access (NUMA)"></a>Non-Uniform Memory Access (NUMA)</h4><ul>
-<li>每個 CPU 的 access time 變得不同</li>
-<li>hierarchy 的架構，可以建構更大的電腦</li>
-<li>高效能計算系統都是 NUMA</li>
-</ul>
-<p><img src="/notes/./images/os-chapter0/NUMA.png" srcset="/notes/info/loading.gif" lazyload alt="NUMA"></p>
-<h2 id="Distributed-Systems-loosely-coupled"><a href="#Distributed-Systems-loosely-coupled" class="headerlink" title="Distributed Systems: loosely coupled"></a>Distributed Systems: loosely coupled</h2><ul>
-<li>每個 processor 有 local memory，不會 share</li>
-<li>很好擴展更多裝置</li>
-<li>Purposes<ul>
-<li>Resource sharing</li>
-<li>Load sharing<ul>
-<li>某電腦工作量太大可以分給別台做</li>
-</ul>
-</li>
-<li>Reliability<ul>
-<li>一台電腦壞掉不會影響其他台</li>
+<li><p>Critical Instruction</p>
+<ul>
+<li>User Space 可以執行，但是執行結果和在 Kernel Space 的執行結果不一樣</li>
 </ul>
 </li>
 </ul>
-</li>
+<h3 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h3><ul>
+<li>提供完全的 Protection，使用者不會互相影響，一個 OS 被 Hack 其它 OS 也沒事</li>
+<li>提供特定的執行環境</li>
+<li>測試開發 OS，避免整台電腦 Crash</li>
+<li>實現資源管理，像是有些雲端計算會用到 VM</li>
 </ul>
-<h3 id="Client-Server"><a href="#Client-Server" class="headerlink" title="Client-Server"></a>Client-Server</h3><ul>
-<li>很好管理與控制資源</li>
-<li>Server 可能會變成 bottleneck 或是 single failure point</li>
-<li>FTP</li>
+<h3 id="Full-Virtualization"><a href="#Full-Virtualization" class="headerlink" title="Full Virtualization"></a>Full Virtualization</h3><ul>
+<li>Guest OS 的程式碼完全不用動，可以直接裝在原本的 OS 上</li>
+<li>Vmware</li>
 </ul>
-<h3 id="Peer-to-Peer"><a href="#Peer-to-Peer" class="headerlink" title="Peer-to-Peer"></a>Peer-to-Peer</h3><ul>
-<li>Decentralized，每個系統的角色是一樣的</li>
-<li>ppStream, bitTorrent, Internet</li>
+<p><img src="/notes/./images/os-chapter2/FullVirtualization.png" srcset="/notes/info/loading.gif" lazyload alt="Full Virtualization"></p>
+<h3 id="Para-virtualization"><a href="#Para-virtualization" class="headerlink" title="Para-virtualization"></a>Para-virtualization</h3><ul>
+<li>Guest OS 會需要修改</li>
+<li>有一個 Manager 去管理所有 Guest OS</li>
+<li>Xen</li>
 </ul>
-<h3 id="Clustered-Systems"><a href="#Clustered-Systems" class="headerlink" title="Clustered Systems"></a>Clustered Systems</h3><ul>
-<li>Share Storage</li>
-<li>通常用 Local Area Network (LAN)，在同個區域，所以會更快</li>
-<li>Asymmetric clustering, Symmetric clustering</li>
+<p><img src="/notes/./images/os-chapter2/Para-virtualization.png" srcset="/notes/info/loading.gif" lazyload alt="Para-virtualization"></p>
+<h3 id="Java-Virtual-Machine"><a href="#Java-Virtual-Machine" class="headerlink" title="Java Virtual Machine"></a>Java Virtual Machine</h3><ul>
+<li>Java 執行的方式就像跑在一個 Virual Machine 上</li>
+<li>跟 Nachos 很像，只做 Instruction 的轉換，把 Java Machine 上 Compile 出的 Bytecodes 轉換成其它的</li>
+<li>有一些 Translation 上的優化，像是 **Just-In-Time (JIT)**，記錄 Translation 過的 Instruction</li>
 </ul>
-<p><img src="/notes/./images/os-chapter0/SystemArchitecture.png" srcset="/notes/info/loading.gif" lazyload alt="System Architecture"></p>
-<h1 id="Special-purpose-Systems"><a href="#Special-purpose-Systems" class="headerlink" title="Special-purpose Systems"></a>Special-purpose Systems</h1><h2 id="Real-Time-Operating-Systems"><a href="#Real-Time-Operating-Systems" class="headerlink" title="Real-Time Operating Systems"></a>Real-Time Operating Systems</h2><ul>
-<li>Well-defined <strong>fixed-time contraints</strong><ul>
-<li>Real-time 代表會在 deadlines 之前做完，跟做得速度沒關係</li>
-</ul>
-</li>
-</ul>
-<h3 id="Soft-real-time"><a href="#Soft-real-time" class="headerlink" title="Soft real-time"></a>Soft real-time</h3><ul>
-<li>盡量完成，沒完成也不會有什麼損失</li>
-<li>會有 priority，比較重要的會先做</li>
-<li>Ex: multimedia streaming<ul>
-<li>畫面不是馬上畫出來，可能會先出現線條，然後顏色，最後高解析度</li>
-</ul>
-</li>
-<li></li>
-</ul>
-<h3 id="Hard-real-time"><a href="#Hard-real-time" class="headerlink" title="Hard real-time"></a>Hard real-time</h3><ul>
-<li>沒有在 deadline 完成，會造成嚴重的後果</li>
-<li>Secondary storage limited or absent<ul>
-<li>沒有 disk，因為讀取太慢，而且讀取時間不好掌握</li>
-</ul>
-</li>
-<li>Ex: nuclear power plant controller</li>
-</ul>
-<h2 id="Multimedia-Systems"><a href="#Multimedia-Systems" class="headerlink" title="Multimedia Systems"></a>Multimedia Systems</h2><ul>
-<li>A wide range of applications including audio and video files</li>
-<li>Issues<ul>
-<li>Timing contraints，屬於 soft real-time</li>
-<li>On-demand&#x2F;live streaming</li>
-<li>Compression，有各種壓縮技術</li>
-</ul>
-</li>
-</ul>
-<h2 id="Handheld-Embedded-Systems"><a href="#Handheld-Embedded-Systems" class="headerlink" title="Handheld&#x2F;Embedded Systems"></a>Handheld&#x2F;Embedded Systems</h2><ul>
-<li>Hardware specialized OS</li>
-<li>Issues<ul>
-<li>Limited memory</li>
-<li>Slow processors</li>
-<li>Battery consumption</li>
-<li>Samll display screens</li>
-</ul>
-</li>
-</ul>
+<p><img src="/notes/./images/os-chapter2/JavaVirtualMachine.png" srcset="/notes/info/loading.gif" lazyload alt="Java Virtual Machine"></p>
 
                 
               </div>
@@ -500,8 +445,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>作業系統筆記 Historical Prospective</div>
-      <div>https://933yee.github.io/notes/2024/07/02/os-chapter0/</div>
+      <div>作業系統筆記 OS Structure</div>
+      <div>https://933yee.github.io/notes/2024/07/18/os-chapter2/</div>
     </div>
     <div class="license-meta">
       
@@ -513,7 +458,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>July 2, 2024</div>
+          <div>July 18, 2024</div>
         </div>
       
       
@@ -545,9 +490,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/notes/2024/07/09/os-chapter1/" title="作業系統筆記 Introduction">
+                      <a href="/notes/2024/07/23/js-note/" title="Javascript Note">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">作業系統筆記 Introduction</span>
+                        <span class="hidden-mobile">Javascript Note</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -555,8 +500,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/notes/2024/06/12/unity-render-1/" title="Unity Compute Shader">
-                        <span class="hidden-mobile">Unity Compute Shader</span>
+                      <a href="/notes/2024/07/17/linux-design-homework/" title="Linux Design Homework">
+                        <span class="hidden-mobile">Linux Design Homework</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
