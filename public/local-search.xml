@@ -17,19 +17,6 @@
   
   
   <entry>
-    <title>Randomized Algorithms</title>
-    <link href="/notes/2024/09/10/randomized-algorithms/"/>
-    <url>/notes/2024/09/10/randomized-algorithms/</url>
-    
-    <content type="html"><![CDATA[<h1 id="Events-and-Probability"><a href="#Events-and-Probability" class="headerlink" title="Events and Probability"></a>Events and Probability</h1><h4 id="Experiment"><a href="#Experiment" class="headerlink" title="Experiment"></a>Experiment</h4><p>A process to produce an outcome</p><h4 id="Random-Experiment"><a href="#Random-Experiment" class="headerlink" title="Random Experiment"></a>Random Experiment</h4><p>Experiment whose outcome is not known until the process is done</p><p>ex1: 翻一個硬幣兩次<br>ex2: 翻硬幣直到 head 出現</p><h4 id="Sample-Space"><a href="#Sample-Space" class="headerlink" title="Sample Space"></a>Sample Space</h4><p>The set of all outcomes of an experiment</p><p>ex1: {HH, HT, TH, TT}</p>]]></content>
-    
-    
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>Graphcis Programming and Application</title>
     <link href="/notes/2024/09/08/graphics-programming-and-applications/"/>
     <url>/notes/2024/09/08/graphics-programming-and-applications/</url>
