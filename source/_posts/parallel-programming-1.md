@@ -156,3 +156,14 @@ IO 的 Wrokflow 常常忽高忽低，所以你的網路頻寬要夠，要擴充�
 ### Speedup Factor
 
 
+# OpenMP
+- shared programming model
+- compiler 幫助來 thread programming
+- fork-join model
+- pragma 結束後就自動 join
+- #prama omp parallel 就是 function call
+- 
+
+
+## Data Scope
+要注意因為是 compiler generate，所以有時候執行起來不一樣

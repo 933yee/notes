@@ -26,7 +26,7 @@
 <meta property="og:image" content="https://933yee.github.io/notes/images/parallel-programming-1/TrendofParallelComputong.png">
 <meta property="og:image" content="https://933yee.github.io/notes/images/parallel-programming-1/MemoryArchitectureClassfication.png">
 <meta property="article:published_time" content="2024-09-13T07:03:34.000Z">
-<meta property="article:modified_time" content="2024-10-02T08:52:21.311Z">
+<meta property="article:modified_time" content="2024-10-07T07:13:14.801Z">
 <meta property="article:author" content="Kevin Lee">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://933yee.github.io/notes/images/parallel-programming-1/TrendofParallelComputong.png">
@@ -376,7 +376,16 @@
 <p>![InfiniBand vs. Gigabit Ethernet]</p>
 <h2 id="IO-Storange"><a href="#IO-Storange" class="headerlink" title="IO &amp; Storange"></a>IO &amp; Storange</h2><p>Parallel file and IO 系統<br>![Lustre file system]</p>
 <h3 id="Burst-Buffering"><a href="#Burst-Buffering" class="headerlink" title="Burst Buffering"></a>Burst Buffering</h3><p>用 Non-Volatile RAM<br>用 Write Back 而不是 Write Thorugh<br>IO 的 Wrokflow 常常忽高忽低，所以你的網路頻寬要夠，要擴充到 Peak load 才能，但是會變成成本很高，使用率很低。因此 Burst Buffer 會 Smooth IO 傳輸速率。</p>
-<h1 id="Parallel-Program-Analysis"><a href="#Parallel-Program-Analysis" class="headerlink" title="Parallel Program Analysis"></a>Parallel Program Analysis</h1><h3 id="Speedup-Factor"><a href="#Speedup-Factor" class="headerlink" title="Speedup Factor"></a>Speedup Factor</h3>
+<h1 id="Parallel-Program-Analysis"><a href="#Parallel-Program-Analysis" class="headerlink" title="Parallel Program Analysis"></a>Parallel Program Analysis</h1><h3 id="Speedup-Factor"><a href="#Speedup-Factor" class="headerlink" title="Speedup Factor"></a>Speedup Factor</h3><h1 id="OpenMP"><a href="#OpenMP" class="headerlink" title="OpenMP"></a>OpenMP</h1><ul>
+<li>shared programming model</li>
+<li>compiler 幫助來 thread programming</li>
+<li>fork-join model</li>
+<li>pragma 結束後就自動 join</li>
+<li>#prama omp parallel 就是 function call</li>
+<li></li>
+</ul>
+<h2 id="Data-Scope"><a href="#Data-Scope" class="headerlink" title="Data Scope"></a>Data Scope</h2><p>要注意因為是 compiler generate，所以有時候執行起來不一樣</p>
+
                 
               </div>
             
