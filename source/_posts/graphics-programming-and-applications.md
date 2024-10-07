@@ -39,4 +39,3 @@ Screen Coordinate
 - 用四維 vector (x, y, z, w) 來描述，能夠區分它是 **點** 還是 **向量**
   - w = 0: 向量
   - w = 1: 點
-

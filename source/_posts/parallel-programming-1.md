@@ -156,5 +156,3 @@ IO 的 Wrokflow 常常忽高忽低，所以你的網路頻寬要夠，要擴充�
 ### Speedup Factor
 
 
-
-
