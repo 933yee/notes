@@ -16,24 +16,21 @@
   <meta name="author" content="Kevin Lee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="OpenGL Application Programming Interface (API) 寫指令與底層顯卡溝通，把資料餵到 Render Pipeline 裡面，繪出結果 Primitive-based Rendering 用最小單元，點、線、面組成    Rasterization Rendering Pipeline 有很多 Stage，一路從 CPU 流到 GPU，有些專門處理頂點，有些">
+    <meta name="description" content="NVDIA Night Systems 主要用來分析 GPU 的 Performance  因為有直覺得 Timeline，可以看某個程式在哪個時間點再做什麼，所以也可以看 CPU 執行的程式  Single thread&#x2F; Multi-thread (pthread&#x2F;OpenMP)  srun -n1 -cX nsys profile &lt;nsys options&gt;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Graphcis Programming and Application">
-<meta property="og:url" content="https://933yee.github.io/notes/2024/09/08/graphics-programming-and-applications/index.html">
+<meta property="og:title" content="NVDIA Night Systems">
+<meta property="og:url" content="https://933yee.github.io/notes/2024/10/02/nvdia-night-systems/index.html">
 <meta property="og:site_name" content="Kevin&#39;s notes">
-<meta property="og:description" content="OpenGL Application Programming Interface (API) 寫指令與底層顯卡溝通，把資料餵到 Render Pipeline 裡面，繪出結果 Primitive-based Rendering 用最小單元，點、線、面組成    Rasterization Rendering Pipeline 有很多 Stage，一路從 CPU 流到 GPU，有些專門處理頂點，有些">
+<meta property="og:description" content="NVDIA Night Systems 主要用來分析 GPU 的 Performance  因為有直覺得 Timeline，可以看某個程式在哪個時間點再做什麼，所以也可以看 CPU 執行的程式  Single thread&#x2F; Multi-thread (pthread&#x2F;OpenMP)  srun -n1 -cX nsys profile &lt;nsys options&gt;">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://www.khronos.org/opengl/wiki_opengl/images/RenderingPipeline.png">
-<meta property="og:image" content="https://i.sstatic.net/w7bKr.jpg">
-<meta property="article:published_time" content="2024-09-08T05:28:01.000Z">
-<meta property="article:modified_time" content="2024-10-04T08:28:00.853Z">
+<meta property="article:published_time" content="2024-10-02T08:52:14.000Z">
+<meta property="article:modified_time" content="2024-10-02T08:52:30.489Z">
 <meta property="article:author" content="Kevin Lee">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://www.khronos.org/opengl/wiki_opengl/images/RenderingPipeline.png">
   
   
   
-  <title>Graphcis Programming and Application - Kevin&#39;s notes</title>
+  <title>NVDIA Night Systems - Kevin&#39;s notes</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -199,7 +196,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Graphcis Programming and Application"></span>
+            <span id="subtitle" data-typed-text="NVDIA Night Systems"></span>
           
         </div>
 
@@ -210,8 +207,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-09-08 13:28" pubdate>
-          September 8, 2024 pm
+        <time datetime="2024-10-02 16:52" pubdate>
+          October 2, 2024 pm
         </time>
       </span>
     
@@ -222,7 +219,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          180 words
+          190 words
         
       </span>
     
@@ -270,45 +267,30 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Graphcis Programming and Application</h1>
+            <h1 id="seo-header">NVDIA Night Systems</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="OpenGL"><a href="#OpenGL" class="headerlink" title="OpenGL"></a>OpenGL</h2><ul>
-<li>Application Programming Interface (API)</li>
-<li>寫指令與底層顯卡溝通，把資料餵到 Render Pipeline 裡面，繪出結果</li>
-<li>Primitive-based Rendering<ul>
-<li>用最小單元，點、線、面組成</li>
+                <h1 id="NVDIA-Night-Systems"><a href="#NVDIA-Night-Systems" class="headerlink" title="NVDIA Night Systems"></a>NVDIA Night Systems</h1><ul>
+<li><p>主要用來分析 GPU 的 Performance</p>
+</li>
+<li><p>因為有直覺得 Timeline，可以看某個程式在哪個時間點再做什麼，所以也可以看 CPU 執行的程式</p>
+</li>
+<li><p>Single thread&#x2F; Multi-thread (pthread&#x2F;OpenMP)</p>
+<ul>
+<li><code>srun -n1 -cX nsys profile &lt;nsys options&gt; ./your_program &lt;program args&gt;</code></li>
 </ul>
 </li>
-</ul>
-<h2 id="Rasterization-Rendering-Pipeline"><a href="#Rasterization-Rendering-Pipeline" class="headerlink" title="Rasterization Rendering Pipeline"></a>Rasterization Rendering Pipeline</h2><ul>
-<li>有很多 Stage，一路從 CPU 流到 GPU，有些專門處理頂點，有些專門處理三角片，有些處理 Pixel…</li>
-<li>早期的 Rendering Pipeline 是 Fiexed Function，Stage 裡面大部分的邏輯是寫死的<ul>
-<li>只能傳一些自己的參數進去，不能改變裡面的運行邏輯</li>
-</ul>
+<li><p>MPI<br><code>srun -nX ./wrapper.sh ./your_program &lt;program args&gt;</code></p>
 </li>
-<li>現在是 Programmable shader，可以自己寫一些東西進去，更為靈活<ul>
-<li>在 OpenGL 3.0 成為正式的核心，捨去 Fixed Function Pipeline</li>
-<li>在 OpenGL 裡面使用 GLSL 撰寫<br><img src="https://www.khronos.org/opengl/wiki_opengl/images/RenderingPipeline.png" srcset="/notes/info/loading.gif" lazyload alt="Rasterization Rendering Pipeline"></li>
-</ul>
+<li><p>wrapper.sh</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-meta">#! /bin/bash</span><br><br><span class="hljs-built_in">mkdir</span> -p nsys_reports<br><br><span class="hljs-comment"># Output to ./nsys_reports/rank_$N.nsys-rep</span><br>nsys profile \<br>-o <span class="hljs-string">&quot;./nsys_reports/rank_<span class="hljs-variable">$PMI_RANK</span>.nsys-rep&quot;</span> \  <br>--mpi-impl openmpi \<br>--trace mpi,ucx,osrt \<br><span class="hljs-variable">$@</span><br></code></pre></td></tr></table></figure>
+<p>讓每個 Process 輸出到不同名稱的檔案，裡面的 PMI_RANK 就會自動填入對應的 rank</p>
 </li>
 </ul>
-<h1 id="Projection-Transformation"><a href="#Projection-Transformation" class="headerlink" title="Projection &amp; Transformation"></a>Projection &amp; Transformation</h1><ul>
-<li>Modeling Transformation<br>World Coordinate</li>
-<li>Viewing Transformation<br>Camera Coordinate</li>
-<li>Projection Transformation<br>Window Coordinate</li>
-<li>Viewport Transformation<br>Screen Coordinate</li>
-</ul>
-<h2 id="Coordinate-System"><a href="#Coordinate-System" class="headerlink" title="Coordinate System"></a>Coordinate System</h2><p><img src="https://i.sstatic.net/w7bKr.jpg" srcset="/notes/info/loading.gif" lazyload alt="Coordinate System"></p>
-<h3 id="Homogeneous-Coordinates"><a href="#Homogeneous-Coordinates" class="headerlink" title="Homogeneous Coordinates"></a>Homogeneous Coordinates</h3><ul>
-<li>用四維 vector (x, y, z, w) 來描述，能夠區分它是 <strong>點</strong> 還是 <strong>向量</strong><ul>
-<li>w &#x3D; 0: 向量</li>
-<li>w &#x3D; 1: 點</li>
-</ul>
-</li>
-</ul>
+<p>–trace <events>: cuda, mpi, ucs, nvtx, …<br>–start-later X: X 秒之後再開始 profile，因為像是 initialization 就不重要，且通常只要監測幾秒就好，不用全看<br>–duration Y: profile 跑幾秒<br>–mpi-impl: openmpi (for OpenMPI)&#x2F; mpich (for Intel MPI)</p>
+<h1 id="NVTX"><a href="#NVTX" class="headerlink" title="NVTX"></a>NVTX</h1><p>可以結合 Nsystem，插偵來更好的監測結果，不過會有一些 Profile Overhead</p>
 
                 
               </div>
@@ -326,8 +308,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Graphcis Programming and Application</div>
-      <div>https://933yee.github.io/notes/2024/09/08/graphics-programming-and-applications/</div>
+      <div>NVDIA Night Systems</div>
+      <div>https://933yee.github.io/notes/2024/10/02/nvdia-night-systems/</div>
     </div>
     <div class="license-meta">
       
@@ -339,7 +321,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>September 8, 2024</div>
+          <div>October 2, 2024</div>
         </div>
       
       
@@ -371,9 +353,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/notes/2024/09/10/randomized-algorithms/" title="Randomized Algorithms">
+                      <a href="/notes/2024/10/06/gpa-lecture-program/" title="Graphcis Programming and Application Lecture Program 解析">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Randomized Algorithms</span>
+                        <span class="hidden-mobile">Graphcis Programming and Application Lecture Program 解析</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -381,8 +363,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/notes/2024/09/07/circuits-and-electronics-1/" title="Circuits &amp; Electronics - Semiconductor Material &amp; Diode">
-                        <span class="hidden-mobile">Circuits &amp; Electronics - Semiconductor Material &amp; Diode</span>
+                      <a href="/notes/2024/09/15/daily-conversion/" title="Daily Conversion">
+                        <span class="hidden-mobile">Daily Conversion</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
