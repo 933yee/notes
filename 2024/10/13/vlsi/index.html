@@ -16,24 +16,23 @@
   <meta name="author" content="Kevin Lee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="平行計算 Parallel Computing過往我們寫的程式都是 Sequential Code，都是線性的邏輯，同個問題只能用一個 Processor 處理。平行計算 是讓 多個Processors 一起解決 單一問題，把 Instructions 餵到不同的 Processor，讓他們同時去處理。  這些 Processor 每次執行的先後順序可能不固定，所以像是用 print 來 debu">
+    <meta name="description" content="Assert-High Swtich: 輸入邏輯 1 電路會 close，導通Assert-Low Swtich: 輸入邏輯 0 電路會 close，導通  MOSFETMetal + Oxide-Semiconductor Field Effect Transitor N channel MOSFET (nFET) 是 assert-high switch，也稱 N-MOSP channel M">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Parallel Programming">
-<meta property="og:url" content="https://933yee.github.io/notes/2024/09/13/parallel-programming-1/index.html">
+<meta property="og:title" content="VLSI">
+<meta property="og:url" content="https://933yee.github.io/notes/2024/10/13/vlsi/index.html">
 <meta property="og:site_name" content="Kevin&#39;s notes">
-<meta property="og:description" content="平行計算 Parallel Computing過往我們寫的程式都是 Sequential Code，都是線性的邏輯，同個問題只能用一個 Processor 處理。平行計算 是讓 多個Processors 一起解決 單一問題，把 Instructions 餵到不同的 Processor，讓他們同時去處理。  這些 Processor 每次執行的先後順序可能不固定，所以像是用 print 來 debu">
+<meta property="og:description" content="Assert-High Swtich: 輸入邏輯 1 電路會 close，導通Assert-Low Swtich: 輸入邏輯 0 電路會 close，導通  MOSFETMetal + Oxide-Semiconductor Field Effect Transitor N channel MOSFET (nFET) 是 assert-high switch，也稱 N-MOSP channel M">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://933yee.github.io/notes/images/parallel-programming-1/TrendofParallelComputong.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/parallel-programming-1/MemoryArchitectureClassfication.png">
-<meta property="article:published_time" content="2024-09-13T07:03:34.000Z">
-<meta property="article:modified_time" content="2024-10-08T17:01:48.316Z">
+<meta property="og:image" content="https://i.sstatic.net/DULlo.png">
+<meta property="article:published_time" content="2024-10-13T08:22:14.000Z">
+<meta property="article:modified_time" content="2024-10-13T12:32:40.220Z">
 <meta property="article:author" content="Kevin Lee">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://933yee.github.io/notes/images/parallel-programming-1/TrendofParallelComputong.png">
+<meta name="twitter:image" content="https://i.sstatic.net/DULlo.png">
   
   
   
-  <title>Parallel Programming - Kevin&#39;s notes</title>
+  <title>VLSI - Kevin&#39;s notes</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -199,7 +198,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Parallel Programming"></span>
+            <span id="subtitle" data-typed-text="VLSI"></span>
           
         </div>
 
@@ -210,8 +209,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-09-13 15:03" pubdate>
-          September 13, 2024 pm
+        <time datetime="2024-10-13 16:22" pubdate>
+          October 13, 2024 pm
         </time>
       </span>
     
@@ -222,7 +221,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k words
+          291 words
         
       </span>
     
@@ -233,7 +232,7 @@
         
         
         
-          11 mins
+          3 mins
         
       </span>
     
@@ -270,129 +269,20 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Parallel Programming</h1>
+            <h1 id="seo-header">VLSI</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="平行計算-Parallel-Computing"><a href="#平行計算-Parallel-Computing" class="headerlink" title="平行計算 Parallel Computing"></a>平行計算 Parallel Computing</h1><p>過往我們寫的程式都是 <strong>Sequential Code</strong>，都是線性的邏輯，同個問題只能用一個 Processor 處理。<strong>平行計算</strong> 是讓 <strong>多個Processors</strong> 一起解決 <strong>單一問題</strong>，把 Instructions 餵到不同的 Processor，讓他們同時去處理。</p>
-<ul>
-<li>這些 Processor 每次執行的先後順序可能不固定，所以像是用 print 來 debug 可能結果每次都不一樣，處理起來非常複雜</li>
-<li>有時候會有 Dependency 的問題要自己特別處理</li>
-</ul>
-<p>平行計算可以應用在 Bottleneck 的地方，像是以往高速公路的 Bottleneck 在收費站，現在改成電子化大幅提升處理速度</p>
-<h2 id="平行計算-VS-分散式計算"><a href="#平行計算-VS-分散式計算" class="headerlink" title="平行計算 VS 分散式計算"></a>平行計算 VS 分散式計算</h2><p>兩者都需要多台電腦，但是背景有很大的差異性</p>
-<p><strong>平行計算</strong> 主要是用來 <strong>高效能計算</strong>，通常需要大量計算，因此 <strong>效能</strong> 是最重要的，在有限時間內解決某問題<br><strong>分散式計算</strong> 主要是 <strong>商用的</strong>，通常用來提供 <strong>計算服務的共享</strong>，讓使用者共享資源，效能並非最重要的，重視 <strong>分享與管理計算的資源</strong></p>
-<h2 id="為甚麼需要平行計算"><a href="#為甚麼需要平行計算" class="headerlink" title="為甚麼需要平行計算"></a>為甚麼需要平行計算</h2><ul>
-<li>節省時間<br>使用 <strong>更多資源</strong> 縮短 <strong>執行時間</strong></li>
-<li>解決更大的問題<br>以往某些問題就算給予大量時間，依然無法解決，一定需要大量的計算能力才可以，像是大部分的科學計算 (物理模擬、台積電製程等等)</li>
-<li>最大化榨乾硬體效能</li>
-</ul>
-<h2 id="平行計算的演化"><a href="#平行計算的演化" class="headerlink" title="平行計算的演化"></a>平行計算的演化</h2><ol>
-<li>Single-Core Era</li>
-<li>Multi-Core Era</li>
-<li>Distributed System Era</li>
-<li>Heterogeneous Systems Era<ul>
-<li>發現 CPU 不再夠用，開始使用 GPU 來解決問題<br><img src="/notes/./images/parallel-programming-1/TrendofParallelComputong.png" srcset="/notes/info/loading.gif" lazyload alt="Trend of Parallel Computong"></li>
-</ul>
-</li>
-</ol>
-<h1 id="平行電腦的分類-Parallel-Computer-Classification"><a href="#平行電腦的分類-Parallel-Computer-Classification" class="headerlink" title="平行電腦的分類 Parallel Computer Classification"></a>平行電腦的分類 Parallel Computer Classification</h1><h2 id="Flynn’s-classic-taxonomy"><a href="#Flynn’s-classic-taxonomy" class="headerlink" title="Flynn’s classic taxonomy"></a>Flynn’s classic taxonomy</h2><p>把電腦架構依據兩個獨立的象限: <strong>Instruction</strong> &amp; <strong>Data</strong></p>
-<ul>
-<li>又可以分成 SISD、SIMD、MISD、MIMD</li>
-</ul>
-<h3 id="SISD"><a href="#SISD" class="headerlink" title="SISD"></a>SISD</h3><ul>
-<li>一次讀一個 Instruction，一種 Data</li>
-<li>Serail Computer，最後到硬體處理都是 Sequential Code</li>
-</ul>
-<h3 id="SIMD"><a href="#SIMD" class="headerlink" title="SIMD"></a>SIMD</h3><ul>
-<li>一次讀一個 Instruction，可以 Apply 這個 Instruction 到不同的 Data</li>
-<li>ex: vector processor、<strong>GPU</strong></li>
-</ul>
-<h3 id="MISD"><a href="#MISD" class="headerlink" title="MISD"></a>MISD</h3><ul>
-<li>多種 Instruction，但是吃的 Data 一樣</li>
-<li>ex: 幾乎沒有應用</li>
-</ul>
-<h3 id="MIMD"><a href="#MIMD" class="headerlink" title="MIMD"></a>MIMD</h3><ul>
-<li>多種 Instruction，可以吃不同的 Data</li>
-<li>現在電腦中的 Multi-core CPU 都是這種</li>
-</ul>
-<h2 id="Memory-Architecture-Classfication"><a href="#Memory-Architecture-Classfication" class="headerlink" title="Memory Architecture Classfication"></a>Memory Architecture Classfication</h2><ul>
-<li><p>Shared Memory</p>
-<ul>
-<li>Uniform Memory Access (UMA)</li>
-<li>Non-Uniform Memory Access (NUMA)</li>
-</ul>
-</li>
-<li><p>Distributed Memory </p>
-<ul>
-<li>Cluster、Supercomputer、Datacenter</li>
-</ul>
-</li>
-</ul>
-<p><img src="/notes/./images/parallel-programming-1/MemoryArchitectureClassfication.png" srcset="/notes/info/loading.gif" lazyload alt="Memory Architecture Classfication"></p>
-<h1 id="Parallel-Programming-Model"><a href="#Parallel-Programming-Model" class="headerlink" title="Parallel Programming Model"></a>Parallel Programming Model</h1><p>不管硬體長怎樣，都把它們做 abstraction，製造假象讓上層使用</p>
-<ul>
-<li>Message Passing Model 可以支援 Shared Memory Machine</li>
-<li>Shared Memory Model 可以支援 Distributed Memory Machine</li>
-</ul>
-<h2 id="Shared-Memory-Programming-Model"><a href="#Shared-Memory-Programming-Model" class="headerlink" title="Shared Memory Programming Model"></a>Shared Memory Programming Model</h2><p>Thread 之間藉由 Global Memory 做溝通<br>Ex: POSIX Thread (Pthread)、OpenMP<br>比較簡單，很多 Sync. 的問題，可能會更慢</p>
-<h2 id="Message-Passing-Programming-Model"><a href="#Message-Passing-Programming-Model" class="headerlink" title="Message Passing Programming Model"></a>Message Passing Programming Model</h2><p>不同 Machine 需要 Send、Receive 來溝通，因此需要 Memory Copy<br>Ex: MPI API<br>Scability 比較好</p>
-<h1 id="Supercomputer"><a href="#Supercomputer" class="headerlink" title="Supercomputer"></a>Supercomputer</h1><p>專門為了高效能計算而設計的</p>
-<p>效能通常用 <strong>FLOPS</strong> 來定義，也就是每秒鐘能做多少 <strong>浮點數運算</strong></p>
-<p>執行的 Benchmark 是 HPL benchmark，來做超級電腦排名</p>
-<h2 id="HPL-Benchmark"><a href="#HPL-Benchmark" class="headerlink" title="HPL Benchmark"></a>HPL Benchmark</h2><p>能夠計算 <strong>浮點數執行的速率</strong></p>
-<p>實作方式沒有限制，甚至連記憶體大小之類的也會影響結果。</p>
-<p>如果這個 Benchmark 的執行效果好，其他計算基本上也會不錯</p>
-<h1 id="Interconnect"><a href="#Interconnect" class="headerlink" title="Interconnect"></a>Interconnect</h1><p>平行計算的時候，真的瓶頸在 <strong>網路</strong> 、 <strong>IO</strong> 這邊，遠慢於 CPU 計算，因此會有其他優化</p>
-<h2 id="Interconnection-Networks"><a href="#Interconnection-Networks" class="headerlink" title="Interconnection Networks"></a>Interconnection Networks</h2><p>四大考量因素: Scalability、Performance、Resilience、Cost</p>
-<h3 id="Network-Topology"><a href="#Network-Topology" class="headerlink" title="Network Topology"></a>Network Topology</h3><ul>
-<li>Diameter(lantency)<ul>
-<li>最長的點對點有多少 Link</li>
-</ul>
-</li>
-<li>Bisection(resilience)<ul>
-<li>斷掉幾個 Link 會壞掉</li>
-</ul>
-</li>
-<li>Links(cost)<ul>
-<li>要多少 Edge</li>
-</ul>
-</li>
-<li>Degree(scalability)<ul>
-<li>每個 Node 需要多少 Link 的 Port 的數量</li>
-</ul>
-</li>
-</ul>
-<p>—|—|—|—|—|—</p>
-<p>| Linear Array | P-1   | 1   | P-1    | 2   |<br>| ———— | —– | — | —— | — | — |</p>
-<p>| Ring         | P&#x2F;2   | 2   | P      | 2   |<br>| —          | —   | — | —    | — | — |</p>
-<p>| Tree         | 2logp | 1   | 2(p-1) | 3   |<br>| —          | —   | — | —    | — | — |<br>2-D Mesh<br>2-D Torus<br>Hypercube</p>
-<h4 id="4-D-Hypercube"><a href="#4-D-Hypercube" class="headerlink" title="4-D Hypercube"></a>4-D Hypercube</h4><p>scability 不理想<br>每個 Node 有 ID，是由 4 bits 組成，鄰居之間都把某個 bit flip</p>
-<h4 id="6-Dimensional-Mesh-Torus"><a href="#6-Dimensional-Mesh-Torus" class="headerlink" title="6-Dimensional Mesh&#x2F; Torus"></a>6-Dimensional Mesh&#x2F; Torus</h4><h4 id="Dragonfly-topology"><a href="#Dragonfly-topology" class="headerlink" title="Dragonfly topology"></a>Dragonfly topology</h4><p>在比較接近的 Node 或 Rack 之間，會很有密集的 Link，越遠的 Link 越少</p>
-<h4 id="InfiniBand"><a href="#InfiniBand" class="headerlink" title="InfiniBand"></a>InfiniBand</h4><p>效能很高，成本也很高</p>
-<p>在超級電腦中，幾乎都是使用 InfiniBand</p>
-<p>Ethernet 是用 IP 傳輸，每個網路層彼此都是獨立的，因此 Layer 之間傳輸都要做 Memory Copy，一堆 Context Switch，不利於大量傳輸<br>InfiniBand 拋棄了 Layer IP 的方式，是藉由 DMA 的控制器去做 IO，不經過 OS、CPU。且 Remote DMA 甚至可以讀到遠端電腦的 Local Memory</p>
-<p>![InfiniBand vs. Gigabit Ethernet]</p>
-<h2 id="IO-Storange"><a href="#IO-Storange" class="headerlink" title="IO &amp; Storange"></a>IO &amp; Storange</h2><p>Parallel file and IO 系統<br>![Lustre file system]</p>
-<h3 id="Burst-Buffering"><a href="#Burst-Buffering" class="headerlink" title="Burst Buffering"></a>Burst Buffering</h3><p>用 Non-Volatile RAM<br>用 Write Back 而不是 Write Thorugh<br>IO 的 Wrokflow 常常忽高忽低，所以你的網路頻寬要夠，要擴充到 Peak load 才能，但是會變成成本很高，使用率很低。因此 Burst Buffer 會 Smooth IO 傳輸速率。</p>
-<h1 id="Parallel-Program-Analysis"><a href="#Parallel-Program-Analysis" class="headerlink" title="Parallel Program Analysis"></a>Parallel Program Analysis</h1><h3 id="Speedup-Factor"><a href="#Speedup-Factor" class="headerlink" title="Speedup Factor"></a>Speedup Factor</h3><h1 id="OpenMP"><a href="#OpenMP" class="headerlink" title="OpenMP"></a>OpenMP</h1><ul>
-<li>shared programming model</li>
-<li>compiler 幫助來 thread programming</li>
-<li>fork-join model</li>
-<li>pragma 結束後就自動 join</li>
-<li>#prama omp parallel 就是 function call</li>
-<li></li>
-</ul>
-<h2 id="Data-Scope"><a href="#Data-Scope" class="headerlink" title="Data Scope"></a>Data Scope</h2><p>要注意因為是 compiler generate，所以有時候執行起來不一樣</p>
-<h1 id="Parallel-Computing"><a href="#Parallel-Computing" class="headerlink" title="Parallel Computing"></a>Parallel Computing</h1><h2 id="Embarassingly"><a href="#Embarassingly" class="headerlink" title="Embarassingly"></a>Embarassingly</h2><p>很常見的名詞，Independent 的 Parallel Computing，最理想的 task，非常容易平行話</p>
-<p>ex: shift、scale、rotate 一個圖的每個 pixel<br>ex: Monte Carlo Methods<br>random sampling<br>用來處理很複雜的問題，且每一個 Sampling 的問題都是 Independent，很適用平行計算<br>計算拍<br>積分<br>ex: Mandelbrot Set<br>計算 complex number<br>絕對值永遠不超過 2 就是</p>
-<h3 id="Image-Region-Partitioning"><a href="#Image-Region-Partitioning" class="headerlink" title="Image Region Partitioning"></a>Image Region Partitioning</h3><p>要確保每個 Partition 工作量是差不多的</p>
-<h2 id="Dynamic-Task-Assignment"><a href="#Dynamic-Task-Assignment" class="headerlink" title="Dynamic Task Assignment"></a>Dynamic Task Assignment</h2><p>有個 Master 來分配工作，做完的 Thread 繼續做下一個工作<br>count 代表發出去的工作，當count &#x3D;&#x3D; 0 代表工作都做完收回了，Master 才可以結束</p>
-<h2 id="Sorting-Algorithm"><a href="#Sorting-Algorithm" class="headerlink" title="Sorting Algorithm"></a>Sorting Algorithm</h2><p>Quick Sort 在平行演算法中效果不好</p>
-<p>在 n processors 情況下，平行後最理想複雜度應該達到 O(log n)</p>
-<h3 id="Bucket-Sort"><a href="#Bucket-Sort" class="headerlink" title="Bucket Sort"></a>Bucket Sort</h3><p>Bucket range 很重要</p>
-<h3 id="Bitonic-Mergesort"><a href="#Bitonic-Mergesort" class="headerlink" title="Bitonic Mergesort"></a>Bitonic Mergesort</h3><p>平行後算快的 Sorting Algorithm<br>結合 Mergesort 的 Divide，最後一定是兩兩 Bitonic Sequence<br>Monotonic Sequence: 漸增或漸減<br>Bitonic Sequence: 切一半，兩邊都是 Monotonic Sequence 一邊漸增、一邊漸減<br>交換、會變成兩個 Bitonic Sequence</p>
+                <p>Assert-High Swtich: 輸入邏輯 1 電路會 close，導通<br>Assert-Low Swtich: 輸入邏輯 0 電路會 close，導通 </p>
+<h1 id="MOSFET"><a href="#MOSFET" class="headerlink" title="MOSFET"></a>MOSFET</h1><p>Metal + Oxide-Semiconductor Field Effect Transitor</p>
+<p>N channel MOSFET (nFET) 是 assert-high switch，也稱 N-MOS<br>P channel MOSFET (pFET) 是 assert-low switch，也稱 P-MOS</p>
+<h3 id="電壓對應-Boolean-值"><a href="#電壓對應-Boolean-值" class="headerlink" title="電壓對應 Boolean 值"></a>電壓對應 Boolean 值</h3><p>當電壓大於某個值，一律判斷成邏輯 1，小於某個值判斷成邏輯 0，中間的區域叫做 noise margin。noise margin 越小越容易誤判</p>
+<h3 id="P-N-Junctions"><a href="#P-N-Junctions" class="headerlink" title="P-N Junctions"></a>P-N Junctions</h3><p>p-type 半導體電洞多，n-type 半導體電子多。兩者接在一起會讓電子電洞傾向互相吸引，然而實際上受到電廠影響，僅有少數電子電洞相吸。</p>
+<p>P-N Junctions 的特性是，施加外加電壓後，<strong>電流只能從 P 端流向 N 端</strong>。當給予 P 端正電、給予 N 端負電，N 端的電子會受到正電吸引、P 端的電動會受到負電吸引，兩者都往反方向衝，產生 <strong>P 流向 N 的電流</strong>。然而如果我們是給 P 端負電、N 端正電，就不會有電流產生。</p>
+<h2 id="nFET-nMOS"><a href="#nFET-nMOS" class="headerlink" title="nFET (nMOS)"></a>nFET (nMOS)</h2><p>Source 接地，Drain 給高電壓 ($V_{DD}$)<br>Source 和 Drain 都接到一個帶很多電子 (n) 的東西，然後整個 body 是 p 型半導體<br>Strong Logic 0, Weak Logic 1</p>
+<h2 id="pFET-pMOS"><a href="#pFET-pMOS" class="headerlink" title="pFET (pMOS)"></a>pFET (pMOS)</h2><p>都跟 nFET 相反</p>
+<h2 id="Gate-Level"><a href="#Gate-Level" class="headerlink" title="Gate Level"></a>Gate Level</h2><h3 id="Not-Gate"><a href="#Not-Gate" class="headerlink" title="Not Gate"></a>Not Gate</h3><p><img src="https://i.sstatic.net/DULlo.png" srcset="/notes/info/loading.gif" lazyload alt="not gate"></p>
 
                 
               </div>
@@ -410,8 +300,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Parallel Programming</div>
-      <div>https://933yee.github.io/notes/2024/09/13/parallel-programming-1/</div>
+      <div>VLSI</div>
+      <div>https://933yee.github.io/notes/2024/10/13/vlsi/</div>
     </div>
     <div class="license-meta">
       
@@ -423,7 +313,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>September 13, 2024</div>
+          <div>October 13, 2024</div>
         </div>
       
       
@@ -455,18 +345,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/notes/2024/09/15/daily-conversion/" title="Daily Conversion">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Daily Conversion</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/notes/2024/09/10/randomized-algorithms/" title="Randomized Algorithms">
-                        <span class="hidden-mobile">Randomized Algorithms</span>
+                      <a href="/notes/2024/10/06/gpa-lecture-program/" title="Graphcis Programming and Application Lecture Program 解析">
+                        <span class="hidden-mobile">Graphcis Programming and Application Lecture Program 解析</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -523,6 +407,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -716,6 +606,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/notes/js/local-search.js" ></script>
 
