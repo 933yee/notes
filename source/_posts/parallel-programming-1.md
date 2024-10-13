@@ -167,3 +167,40 @@ IO 的 Wrokflow 常常忽高忽低，所以你的網路頻寬要夠，要擴充�
 
 ## Data Scope
 要注意因為是 compiler generate，所以有時候執行起來不一樣
+
+# Parallel Computing
+## Embarassingly 
+很常見的名詞，Independent 的 Parallel Computing，最理想的 task，非常容易平行話
+
+ex: shift、scale、rotate 一個圖的每個 pixel
+ex: Monte Carlo Methods
+random sampling
+用來處理很複雜的問題，且每一個 Sampling 的問題都是 Independent，很適用平行計算
+計算拍
+積分
+ex: Mandelbrot Set
+計算 complex number
+絕對值永遠不超過 2 就是
+
+### Image Region Partitioning
+要確保每個 Partition 工作量是差不多的
+
+
+## Dynamic Task Assignment
+有個 Master 來分配工作，做完的 Thread 繼續做下一個工作  
+count 代表發出去的工作，當count == 0 代表工作都做完收回了，Master 才可以結束
+
+## Sorting Algorithm
+Quick Sort 在平行演算法中效果不好
+
+在 n processors 情況下，平行後最理想複雜度應該達到 O(log n)
+
+### Bucket Sort
+Bucket range 很重要
+
+### Bitonic Mergesort
+平行後算快的 Sorting Algorithm
+結合 Mergesort 的 Divide，最後一定是兩兩 Bitonic Sequence
+Monotonic Sequence: 漸增或漸減
+Bitonic Sequence: 切一半，兩邊都是 Monotonic Sequence 一邊漸增、一邊漸減
+交換、會變成兩個 Bitonic Sequence
