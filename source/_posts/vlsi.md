@@ -63,5 +63,11 @@ via: metal to metal
 
 # 會考 IR drop 是啥
 # 會考 semantic 轉 layout、layout 轉 semantic
+要注意 n-well 的位置
 先試試看畫出 inverter
-Nor2 或 Nand2，然後要注意 3 個 input 版本的
+Nor2 或 Nand2，然後要注意 3 個 input 版本的 **並聯** 部分
+AOI
+
+# 要換看 stick layout
+
+# 要看的懂 Euler graph (幹
