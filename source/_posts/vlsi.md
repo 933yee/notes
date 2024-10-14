@@ -38,3 +38,30 @@ Strong Logic 0, Weak Logic 1
 
 ### Not Gate
 ![not gate](https://i.sstatic.net/DULlo.png)
+
+
+# 我可以先把 Nand、Nor 之類的 用 pMOS、nMOS 的作法做出，記熟一點
+一端是串聯、一端並聯
+
+# Physics Structure
+## Add more layers
+先加 insulating glass
+再 CMP (chemical-mechanical planarization)，磨平
+最後加上金屬層
+
+low-k: 電容很快就充滿
+critical path: 最長的那條，會用 low-k 來加速
+
+## 絕緣層
+t_ox 如果越小，代表絕緣層厚度越小，因此上下的吸引力會越大，導致電容變大
+A_g: 面積，w * L
+1:15:20 current voltage equation 推導
+
+active contact: metal to drain/source
+gate contact : metal to gate 
+via: metal to metal
+
+# 會考 IR drop 是啥
+# 會考 semantic 轉 layout、layout 轉 semantic
+先試試看畫出 inverter
+Nor2 或 Nand2，然後要注意 3 個 input 版本的
