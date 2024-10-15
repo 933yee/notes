@@ -25,7 +25,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://i.sstatic.net/DULlo.png">
 <meta property="article:published_time" content="2024-10-13T08:22:14.000Z">
-<meta property="article:modified_time" content="2024-10-14T14:56:17.044Z">
+<meta property="article:modified_time" content="2024-10-15T03:49:32.454Z">
 <meta property="article:author" content="Kevin Lee">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://i.sstatic.net/DULlo.png">
@@ -221,7 +221,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          449 words
+          832 words
         
       </span>
     
@@ -232,7 +232,7 @@
         
         
         
-          4 mins
+          7 mins
         
       </span>
     
@@ -283,13 +283,31 @@
 <h2 id="nFET-nMOS"><a href="#nFET-nMOS" class="headerlink" title="nFET (nMOS)"></a>nFET (nMOS)</h2><p>Source 接地，Drain 給高電壓 ($V_{DD}$)<br>Source 和 Drain 都接到一個帶很多電子 (n) 的東西，然後整個 body 是 p 型半導體<br>Strong Logic 0, Weak Logic 1</p>
 <h2 id="pFET-pMOS"><a href="#pFET-pMOS" class="headerlink" title="pFET (pMOS)"></a>pFET (pMOS)</h2><p>都跟 nFET 相反</p>
 <h2 id="Gate-Level"><a href="#Gate-Level" class="headerlink" title="Gate Level"></a>Gate Level</h2><h3 id="Not-Gate"><a href="#Not-Gate" class="headerlink" title="Not Gate"></a>Not Gate</h3><p><img src="https://i.sstatic.net/DULlo.png" srcset="/notes/info/loading.gif" lazyload alt="not gate"></p>
-<h1 id="我可以先把-Nand、Nor-之類的-用-pMOS、nMOS-的作法做出，記熟一點"><a href="#我可以先把-Nand、Nor-之類的-用-pMOS、nMOS-的作法做出，記熟一點" class="headerlink" title="我可以先把 Nand、Nor 之類的 用 pMOS、nMOS 的作法做出，記熟一點"></a>我可以先把 Nand、Nor 之類的 用 pMOS、nMOS 的作法做出，記熟一點</h1><p>一端是串聯、一端並聯</p>
+<h3 id="我可以先把-Nand、Nor-之類的-用-pMOS、nMOS-的作法做出，記熟一點"><a href="#我可以先把-Nand、Nor-之類的-用-pMOS、nMOS-的作法做出，記熟一點" class="headerlink" title="我可以先把 Nand、Nor 之類的 用 pMOS、nMOS 的作法做出，記熟一點"></a>我可以先把 Nand、Nor 之類的 用 pMOS、nMOS 的作法做出，記熟一點</h3><p>一端是串聯、一端並聯</p>
 <h1 id="Physics-Structure"><a href="#Physics-Structure" class="headerlink" title="Physics Structure"></a>Physics Structure</h1><h2 id="Add-more-layers"><a href="#Add-more-layers" class="headerlink" title="Add more layers"></a>Add more layers</h2><p>先加 insulating glass<br>再 CMP (chemical-mechanical planarization)，磨平<br>最後加上金屬層</p>
 <p>low-k: 電容很快就充滿<br>critical path: 最長的那條，會用 low-k 來加速</p>
 <h2 id="絕緣層"><a href="#絕緣層" class="headerlink" title="絕緣層"></a>絕緣層</h2><p>t_ox 如果越小，代表絕緣層厚度越小，因此上下的吸引力會越大，導致電容變大<br>A_g: 面積，w * L<br>1:15:20 current voltage equation 推導</p>
 <p>active contact: metal to drain&#x2F;source<br>gate contact : metal to gate<br>via: metal to metal</p>
-<h1 id="會考-IR-drop-是啥"><a href="#會考-IR-drop-是啥" class="headerlink" title="會考 IR drop 是啥"></a>會考 IR drop 是啥</h1><h1 id="會考-semantic-轉-layout、layout-轉-semantic"><a href="#會考-semantic-轉-layout、layout-轉-semantic" class="headerlink" title="會考 semantic 轉 layout、layout 轉 semantic"></a>會考 semantic 轉 layout、layout 轉 semantic</h1><p>要注意 n-well 的位置<br>先試試看畫出 inverter<br>Nor2 或 Nand2，然後要注意 3 個 input 版本的 <strong>並聯</strong> 部分<br>AOI</p>
-<h1 id="要換看-stick-layout"><a href="#要換看-stick-layout" class="headerlink" title="要換看 stick layout"></a>要換看 stick layout</h1><h1 id="要看的懂-Euler-graph-幹"><a href="#要看的懂-Euler-graph-幹" class="headerlink" title="要看的懂 Euler graph (幹"></a>要看的懂 Euler graph (幹</h1>
+<h3 id="會考-IR-drop-是啥"><a href="#會考-IR-drop-是啥" class="headerlink" title="會考 IR drop 是啥"></a>會考 IR drop 是啥</h3><h3 id="會考-semantic-轉-layout、layout-轉-semantic"><a href="#會考-semantic-轉-layout、layout-轉-semantic" class="headerlink" title="會考 semantic 轉 layout、layout 轉 semantic"></a>會考 semantic 轉 layout、layout 轉 semantic</h3><p>要注意 n-well 的位置<br>先試試看畫出 inverter<br>Nor2 或 Nand2，然後要注意 3 個 input 版本的 <strong>並聯</strong> 部分<br>AOI</p>
+<h3 id="要會看-stick-layout"><a href="#要會看-stick-layout" class="headerlink" title="要會看 stick layout"></a>要會看 stick layout</h3><h3 id="要看的懂-Euler-graph-WTFㄑ"><a href="#要看的懂-Euler-graph-WTFㄑ" class="headerlink" title="要看的懂 Euler graph (WTFㄑ"></a>要看的懂 Euler graph (WTFㄑ</h3><h1 id="Fabrication"><a href="#Fabrication" class="headerlink" title="Fabrication"></a>Fabrication</h1><p>把矽晶柱切成一片一片，然後 polish<br>產線會需要好幾個禮拜，沒辦法一次做完</p>
+<h4 id="為什麼晶圓是圓的"><a href="#為什麼晶圓是圓的" class="headerlink" title="為什麼晶圓是圓的"></a>為什麼晶圓是圓的</h4><ol>
+<li>方形的話邊邊角角會撞到，良率 (yeild) 降低</li>
+<li>邊邊角角其實不太能用，之後會講</li>
+</ol>
+<h4 id="良率-Yeild"><a href="#良率-Yeild" class="headerlink" title="良率 Yeild"></a>良率 Yeild</h4><p>如果做出來完全不能用，直接丟掉<br>如果做出來不符合規格，可以以更低價錢賣出<br>為了提升良率，有時候會把導線之間做寬一點，提升容錯率，但會犧牲 Area 或 Power，讓整體面積更大</p>
+<p>$Y &#x3D; e^{-\sqrt{DA}}$</p>
+<ul>
+<li>A: area，晶圓的面積</li>
+<li>D: defect density，根據過往的統計資料</li>
+</ul>
+<h2 id="Silicon-Dioxide"><a href="#Silicon-Dioxide" class="headerlink" title="Silicon Dioxide"></a>Silicon Dioxide</h2><p>使用在 substrate 和 gate 之間</p>
+<p>Thermal oxide，加熱讓 Si 和 O2 變成 SiO2，但會很花時間，還會吃掉原本的 Si<br>Wet oxidation Si + 2H2O -&gt; SiO2 + 2H2，比較快但也很花時間<br>Deposited on the top (CVD oxide)，省時間，並且是拿另外的 Si 來用，附著在 substrate 上</p>
+<h2 id="Silicon-Nitride-氮"><a href="#Silicon-Nitride-氮" class="headerlink" title="Silicon Nitride (氮)"></a>Silicon Nitride (氮)</h2><p>用於 Final protective</p>
+<h2 id="Polysilicon"><a href="#Polysilicon" class="headerlink" title="Polysilicon"></a>Polysilicon</h2><p>結晶都是一塊一塊的，所以叫做 Polycrystal silicon 或 polysilicon<br>加入 Ti、Pt 降低 sheet resistance</p>
+<h2 id="Metal"><a href="#Metal" class="headerlink" title="Metal"></a>Metal</h2><p>通常用 Aluminium，附著性很好且很好做 pattern<br>會有 electromigration (EM) 的問題，也就是 Wire 的老化</p>
+<h3 id="EM"><a href="#EM" class="headerlink" title="EM"></a>EM</h3><p>因為電子不斷從同個方向往另一端流，導致電子離開那端的導線產生 voids，越來越細甚至斷掉，充飽所需的電量可能有差<br>另一端會產生 Hillocks，導線會變大，可能會碰到別的導線導致 short<br>要控制 Current density J 不能太大，因此導線寬度不能太小</p>
+<p>後來大部分改用 Copper，比較不會有 EM 的問題</p>
+
                 
               </div>
             

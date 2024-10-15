@@ -40,7 +40,7 @@ Strong Logic 0, Weak Logic 1
 ![not gate](https://i.sstatic.net/DULlo.png)
 
 
-# 我可以先把 Nand、Nor 之類的 用 pMOS、nMOS 的作法做出，記熟一點
+### 我可以先把 Nand、Nor 之類的 用 pMOS、nMOS 的作法做出，記熟一點
 一端是串聯、一端並聯
 
 # Physics Structure
@@ -61,13 +61,59 @@ active contact: metal to drain/source
 gate contact : metal to gate 
 via: metal to metal
 
-# 會考 IR drop 是啥
-# 會考 semantic 轉 layout、layout 轉 semantic
+### 會考 IR drop 是啥
+### 會考 semantic 轉 layout、layout 轉 semantic
 要注意 n-well 的位置
 先試試看畫出 inverter
 Nor2 或 Nand2，然後要注意 3 個 input 版本的 **並聯** 部分
 AOI
 
-# 要換看 stick layout
+### 要會看 stick layout
 
-# 要看的懂 Euler graph (幹
+### 要看的懂 Euler graph (WTFㄑ
+
+
+# Fabrication
+把矽晶柱切成一片一片，然後 polish
+產線會需要好幾個禮拜，沒辦法一次做完
+
+#### 為什麼晶圓是圓的
+1. 方形的話邊邊角角會撞到，良率 (yeild) 降低
+2. 邊邊角角其實不太能用，之後會講
+
+#### 良率 Yeild 
+如果做出來完全不能用，直接丟掉
+如果做出來不符合規格，可以以更低價錢賣出
+為了提升良率，有時候會把導線之間做寬一點，提升容錯率，但會犧牲 Area 或 Power，讓整體面積更大
+
+
+$Y = e^{-\sqrt{DA}}$
+- A: area，晶圓的面積
+- D: defect density，根據過往的統計資料
+
+
+## Silicon Dioxide
+使用在 substrate 和 gate 之間
+
+
+Thermal oxide，加熱讓 Si 和 O2 變成 SiO2，但會很花時間，還會吃掉原本的 Si
+Wet oxidation Si + 2H2O -> SiO2 + 2H2，比較快但也很花時間
+Deposited on the top (CVD oxide)，省時間，並且是拿另外的 Si 來用，附著在 substrate 上
+
+## Silicon Nitride (氮)
+用於 Final protective
+
+## Polysilicon
+結晶都是一塊一塊的，所以叫做 Polycrystal silicon 或 polysilicon
+加入 Ti、Pt 降低 sheet resistance
+
+## Metal
+通常用 Aluminium，附著性很好且很好做 pattern
+會有 electromigration (EM) 的問題，也就是 Wire 的老化
+
+### EM
+因為電子不斷從同個方向往另一端流，導致電子離開那端的導線產生 voids，越來越細甚至斷掉，充飽所需的電量可能有差
+另一端會產生 Hillocks，導線會變大，可能會碰到別的導線導致 short
+要控制 Current density J 不能太大，因此導線寬度不能太小
+
+後來大部分改用 Copper，比較不會有 EM 的問題
