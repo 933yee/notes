@@ -57,9 +57,9 @@ t_ox 如果越小，代表絕緣層厚度越小，因此上下的吸引力會越
 A_g: 面積，w * L
 1:15:20 current voltage equation 推導
 
-active contact: metal to drain/source
+active contact: metal to drain/source (鎢)
 gate contact : metal to gate 
-via: metal to metal
+via: metal to metal (銅)
 
 ### 會考 IR drop 是啥
 ### 會考 semantic 轉 layout、layout 轉 semantic
@@ -99,9 +99,12 @@ $Y = e^{-\sqrt{DA}}$
 Thermal oxide，加熱讓 Si 和 O2 變成 SiO2，但會很花時間，還會吃掉原本的 Si
 Wet oxidation Si + 2H2O -> SiO2 + 2H2，比較快但也很花時間
 Deposited on the top (CVD oxide)，省時間，並且是拿另外的 Si 來用，附著在 substrate 上
+厚度不同
 
 ## Silicon Nitride (氮)
 用於 Final protective
+光阻劑，避免蝕刻破壞
+決定你下面對應的 active region 有多大
 
 ## Polysilicon
 結晶都是一塊一塊的，所以叫做 Polycrystal silicon 或 polysilicon
@@ -117,3 +120,5 @@ Deposited on the top (CVD oxide)，省時間，並且是拿另外的 Si 來用�
 要控制 Current density J 不能太大，因此導線寬度不能太小
 
 後來大部分改用 Copper，比較不會有 EM 的問題
+
+

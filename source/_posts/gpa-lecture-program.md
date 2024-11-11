@@ -351,17 +351,41 @@ void My_Init()
 
     glGenTextures(1, &tex_object[0]);
     glBindTexture(GL_TEXTURE_2D, tex_object[0]);
+	
+	// void glTexImage2D(
+	//  GLenum target,
+	// 	GLint level,
+	// 	GLint internalformat,
+	// 	GLsizei width,
+	// 	GLsizei height,
+	// 	GLint border,
+	// 	GLenum format,
+	// 	GLenum type,
+	// 	const void * data
+	//);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 16, 16, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
     glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 16, 16, GL_RGBA, GL_UNSIGNED_BYTE, tex_data);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
+	// load
     TextureData tex = loadImg("../../Media/Textures/pattern1.png");
 	glGenTextures(1, &tex_object[1]);
 	glBindTexture(GL_TEXTURE_2D, tex_object[1]);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex.width, tex.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, tex.data);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+	//  // (1) nearest-neighbor filtering
+	//  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	//  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	//  // (2) or bilinear filtering
+	//  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	//  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	//  // (3) or bilinear filtering with mipmapping
+	//  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	//  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	//  glGenerateMipmap(GL_TEXTURE_2D);
 
 	vector<MeshData> meshes;
 	meshes = loadObj("../../Media/Objects/torus_nrms_tc.obj");
@@ -428,6 +452,7 @@ void My_Display()
 	// glDrawArrays(GL_TRIANGLES, 0, vertex_count);
 	// void glDrawElements(GLenum mode, GLsizei count, GLenum type, const void * indices);
 	// 告訴 shader 要抓哪些點組成三角形，index_count 每三個會一組
+	// 啊這裡前面已經綁定了 ELEMENT
     glDrawElements(GL_TRIANGLES, index_count, GL_UNSIGNED_INT, 0);
 
 	glutSwapBuffers();
