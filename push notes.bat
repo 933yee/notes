@@ -7,4 +7,4 @@ call cmd /c "hexo generate"
 
 git add .
 git commit -m "update"
-git subtree push --prefix=public origin gh-pages -f 
+git subtree push -f --prefix=public origin gh-pages
