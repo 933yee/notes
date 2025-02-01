@@ -1,5 +1,5 @@
 ---
-title: 不知道這會持續幾天
+title: 不知道這會持續幾天的 leetcode 100
 date: 2025-01-31 21:22:11
 tags: leetcode
 category:
@@ -102,7 +102,7 @@ public:
 
 1. 計算每個 string a ~ z 的數量，比較先前存的結果，沒有匹配的話就塞到新的 vector (超慢
    - Time Complexity $O(n * m)$
-   - Space Complexity $O(n * m)$
+   - Space Complexity $O(n)$
 
 ```cpp
 class Solution {
@@ -125,6 +125,92 @@ public:
                 str_cnt.push_back(tmp_cnt);
                 ret.push_back({s});
             }
+        }
+        return ret;
+    }
+};
+```
+
+1. 用 hash map，把 sort 過的 string 當作 key
+   - Time Complexity $O(n * \mlg(m))$
+   - Space Complexity $O(n * m)$
+
+```cpp
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        vector<vector<string>> ret;
+        unordered_map<string, int> mp;
+        for(string s:strs){
+            string sorted_s = s;
+            sort(sorted_s.begin(), sorted_s.end());
+            if(mp.count(sorted_s))
+                ret[mp[sorted_s]].push_back(s);
+            else{
+                mp[sorted_s] = ret.size();
+                ret.push_back({s});
+            }
+        }
+        return ret;
+    }
+};
+```
+
+### [347. Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/description/)
+
+1. 先存進 map ，再遍歷 map 的值，丟進 priority queue 裡面取出前 k 個 (快忘光 cmp 的語法了 qq，也可以直接用 greater
+   - Time Complexity $O(n\lg{n})$
+   - Space Complexity $O(n)$
+
+```cpp
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        unordered_map<int, int> mp;
+        for(int& i:nums) mp[i]++;
+
+        auto cmp = [](pair<int, int>& a, pair<int, int>& b) {
+            return a.second < b.second;
+        };
+        priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(cmp)> pq;
+        for(auto& i:mp)
+            pq.push(i);
+
+        vector<int> ret;
+        while(k--){
+            ret.push_back(pq.top().first);
+            pq.pop();
+        }
+        return ret;
+    }
+};
+```
+
+2. heap 那邊可以做一些優化，可以從小排到大，然後確保每次操作 heap 裡面都只有 k 個
+   - Time Complexity $O(n\lg{k})$
+   - Space Complexity $O(n)$
+
+```cpp
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        unordered_map<int, int> mp;
+        for(int& i:nums) mp[i]++;
+
+        auto cmp = [](pair<int, int>& a, pair<int, int>& b) {
+            return a.second > b.second;
+        };
+        priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(cmp)> pq;
+        for(auto& i:mp){
+            pq.push(i);
+            if(pq.size() > k)
+                pq.pop();
+        }
+
+        vector<int> ret;
+        while(k--){
+            ret.push_back(pq.top().first);
+            pq.pop();
         }
         return ret;
     }
