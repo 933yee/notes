@@ -101,6 +101,8 @@ public:
 ### [49. Group Anagrams](https://leetcode.com/problems/group-anagrams/description/)
 
 1. 計算每個 string a ~ z 的數量，比較先前存的結果，沒有匹配的話就塞到新的 vector (超慢
+   - Time Complexity $O(n * m)$
+   - Space Complexity $O(n * m)$
 
 ```cpp
 class Solution {

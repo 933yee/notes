@@ -16,22 +16,22 @@
   <meta name="author" content="Kevin Lee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Arrays &amp; Hashing217. Contains Duplicate Hash map Time Complexity $O(n)$ Space Complexity $O(n)$    1234567891011class Solution &#123;public:    bool containsDuplicate(vector&lt;int&gt;&amp; nums)">
+    <meta name="description" content="五十音清音    あ a い i う u え e お o    か ka き ki く ku け ke こ ko   さ sa し si す su せ se そ so   た ta ち chi つ tsu て te と to   な na に ni ぬ nu ね ne の no   は ha ひ hi ふ hu へ he ほ ho   ま ma み mi む mu め me も mo   や ya">
 <meta property="og:type" content="article">
-<meta property="og:title" content="不知道這會持續幾天">
-<meta property="og:url" content="https://933yee.github.io/notes/2025/01/31/leetcode/index.html">
+<meta property="og:title" content="日語">
+<meta property="og:url" content="https://933yee.github.io/notes/2025/02/01/japanese/index.html">
 <meta property="og:site_name" content="Kevin&#39;s notes">
-<meta property="og:description" content="Arrays &amp; Hashing217. Contains Duplicate Hash map Time Complexity $O(n)$ Space Complexity $O(n)$    1234567891011class Solution &#123;public:    bool containsDuplicate(vector&lt;int&gt;&amp; nums)">
+<meta property="og:description" content="五十音清音    あ a い i う u え e お o    か ka き ki く ku け ke こ ko   さ sa し si す su せ se そ so   た ta ち chi つ tsu て te と to   な na に ni ぬ nu ね ne の no   は ha ひ hi ふ hu へ he ほ ho   ま ma み mi む mu め me も mo   や ya">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2025-01-31T13:22:11.000Z">
-<meta property="article:modified_time" content="2025-01-31T16:13:35.400Z">
+<meta property="article:published_time" content="2025-02-01T09:41:31.000Z">
+<meta property="article:modified_time" content="2025-02-01T11:03:05.521Z">
 <meta property="article:author" content="Kevin Lee">
-<meta property="article:tag" content="leetcode">
+<meta property="article:tag" content="japanese">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>不知道這會持續幾天 - Kevin&#39;s notes</title>
+  <title>日語 - Kevin&#39;s notes</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -197,7 +197,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="不知道這會持續幾天"></span>
+            <span id="subtitle" data-typed-text="日語"></span>
           
         </div>
 
@@ -208,8 +208,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-01-31 21:22" pubdate>
-          January 31, 2025 pm
+        <time datetime="2025-02-01 17:41" pubdate>
+          February 1, 2025 pm
         </time>
       </span>
     
@@ -220,7 +220,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          428 words
+          140 words
         
       </span>
     
@@ -231,7 +231,7 @@
         
         
         
-          4 mins
+          2 mins
         
       </span>
     
@@ -268,59 +268,226 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">不知道這會持續幾天</h1>
+            <h1 id="seo-header">日語</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="Arrays-Hashing"><a href="#Arrays-Hashing" class="headerlink" title="Arrays &amp; Hashing"></a>Arrays &amp; Hashing</h1><h3 id="217-Contains-Duplicate"><a href="#217-Contains-Duplicate" class="headerlink" title="217. Contains Duplicate"></a><a target="_blank" rel="noopener" href="https://leetcode.com/problems/contains-duplicate/description/">217. Contains Duplicate</a></h3><ol>
-<li>Hash map<ul>
-<li>Time Complexity $O(n)$</li>
-<li>Space Complexity $O(n)$</li>
-</ul>
-</li>
-</ol>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">containsDuplicate</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>&#123;<br>        unordered_map&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt; mp;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span>&amp; i:nums)&#123;<br>            <span class="hljs-keyword">if</span>(mp.<span class="hljs-built_in">count</span>(i) != <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>            mp[i]++;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>更簡短的寫法</li>
-</ol>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">containsDuplicate</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>&#123;<br>        <span class="hljs-function">unordered_set&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">st</span><span class="hljs-params">(nums.begin(), nums.end())</span></span>;<br>        <span class="hljs-keyword">return</span> st.<span class="hljs-built_in">size</span>() &lt; nums.<span class="hljs-built_in">size</span>();<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-
-<h3 id="242-Valid-Anagram"><a href="#242-Valid-Anagram" class="headerlink" title="242. Valid Anagram"></a><a target="_blank" rel="noopener" href="https://leetcode.com/problems/valid-anagram/description/">242. Valid Anagram</a></h3><ol>
-<li>算出兩者 a ~ z 的數量存到不同 vector，最後直接比較兩個 vector 是否一樣 (其實就 Hash map)<ul>
-<li>Time Complexity $O(n + m)$</li>
-<li>Space Complexity $O(1)$</li>
-</ul>
-</li>
-</ol>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">isAnagram</span><span class="hljs-params">(string s, string t)</span> </span>&#123;<br>        <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">s_cnt</span><span class="hljs-params">(<span class="hljs-number">26</span>)</span>, <span class="hljs-title">t_cnt</span><span class="hljs-params">(<span class="hljs-number">26</span>)</span></span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">char</span>&amp; c:s) s_cnt[c - <span class="hljs-string">&#x27;a&#x27;</span>]++;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">char</span>&amp; c:t) t_cnt[c - <span class="hljs-string">&#x27;a&#x27;</span>]++;<br>        <span class="hljs-keyword">return</span> s_cnt == t_cnt;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-
-<h3 id="1-Two-Sum"><a href="#1-Two-Sum" class="headerlink" title="1. Two Sum"></a><a target="_blank" rel="noopener" href="https://leetcode.com/problems/two-sum/description/">1. Two Sum</a></h3><ol>
-<li>Hash map<ul>
-<li>Time Complexity $O(n)$</li>
-<li>Space Complexity $O(n)$</li>
-</ul>
-</li>
-</ol>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">twoSum</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums, <span class="hljs-type">int</span> target)</span> </span>&#123;<br>        unordered_map&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt; mp;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;nums.<span class="hljs-built_in">size</span>(); i++)&#123;<br>            <span class="hljs-type">int</span> k = target - nums[i];<br>            <span class="hljs-keyword">if</span>(mp.<span class="hljs-built_in">count</span>(k))<br>                <span class="hljs-keyword">return</span> vector&lt;<span class="hljs-type">int</span>&gt;&#123;i, mp[k]&#125;;<br>            mp[nums[i]] = i;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(<span class="hljs-number">0</span>);<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>更簡短的寫法<ul>
-<li><code>vector&lt;int&gt;</code> 可以省略耶 (wow</li>
-</ul>
-</li>
-</ol>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">twoSum</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums, <span class="hljs-type">int</span> target)</span> </span>&#123;<br>        unordered_map&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt; mp;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;nums.<span class="hljs-built_in">size</span>(); i++)&#123;<br>            <span class="hljs-type">int</span> k = target - nums[i];<br>            <span class="hljs-keyword">if</span>(mp.<span class="hljs-built_in">count</span>(k))<br>                <span class="hljs-keyword">return</span> &#123;i, mp[k]&#125;;<br>            mp[nums[i]] = i;<br>        &#125;<br>        <span class="hljs-keyword">return</span> &#123;&#125;;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-
-<h3 id="49-Group-Anagrams"><a href="#49-Group-Anagrams" class="headerlink" title="49. Group Anagrams"></a><a target="_blank" rel="noopener" href="https://leetcode.com/problems/group-anagrams/description/">49. Group Anagrams</a></h3><ol>
-<li>計算每個 string a ~ z 的數量，比較先前存的結果，沒有匹配的話就塞到新的 vector (超慢<ul>
-<li>Time Complexity $O(n * m)$</li>
-<li>Space Complexity $O(n * m)$</li>
-</ul>
-</li>
-</ol>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    vector&lt;vector&lt;string&gt;&gt; <span class="hljs-built_in">groupAnagrams</span>(vector&lt;string&gt;&amp; strs) &#123;<br>        vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; str_cnt;<br>        vector&lt;vector&lt;string&gt;&gt; ret;<br>        <span class="hljs-keyword">for</span>(string&amp; s:strs)&#123;<br>            <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">tmp_cnt</span><span class="hljs-params">(<span class="hljs-number">26</span>)</span></span>;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">char</span>&amp; c:s) tmp_cnt[c - <span class="hljs-string">&#x27;a&#x27;</span>]++;<br>            <span class="hljs-type">bool</span> v_same = <span class="hljs-literal">false</span>;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;str_cnt.<span class="hljs-built_in">size</span>(); i++)&#123;<br>                <span class="hljs-keyword">if</span>(str_cnt[i] == tmp_cnt)&#123;<br>                    ret[i].<span class="hljs-built_in">push_back</span>(s);<br>                    v_same = <span class="hljs-literal">true</span>;<br>                    <span class="hljs-keyword">break</span>;<br>                &#125;<br>            &#125;<br>            <span class="hljs-keyword">if</span>(!v_same)&#123;<br>                str_cnt.<span class="hljs-built_in">push_back</span>(tmp_cnt);<br>                ret.<span class="hljs-built_in">push_back</span>(&#123;s&#125;);<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> ret;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+                <h3 id="五十音清音"><a href="#五十音清音" class="headerlink" title="五十音清音"></a>五十音清音</h3><hr>
+<table>
+<thead>
+<tr>
+<th align="center">あ a</th>
+<th align="center">い i</th>
+<th align="center">う u</th>
+<th align="center">え e</th>
+<th align="center">お o</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">か ka</td>
+<td align="center">き ki</td>
+<td align="center">く ku</td>
+<td align="center">け ke</td>
+<td align="center">こ ko</td>
+</tr>
+<tr>
+<td align="center">さ sa</td>
+<td align="center">し si</td>
+<td align="center">す su</td>
+<td align="center">せ se</td>
+<td align="center">そ so</td>
+</tr>
+<tr>
+<td align="center">た ta</td>
+<td align="center">ち chi</td>
+<td align="center">つ tsu</td>
+<td align="center">て te</td>
+<td align="center">と to</td>
+</tr>
+<tr>
+<td align="center">な na</td>
+<td align="center">に ni</td>
+<td align="center">ぬ nu</td>
+<td align="center">ね ne</td>
+<td align="center">の no</td>
+</tr>
+<tr>
+<td align="center">は ha</td>
+<td align="center">ひ hi</td>
+<td align="center">ふ hu</td>
+<td align="center">へ he</td>
+<td align="center">ほ ho</td>
+</tr>
+<tr>
+<td align="center">ま ma</td>
+<td align="center">み mi</td>
+<td align="center">む mu</td>
+<td align="center">め me</td>
+<td align="center">も mo</td>
+</tr>
+<tr>
+<td align="center">や ya</td>
+<td align="center"></td>
+<td align="center">ゆ yu</td>
+<td align="center"></td>
+<td align="center">よ yo</td>
+</tr>
+<tr>
+<td align="center">ら ra</td>
+<td align="center">り ri</td>
+<td align="center">る ru</td>
+<td align="center">れ re</td>
+<td align="center">ろ ro</td>
+</tr>
+<tr>
+<td align="center">わ wa</td>
+<td align="center"></td>
+<td align="center">ん n</td>
+<td align="center"></td>
+<td align="center">を o</td>
+</tr>
+</tbody></table>
+<h3 id="促音"><a href="#促音" class="headerlink" title="促音"></a>促音</h3><p>中間有包含 つ、ツ 的詞，要頓一下</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">きつぷ</td>
+<td align="center">車票</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">ざつし</td>
+<td align="center">雜誌</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">につき</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">コツプ</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">ベツド</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<h3 id="長音"><a href="#長音" class="headerlink" title="長音"></a>長音</h3><p>包含 AA、II、UU、EE、OO、OU、EI 等等，要拉長</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">おかあさん</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">おにいさん</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">ゆうき</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">ひこうき</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">おとうと</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">こうこう</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">とけい</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">せんせん</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">ターパー</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">タクシー</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>一堆詞</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">てんき</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">ほん</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">カード</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">たまご</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">にほん</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">りんご</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">さけ</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
 
                 
               </div>
@@ -333,7 +500,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/notes/tags/leetcode/" class="print-no-link">#leetcode</a>
+        <a href="/notes/tags/japanese/" class="print-no-link">#japanese</a>
       
     </div>
   
@@ -345,8 +512,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>不知道這會持續幾天</div>
-      <div>https://933yee.github.io/notes/2025/01/31/leetcode/</div>
+      <div>日語</div>
+      <div>https://933yee.github.io/notes/2025/02/01/japanese/</div>
     </div>
     <div class="license-meta">
       
@@ -358,7 +525,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>January 31, 2025</div>
+          <div>February 1, 2025</div>
         </div>
       
       
@@ -390,18 +557,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/notes/2025/02/01/japanese/" title="日語">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">日語</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/notes/2024/07/26/os-chapter3/" title="作業系統筆記 Processes Conecpt">
-                        <span class="hidden-mobile">作業系統筆記 Processes Conecpt</span>
+                      <a href="/notes/2025/01/31/leetcode/" title="不知道這會持續幾天">
+                        <span class="hidden-mobile">不知道這會持續幾天</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
