@@ -23,3 +23,26 @@ public:
     }
 };
 ```
+
+### 2025/02/02 [1752. Check if Array Is Sorted and Rotated](https://leetcode.com/problems/check-if-array-is-sorted-and-rotated/description/?envType=daily-question&envId=2025-02-02)
+
+1. drop 只能一次，最後要檢查頭尾
+   - Time Complexity $O(n)$
+   - Space Complexity $O(1)$
+
+```cpp
+class Solution {
+public:
+    bool check(vector<int>& nums) {
+        bool drop = false;
+        int n = nums.size();
+        for(int i=1; i<n; i++){
+            if(nums[i] < nums[i-1]){
+                if(drop) return false;
+                drop = true;
+            }
+        }
+        return (nums[n-1] > nums[0]) ? !drop : true;
+    }
+};
+```

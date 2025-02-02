@@ -41,9 +41,9 @@ public:
 
 ### [242. Valid Anagram](https://leetcode.com/problems/valid-anagram/description/)
 
-1. 算出兩者 a ~ z 的數量存到不同 vector，最後直接比較兩個 vector 是否一樣 (其實就 Hash map)
-   - Time Complexity $O(n + m)$
-   - Space Complexity $O(1)$
+- 算出兩者 a ~ z 的數量存到不同 vector，最後直接比較兩個 vector 是否一樣 (其實就 Hash map)
+  - Time Complexity $O(n + m)$
+  - Space Complexity $O(1)$
 
 ```cpp
 class Solution {
@@ -100,9 +100,9 @@ public:
 
 ### [49. Group Anagrams](https://leetcode.com/problems/group-anagrams/description/)
 
-1. 計算每個 string a ~ z 的數量，比較先前存的結果，沒有匹配的話就塞到新的 vector (超慢
-   - Time Complexity $O(n * m)$
-   - Space Complexity $O(n)$
+- 計算每個 string a ~ z 的數量，比較先前存的結果，沒有匹配的話就塞到新的 vector (超慢
+  - Time Complexity $O(n * m)$
+  - Space Complexity $O(n)$
 
 ```cpp
 class Solution {
@@ -131,9 +131,9 @@ public:
 };
 ```
 
-1. 用 hash map，把 sort 過的 string 當作 key
-   - Time Complexity $O(n * \mlg(m))$
-   - Space Complexity $O(n * m)$
+- 用 hash map，把 sort 過的 string 當作 key
+  - Time Complexity $O(n * \mlg(m))$
+  - Space Complexity $O(n * m)$
 
 ```cpp
 class Solution {
@@ -213,6 +213,72 @@ public:
             pq.pop();
         }
         return ret;
+    }
+};
+```
+
+### [238. Product of Array Except Self](https://leetcode.com/problems/product-of-array-except-self/description/)
+
+- 開兩個 vector 記錄左右兩邊一路乘過去的值，最後兩者相乘
+  - Time Complexity $O(n)$
+  - Space Complexity $O(n)$
+
+```cpp
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> L(n+2), R(n+2), ret(n);
+        L[0] = L[1] = R[n] = R[n+1] = 1;
+        for(int i=0; i<n; i++){
+            L[i+2] = L[i+1] * nums[i];
+            R[n-1-i] = R[n-i] * nums[n-1-i];
+        }
+        for(int i=0; i<n; i++)
+            ret[i] = L[i+1] * R[i+1];
+        return ret;
+    }
+};
+```
+
+### [36. Valid Sudoku](https://leetcode.com/problems/valid-sudoku/description/)
+
+- 檢查每個 row、column、九宮格的情況
+  - Time Complexity $O(1)$
+  - Space Complexity $O(1)$
+
+```cpp
+class Solution {
+public:
+    bool isValidSudoku(vector<vector<char>>& board) {
+        for(int i=0; i<9; i++){
+            vector<int> seen(9);
+            for(int j=0; j<9; j++){
+                char ch = board[i][j];
+                if(ch == '.') continue;
+                if(seen[ch-'1']) return false;
+                ++seen[ch-'1'];
+            }
+        }
+        for(int i=0; i<9; i++){
+            vector<int> seen(9);
+            for(int j=0; j<9; j++){
+                char ch = board[j][i];
+                if(ch == '.') continue;
+                if(seen[ch-'1']) return false;
+                ++seen[ch-'1'];
+            }
+        }
+        for(int i=0; i<9; i++){
+            vector<int> seen(9);
+            for(int j=0; j<9; j++){
+                char ch = board[i/3*3+j/3][i%3*3+j%3];
+                if(ch == '.') continue;
+                if(seen[ch-'1']) return false;
+                ++seen[ch-'1'];
+            }
+        }
+        return true;
     }
 };
 ```

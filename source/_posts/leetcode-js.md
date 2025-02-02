@@ -26,3 +26,26 @@ var createHelloWorld = function () {
  * f(); // "Hello World"
  */
 ```
+
+### [2620. Counter](https://leetcode.com/problems/counter/description/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+- 一樣 closure，之後 call return 的 function 都可以修改最初傳進來的變數的值
+
+```js
+/**
+ * @param {number} n
+ * @return {Function} counter
+ */
+var createCounter = function (n) {
+  return function () {
+    return n++;
+  };
+};
+
+/**
+ * const counter = createCounter(10)
+ * counter() // 10
+ * counter() // 11
+ * counter() // 12
+ */
+```
