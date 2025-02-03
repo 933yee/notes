@@ -16,23 +16,27 @@
   <meta name="author" content="Kevin Lee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="安裝套件 12npm install gh-pages --save-devyarn add -D gh-pages  在 package.json 裡面新增 1234567&#123;  &quot;homepage&quot; : &quot;&#123;url to your website&#125;&quot;  &quot;scripts&quot;: &#123;    &amp;quot">
+    <meta name="description" content="從來沒去搞懂 react 的一些機制  瀏覽器怎麼渲染網頁瀏覽器會遵照一些既有的規則，去解析我們的 HTML 和 CSS 檔案，分別做成 DOM 和 CSSOM 等樹狀結構，最後再合併成 Render Tree。  Reflow當 DOM 結構、元素的大小、位置或其他與 layout 的屬性改變時，瀏覽器會重新計算所有元素的位置 Repaint當 DOM 變更影響了元素的外觀（顏色、背景、陰影等">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Push React App to Github Pages">
-<meta property="og:url" content="https://933yee.github.io/notes/2024/02/08/react-github-pages/index.html">
+<meta property="og:title" content="React DOM">
+<meta property="og:url" content="https://933yee.github.io/notes/2024/02/21/react-dom/index.html">
 <meta property="og:site_name" content="Kevin&#39;s notes">
-<meta property="og:description" content="安裝套件 12npm install gh-pages --save-devyarn add -D gh-pages  在 package.json 裡面新增 1234567&#123;  &quot;homepage&quot; : &quot;&#123;url to your website&#125;&quot;  &quot;scripts&quot;: &#123;    &amp;quot">
+<meta property="og:description" content="從來沒去搞懂 react 的一些機制  瀏覽器怎麼渲染網頁瀏覽器會遵照一些既有的規則，去解析我們的 HTML 和 CSS 檔案，分別做成 DOM 和 CSSOM 等樹狀結構，最後再合併成 Render Tree。  Reflow當 DOM 結構、元素的大小、位置或其他與 layout 的屬性改變時，瀏覽器會重新計算所有元素的位置 Repaint當 DOM 變更影響了元素的外觀（顏色、背景、陰影等">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2024-02-08T13:05:13.000Z">
-<meta property="article:modified_time" content="2024-02-08T13:15:16.263Z">
+<meta property="og:image" content="https://www.lumin.tech/articles/browser-reflow-repaint/reflow_repaint.png">
+<meta property="article:published_time" content="2024-02-21T05:42:27.000Z">
+<meta property="article:modified_time" content="2025-02-03T14:22:49.910Z">
 <meta property="article:author" content="Kevin Lee">
-<meta property="article:tag" content="React">
-<meta property="article:tag" content="Gtihub">
+<meta property="article:tag" content="react">
+<meta property="article:tag" content="DOM">
+<meta property="article:tag" content="frontend">
+<meta property="article:tag" content="website">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.lumin.tech/articles/browser-reflow-repaint/reflow_repaint.png">
   
   
   
-  <title>Push React App to Github Pages - Kevin&#39;s notes</title>
+  <title>React DOM - Kevin&#39;s notes</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -198,7 +202,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Push React App to Github Pages"></span>
+            <span id="subtitle" data-typed-text="React DOM"></span>
           
         </div>
 
@@ -209,8 +213,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-02-08 21:05" pubdate>
-          February 8, 2024 pm
+        <time datetime="2024-02-21 13:42" pubdate>
+          February 21, 2024 pm
         </time>
       </span>
     
@@ -221,7 +225,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          64 words
+          342 words
         
       </span>
     
@@ -232,7 +236,7 @@
         
         
         
-          1 mins
+          3 mins
         
       </span>
     
@@ -269,21 +273,27 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Push React App to Github Pages</h1>
+            <h1 id="seo-header">React DOM</h1>
             
             
               <div class="markdown-body">
                 
-                <ul>
-<li><p>安裝套件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">npm install gh-pages --save-dev<br>yarn add -D gh-pages<br></code></pre></td></tr></table></figure>
-</li>
-<li><p>在 package.json 裡面新增</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;homepage&quot;</span> <span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;&#123;url to your website&#125;&quot;</span><br>  <span class="hljs-attr">&quot;scripts&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;predeploy&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;npm run build&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;deploy&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;gh-pages -d build&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
-</li>
-<li><p>要 push 的時候就打以下指令，就可以自動 push 到 branch gh-pages</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">npm run deploy<br></code></pre></td></tr></table></figure></li>
+                <blockquote>
+<p>從來沒去搞懂 react 的一些機制</p>
+</blockquote>
+<h2 id="瀏覽器怎麼渲染網頁"><a href="#瀏覽器怎麼渲染網頁" class="headerlink" title="瀏覽器怎麼渲染網頁"></a>瀏覽器怎麼渲染網頁</h2><p>瀏覽器會遵照一些既有的規則，去解析我們的 HTML 和 CSS 檔案，分別做成 DOM 和 CSSOM 等樹狀結構，最後再合併成 Render Tree。</p>
+<p><img src="https://www.lumin.tech/articles/browser-reflow-repaint/reflow_repaint.png" srcset="/notes/info/loading.gif" lazyload alt="Web Browser Rendering"></p>
+<h4 id="Reflow"><a href="#Reflow" class="headerlink" title="Reflow"></a>Reflow</h4><p>當 DOM 結構、元素的大小、位置或其他與 layout 的屬性改變時，瀏覽器會重新計算所有元素的位置</p>
+<h4 id="Repaint"><a href="#Repaint" class="headerlink" title="Repaint"></a>Repaint</h4><p>當 DOM 變更影響了元素的外觀（顏色、背景、陰影等），瀏覽器只需要重新繪製該元素，成本沒有 Reflow 那麼高</p>
+<h2 id="React-Virtual-DOM"><a href="#React-Virtual-DOM" class="headerlink" title="React Virtual DOM"></a>React Virtual DOM</h2><p>傳統的方法是直接更改 Real DOM，像是如果我有 <code>document.getElementById().innerHTML = &quot;new content&quot;</code>，他會直接去更新 Real DOM，更新完後 Reflow 或 Repaint 可能會再做一遍，成本很高。如果我有數個相似的操作，就會很慢。</p>
+<p>React 會在記憶體中建立一個 JavaScript 物件（Virtual DOM），這個物件是一個與 Real DOM 結構相似的樹。當 State 改變時， React 比較新舊版本的 Virtual DOM 的樹上的每一個節點，然後更新，最後批次更改 Real DOM，減少花費的成本。</p>
+<h3 id="React-的-re-rendering"><a href="#React-的-re-rendering" class="headerlink" title="React 的 re-rendering"></a>React 的 re-rendering</h3><p>上面提到，React 會比較新舊 Virtual DOM 的差異，最後更新到 Real DOM 上面。其中他會檢查 Virtual DOM 更新的部分，稱為 re-render，而非指 repaint。</p>
+<h3 id="React-中可以減少-re-rendering-的方式"><a href="#React-中可以減少-re-rendering-的方式" class="headerlink" title="React 中可以減少 re-rendering 的方式"></a>React 中可以減少 re-rendering 的方式</h3><ul>
+<li>memo</li>
+<li>useCallback</li>
+<li>babel-plugin-react-compiler</li>
 </ul>
+<h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a target="_blank" rel="noopener" href="https://www.lumin.tech/articles/browser-reflow-repaint/">浏览器的重绘 (repaint) 和重排 (reflow)</a></p>
 
                 
               </div>
@@ -292,34 +302,17 @@
             <div>
               <div class="post-metas my-3">
   
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/notes/categories/React/" class="category-chain-item">React</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
   
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/notes/tags/React/" class="print-no-link">#React</a>
+        <a href="/notes/tags/react/" class="print-no-link">#react</a>
       
-        <a href="/notes/tags/Gtihub/" class="print-no-link">#Gtihub</a>
+        <a href="/notes/tags/DOM/" class="print-no-link">#DOM</a>
+      
+        <a href="/notes/tags/frontend/" class="print-no-link">#frontend</a>
+      
+        <a href="/notes/tags/website/" class="print-no-link">#website</a>
       
     </div>
   
@@ -331,8 +324,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Push React App to Github Pages</div>
-      <div>https://933yee.github.io/notes/2024/02/08/react-github-pages/</div>
+      <div>React DOM</div>
+      <div>https://933yee.github.io/notes/2024/02/21/react-dom/</div>
     </div>
     <div class="license-meta">
       
@@ -344,7 +337,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>February 8, 2024</div>
+          <div>February 21, 2024</div>
         </div>
       
       
@@ -376,9 +369,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/notes/2024/02/21/react-dom/" title="React DOM">
+                      <a href="/notes/2024/02/21/gpgpu/" title="GPGPU">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">React DOM</span>
+                        <span class="hidden-mobile">GPGPU</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -386,8 +379,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/notes/2024/01/31/ue5-resources/" title="UE5 Resources">
-                        <span class="hidden-mobile">UE5 Resources</span>
+                      <a href="/notes/2024/02/08/react-github-pages/" title="Push React App to Github Pages">
+                        <span class="hidden-mobile">Push React App to Github Pages</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
