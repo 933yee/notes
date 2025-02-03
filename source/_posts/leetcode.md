@@ -282,3 +282,36 @@ public:
     }
 };
 ```
+
+### [128. Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence/description/)
+
+- 檢查每個數字左右兩邊連續數字的數量，檢查過的要刪掉避免重複檢查
+  - Time Complexity $O(n)$
+  - Space Complexity $O(n)$
+
+```cpp
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        unordered_set<int> st(nums.begin(), nums.end());
+        int ret = 0;
+        for(int i:nums){
+            if(st.count(i) == 0) continue;
+            int cnt = 1; int cur = i;
+            st.erase(cur);
+            int temp = cur + 1;
+            while(st.count(temp)){
+                ++cnt;
+                st.erase(temp++);
+            }
+            temp = cur - 1;
+            while(st.count(temp)){
+                ++cnt;
+                st.erase(temp--);
+            }
+            ret = max(ret, cnt);
+        }
+        return ret;
+    }
+};
+```

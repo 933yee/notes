@@ -40,3 +40,4 @@ React 會在記憶體中建立一個 JavaScript 物件（Virtual DOM），這個
 ### 參考資料
 
 [浏览器的重绘 (repaint) 和重排 (reflow)](https://www.lumin.tech/articles/browser-reflow-repaint/)
+[Why is every React site so slow?](https://www.youtube.com/watch?v=INLq9RPAYUw)
