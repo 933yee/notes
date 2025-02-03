@@ -49,3 +49,55 @@ var createCounter = function (n) {
  * counter() // 12
  */
 ```
+
+### [2704. To Be Or Not To Be](https://leetcode.com/studyplan/30-days-of-javascript/)
+
+- 這題是寫測試 code，教我們怎麼 throw error
+
+```js
+/**
+ * @param {string} val
+ * @return {Object}
+ */
+var expect = function (val) {
+  return {
+    toBe: (v) => {
+      if (v === val) return true;
+      else throw new Error("Not Equal");
+    },
+    notToBe: (v) => {
+      if (v !== val) return true;
+      else throw new Error("Equal");
+    },
+  };
+};
+
+/**
+ * expect(5).toBe(5); // true
+ * expect(5).notToBe(5); // throws "Equal"
+ */
+```
+
+### [2665. Counter II](https://leetcode.com/problems/counter-ii/description/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+```js
+/**
+ * @param {integer} init
+ * @return { increment: Function, decrement: Function, reset: Function }
+ */
+var createCounter = function (init) {
+  var cnt = init;
+  return {
+    increment: () => ++cnt,
+    reset: () => (cnt = init),
+    decrement: () => --cnt,
+  };
+};
+
+/**
+ * const counter = createCounter(5)
+ * counter.increment(); // 6
+ * counter.reset(); // 5
+ * counter.decrement(); // 4
+ */
+```

@@ -7,9 +7,9 @@ category:
 
 ### 2025/02/01 [3151. Special Array I](https://leetcode.com/problems/special-array-i/description/?envType=daily-question&envId=2025-02-01)
 
-1. bitwise xor + and 即可
-   - Time Complexity $O(n)$
-   - Space Complexity $O(1)$
+- bitwise xor + and 即可
+  - Time Complexity $O(n)$
+  - Space Complexity $O(1)$
 
 ```cpp
 class Solution {
@@ -26,9 +26,9 @@ public:
 
 ### 2025/02/02 [1752. Check if Array Is Sorted and Rotated](https://leetcode.com/problems/check-if-array-is-sorted-and-rotated/description/?envType=daily-question&envId=2025-02-02)
 
-1. drop 只能一次，最後要檢查頭尾
-   - Time Complexity $O(n)$
-   - Space Complexity $O(1)$
+- drop 只能一次，最後要檢查頭尾
+  - Time Complexity $O(n)$
+  - Space Complexity $O(1)$
 
 ```cpp
 class Solution {
@@ -43,6 +43,34 @@ public:
             }
         }
         return (nums[n-1] > nums[0]) ? !drop : true;
+    }
+};
+```
+
+### 2025/02/03 [3105. Longest Strictly Increasing or Strictly Decreasing Subarray](https://leetcode.com/problems/longest-strictly-increasing-or-strictly-decreasing-subarray/description/?envType=daily-question&envId=2025-02-03)
+
+- 寫個 cnt，遍歷陣列兩次，算出最長的值
+  - Time Complexity $O(n)$
+  - Space Complexity $O(1)$
+
+```cpp
+class Solution {
+public:
+    int longestMonotonicSubarray(vector<int>& nums) {
+        int n = nums.size(), cnt = 1;
+        int res = INT_MIN;
+        for(int i=1; i<n; i++){
+            if(nums[i] > nums[i-1]) cnt++;
+            else cnt = 1;
+            res = max(res, cnt);
+        }
+        cnt = 1;
+        for(int i=1; i<n; i++){
+            if(nums[i] < nums[i-1]) cnt++;
+            else cnt = 1;
+            res = max(res, cnt);
+        }
+        return max(res, cnt);
     }
 };
 ```

@@ -24,7 +24,7 @@
 <meta property="og:description" content="2025&#x2F;02&#x2F;01 3151. Special Array I bitwise xor + and 即可 Time Complexity $O(n)$ Space Complexity $O(1)$    12345678910class Solution &#123;public:    bool isArraySpecial(vector&lt;int&gt;&amp;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-01-31T13:22:11.000Z">
-<meta property="article:modified_time" content="2025-02-02T14:04:24.677Z">
+<meta property="article:modified_time" content="2025-02-03T07:17:14.001Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary_large_image">
@@ -220,7 +220,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          121 words
+          218 words
         
       </span>
     
@@ -273,23 +273,32 @@
             
               <div class="markdown-body">
                 
-                <h3 id="2025-02-01-3151-Special-Array-I"><a href="#2025-02-01-3151-Special-Array-I" class="headerlink" title="2025&#x2F;02&#x2F;01 3151. Special Array I"></a>2025&#x2F;02&#x2F;01 <a target="_blank" rel="noopener" href="https://leetcode.com/problems/special-array-i/description/?envType=daily-question&envId=2025-02-01">3151. Special Array I</a></h3><ol>
+                <h3 id="2025-02-01-3151-Special-Array-I"><a href="#2025-02-01-3151-Special-Array-I" class="headerlink" title="2025&#x2F;02&#x2F;01 3151. Special Array I"></a>2025&#x2F;02&#x2F;01 <a target="_blank" rel="noopener" href="https://leetcode.com/problems/special-array-i/description/?envType=daily-question&envId=2025-02-01">3151. Special Array I</a></h3><ul>
 <li>bitwise xor + and 即可<ul>
 <li>Time Complexity $O(n)$</li>
 <li>Space Complexity $O(1)$</li>
 </ul>
 </li>
-</ol>
+</ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">isArraySpecial</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>&#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>; i&lt;nums.<span class="hljs-built_in">size</span>(); i++)&#123;<br>            <span class="hljs-keyword">if</span>(((nums[i] ^ nums[i<span class="hljs-number">-1</span>]) &amp; <span class="hljs-number">1</span>) != <span class="hljs-number">1</span>)<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
-<h3 id="2025-02-02-1752-Check-if-Array-Is-Sorted-and-Rotated"><a href="#2025-02-02-1752-Check-if-Array-Is-Sorted-and-Rotated" class="headerlink" title="2025&#x2F;02&#x2F;02 1752. Check if Array Is Sorted and Rotated"></a>2025&#x2F;02&#x2F;02 <a target="_blank" rel="noopener" href="https://leetcode.com/problems/check-if-array-is-sorted-and-rotated/description/?envType=daily-question&envId=2025-02-02">1752. Check if Array Is Sorted and Rotated</a></h3><ol>
+<h3 id="2025-02-02-1752-Check-if-Array-Is-Sorted-and-Rotated"><a href="#2025-02-02-1752-Check-if-Array-Is-Sorted-and-Rotated" class="headerlink" title="2025&#x2F;02&#x2F;02 1752. Check if Array Is Sorted and Rotated"></a>2025&#x2F;02&#x2F;02 <a target="_blank" rel="noopener" href="https://leetcode.com/problems/check-if-array-is-sorted-and-rotated/description/?envType=daily-question&envId=2025-02-02">1752. Check if Array Is Sorted and Rotated</a></h3><ul>
 <li>drop 只能一次，最後要檢查頭尾<ul>
 <li>Time Complexity $O(n)$</li>
 <li>Space Complexity $O(1)$</li>
 </ul>
 </li>
-</ol>
+</ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">check</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>&#123;<br>        <span class="hljs-type">bool</span> drop = <span class="hljs-literal">false</span>;<br>        <span class="hljs-type">int</span> n = nums.<span class="hljs-built_in">size</span>();<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>; i&lt;n; i++)&#123;<br>            <span class="hljs-keyword">if</span>(nums[i] &lt; nums[i<span class="hljs-number">-1</span>])&#123;<br>                <span class="hljs-keyword">if</span>(drop) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>                drop = <span class="hljs-literal">true</span>;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> (nums[n<span class="hljs-number">-1</span>] &gt; nums[<span class="hljs-number">0</span>]) ? !drop : <span class="hljs-literal">true</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2025-02-03-3105-Longest-Strictly-Increasing-or-Strictly-Decreasing-Subarray"><a href="#2025-02-03-3105-Longest-Strictly-Increasing-or-Strictly-Decreasing-Subarray" class="headerlink" title="2025&#x2F;02&#x2F;03 3105. Longest Strictly Increasing or Strictly Decreasing Subarray"></a>2025&#x2F;02&#x2F;03 <a target="_blank" rel="noopener" href="https://leetcode.com/problems/longest-strictly-increasing-or-strictly-decreasing-subarray/description/?envType=daily-question&envId=2025-02-03">3105. Longest Strictly Increasing or Strictly Decreasing Subarray</a></h3><ul>
+<li>寫個 cnt，遍歷陣列兩次，算出最長的值<ul>
+<li>Time Complexity $O(n)$</li>
+<li>Space Complexity $O(1)$</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">longestMonotonicSubarray</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>&#123;<br>        <span class="hljs-type">int</span> n = nums.<span class="hljs-built_in">size</span>(), cnt = <span class="hljs-number">1</span>;<br>        <span class="hljs-type">int</span> res = INT_MIN;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>; i&lt;n; i++)&#123;<br>            <span class="hljs-keyword">if</span>(nums[i] &gt; nums[i<span class="hljs-number">-1</span>]) cnt++;<br>            <span class="hljs-keyword">else</span> cnt = <span class="hljs-number">1</span>;<br>            res = <span class="hljs-built_in">max</span>(res, cnt);<br>        &#125;<br>        cnt = <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>; i&lt;n; i++)&#123;<br>            <span class="hljs-keyword">if</span>(nums[i] &lt; nums[i<span class="hljs-number">-1</span>]) cnt++;<br>            <span class="hljs-keyword">else</span> cnt = <span class="hljs-number">1</span>;<br>            res = <span class="hljs-built_in">max</span>(res, cnt);<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">max</span>(res, cnt);<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -359,9 +368,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/notes/2025/02/01/japanese-2/" title="日語筆記 - 單字">
+                      <a href="/notes/2025/02/01/japanese-3/" title="日語筆記 - 問候語">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">日語筆記 - 單字</span>
+                        <span class="hidden-mobile">日語筆記 - 問候語</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
