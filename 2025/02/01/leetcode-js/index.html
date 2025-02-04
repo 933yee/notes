@@ -24,7 +24,7 @@
 <meta property="og:description" content="沒在 leetcode 寫過 js 耶，酷  2667. Create Hello World Function 了解 closure 的概念就好  12345678910111213&#x2F;** * @return &#123;Function&#125; *&#x2F;var createHelloWorld &#x3D; function () &#123;  return function (...args) &amp;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-02-01T15:48:41.000Z">
-<meta property="article:modified_time" content="2025-02-03T07:37:42.614Z">
+<meta property="article:modified_time" content="2025-02-04T14:38:59.495Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary_large_image">
@@ -220,7 +220,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          207 words
+          532 words
         
       </span>
     
@@ -231,7 +231,7 @@
         
         
         
-          2 mins
+          5 mins
         
       </span>
     
@@ -292,6 +292,59 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">string</span>&#125; <span class="hljs-variable">val</span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-type">Object</span>&#125;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">var</span> expect = <span class="hljs-keyword">function</span> (<span class="hljs-params">val</span>) &#123;<br>  <span class="hljs-keyword">return</span> &#123;<br>    <span class="hljs-attr">toBe</span>: <span class="hljs-function">(<span class="hljs-params">v</span>) =&gt;</span> &#123;<br>      <span class="hljs-keyword">if</span> (v === val) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>      <span class="hljs-keyword">else</span> <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">&quot;Not Equal&quot;</span>);<br>    &#125;,<br>    <span class="hljs-attr">notToBe</span>: <span class="hljs-function">(<span class="hljs-params">v</span>) =&gt;</span> &#123;<br>      <span class="hljs-keyword">if</span> (v !== val) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>      <span class="hljs-keyword">else</span> <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">&quot;Equal&quot;</span>);<br>    &#125;,<br>  &#125;;<br>&#125;;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * expect(5).toBe(5); // true</span><br><span class="hljs-comment"> * expect(5).notToBe(5); // throws &quot;Equal&quot;</span><br><span class="hljs-comment"> */</span><br></code></pre></td></tr></table></figure>
 
 <h3 id="2665-Counter-II"><a href="#2665-Counter-II" class="headerlink" title="2665. Counter II"></a><a target="_blank" rel="noopener" href="https://leetcode.com/problems/counter-ii/description/?envType=study-plan-v2&envId=30-days-of-javascript">2665. Counter II</a></h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">integer</span>&#125; <span class="hljs-variable">init</span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-type"> increment: Function, decrement: Function, reset: Function </span>&#125;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">var</span> createCounter = <span class="hljs-keyword">function</span> (<span class="hljs-params">init</span>) &#123;<br>  <span class="hljs-keyword">var</span> cnt = init;<br>  <span class="hljs-keyword">return</span> &#123;<br>    <span class="hljs-attr">increment</span>: <span class="hljs-function">() =&gt;</span> ++cnt,<br>    <span class="hljs-attr">reset</span>: <span class="hljs-function">() =&gt;</span> (cnt = init),<br>    <span class="hljs-attr">decrement</span>: <span class="hljs-function">() =&gt;</span> --cnt,<br>  &#125;;<br>&#125;;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * const counter = createCounter(5)</span><br><span class="hljs-comment"> * counter.increment(); // 6</span><br><span class="hljs-comment"> * counter.reset(); // 5</span><br><span class="hljs-comment"> * counter.decrement(); // 4</span><br><span class="hljs-comment"> */</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="2635-Apply-Transform-Over-Each-Element-in-Array"><a href="#2635-Apply-Transform-Over-Each-Element-in-Array" class="headerlink" title="2635. Apply Transform Over Each Element in Array"></a><a target="_blank" rel="noopener" href="https://leetcode.com/problems/apply-transform-over-each-element-in-array/description/?envType=study-plan-v2&envId=30-days-of-javascript">2635. Apply Transform Over Each Element in Array</a></h3><blockquote>
+<p>實作 map 來跑 input function，題目規定不能用 <code>Array.map</code> 讓我愣了一下<br>有各種不同的寫法</p>
+</blockquote>
+<ul>
+<li><p><code>for loop</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">number[]</span>&#125; <span class="hljs-variable">arr</span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">Function</span>&#125; <span class="hljs-variable">fn</span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-type">number[]</span>&#125;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">var</span> map = <span class="hljs-keyword">function</span> (<span class="hljs-params">arr, fn</span>) &#123;<br>  <span class="hljs-keyword">const</span> ret = [];<br>  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; arr.<span class="hljs-property">length</span>; i++) ret.<span class="hljs-title function_">push</span>(<span class="hljs-title function_">fn</span>(arr[i], i));<br>  <span class="hljs-keyword">return</span> ret;<br>&#125;;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>js 可以不用 <code>push</code>，會自動填充</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> map = <span class="hljs-keyword">function</span> (<span class="hljs-params">arr, fn</span>) &#123;<br>  <span class="hljs-keyword">const</span> ret = [];<br>  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; arr.<span class="hljs-property">length</span>; i++) ret[i] = <span class="hljs-title function_">fn</span>(arr[i], i);<br>  <span class="hljs-keyword">return</span> ret;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>補充</p>
+<ul>
+<li><p>如果中間有空的沒填，比方說</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> arr = [];<br>arr[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;<br>arr[<span class="hljs-number">2</span>] = <span class="hljs-number">2</span>;<br></code></pre></td></tr></table></figure>
+
+<p>那麼 <code>arr[1]</code> 會自動填成 <code>undefined</code>，因此 <code>arr.length</code> 會是 <code>3</code></p>
+</li>
+<li><p><code>array</code> 可以用 <code>const</code> 是因為在 javascript 中，<code>const</code> 是 <strong>保證變數本身的記憶體位置不變，但不保證內部內容不可變</strong>，因此在陣列 arr reference 不變的情況下改內容是可以接受的</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>forEach</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> map = <span class="hljs-keyword">function</span> (<span class="hljs-params">arr, fn</span>) &#123;<br>  <span class="hljs-keyword">const</span> ret = [];<br>  arr.<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">el, idx</span>) =&gt;</span> (ret[idx] = <span class="hljs-title function_">fn</span>(el, idx)));<br>  <span class="hljs-keyword">return</span> ret;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p><code>forEach</code> 沒有回傳值，不能像 <code>map</code> 那樣直接 <code>return</code></p>
+</li>
+<li><p><code>array.reduce</code>，但不太直觀</p>
+<ul>
+<li><code>array.reduce(callback, initialValue);</code></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> map = <span class="hljs-keyword">function</span> (<span class="hljs-params">arr, fn</span>) &#123;<br>  <span class="hljs-keyword">return</span> arr.<span class="hljs-title function_">reduce</span>(<span class="hljs-function">(<span class="hljs-params">ret, el, idx</span>) =&gt;</span> &#123;<br>    ret[idx] = <span class="hljs-title function_">fn</span>(el, idx);<br>    <span class="hljs-keyword">return</span> ret;<br>  &#125;, []);<br>&#125;;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>如果可以用 <code>Array.map</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> <span class="hljs-title function_">map</span> = (<span class="hljs-params">arr, fn</span>) =&gt; arr.<span class="hljs-title function_">map</span>(fn);<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>健康又快樂</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="2634-Filter-Elements-from-Array"><a href="#2634-Filter-Elements-from-Array" class="headerlink" title="2634. Filter Elements from Array"></a><a target="_blank" rel="noopener" href="https://leetcode.com/problems/filter-elements-from-array/description/?envType=study-plan-v2&envId=30-days-of-javascript">2634. Filter Elements from Array</a></h3><blockquote>
+<p>跟前一題類似</p>
+</blockquote>
+<ul>
+<li><p><code>forEach</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">number[]</span>&#125; <span class="hljs-variable">arr</span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">Function</span>&#125; <span class="hljs-variable">fn</span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-type">number[]</span>&#125;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">var</span> filter = <span class="hljs-keyword">function</span> (<span class="hljs-params">arr, fn</span>) &#123;<br>  <span class="hljs-keyword">const</span> ret = [];<br>  arr.<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">el, idx</span>) =&gt;</span> <span class="hljs-title function_">fn</span>(el, idx) &amp;&amp; ret.<span class="hljs-title function_">push</span>(el));<br>  <span class="hljs-keyword">return</span> ret;<br>&#125;;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>如果可以用 <code>Array.filter</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> <span class="hljs-title function_">filter</span> = (<span class="hljs-params">arr, fn</span>) =&gt; arr.<span class="hljs-title function_">filter</span>(fn);<br></code></pre></td></tr></table></figure></li>
+</ul>
 
                 
               </div>
