@@ -24,7 +24,7 @@
 <meta property="og:description" content="Arrays &amp; Hashing217. Contains Duplicate Hash map Time Complexity $O(n)$ Space Complexity $O(n)$    1234567891011class Solution &#123;public:    bool containsDuplicate(vector&lt;int&gt;&amp; nums)">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-01-31T13:22:11.000Z">
-<meta property="article:modified_time" content="2025-02-03T15:50:10.593Z">
+<meta property="article:modified_time" content="2025-02-04T14:24:42.620Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary_large_image">
@@ -220,7 +220,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.2k words
+          1.3k words
         
       </span>
     
@@ -273,7 +273,7 @@
             
               <div class="markdown-body">
                 
-                <h1 id="Arrays-Hashing"><a href="#Arrays-Hashing" class="headerlink" title="Arrays &amp; Hashing"></a>Arrays &amp; Hashing</h1><h3 id="217-Contains-Duplicate"><a href="#217-Contains-Duplicate" class="headerlink" title="217. Contains Duplicate"></a><a target="_blank" rel="noopener" href="https://leetcode.com/problems/contains-duplicate/description/">217. Contains Duplicate</a></h3><ol>
+                <h2 id="Arrays-Hashing"><a href="#Arrays-Hashing" class="headerlink" title="Arrays &amp; Hashing"></a>Arrays &amp; Hashing</h2><h3 id="217-Contains-Duplicate"><a href="#217-Contains-Duplicate" class="headerlink" title="217. Contains Duplicate"></a><a target="_blank" rel="noopener" href="https://leetcode.com/problems/contains-duplicate/description/">217. Contains Duplicate</a></h3><ol>
 <li>Hash map<ul>
 <li>Time Complexity $O(n)$</li>
 <li>Space Complexity $O(n)$</li>
@@ -375,6 +375,11 @@
 </li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">longestConsecutive</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>&#123;<br>        <span class="hljs-function">unordered_set&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">st</span><span class="hljs-params">(nums.begin(), nums.end())</span></span>;<br>        <span class="hljs-type">int</span> ret = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i:nums)&#123;<br>            <span class="hljs-keyword">if</span>(st.<span class="hljs-built_in">count</span>(i) == <span class="hljs-number">0</span>) <span class="hljs-keyword">continue</span>;<br>            <span class="hljs-type">int</span> cnt = <span class="hljs-number">1</span>; <span class="hljs-type">int</span> cur = i;<br>            st.<span class="hljs-built_in">erase</span>(cur);<br>            <span class="hljs-type">int</span> temp = cur + <span class="hljs-number">1</span>;<br>            <span class="hljs-keyword">while</span>(st.<span class="hljs-built_in">count</span>(temp))&#123;<br>                ++cnt;<br>                st.<span class="hljs-built_in">erase</span>(temp++);<br>            &#125;<br>            temp = cur - <span class="hljs-number">1</span>;<br>            <span class="hljs-keyword">while</span>(st.<span class="hljs-built_in">count</span>(temp))&#123;<br>                ++cnt;<br>                st.<span class="hljs-built_in">erase</span>(temp--);<br>            &#125;<br>            ret = <span class="hljs-built_in">max</span>(ret, cnt);<br>        &#125;<br>        <span class="hljs-keyword">return</span> ret;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Two-Pointers"><a href="#Two-Pointers" class="headerlink" title="Two Pointers"></a>Two Pointers</h2><h3 id="125-Valid-Palindrome"><a href="#125-Valid-Palindrome" class="headerlink" title="125. Valid Palindrome"></a><a target="_blank" rel="noopener" href="https://leetcode.com/problems/valid-palindrome/description/">125. Valid Palindrome</a></h3><ul>
+<li>用左右兩個指針收縮，檢查是不是 Palindrome</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">isPalindrome</span><span class="hljs-params">(string s)</span> </span>&#123;<br>        <span class="hljs-type">int</span> l = <span class="hljs-number">0</span>, r = s.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">while</span>(l &lt; r)&#123;<br>            <span class="hljs-keyword">while</span>(!<span class="hljs-built_in">isalnum</span>(s[l]) &amp;&amp; l &lt; r) l++;<br>            <span class="hljs-keyword">while</span>(!<span class="hljs-built_in">isalnum</span>(s[r]) &amp;&amp; l &lt; r) r--;<br>            <span class="hljs-keyword">if</span>(l &lt; r &amp;&amp; <span class="hljs-built_in">tolower</span>(s[l++]) != <span class="hljs-built_in">tolower</span>(s[r--]))<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
                 
               </div>

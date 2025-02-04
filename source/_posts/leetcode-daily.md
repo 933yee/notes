@@ -74,3 +74,25 @@ public:
     }
 };
 ```
+
+### 2025/02/04 [1800. Maximum Ascending Subarray Sum](https://leetcode.com/problems/maximum-ascending-subarray-sum/description/?envType=daily-question&envId=2025-02-04)
+
+> 連四天 easy 耶
+
+- 遍歷一次，符合條件就累加
+  - Time Complexity $O(n)$
+  - Space Complexity $O(1)$
+
+```cpp
+class Solution {
+public:
+    int maxAscendingSum(vector<int>& nums) {
+        int res = nums[0], n = nums.size(), cnt = nums[0];
+        for(int i=1; i<n; i++){
+            nums[i] > nums[i-1] ? cnt += nums[i] : cnt = nums[i];
+            res = max(res, cnt);
+        }
+        return res;
+    }
+};
+```

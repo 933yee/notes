@@ -5,7 +5,7 @@ tags: leetcode
 category:
 ---
 
-# Arrays & Hashing
+## Arrays & Hashing
 
 ### [217. Contains Duplicate](https://leetcode.com/problems/contains-duplicate/description/)
 
@@ -312,6 +312,28 @@ public:
             ret = max(ret, cnt);
         }
         return ret;
+    }
+};
+```
+
+## Two Pointers
+
+### [125. Valid Palindrome](https://leetcode.com/problems/valid-palindrome/description/)
+
+- 用左右兩個指針收縮，檢查是不是 Palindrome
+
+```cpp
+class Solution {
+public:
+    bool isPalindrome(string s) {
+        int l = 0, r = s.size() - 1;
+        while(l < r){
+            while(!isalnum(s[l]) && l < r) l++;
+            while(!isalnum(s[r]) && l < r) r--;
+            if(l < r && tolower(s[l++]) != tolower(s[r--]))
+                return false;
+        }
+        return true;
     }
 };
 ```

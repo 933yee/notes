@@ -101,3 +101,102 @@ var createCounter = function (init) {
  * counter.decrement(); // 4
  */
 ```
+
+### [2635. Apply Transform Over Each Element in Array](https://leetcode.com/problems/apply-transform-over-each-element-in-array/description/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+> 實作 map 來跑 input function，題目規定不能用 `Array.map` 讓我愣了一下
+> 有各種不同的寫法
+
+- `for loop`
+
+  ```js
+  /**
+   * @param {number[]} arr
+   * @param {Function} fn
+   * @return {number[]}
+   */
+  var map = function (arr, fn) {
+    const ret = [];
+    for (let i = 0; i < arr.length; i++) ret.push(fn(arr[i], i));
+    return ret;
+  };
+  ```
+
+- js 可以不用 `push`，會自動填充
+
+  ```js
+  var map = function (arr, fn) {
+    const ret = [];
+    for (let i = 0; i < arr.length; i++) ret[i] = fn(arr[i], i);
+    return ret;
+  };
+  ```
+
+  - 補充
+
+    - 如果中間有空的沒填，比方說
+
+      ```js
+      const arr = [];
+      arr[0] = 0;
+      arr[2] = 2;
+      ```
+
+      那麼 `arr[1]` 會自動填成 `undefined`，因此 `arr.length` 會是 `3`
+
+    - `array` 可以用 `const` 是因為在 javascript 中，`const` 是 **保證變數本身的記憶體位置不變，但不保證內部內容不可變**，因此在陣列 arr reference 不變的情況下改內容是可以接受的
+
+- `forEach`
+
+  ```js
+  var map = function (arr, fn) {
+    const ret = [];
+    arr.forEach((el, idx) => (ret[idx] = fn(el, idx)));
+    return ret;
+  };
+  ```
+
+  `forEach` 沒有回傳值，不能像 `map` 那樣直接 `return`
+
+- `array.reduce`，但不太直觀
+
+  - `array.reduce(callback, initialValue);`
+
+  ```js
+  var map = function (arr, fn) {
+    return arr.reduce((ret, el, idx) => {
+      ret[idx] = fn(el, idx);
+      return ret;
+    }, []);
+  };
+  ```
+
+- 如果可以用 `Array.map`
+  ```js
+  var map = (arr, fn) => arr.map(fn);
+  ```
+  > 健康又快樂
+
+### [2634. Filter Elements from Array](https://leetcode.com/problems/filter-elements-from-array/description/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+> 跟前一題類似
+
+- `forEach`
+
+  ```js
+  /**
+   * @param {number[]} arr
+   * @param {Function} fn
+   * @return {number[]}
+   */
+  var filter = function (arr, fn) {
+    const ret = [];
+    arr.forEach((el, idx) => fn(el, idx) && ret.push(el));
+    return ret;
+  };
+  ```
+
+- 如果可以用 `Array.filter`
+  ```js
+  var filter = (arr, fn) => arr.filter(fn);
+  ```
