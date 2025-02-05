@@ -16,30 +16,24 @@
   <meta name="author" content="Kevin Lee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="周志遠教授作業系統開放式課程  Process ConceptProgram 被動、Binary 的 File 存在硬碟裡面  Process 主動、正在記憶體裡面執行的程式  一個 Process 裡面包含：  Code Segment (text section) Data Section (global variables) Stack (暫時的 local variables 和 fun">
+    <meta name="description" content="原本的專案都是用 webpack 打包，現在想換成 vite 看看  安裝 Vite 和相關的 Plugins1npm install vite @vitejs&#x2F;plugin-react --save-dev  Restructure ProjectWebpack 通常用 index.js 或 index.jsx 當作 entry point，但是 Vite 是用 index.html 新增 v">
 <meta property="og:type" content="article">
-<meta property="og:title" content="作業系統筆記 Processes Conecpt">
-<meta property="og:url" content="https://933yee.github.io/notes/2024/07/26/os-chapter3/index.html">
+<meta property="og:title" content="Vite">
+<meta property="og:url" content="https://933yee.github.io/notes/2025/02/05/vite/index.html">
 <meta property="og:site_name" content="Kevin&#39;s notes">
-<meta property="og:description" content="周志遠教授作業系統開放式課程  Process ConceptProgram 被動、Binary 的 File 存在硬碟裡面  Process 主動、正在記憶體裡面執行的程式  一個 Process 裡面包含：  Code Segment (text section) Data Section (global variables) Stack (暫時的 local variables 和 fun">
+<meta property="og:description" content="原本的專案都是用 webpack 打包，現在想換成 vite 看看  安裝 Vite 和相關的 Plugins1npm install vite @vitejs&#x2F;plugin-react --save-dev  Restructure ProjectWebpack 通常用 index.js 或 index.jsx 當作 entry point，但是 Vite 是用 index.html 新增 v">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://933yee.github.io/notes/">
-<meta property="og:image" content="https://933yee.github.io/notes/">
-<meta property="og:image" content="https://933yee.github.io/notes/">
-<meta property="og:image" content="https://933yee.github.io/notes/">
-<meta property="og:image" content="https://933yee.github.io/notes/">
-<meta property="og:image" content="https://933yee.github.io/notes/">
-<meta property="og:image" content="https://933yee.github.io/notes/">
-<meta property="article:published_time" content="2024-07-26T07:15:10.000Z">
-<meta property="article:modified_time" content="2024-07-26T08:49:56.636Z">
+<meta property="article:published_time" content="2025-02-05T02:48:03.000Z">
+<meta property="article:modified_time" content="2025-02-05T09:20:59.759Z">
 <meta property="article:author" content="Kevin Lee">
-<meta property="article:tag" content="OS">
+<meta property="article:tag" content="frontend">
+<meta property="article:tag" content="website">
+<meta property="article:tag" content="vite">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://933yee.github.io/notes/">
   
   
   
-  <title>作業系統筆記 Processes Conecpt - Kevin&#39;s notes</title>
+  <title>Vite - Kevin&#39;s notes</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -205,7 +199,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="作業系統筆記 Processes Conecpt"></span>
+            <span id="subtitle" data-typed-text="Vite"></span>
           
         </div>
 
@@ -216,8 +210,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-07-26 15:15" pubdate>
-          July 26, 2024 pm
+        <time datetime="2025-02-05 10:48" pubdate>
+          February 5, 2025 am
         </time>
       </span>
     
@@ -228,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          481 words
+          434 words
         
       </span>
     
@@ -239,7 +233,7 @@
         
         
         
-          5 mins
+          4 mins
         
       </span>
     
@@ -276,127 +270,30 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">作業系統筆記 Processes Conecpt</h1>
+            <h1 id="seo-header">Vite</h1>
             
             
               <div class="markdown-body">
                 
                 <blockquote>
-<p>周志遠教授作業系統開放式課程</p>
+<p>原本的專案都是用 webpack 打包，現在想換成 vite 看看</p>
 </blockquote>
-<h1 id="Process-Concept"><a href="#Process-Concept" class="headerlink" title="Process Concept"></a>Process Concept</h1><h3 id="Program"><a href="#Program" class="headerlink" title="Program"></a>Program</h3><ul>
-<li>被動、Binary 的 File 存在硬碟裡面</li>
-</ul>
-<h3 id="Process"><a href="#Process" class="headerlink" title="Process"></a>Process</h3><ul>
-<li><p>主動、正在記憶體裡面執行的程式</p>
-</li>
-<li><p>一個 Process 裡面包含：</p>
-<ul>
-<li>Code Segment (text section)</li>
-<li>Data Section (global variables)</li>
-<li>Stack (暫時的 local variables 和 functions)</li>
-<li>Heap (動態分配的 variables 或 classes)</li>
-<li>記錄現在的資料 (<strong>program counter</strong>、register contents)</li>
-<li>其他相關的資源 (OS resources, e.g. open file handlers)</li>
-</ul>
-</li>
-</ul>
-<p><img src="/notes/" srcset="/notes/info/loading.gif" lazyload alt="Process In Memory"></p>
-<h3 id="Threads"><a href="#Threads" class="headerlink" title="Threads"></a>Threads</h3><ul>
-<li><p>A.K.A <strong>lightweight process</strong></p>
-<ul>
-<li>跟 Process 長的一樣，不過有些 Threads 可以共用 Memory 空間</li>
-<li>是 Basic unit of CPU utilization</li>
-</ul>
-</li>
-<li><p>在同一個 Process 底下的 Threads 會共用</p>
-<ul>
-<li>Code Section</li>
-<li>Data Section</li>
-<li>OS resources</li>
-</ul>
-</li>
-<li><p>每個 Thread 有自己的</p>
-<ul>
-<li>Thread ID</li>
-<li>Program Counter</li>
-<li>Register Set</li>
-<li>Stack</li>
-</ul>
-</li>
-</ul>
-<p>因此，在寫 Multi-Thread 的時候可以用 Global Variables (Data Section) 來做溝通</p>
-<p><img src="/notes/" srcset="/notes/info/loading.gif" lazyload alt="Threads"></p>
-<h2 id="Process-States"><a href="#Process-States" class="headerlink" title="Process States"></a>Process States</h2><ul>
-<li>States<ul>
-<li><p>New: 這個 Process 剛被創造出來</p>
-<ul>
-<li>Program Load 到 Memory，並初始化前面提到的那些 (Code Section、Data Section…)</li>
-<li>分配要分配多少給 Process</li>
-</ul>
-</li>
-<li><p>Ready: Process 要競爭的資源是 CPU，會有一個 Queue 存放這些 Process，等待 CPU 排程</p>
-</li>
-<li><p>Running: 在 Ready 中被選到了，可以開始執行程式</p>
-<ul>
-<li>有時候 Running State 會直接回到 Ready State，通常是因為 Timer 到了，送出 Interrupt，而不是因為 IO</li>
-</ul>
-</li>
-<li><p>Waiting: 在做 IO 的時候不需要 CPU 參與，等到完成後會回到 Ready</p>
-<ul>
-<li>也有一個 Queue 來儲存</li>
-</ul>
-</li>
-<li><p>Terminated: 釋放所有分配給這 Process 的資源</p>
-</li>
-</ul>
-</li>
-</ul>
-<p><img src="/notes/" srcset="/notes/info/loading.gif" lazyload alt="Diagram of Process State"></p>
-<h2 id="Process-Control-Block-PCB"><a href="#Process-Control-Block-PCB" class="headerlink" title="Process Control Block (PCB)"></a>Process Control Block (PCB)</h2><ul>
-<li>OS 要能掌握每個 Process 的邏輯來管理，所以每一個 Process 會有一個 Process Control Block</li>
-<li>像是前面說的把 Process 放進 Queue 其實是一個抽象的概念，實際上是放進 PCB，然後裡面的</li>
-<li>PCB 裡面包含<ul>
-<li>Process State (Ready、Waiting…)</li>
-<li>Program Counter</li>
-<li>CPU Registers</li>
-<li>CPU Scheduling Information (這個 Process 的 Priority)</li>
-<li>Memory-Management Information (Base&#x2F; Limit Register)</li>
-<li>I&#x2F;O Status Information (正在做哪個 IO Device 的 IO)</li>
-<li>Accounting Information (你開了幾個檔案)</li>
-</ul>
-</li>
-</ul>
-<p><img src="/notes/" srcset="/notes/info/loading.gif" lazyload alt="Process Control Block"></p>
-<h2 id="Context-Switch"><a href="#Context-Switch" class="headerlink" title="Context Switch"></a>Context Switch</h2><ul>
-<li><p>藉由 Interrupt，把原來的 Process 替換成另一個 Process</p>
-<ul>
-<li>會把舊 Process 的資料存到 PCB 裡，把新 Process 的資料 Load 到 PCB 裡</li>
-</ul>
-</li>
-<li><p>Context Switch 所花的時間就是 Overhead，在這期間兩個 Process 都在 Idle，為了 Time-Sharing 這是無法避免的</p>
-</li>
-<li><p>Context Switch Time 基於</p>
-<ul>
-<li>Memory Speed</li>
-<li>Register 數量</li>
-<li>用特殊的 Instruction，像是某個 Instruction 可以一次 Load 所有 Register</li>
-<li>Hardware Support: CPU 包含很多 Sets of Registers，一次去記很多程式的狀態，在 Context Switch 得時候就不用寫到 Memory</li>
-</ul>
-</li>
-</ul>
-<p><img src="/notes/" srcset="/notes/info/loading.gif" lazyload alt="Context Switch"></p>
-<h1 id="Process-Scheduling"><a href="#Process-Scheduling" class="headerlink" title="Process Scheduling"></a>Process Scheduling</h1><ul>
-<li>為了實現 Multiprogramming 和 Time Sharing</li>
-</ul>
-<h3 id="Queues"><a href="#Queues" class="headerlink" title="Queues"></a>Queues</h3><ul>
-<li>Job Queue (New State): 哪些 Process 可以 Load 到 Memory</li>
-<li>Ready Queue (Ready State)</li>
-<li>Device Queue (Wait State)</li>
-</ul>
-<p><img src="/notes/" srcset="/notes/info/loading.gif" lazyload alt="Process Scheduling Queues"></p>
-<p><img src="/notes/" srcset="/notes/info/loading.gif" lazyload alt="Process Scheduling Diagram"></p>
-<h2 id="Scheculers"><a href="#Scheculers" class="headerlink" title="Scheculers"></a>Scheculers</h2><h1 id="Operations-on-Processes"><a href="#Operations-on-Processes" class="headerlink" title="Operations on Processes"></a>Operations on Processes</h1><h1 id="Interprocess-Communication"><a href="#Interprocess-Communication" class="headerlink" title="Interprocess Communication"></a>Interprocess Communication</h1>
+<h3 id="安裝-Vite-和相關的-Plugins"><a href="#安裝-Vite-和相關的-Plugins" class="headerlink" title="安裝 Vite 和相關的 Plugins"></a>安裝 Vite 和相關的 Plugins</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">npm install vite @vitejs/plugin-react --save-dev<br></code></pre></td></tr></table></figure>
+
+<h3 id="Restructure-Project"><a href="#Restructure-Project" class="headerlink" title="Restructure Project"></a>Restructure Project</h3><p>Webpack 通常用 <code>index.js</code> 或 <code>index.jsx</code> 當作 entry point，但是 Vite 是用 <code>index.html</code></p>
+<h3 id="新增-vite-config-js"><a href="#新增-vite-config-js" class="headerlink" title="新增 vite.config.js"></a>新增 vite.config.js</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; defineConfig &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;vite&quot;</span>;<br><span class="hljs-keyword">import</span> react <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@vitejs/plugin-react&quot;</span>;<br><span class="hljs-keyword">import</span> path <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;path&quot;</span>;<br><br><span class="hljs-comment">// Detect environment mode</span><br><span class="hljs-keyword">const</span> isDev = process.<span class="hljs-property">env</span>.<span class="hljs-property">NODE_ENV</span> === <span class="hljs-string">&quot;development&quot;</span>;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;isDev: &quot;</span>, isDev);<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title function_">defineConfig</span>(&#123;<br>  <span class="hljs-attr">plugins</span>: [<br>    <span class="hljs-title function_">react</span>(&#123;<br>      <span class="hljs-attr">babel</span>: &#123;<br>        <span class="hljs-attr">plugins</span>: [[<span class="hljs-string">&quot;babel-plugin-react-compiler&quot;</span>]],<br>      &#125;,<br>    &#125;),<br>  ],<br>  <span class="hljs-attr">root</span>: <span class="hljs-string">&quot;src&quot;</span>, <span class="hljs-comment">// Set project root to &quot;src&quot;</span><br>  <span class="hljs-attr">resolve</span>: &#123;<br>    <span class="hljs-attr">alias</span>: &#123;<br>      <span class="hljs-title class_">States</span>: path.<span class="hljs-title function_">resolve</span>(__dirname, <span class="hljs-string">&quot;src/States&quot;</span>),<br>      <span class="hljs-title class_">Components</span>: path.<span class="hljs-title function_">resolve</span>(__dirname, <span class="hljs-string">&quot;src/Components&quot;</span>),<br>      <span class="hljs-title class_">Global</span>: path.<span class="hljs-title function_">resolve</span>(__dirname, <span class="hljs-string">&quot;src/Components/Global&quot;</span>),<br>      <span class="hljs-title class_">Home</span>: path.<span class="hljs-title function_">resolve</span>(__dirname, <span class="hljs-string">&quot;src/Components/Home&quot;</span>),<br>      <span class="hljs-title class_">About</span>: path.<span class="hljs-title function_">resolve</span>(__dirname, <span class="hljs-string">&quot;src/Components/About&quot;</span>),<br>      <span class="hljs-title class_">Contact</span>: path.<span class="hljs-title function_">resolve</span>(__dirname, <span class="hljs-string">&quot;src/Components/Contact&quot;</span>),<br>      <span class="hljs-title class_">Price</span>: path.<span class="hljs-title function_">resolve</span>(__dirname, <span class="hljs-string">&quot;src/Components/Price&quot;</span>),<br>      <span class="hljs-title class_">News</span>: path.<span class="hljs-title function_">resolve</span>(__dirname, <span class="hljs-string">&quot;src/Components/News&quot;</span>),<br>      <span class="hljs-title class_">Products</span>: path.<span class="hljs-title function_">resolve</span>(__dirname, <span class="hljs-string">&quot;src/Components/Products&quot;</span>),<br>    &#125;,<br>  &#125;,<br>  <span class="hljs-attr">server</span>: &#123;<br>    <span class="hljs-attr">port</span>: <span class="hljs-number">7070</span>,<br>    <span class="hljs-attr">strictPort</span>: <span class="hljs-literal">true</span>,<br>    <span class="hljs-attr">open</span>: <span class="hljs-literal">true</span>, <span class="hljs-comment">// Open browser automatically</span><br>    <span class="hljs-attr">historyApiFallback</span>: <span class="hljs-literal">true</span>,<br>  &#125;,<br>  <span class="hljs-attr">build</span>: &#123;<br>    <span class="hljs-attr">outDir</span>: path.<span class="hljs-title function_">resolve</span>(__dirname, <span class="hljs-string">&quot;public&quot;</span>),<br>    <span class="hljs-attr">sourcemap</span>: isDev ? <span class="hljs-string">&quot;inline-source-map&quot;</span> : <span class="hljs-literal">false</span>,<br>  &#125;,<br>  <span class="hljs-attr">define</span>: &#123;<br>    <span class="hljs-string">&quot;process.env.NODE_ENV&quot;</span>: <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(process.<span class="hljs-property">env</span>.<span class="hljs-property">NODE_ENV</span>),<br>  &#125;,<br>  <span class="hljs-attr">base</span>: isDev ? <span class="hljs-string">&quot;/&quot;</span> : <span class="hljs-string">&quot;https://carbon-walker.com/&quot;</span>,<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<h3 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h3><p>這部分要改成</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;scripts&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;dev&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;vite&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;build&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;vite build&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;predeploy&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;npm run build&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;deploy&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;gh-pages -d public&quot;</span><span class="hljs-punctuation">,</span><br><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="圖片問題"><a href="#圖片問題" class="headerlink" title="圖片問題"></a>圖片問題</h3><p>原本用 webpack 加載圖片時是用，他就能夠讀取到 <code>public</code> 資料夾裡面的 <code>images</code> 裡面的圖片</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">img</span></span><br><span class="hljs-tag">  <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;h-[2.5rem] object-contain lg:h-[2rem] md:h-[2.2rem]&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;./images/logo.png&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">alt</span>=<span class="hljs-string">&quot;logo&quot;</span></span><br><span class="hljs-tag">/&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>但換成 Vite 我發現路徑會有問題，要把原本放在先前的資料夾 <code>images</code> 放到 <code>src</code> 裡面的 <code>assets</code> 資料夾中，這樣跑 <code>npm run build</code> 的時候他會自動處理，複製一份到 <code>public</code></p>
+<h3 id="刪掉-Webpack-Specific-的-Packages"><a href="#刪掉-Webpack-Specific-的-Packages" class="headerlink" title="刪掉 Webpack-Specific 的 Packages"></a>刪掉 Webpack-Specific 的 Packages</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">npm remove webpack webpack-cli webpack-dev-server html-webpack-plugin babel-loader style-loader css-loader postcss-loader<br></code></pre></td></tr></table></figure>
+
+<p>雖然搞很久，但有感覺 Vite 速度有快很多，之後再看有沒有更酷的功能</p>
+
                 
               </div>
             
@@ -408,7 +305,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/notes/tags/OS/" class="print-no-link">#OS</a>
+        <a href="/notes/tags/frontend/" class="print-no-link">#frontend</a>
+      
+        <a href="/notes/tags/website/" class="print-no-link">#website</a>
+      
+        <a href="/notes/tags/vite/" class="print-no-link">#vite</a>
       
     </div>
   
@@ -420,8 +321,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>作業系統筆記 Processes Conecpt</div>
-      <div>https://933yee.github.io/notes/2024/07/26/os-chapter3/</div>
+      <div>Vite</div>
+      <div>https://933yee.github.io/notes/2025/02/05/vite/</div>
     </div>
     <div class="license-meta">
       
@@ -433,7 +334,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>July 26, 2024</div>
+          <div>February 5, 2025</div>
         </div>
       
       
@@ -465,18 +366,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/notes/2025/01/31/leetcode/" title="不知道這會持續幾天的 leetcode">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">不知道這會持續幾天的 leetcode</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/notes/2024/07/23/js-note/" title="Javascript Note">
-                        <span class="hidden-mobile">Javascript Note</span>
+                      <a href="/notes/2025/02/04/information-security/" title="Frontend Information Security">
+                        <span class="hidden-mobile">Frontend Information Security</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
