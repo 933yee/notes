@@ -1,5 +1,5 @@
 ---
-title: Webpack 移植 Vite
+title: Webpack 替換成 Vite
 date: 2025-02-05 10:48:03
 tags: [frontend, vite, website]
 category:
@@ -93,5 +93,5 @@ export default defineConfig({
 npm remove webpack webpack-cli webpack-dev-server html-webpack-plugin babel-loader style-loader css-loader postcss-loader
 ```
 
-雖然 Vite 速度感覺快很多，但是花了一堆時間再移植，遇到一堆怪怪的問題，之後再看有沒有更酷的功能
+雖然 Vite 速度感覺快很多，但是花了一堆時間在 debug，遇到一堆怪怪的問題，之後再看有沒有更酷的功能
 ![金句](https://media2.dev.to/dynamic/image/width=1000,height=500,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fd4u62vy3h2bptsynmuu6.png)
