@@ -18,14 +18,14 @@
   
     <meta name="description" content="原本的專案都是用 webpack 打包，現在想換成 vite 看看  安裝 Vite 和相關的 Plugins1npm install vite @vitejs&#x2F;plugin-react --save-dev  Restructure ProjectWebpack 通常用 index.js 或 index.jsx 當作 entry point，但是 Vite 是用 index.html 新增 v">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Webpack 移植 Vite">
+<meta property="og:title" content="Webpack 替換成 Vite">
 <meta property="og:url" content="https://933yee.github.io/notes/2025/02/05/vite/index.html">
 <meta property="og:site_name" content="Kevin&#39;s notes">
 <meta property="og:description" content="原本的專案都是用 webpack 打包，現在想換成 vite 看看  安裝 Vite 和相關的 Plugins1npm install vite @vitejs&#x2F;plugin-react --save-dev  Restructure ProjectWebpack 通常用 index.js 或 index.jsx 當作 entry point，但是 Vite 是用 index.html 新增 v">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://media2.dev.to/dynamic/image/width=1000,height=500,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fd4u62vy3h2bptsynmuu6.png">
 <meta property="article:published_time" content="2025-02-05T02:48:03.000Z">
-<meta property="article:modified_time" content="2025-02-05T13:41:17.834Z">
+<meta property="article:modified_time" content="2025-02-05T14:27:08.595Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="frontend">
 <meta property="article:tag" content="website">
@@ -35,7 +35,7 @@
   
   
   
-  <title>Webpack 移植 Vite - Kevin&#39;s notes</title>
+  <title>Webpack 替換成 Vite - Kevin&#39;s notes</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -201,7 +201,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Webpack 移植 Vite"></span>
+            <span id="subtitle" data-typed-text="Webpack 替換成 Vite"></span>
           
         </div>
 
@@ -224,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          404 words
+          403 words
         
       </span>
     
@@ -272,7 +272,7 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Webpack 移植 Vite</h1>
+            <h1 id="seo-header">Webpack 替換成 Vite</h1>
             
             
               <div class="markdown-body">
@@ -294,7 +294,7 @@
 <p>但換成 Vite 我發現路徑會有問題，要把原本放在先前的資料夾 <code>images</code> 複製一份到 <code>src</code> 裡面，跑 dev 的時候才能看到</p>
 <h3 id="刪掉-Webpack-Specific-的-Packages"><a href="#刪掉-Webpack-Specific-的-Packages" class="headerlink" title="刪掉 Webpack-Specific 的 Packages"></a>刪掉 Webpack-Specific 的 Packages</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">npm remove webpack webpack-cli webpack-dev-server html-webpack-plugin babel-loader style-loader css-loader postcss-loader<br></code></pre></td></tr></table></figure>
 
-<p>雖然 Vite 速度感覺快很多，但是花了一堆時間再移植，遇到一堆怪怪的問題，之後再看有沒有更酷的功能<br><img src="https://media2.dev.to/dynamic/image/width=1000,height=500,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fd4u62vy3h2bptsynmuu6.png" srcset="/notes/info/loading.gif" lazyload alt="金句"></p>
+<p>雖然 Vite 速度感覺快很多，但是花了一堆時間在 debug，遇到一堆怪怪的問題，之後再看有沒有更酷的功能<br><img src="https://media2.dev.to/dynamic/image/width=1000,height=500,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fd4u62vy3h2bptsynmuu6.png" srcset="/notes/info/loading.gif" lazyload alt="金句"></p>
 
                 
               </div>
@@ -323,7 +323,7 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Webpack 移植 Vite</div>
+      <div>Webpack 替換成 Vite</div>
       <div>https://933yee.github.io/notes/2025/02/05/vite/</div>
     </div>
     <div class="license-meta">
