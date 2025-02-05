@@ -77,8 +77,6 @@ public:
 
 ### 2025/02/04 [1800. Maximum Ascending Subarray Sum](https://leetcode.com/problems/maximum-ascending-subarray-sum/description/?envType=daily-question&envId=2025-02-04)
 
-> 連四天 easy 耶
-
 - 遍歷一次，符合條件就累加
   - Time Complexity $O(n)$
   - Space Complexity $O(1)$
@@ -93,6 +91,34 @@ public:
             res = max(res, cnt);
         }
         return res;
+    }
+};
+```
+
+### 2025/02/05 [1790. Check if One String Swap Can Make Strings Equal](https://leetcode.com/problems/check-if-one-string-swap-can-make-strings-equal/description/?envType=daily-question&envId=2025-02-05)
+
+> 連五天 easy 耶
+
+- 題目只允許交換一次，所以記住兩個 idx 就好
+  - Time Complexity $O(n)$
+  - Space Complexity $O(1)$
+
+```cpp
+class Solution {
+public:
+    bool areAlmostEqual(string s1, string s2) {
+        int n = s1.size(), cnt = 0;
+        int idx1, idx2;
+        for(int i=0; i<n; i++){
+            if(s1[i] != s2[i]){
+                cnt++;
+                if(cnt == 1) idx1 = i;
+                else idx2 = i;
+            }
+        }
+        if(cnt == 0) return true;
+        if(cnt == 2 && s1[idx1] == s2[idx2] && s1[idx2] == s2[idx1]) return true;
+        return false;
     }
 };
 ```

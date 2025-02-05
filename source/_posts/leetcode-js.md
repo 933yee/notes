@@ -200,3 +200,28 @@ var createCounter = function (init) {
   ```js
   var filter = (arr, fn) => arr.filter(fn);
   ```
+
+### [2626. Array Reduce Transformation](https://leetcode.com/problems/array-reduce-transformation/description/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+> 跟前幾題類似
+
+- `forEach`
+
+  ```js
+  /**
+   * @param {number[]} nums
+   * @param {Function} fn
+   * @param {number} init
+   * @return {number}
+   */
+  var reduce = function (nums, fn, init) {
+    let acc = init;
+    nums.forEach((el) => (acc = fn(acc, el)));
+    return acc;
+  };
+  ```
+
+- 如果可以用 `Array.reduce`
+  ```js
+  var reduce = (nums, fn, init) => nums.reduce(fn, init);
+  ```

@@ -75,7 +75,7 @@ export default defineConfig({
 
 ### 圖片問題
 
-原本用 webpack 加載圖片時是用，他就能夠讀取到 `public` 資料夾裡面的 `images` 裡面的圖片
+原本用 webpack 加載圖片時是用
 
 ```html
 <img
@@ -85,7 +85,7 @@ export default defineConfig({
 />
 ```
 
-但換成 Vite 我發現路徑會有問題，要把原本放在先前的資料夾 `images` 複製一份到 `src` 裡面
+但換成 Vite 我發現路徑會有問題，要把原本放在先前的資料夾 `images` 複製一份到 `src` 裡面，跑 dev 的時候才能看到
 
 ### 刪掉 Webpack-Specific 的 Packages
 

@@ -25,7 +25,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://media2.dev.to/dynamic/image/width=1000,height=500,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fd4u62vy3h2bptsynmuu6.png">
 <meta property="article:published_time" content="2025-02-05T02:48:03.000Z">
-<meta property="article:modified_time" content="2025-02-05T09:40:51.142Z">
+<meta property="article:modified_time" content="2025-02-05T13:41:17.834Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="frontend">
 <meta property="article:tag" content="website">
@@ -224,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          414 words
+          404 words
         
       </span>
     
@@ -288,10 +288,10 @@
 <h3 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h3><p>這部分要改成</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;scripts&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;dev&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;vite&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;build&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;vite build&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;predeploy&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;npm run build&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;deploy&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;gh-pages -d public&quot;</span><span class="hljs-punctuation">,</span><br><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br></code></pre></td></tr></table></figure>
 
-<h3 id="圖片問題"><a href="#圖片問題" class="headerlink" title="圖片問題"></a>圖片問題</h3><p>原本用 webpack 加載圖片時是用，他就能夠讀取到 <code>public</code> 資料夾裡面的 <code>images</code> 裡面的圖片</p>
+<h3 id="圖片問題"><a href="#圖片問題" class="headerlink" title="圖片問題"></a>圖片問題</h3><p>原本用 webpack 加載圖片時是用</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">img</span></span><br><span class="hljs-tag">  <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;h-[2.5rem] object-contain lg:h-[2rem] md:h-[2.2rem]&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;./images/logo.png&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">alt</span>=<span class="hljs-string">&quot;logo&quot;</span></span><br><span class="hljs-tag">/&gt;</span><br></code></pre></td></tr></table></figure>
 
-<p>但換成 Vite 我發現路徑會有問題，要把原本放在先前的資料夾 <code>images</code> 複製一份到 <code>src</code> 裡面</p>
+<p>但換成 Vite 我發現路徑會有問題，要把原本放在先前的資料夾 <code>images</code> 複製一份到 <code>src</code> 裡面，跑 dev 的時候才能看到</p>
 <h3 id="刪掉-Webpack-Specific-的-Packages"><a href="#刪掉-Webpack-Specific-的-Packages" class="headerlink" title="刪掉 Webpack-Specific 的 Packages"></a>刪掉 Webpack-Specific 的 Packages</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">npm remove webpack webpack-cli webpack-dev-server html-webpack-plugin babel-loader style-loader css-loader postcss-loader<br></code></pre></td></tr></table></figure>
 
 <p>雖然 Vite 速度感覺快很多，但是花了一堆時間再移植，遇到一堆怪怪的問題，之後再看有沒有更酷的功能<br><img src="https://media2.dev.to/dynamic/image/width=1000,height=500,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fd4u62vy3h2bptsynmuu6.png" srcset="/notes/info/loading.gif" lazyload alt="金句"></p>
