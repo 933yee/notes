@@ -1,5 +1,5 @@
 ---
-title: 不知道這會持續幾天的 leetcode 100
+title: 不知道這會持續幾天的 leetcode
 date: 2025-01-31 21:22:11
 tags: leetcode
 category:
