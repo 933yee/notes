@@ -28,13 +28,7 @@ import path from "path";
 const isDev = process.env.NODE_ENV === "development";
 console.log("isDev: ", isDev);
 export default defineConfig({
-  plugins: [
-    react({
-      babel: {
-        plugins: [["babel-plugin-react-compiler"]],
-      },
-    }),
-  ],
+  plugins: [react()],
   root: "src", // Set project root to "src"
   resolve: {
     alias: {
@@ -91,7 +85,7 @@ export default defineConfig({
 />
 ```
 
-但換成 Vite 我發現路徑會有問題，要把原本放在先前的資料夾 `images` 放到 `src` 裡面的 `assets` 資料夾中，這樣跑 `npm run build` 的時候他會自動處理，複製一份到 `public`
+但換成 Vite 我發現路徑會有問題，要把原本放在先前的資料夾 `images` 複製一份到 `src` 裡面
 
 ### 刪掉 Webpack-Specific 的 Packages
 
@@ -99,4 +93,5 @@ export default defineConfig({
 npm remove webpack webpack-cli webpack-dev-server html-webpack-plugin babel-loader style-loader css-loader postcss-loader
 ```
 
-雖然搞很久，但有感覺 Vite 速度有快很多，之後再看有沒有更酷的功能
+雖然 Vite 速度感覺快很多，但是花了一堆時間再移植，遇到一堆怪怪的問題，之後再看有沒有更酷的功能
+![金句](https://media2.dev.to/dynamic/image/width=1000,height=500,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fd4u62vy3h2bptsynmuu6.png)
