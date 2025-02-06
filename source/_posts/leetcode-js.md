@@ -225,3 +225,33 @@ var createCounter = function (init) {
   ```js
   var reduce = (nums, fn, init) => nums.reduce(fn, init);
   ```
+
+### [2629. Function Composition](https://leetcode.com/problems/function-composition/description/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+從最後面開始每個 function 跑一次
+
+```js
+/**
+ * @param {Function[]} functions
+ * @return {Function}
+ */
+var compose = function (functions) {
+  return function (x) {
+    functions.reverse().map((fn) => (x = fn(x)));
+    return x;
+  };
+};
+
+/**
+ * const fn = compose([x => x + 1, x => 2 * x])
+ * fn(4) // 9
+ */
+```
+
+- `reduceRight`
+  跟 `array.reduce()` 一樣，只是是從最右邊往左 reduce
+  ```js
+  var compose = function (functions) {
+    return (x) => functions.reduceRight((acc, fn) => fn(acc), x);
+  };
+  ```

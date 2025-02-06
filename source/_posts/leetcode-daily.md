@@ -122,3 +122,28 @@ public:
     }
 };
 ```
+
+### 2025/02/06 [1726. Tuple with Same Product](https://leetcode.com/problems/tuple-with-same-product/description/?envType=daily-question&envId=2025-02-06)
+
+- 每個數字都不同，所以考慮在不同位置的情況時可以直接乘以 8。用 hash map 來儲存計算的結果的 counter。
+  - Time Complexity $O(n)$
+  - Space Complexity $O(1)$
+
+```cpp
+class Solution {
+public:
+    int tupleSameProduct(vector<int>& nums) {
+        unordered_map<int, int> mp;
+        int n = nums.size(), res = 0;
+        for(int i=0; i<n; i++){
+            for(int j=i+1; j<n; j++){
+                int p = nums[i] * nums[j];
+                mp[p]++;
+            }
+        }
+        for(auto& i:mp)
+            res += (i.second * (i.second - 1)) / 2 * 8;
+        return res;
+    }
+};
+```

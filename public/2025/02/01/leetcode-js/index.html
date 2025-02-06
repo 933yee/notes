@@ -24,7 +24,7 @@
 <meta property="og:description" content="沒在 leetcode 寫過 js 耶，酷  2667. Create Hello World Function 了解 closure 的概念就好  12345678910111213&#x2F;** * @return &#123;Function&#125; *&#x2F;var createHelloWorld &#x3D; function () &#123;  return function (...args) &amp;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-02-01T15:48:41.000Z">
-<meta property="article:modified_time" content="2025-02-05T13:52:13.780Z">
+<meta property="article:modified_time" content="2025-02-06T15:47:56.423Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary_large_image">
@@ -220,7 +220,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          592 words
+          675 words
         
       </span>
     
@@ -231,7 +231,7 @@
         
         
         
-          5 mins
+          6 mins
         
       </span>
     
@@ -354,6 +354,12 @@
 </li>
 <li><p>如果可以用 <code>Array.reduce</code></p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> <span class="hljs-title function_">reduce</span> = (<span class="hljs-params">nums, fn, init</span>) =&gt; nums.<span class="hljs-title function_">reduce</span>(fn, init);<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="2629-Function-Composition"><a href="#2629-Function-Composition" class="headerlink" title="2629. Function Composition"></a><a target="_blank" rel="noopener" href="https://leetcode.com/problems/function-composition/description/?envType=study-plan-v2&envId=30-days-of-javascript">2629. Function Composition</a></h3><p>從最後面開始每個 function 跑一次</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">Function[]</span>&#125; <span class="hljs-variable">functions</span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-type">Function</span>&#125;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">var</span> compose = <span class="hljs-keyword">function</span> (<span class="hljs-params">functions</span>) &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span> (<span class="hljs-params">x</span>) &#123;<br>    functions.<span class="hljs-title function_">reverse</span>().<span class="hljs-title function_">map</span>(<span class="hljs-function">(<span class="hljs-params">fn</span>) =&gt;</span> (x = <span class="hljs-title function_">fn</span>(x)));<br>    <span class="hljs-keyword">return</span> x;<br>  &#125;;<br>&#125;;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * const fn = compose([x =&gt; x + 1, x =&gt; 2 * x])</span><br><span class="hljs-comment"> * fn(4) // 9</span><br><span class="hljs-comment"> */</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>reduceRight</code><br>跟 <code>array.reduce()</code> 一樣，只是是從最右邊往左 reduce<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> compose = <span class="hljs-keyword">function</span> (<span class="hljs-params">functions</span>) &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-function">(<span class="hljs-params">x</span>) =&gt;</span> functions.<span class="hljs-title function_">reduceRight</span>(<span class="hljs-function">(<span class="hljs-params">acc, fn</span>) =&gt;</span> <span class="hljs-title function_">fn</span>(acc), x);<br>&#125;;<br></code></pre></td></tr></table></figure></li>
 </ul>
 
                 
