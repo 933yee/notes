@@ -7,6 +7,8 @@ category:
 
 > 記錄一下常用到的 Components
 
+## JSX
+
 ### Swiper
 
 - 安裝
@@ -179,3 +181,11 @@ category:
   ```
 
 - [更多用法](https://www.npmjs.com/package/react-spinners)
+
+## CSS
+
+### flexwrap
+
+用 `flex` 的時候，會與下一行有一些奇怪的間隔，是因為他會啟動 `aligin-content: strench`，要改成 `align-content: flex-start`，或 Tailwind 的 `content-start`
+
+- [更多資訊](https://stackoverflow.com/questions/40890613/remove-space-gaps-between-multiple-lines-of-flex-items-when-they-wrap)
