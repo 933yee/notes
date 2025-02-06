@@ -24,7 +24,7 @@
 <meta property="og:description" content="2025&#x2F;02&#x2F;01 3151. Special Array I bitwise xor + and 即可 Time Complexity $O(n)$ Space Complexity $O(1)$    12345678910class Solution &#123;public:    bool isArraySpecial(vector&lt;int&gt;&amp;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-01-31T13:22:11.000Z">
-<meta property="article:modified_time" content="2025-02-05T13:39:07.178Z">
+<meta property="article:modified_time" content="2025-02-06T15:48:16.305Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary_large_image">
@@ -220,7 +220,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          383 words
+          497 words
         
       </span>
     
@@ -231,7 +231,7 @@
         
         
         
-          4 mins
+          5 mins
         
       </span>
     
@@ -320,6 +320,15 @@
 </li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">areAlmostEqual</span><span class="hljs-params">(string s1, string s2)</span> </span>&#123;<br>        <span class="hljs-type">int</span> n = s1.<span class="hljs-built_in">size</span>(), cnt = <span class="hljs-number">0</span>;<br>        <span class="hljs-type">int</span> idx1, idx2;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;n; i++)&#123;<br>            <span class="hljs-keyword">if</span>(s1[i] != s2[i])&#123;<br>                cnt++;<br>                <span class="hljs-keyword">if</span>(cnt == <span class="hljs-number">1</span>) idx1 = i;<br>                <span class="hljs-keyword">else</span> idx2 = i;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">if</span>(cnt == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        <span class="hljs-keyword">if</span>(cnt == <span class="hljs-number">2</span> &amp;&amp; s1[idx1] == s2[idx2] &amp;&amp; s1[idx2] == s2[idx1]) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2025-02-06-1726-Tuple-with-Same-Product"><a href="#2025-02-06-1726-Tuple-with-Same-Product" class="headerlink" title="2025&#x2F;02&#x2F;06 1726. Tuple with Same Product"></a>2025&#x2F;02&#x2F;06 <a target="_blank" rel="noopener" href="https://leetcode.com/problems/tuple-with-same-product/description/?envType=daily-question&envId=2025-02-06">1726. Tuple with Same Product</a></h3><ul>
+<li>每個數字都不同，所以考慮在不同位置的情況時可以直接乘以 8。用 hash map 來儲存計算的結果的 counter。<ul>
+<li>Time Complexity $O(n)$</li>
+<li>Space Complexity $O(1)$</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">tupleSameProduct</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>&#123;<br>        unordered_map&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt; mp;<br>        <span class="hljs-type">int</span> n = nums.<span class="hljs-built_in">size</span>(), res = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;n; i++)&#123;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=i+<span class="hljs-number">1</span>; j&lt;n; j++)&#123;<br>                <span class="hljs-type">int</span> p = nums[i] * nums[j];<br>                mp[p]++;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span>&amp; i:mp)<br>            res += (i.second * (i.second - <span class="hljs-number">1</span>)) / <span class="hljs-number">2</span> * <span class="hljs-number">8</span>;<br>        <span class="hljs-keyword">return</span> res;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
                 
               </div>
