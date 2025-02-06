@@ -124,3 +124,30 @@ category:
     transition: height 500ms;
   }
   ```
+
+### Select
+
+- 安裝
+
+  ```sh
+  npm i --save react-select
+  ```
+
+- import
+
+  ```jsx
+  import Select from "react-select";
+  ```
+
+- 範例
+
+  ```jsx
+  const options = [
+    { value: "chocolate", label: "Chocolate" },
+    { value: "strawberry", label: "Strawberry" },
+    { value: "vanilla", label: "Vanilla" },
+  ];
+  const MyComponent = () => <Select options={options} />;
+  ```
+
+- [更多用法](https://react-select.com/home#getting-started)
