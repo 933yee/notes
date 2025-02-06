@@ -24,7 +24,7 @@
 <meta property="og:description" content="記錄一下常用到的 Components  Swiper 安裝 1npm install swiper  import  一定要的 12import &#123; Swiper, SwiperSlide &#125; from &quot;swiper&#x2F;react&quot;;import &quot;swiper&#x2F;css&quot;;  其他一些可用的 modules 12import &amp;#12">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-02-05T14:21:19.000Z">
-<meta property="article:modified_time" content="2025-02-06T07:02:56.268Z">
+<meta property="article:modified_time" content="2025-02-06T07:50:44.420Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="frontend">
 <meta property="article:tag" content="react">
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          443 words
+          485 words
         
       </span>
     
@@ -233,7 +233,7 @@
         
         
         
-          4 mins
+          5 mins
         
       </span>
     
@@ -327,6 +327,19 @@
 <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">const</span> options = [<br>  &#123; <span class="hljs-attr">value</span>: <span class="hljs-string">&quot;chocolate&quot;</span>, <span class="hljs-attr">label</span>: <span class="hljs-string">&quot;Chocolate&quot;</span> &#125;,<br>  &#123; <span class="hljs-attr">value</span>: <span class="hljs-string">&quot;strawberry&quot;</span>, <span class="hljs-attr">label</span>: <span class="hljs-string">&quot;Strawberry&quot;</span> &#125;,<br>  &#123; <span class="hljs-attr">value</span>: <span class="hljs-string">&quot;vanilla&quot;</span>, <span class="hljs-attr">label</span>: <span class="hljs-string">&quot;Vanilla&quot;</span> &#125;,<br>];<br><span class="hljs-keyword">const</span> <span class="hljs-title function_">MyComponent</span> = (<span class="hljs-params"></span>) =&gt; <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Select</span> <span class="hljs-attr">options</span>=<span class="hljs-string">&#123;options&#125;</span> /&gt;</span></span>;<br></code></pre></td></tr></table></figure>
 </li>
 <li><p><a target="_blank" rel="noopener" href="https://react-select.com/home#getting-started">更多用法</a></p>
+</li>
+</ul>
+<h3 id="Spinner"><a href="#Spinner" class="headerlink" title="Spinner"></a>Spinner</h3><ul>
+<li><p>安裝</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">npm install --save react-spinners<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>import</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">import</span> <span class="hljs-title class_">ClipLoader</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react-spinners/ClipLoader&quot;</span>;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>範例</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs jsx">&lt;<span class="hljs-title class_">ClipLoader</span><br>  color=<span class="hljs-string">&quot;#ffffff&quot;</span><br>  loading=&#123;loading&#125; <span class="hljs-comment">// bool 值</span><br>  size=&#123;<span class="hljs-number">150</span>&#125;<br>  aria-label=<span class="hljs-string">&quot;Loading Spinner&quot;</span><br>  data-testid=<span class="hljs-string">&quot;loader&quot;</span><br>/&gt;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/react-spinners">更多用法</a></p>
 </li>
 </ul>
 

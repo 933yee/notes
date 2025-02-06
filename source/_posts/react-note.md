@@ -151,3 +151,31 @@ category:
   ```
 
 - [更多用法](https://react-select.com/home#getting-started)
+
+### Spinner
+
+- 安裝
+
+  ```sh
+  npm install --save react-spinners
+  ```
+
+- import
+
+  ```jsx
+  import ClipLoader from "react-spinners/ClipLoader";
+  ```
+
+- 範例
+
+  ```jsx
+  <ClipLoader
+    color="#ffffff"
+    loading={loading} // bool 值
+    size={150}
+    aria-label="Loading Spinner"
+    data-testid="loader"
+  />
+  ```
+
+- [更多用法](https://www.npmjs.com/package/react-spinners)
