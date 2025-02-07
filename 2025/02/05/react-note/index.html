@@ -16,15 +16,15 @@
   <meta name="author" content="Kevin Lee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="記錄一下常用到的 Components  JSXSwiper 安裝 1npm install swiper  import  一定要的 12import &#123; Swiper, SwiperSlide &#125; from &quot;swiper&#x2F;react&quot;;import &quot;swiper&#x2F;css&quot;;  其他一些可用的 modules 12import &amp;">
+    <meta name="description" content="記錄一下常用到的 Components  JSXTanStack官方有個非常詳盡的文件，這裡只有寫大概怎麼用。 文件寫到 TanStack Table is a modular library. Not all code for every single feature is included in the createTable functions&#x2F;hooks by default.，所以很多">
 <meta property="og:type" content="article">
 <meta property="og:title" content="React 筆記">
 <meta property="og:url" content="https://933yee.github.io/notes/2025/02/05/react-note/index.html">
 <meta property="og:site_name" content="Kevin&#39;s notes">
-<meta property="og:description" content="記錄一下常用到的 Components  JSXSwiper 安裝 1npm install swiper  import  一定要的 12import &#123; Swiper, SwiperSlide &#125; from &quot;swiper&#x2F;react&quot;;import &quot;swiper&#x2F;css&quot;;  其他一些可用的 modules 12import &amp;">
+<meta property="og:description" content="記錄一下常用到的 Components  JSXTanStack官方有個非常詳盡的文件，這裡只有寫大概怎麼用。 文件寫到 TanStack Table is a modular library. Not all code for every single feature is included in the createTable functions&#x2F;hooks by default.，所以很多">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-02-05T14:21:19.000Z">
-<meta property="article:modified_time" content="2025-02-06T08:48:09.843Z">
+<meta property="article:modified_time" content="2025-02-07T08:30:00.303Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="frontend">
 <meta property="article:tag" content="react">
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          528 words
+          1k words
         
       </span>
     
@@ -233,7 +233,7 @@
         
         
         
-          5 mins
+          9 mins
         
       </span>
     
@@ -278,7 +278,44 @@
                 <blockquote>
 <p>記錄一下常用到的 Components</p>
 </blockquote>
-<h2 id="JSX"><a href="#JSX" class="headerlink" title="JSX"></a>JSX</h2><h3 id="Swiper"><a href="#Swiper" class="headerlink" title="Swiper"></a>Swiper</h3><ul>
+<h1 id="JSX"><a href="#JSX" class="headerlink" title="JSX"></a>JSX</h1><h2 id="TanStack"><a href="#TanStack" class="headerlink" title="TanStack"></a>TanStack</h2><p>官方有個非常詳盡的<a target="_blank" rel="noopener" href="https://tanstack.com/table/latest">文件</a>，這裡只有寫大概怎麼用。</p>
+<p>文件寫到 <code>TanStack Table is a modular library. Not all code for every single feature is included in the createTable functions/hooks by default.</code>，所以很多功能要在建立 table 的時候自己 import。</p>
+<ul>
+<li><p>安裝</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">npm install @tanstack/react-table<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="Header"><a href="#Header" class="headerlink" title="Header"></a>Header</h3><p>Header Group 包含所有 header row</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs jsx">&lt;thead&gt;<br>  &#123;table.<span class="hljs-title function_">getHeaderGroups</span>().<span class="hljs-title function_">map</span>(<span class="hljs-function">(<span class="hljs-params">headerGroup</span>) =&gt;</span> &#123;<br>    <span class="hljs-keyword">return</span> (<br>      <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">tr</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&#123;headerGroup.id&#125;</span>&gt;</span></span><br><span class="language-xml">        &#123;headerGroup.headers.map(</span><br><span class="language-xml">          (</span><br><span class="language-xml">            header // map over the headerGroup headers array</span><br><span class="language-xml">          ) =&gt; (</span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">th</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&#123;header.id&#125;</span> <span class="hljs-attr">colSpan</span>=<span class="hljs-string">&#123;header.colSpan&#125;</span>&gt;</span></span><br><span class="language-xml">              &#123;/* */&#125;</span><br><span class="language-xml">            <span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span></span><br><span class="language-xml">          )</span><br><span class="language-xml">        )&#125;</span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span></span><br>    );<br>  &#125;)&#125;<br>&lt;/thead&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="Column"><a href="#Column" class="headerlink" title="Column"></a>Column</h3><h4 id="可以從-cell-、-header-和-table-取得"><a href="#可以從-cell-、-header-和-table-取得" class="headerlink" title="可以從 cell 、 header 和 table 取得"></a>可以從 <code>cell</code> 、 <code>header</code> 和 <code>table</code> 取得</h4><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">const</span> column = cell.<span class="hljs-property">column</span>; <span class="hljs-comment">// get column from cell</span><br><span class="hljs-keyword">const</span> column = header.<span class="hljs-property">column</span>; <span class="hljs-comment">// get column from header</span><br><span class="hljs-keyword">const</span> column = table.<span class="hljs-title function_">getColumn</span>(<span class="hljs-string">&quot;firstName&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<h4 id=""><a href="#" class="headerlink" title=""></a></h4><h3 id="Row"><a href="#Row" class="headerlink" title="Row"></a>Row</h3><p>全部可以用的 row model</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">const</span> table = <span class="hljs-title function_">useReactTable</span>(&#123;<br>  columns,<br>  data,<br>  <span class="hljs-attr">getCoreRowModel</span>: <span class="hljs-title function_">getCoreRowModel</span>(),<br>  <span class="hljs-attr">getExpandedRowModel</span>: <span class="hljs-title function_">getExpandedRowModel</span>(),<br>  <span class="hljs-attr">getFacetedMinMaxValues</span>: <span class="hljs-title function_">getFacetedMinMaxValues</span>(),<br>  <span class="hljs-attr">getFacetedRowModel</span>: <span class="hljs-title function_">getFacetedRowModel</span>(),<br>  <span class="hljs-attr">getFacetedUniqueValues</span>: <span class="hljs-title function_">getFacetedUniqueValues</span>(),<br>  <span class="hljs-attr">getFilteredRowModel</span>: <span class="hljs-title function_">getFilteredRowModel</span>(),<br>  <span class="hljs-attr">getGroupedRowModel</span>: <span class="hljs-title function_">getGroupedRowModel</span>(),<br>  <span class="hljs-attr">getPaginationRowModel</span>: <span class="hljs-title function_">getPaginationRowModel</span>(),<br>  <span class="hljs-attr">getSortedRowModel</span>: <span class="hljs-title function_">getSortedRowModel</span>(),<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<h4 id="table-getRow"><a href="#table-getRow" class="headerlink" title="table.getRow()"></a><code>table.getRow()</code></h4><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">const</span> row = table.<span class="hljs-title function_">getRow</span>(rowId);<br></code></pre></td></tr></table></figure>
+
+<h4 id="table-getRowModel"><a href="#table-getRowModel" class="headerlink" title="table.getRowModel()"></a><code>table.getRowModel()</code></h4><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs jsx">&lt;tbody&gt;<br>  &#123;table.<span class="hljs-title function_">getRowModel</span>().<span class="hljs-property">rows</span>.<span class="hljs-title function_">map</span>(<span class="hljs-function">(<span class="hljs-params">row</span>) =&gt;</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">tr</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&#123;row.id&#125;</span>&gt;</span>&#123;/* ... */&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span></span><br>  ))&#125;<br>&lt;/tbody&gt;<br></code></pre></td></tr></table></figure>
+
+<h4 id="table-getSelectedRowModel"><a href="#table-getSelectedRowModel" class="headerlink" title="table.getSelectedRowModel()"></a><code>table.getSelectedRowModel()</code></h4><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">const</span> selectedRows = table.<span class="hljs-title function_">getSelectedRowModel</span>().<span class="hljs-property">rows</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="row-getValue-、row-renderValue"><a href="#row-getValue-、row-renderValue" class="headerlink" title="row.getValue()、row.renderValue()"></a><code>row.getValue()</code>、<code>row.renderValue()</code></h4><p>兩個只差在檢查 value 是否為 <code>undefined</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> firstName = row.<span class="hljs-title function_">getValue</span>(<span class="hljs-string">&quot;firstName&quot;</span>); <span class="hljs-comment">// read the row value from the firstName column</span><br><span class="hljs-keyword">const</span> renderedLastName = row.<span class="hljs-title function_">renderValue</span>(<span class="hljs-string">&quot;lastName&quot;</span>); <span class="hljs-comment">// render the value from the lastName column</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="row-original"><a href="#row-original" class="headerlink" title="row.original"></a><code>row.original</code></h4><p>跟 <code>row.getValue()</code> 類似，但是回傳 <code>accessorFn</code> <strong>處理前</strong> 的值，是最原始的資料</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">const</span> firstName = row.<span class="hljs-property">original</span>.<span class="hljs-property">firstName</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="Cell"><a href="#Cell" class="headerlink" title="Cell"></a>Cell</h3><p>每個 Cell 的 id 是由 parent row 和 parent col 決定的：<code>&#123; id: </code>${row.id}_${column.id}<code> &#125;</code></p>
+<h4 id="cell-getValue-、cell-renderValue"><a href="#cell-getValue-、cell-renderValue" class="headerlink" title="cell.getValue()、cell.renderValue()"></a><code>cell.getValue()</code>、<code>cell.renderValue()</code></h4><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">const</span> firstName = cell.<span class="hljs-title function_">getValue</span>(); <span class="hljs-comment">// read the cell value</span><br><span class="hljs-keyword">const</span> renderedLastName = cell.<span class="hljs-title function_">renderValue</span>(); <span class="hljs-comment">// render the value</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="取得-parent-row"><a href="#取得-parent-row" class="headerlink" title="取得 parent row"></a>取得 parent row</h4><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">const</span> firstName = cell.<span class="hljs-property">row</span>.<span class="hljs-property">original</span>.<span class="hljs-property">firstName</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="flexRender"><a href="#flexRender" class="headerlink" title="flexRender()"></a>flexRender()</h4><p>如果 <code>column.cell</code> 是 <strong>函數回傳 JSX</strong> 而不是純數據，就一定要用 <code>flexRender</code> 渲染，不能用 <code>getValue()</code></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">import</span> &#123; flexRender &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@tanstack/react-table&#x27;</span><br><br><span class="hljs-keyword">const</span> columns = [<br>  &#123;<br>    <span class="hljs-attr">accessorKey</span>: <span class="hljs-string">&#x27;fullName&#x27;</span>,<br>    <span class="hljs-attr">cell</span>: <span class="hljs-function">(<span class="hljs-params">&#123; cell, row &#125;</span>) =&gt;</span> &#123;<br>      <span class="hljs-keyword">return</span> <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">strong</span>&gt;</span>&#123;row.original.firstName&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">strong</span>&gt;</span> &#123;row.original.lastName&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>    &#125;<br>    <span class="hljs-comment">//...</span><br>  &#125;<br>]<br><span class="hljs-comment">//...</span><br>&lt;tr&gt;<br>  &#123;row.<span class="hljs-title function_">getVisibleCells</span>().<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">cell</span> =&gt;</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">td</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&#123;cell.id&#125;</span>&gt;</span>&#123;flexRender(cell.column.columnDef.cell, cell.getContext())&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span></span><br>  &#125;)&#125;<br>&lt;/tr&gt;<br></code></pre></td></tr></table></figure>
+
+<h5 id="getVisibleCells"><a href="#getVisibleCells" class="headerlink" title="getVisibleCells()"></a><code>getVisibleCells()</code></h5><p>只回傳當前可見的 Cells，避免 render 不需要的內容</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs jsx">&#123;<br>  table.<span class="hljs-title function_">getRowModel</span>().<span class="hljs-property">rows</span>.<span class="hljs-title function_">map</span>(<span class="hljs-function">(<span class="hljs-params">row</span>) =&gt;</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">tr</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&#123;row.id&#125;</span>&gt;</span></span><br><span class="language-xml">      &#123;row.getVisibleCells().map((cell) =&gt; (</span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">td</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&#123;cell.id&#125;</span>&gt;</span>&#123;cell.renderValue()&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span></span><br><span class="language-xml">      ))&#125;</span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span></span><br>  ));<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Swiper"><a href="#Swiper" class="headerlink" title="Swiper"></a>Swiper</h2><ul>
 <li><p>安裝</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">npm install swiper<br></code></pre></td></tr></table></figure>
 </li>
@@ -298,7 +335,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="Collapse"><a href="#Collapse" class="headerlink" title="Collapse"></a>Collapse</h3><ul>
+<h2 id="Collapse"><a href="#Collapse" class="headerlink" title="Collapse"></a>Collapse</h2><ul>
 <li><p>安裝</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">npm install --save react-collapse<br></code></pre></td></tr></table></figure>
 </li>
@@ -316,7 +353,7 @@
 </ul>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.ReactCollapse--collapse</span> &#123;<br>  <span class="hljs-attribute">transition</span>: height <span class="hljs-number">500ms</span>;<br>&#125;<br></code></pre></td></tr></table></figure></li>
 </ul>
-<h3 id="Select"><a href="#Select" class="headerlink" title="Select"></a>Select</h3><ul>
+<h2 id="Select"><a href="#Select" class="headerlink" title="Select"></a>Select</h2><ul>
 <li><p>安裝</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">npm i --save react-select<br></code></pre></td></tr></table></figure>
 </li>
@@ -329,7 +366,7 @@
 <li><p><a target="_blank" rel="noopener" href="https://react-select.com/home#getting-started">更多用法</a></p>
 </li>
 </ul>
-<h3 id="Spinner"><a href="#Spinner" class="headerlink" title="Spinner"></a>Spinner</h3><ul>
+<h2 id="Spinner"><a href="#Spinner" class="headerlink" title="Spinner"></a>Spinner</h2><ul>
 <li><p>安裝</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">npm install --save react-spinners<br></code></pre></td></tr></table></figure>
 </li>
@@ -337,12 +374,12 @@
 <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">import</span> <span class="hljs-title class_">ClipLoader</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react-spinners/ClipLoader&quot;</span>;<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>範例</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs jsx">&lt;<span class="hljs-title class_">ClipLoader</span><br>  color=<span class="hljs-string">&quot;#ffffff&quot;</span><br>  loading=&#123;loading&#125; <span class="hljs-comment">// bool 值</span><br>  size=&#123;<span class="hljs-number">150</span>&#125;<br>  aria-label=<span class="hljs-string">&quot;Loading Spinner&quot;</span><br>  data-testid=<span class="hljs-string">&quot;loader&quot;</span><br>/&gt;<br></code></pre></td></tr></table></figure>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs jsx">&lt;<span class="hljs-title class_">ClipLoader</span><br>  color=<span class="hljs-string">&quot;#ffffff&quot;</span><br>  loading=&#123;loading&#125; <span class="hljs-comment">// bool 值</span><br>  size=&#123;<span class="hljs-number">150</span>&#125;<br>  aria-label=<span class="hljs-string">&quot;Loading Spinner&quot;</span><br>  data-testid=<span class="hljs-string">&quot;loader&quot;</span><br>/&gt;<br><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">BeatLoader</span></span></span><br><span class="hljs-tag"><span class="language-xml">  <span class="hljs-attr">color</span>=<span class="hljs-string">&quot;#000000&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">  <span class="hljs-attr">loading</span>=<span class="hljs-string">&#123;true&#125;</span> // <span class="hljs-attr">bool</span> <span class="hljs-attr">值</span></span></span><br><span class="hljs-tag"><span class="language-xml">  <span class="hljs-attr">size</span>=<span class="hljs-string">&#123;10&#125;</span></span></span><br><span class="hljs-tag"><span class="language-xml">  <span class="hljs-attr">aria-label</span>=<span class="hljs-string">&quot;Loading Spinner&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">  <span class="hljs-attr">data-testid</span>=<span class="hljs-string">&quot;loader&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">/&gt;</span></span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/react-spinners">更多用法</a></p>
 </li>
 </ul>
-<h2 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h2><h3 id="flexwrap"><a href="#flexwrap" class="headerlink" title="flexwrap"></a>flexwrap</h3><p>用 <code>flex</code> 的時候，會與下一行有一些奇怪的間隔，是因為他會啟動 <code>aligin-content: strench</code>，要改成 <code>align-content: flex-start</code>，或 Tailwind 的 <code>content-start</code></p>
+<h1 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h1><h2 id="flexwrap"><a href="#flexwrap" class="headerlink" title="flexwrap"></a>flexwrap</h2><p>用 <code>flex</code> 的時候，會與下一行有一些奇怪的間隔，是因為他會啟動 <code>aligin-content: strench</code>，要改成 <code>align-content: flex-start</code>，或 Tailwind 的 <code>content-start</code></p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/40890613/remove-space-gaps-between-multiple-lines-of-flex-items-when-they-wrap">更多資訊</a></li>
 </ul>
