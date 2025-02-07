@@ -24,7 +24,7 @@
 <meta property="og:description" content="2025&#x2F;02&#x2F;01 3151. Special Array I bitwise xor + and 即可 Time Complexity $O(n)$ Space Complexity $O(1)$    12345678910class Solution &#123;public:    bool isArraySpecial(vector&lt;int&gt;&amp;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-01-31T13:22:11.000Z">
-<meta property="article:modified_time" content="2025-02-06T15:48:16.305Z">
+<meta property="article:modified_time" content="2025-02-07T14:34:29.288Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary_large_image">
@@ -220,7 +220,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          497 words
+          628 words
         
       </span>
     
@@ -231,7 +231,7 @@
         
         
         
-          5 mins
+          6 mins
         
       </span>
     
@@ -329,6 +329,15 @@
 </li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">tupleSameProduct</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>&#123;<br>        unordered_map&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt; mp;<br>        <span class="hljs-type">int</span> n = nums.<span class="hljs-built_in">size</span>(), res = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;n; i++)&#123;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=i+<span class="hljs-number">1</span>; j&lt;n; j++)&#123;<br>                <span class="hljs-type">int</span> p = nums[i] * nums[j];<br>                mp[p]++;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span>&amp; i:mp)<br>            res += (i.second * (i.second - <span class="hljs-number">1</span>)) / <span class="hljs-number">2</span> * <span class="hljs-number">8</span>;<br>        <span class="hljs-keyword">return</span> res;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2024-02-07-3160-Find-the-Number-of-Distinct-Colors-Among-the-Balls"><a href="#2024-02-07-3160-Find-the-Number-of-Distinct-Colors-Among-the-Balls" class="headerlink" title="2024&#x2F;02&#x2F;07 3160. Find the Number of Distinct Colors Among the Balls"></a>2024&#x2F;02&#x2F;07 <a target="_blank" rel="noopener" href="https://leetcode.com/problems/find-the-number-of-distinct-colors-among-the-balls/description/?envType=daily-question&envId=2025-02-07">3160. Find the Number of Distinct Colors Among the Balls</a></h3><ul>
+<li>開兩個 hash map，記錄 <strong>球對應的顏色</strong> 和 <strong>某顏色的數量</strong>，當顏色數量變成 0 &#x2F; 1 時，代表 少一種 &#x2F; 多一種 顏色。<ul>
+<li>Time Complexity $O(n)$</li>
+<li>Space Complexity $O(n)$</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">queryResults</span><span class="hljs-params">(<span class="hljs-type">int</span> limit, vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;&amp; queries)</span> </span>&#123;<br>        vector&lt;<span class="hljs-type">int</span>&gt; res;<br>        unordered_map&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt; ball, color;<br>        <span class="hljs-type">int</span> cnt = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span>&amp; v:queries)&#123;<br>            <span class="hljs-type">int</span> a = v[<span class="hljs-number">0</span>], b = v[<span class="hljs-number">1</span>];<br>            <span class="hljs-keyword">if</span>(ball[a] != b)&#123;<br>                color[ball[a]]--;<br>                <span class="hljs-keyword">if</span>(color[ball[a]] == <span class="hljs-number">0</span>) cnt--;<br>                ball[a] = b;<br>                color[ball[a]]++;<br>                <span class="hljs-keyword">if</span>(color[ball[a]] == <span class="hljs-number">1</span>) cnt++;<br>            &#125;<br>            res.<span class="hljs-built_in">push_back</span>(cnt);<br>        &#125;<br>        <span class="hljs-keyword">return</span> res;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
                 
               </div>

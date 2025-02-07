@@ -147,3 +147,32 @@ public:
     }
 };
 ```
+
+### 2024/02/07 [3160. Find the Number of Distinct Colors Among the Balls](https://leetcode.com/problems/find-the-number-of-distinct-colors-among-the-balls/description/?envType=daily-question&envId=2025-02-07)
+
+- 開兩個 hash map，記錄 **球對應的顏色** 和 **某顏色的數量**，當顏色數量變成 0 / 1 時，代表 少一種 / 多一種 顏色。
+  - Time Complexity $O(n)$
+  - Space Complexity $O(n)$
+
+```cpp
+class Solution {
+public:
+    vector<int> queryResults(int limit, vector<vector<int>>& queries) {
+        vector<int> res;
+        unordered_map<int, int> ball, color;
+        int cnt = 0;
+        for(auto& v:queries){
+            int a = v[0], b = v[1];
+            if(ball[a] != b){
+                color[ball[a]]--;
+                if(color[ball[a]] == 0) cnt--;
+                ball[a] = b;
+                color[ball[a]]++;
+                if(color[ball[a]] == 1) cnt++;
+            }
+            res.push_back(cnt);
+        }
+        return res;
+    }
+};
+```
