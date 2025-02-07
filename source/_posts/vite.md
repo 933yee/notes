@@ -1,5 +1,5 @@
 ---
-title: Webpack 替換成 Vite
+title: Webpack 換成 Vite
 date: 2025-02-05 10:48:03
 tags: [frontend, vite, website]
 category:
@@ -27,36 +27,44 @@ import path from "path";
 // Detect environment mode
 const isDev = process.env.NODE_ENV === "development";
 console.log("isDev: ", isDev);
+
 export default defineConfig({
   plugins: [react()],
-  root: "src", // Set project root to "src"
+  root: "src",
+  publicDir: "../public", // 因為這裡 root 設為 "src"，靜態資源放在 public 裡面，要加個 ../
   resolve: {
     alias: {
       States: path.resolve(__dirname, "src/States"),
+      Utilities: path.resolve(__dirname, "src/Utilities"),
       Components: path.resolve(__dirname, "src/Components"),
-      Global: path.resolve(__dirname, "src/Components/Global"),
-      Home: path.resolve(__dirname, "src/Components/Home"),
-      About: path.resolve(__dirname, "src/Components/About"),
-      Contact: path.resolve(__dirname, "src/Components/Contact"),
-      Price: path.resolve(__dirname, "src/Components/Price"),
-      News: path.resolve(__dirname, "src/Components/News"),
-      Products: path.resolve(__dirname, "src/Components/Products"),
     },
   },
   server: {
     port: 7070,
     strictPort: true,
     open: true, // Open browser automatically
-    historyApiFallback: true,
   },
   build: {
     outDir: path.resolve(__dirname, "public"),
     sourcemap: isDev ? "inline-source-map" : false,
+    // rollupOptions: {
+    //   output: {
+    //     manualChunks(id) {
+    //       if (id.includes("node_modules")) {
+    //         return id
+    //           .toString()
+    //           .split("node_modules/")[1]
+    //           .split("/")[0]
+    //           .toString();
+    //       }
+    //     },
+    //   },
+    // },
   },
   define: {
     "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
   },
-  base: isDev ? "/" : "https://carbon-walker.com/",
+  base: isDev ? "/" : "https://bms.carbon-walker.com/",
 });
 ```
 
@@ -72,20 +80,6 @@ export default defineConfig({
     "deploy": "gh-pages -d public",
   },
 ```
-
-### 圖片問題
-
-原本用 webpack 加載圖片時是用
-
-```html
-<img
-  className="h-[2.5rem] object-contain lg:h-[2rem] md:h-[2.2rem]"
-  src="./images/logo.png"
-  alt="logo"
-/>
-```
-
-但換成 Vite 我發現路徑會有問題，要把原本放在先前的資料夾 `images` 複製一份到 `src` 裡面，跑 dev 的時候才能看到
 
 ### 刪掉 Webpack-Specific 的 Packages
 
