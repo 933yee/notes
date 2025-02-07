@@ -15,7 +15,7 @@ npm install vite @vitejs/plugin-react --save-dev
 
 ### Restructure Project
 
-Webpack 通常用 `index.js` 或 `index.jsx` 當作 entry point，但是 Vite 是用 `index.html`
+原本我是只有 `src` 和 `dist` 資料夾，但是 Vite 會需要 `src`、`dist` 和 `public`。所有靜態資源包含圖片、`404.html`和 `CNAME` 等都要放在 `public`，在跑 vite build 的時候它會去讀取 `public` 資料夾裡面的資源，最後一並放入 `dist`。
 
 ### 新增 vite.config.js
 
@@ -30,8 +30,8 @@ console.log("isDev: ", isDev);
 
 export default defineConfig({
   plugins: [react()],
-  root: "src",
-  publicDir: "../public", // 因為這裡 root 設為 "src"，靜態資源放在 public 裡面，要加個 ../
+  root: path.resolve(__dirname, "src"),
+  publicDir: path.resolve(__dirname, "public"),
   resolve: {
     alias: {
       States: path.resolve(__dirname, "src/States"),
@@ -45,21 +45,9 @@ export default defineConfig({
     open: true, // Open browser automatically
   },
   build: {
-    outDir: path.resolve(__dirname, "public"),
+    outDir: path.resolve(__dirname, "dist"),
+    emptyOutDir: true,
     sourcemap: isDev ? "inline-source-map" : false,
-    // rollupOptions: {
-    //   output: {
-    //     manualChunks(id) {
-    //       if (id.includes("node_modules")) {
-    //         return id
-    //           .toString()
-    //           .split("node_modules/")[1]
-    //           .split("/")[0]
-    //           .toString();
-    //       }
-    //     },
-    //   },
-    // },
   },
   define: {
     "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
@@ -75,9 +63,10 @@ export default defineConfig({
 ```json
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build --emptyOutDir",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d public",
+    "deploy": "gh-pages -d dist",
+    "format": "prettier --write ."
   },
 ```
 
