@@ -24,7 +24,7 @@
 <meta property="og:description" content="2025&#x2F;02&#x2F;01 3151. Special Array I bitwise xor + and 即可 Time Complexity $O(n)$ Space Complexity $O(1)$    12345678910class Solution &#123;public:    bool isArraySpecial(vector&lt;int&gt;&amp;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-01-31T13:22:11.000Z">
-<meta property="article:modified_time" content="2025-02-07T14:34:29.288Z">
+<meta property="article:modified_time" content="2025-02-09T07:29:39.827Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary_large_image">
@@ -220,7 +220,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          628 words
+          822 words
         
       </span>
     
@@ -231,7 +231,7 @@
         
         
         
-          6 mins
+          7 mins
         
       </span>
     
@@ -338,6 +338,24 @@
 </li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">queryResults</span><span class="hljs-params">(<span class="hljs-type">int</span> limit, vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;&amp; queries)</span> </span>&#123;<br>        vector&lt;<span class="hljs-type">int</span>&gt; res;<br>        unordered_map&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt; ball, color;<br>        <span class="hljs-type">int</span> cnt = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span>&amp; v:queries)&#123;<br>            <span class="hljs-type">int</span> a = v[<span class="hljs-number">0</span>], b = v[<span class="hljs-number">1</span>];<br>            <span class="hljs-keyword">if</span>(ball[a] != b)&#123;<br>                color[ball[a]]--;<br>                <span class="hljs-keyword">if</span>(color[ball[a]] == <span class="hljs-number">0</span>) cnt--;<br>                ball[a] = b;<br>                color[ball[a]]++;<br>                <span class="hljs-keyword">if</span>(color[ball[a]] == <span class="hljs-number">1</span>) cnt++;<br>            &#125;<br>            res.<span class="hljs-built_in">push_back</span>(cnt);<br>        &#125;<br>        <span class="hljs-keyword">return</span> res;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2024-02-08-2349-Design-a-Number-Container-System"><a href="#2024-02-08-2349-Design-a-Number-Container-System" class="headerlink" title="2024&#x2F;02&#x2F;08 2349. Design a Number Container System"></a>2024&#x2F;02&#x2F;08 <a target="_blank" rel="noopener" href="https://leetcode.com/problems/design-a-number-container-system/description/?envType=daily-question&envId=2025-02-08">2349. Design a Number Container System</a></h3><ul>
+<li>因為 <code>1 &lt;= index, number &lt;= 109</code> ，需要開一個 hash map，負責記錄該 index 對應到的值，再開另一個 hash map，記錄 value 有哪些 index 指著。<ul>
+<li>Time Complexity $O(n \lg(n))$</li>
+<li>Space Complexity $O(n)$</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">NumberContainers</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">NumberContainers</span>() &#123;&#125;<br><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">change</span><span class="hljs-params">(<span class="hljs-type">int</span> index, <span class="hljs-type">int</span> number)</span> </span>&#123;<br>        <span class="hljs-keyword">if</span>(index_mp.<span class="hljs-built_in">find</span>(index) != index_mp.<span class="hljs-built_in">end</span>())&#123;<br>            value_map[index_mp[index]].<span class="hljs-built_in">erase</span>(index);<br>            value_map[number].<span class="hljs-built_in">erase</span>(index);<br>        &#125;<br>        index_mp[index] = number;<br>        value_map[number].<span class="hljs-built_in">insert</span>(index);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-type">int</span> number)</span> </span>&#123;<br>        <span class="hljs-keyword">if</span>(value_map[number].<span class="hljs-built_in">empty</span>()) <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>        <span class="hljs-keyword">return</span> *value_map[number].<span class="hljs-built_in">begin</span>();<br>    &#125;<br>    unordered_map&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt; index_mp;<br>    unordered_map&lt;<span class="hljs-type">int</span>, set&lt;<span class="hljs-type">int</span>&gt;&gt; value_map;<br>&#125;;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Your NumberContainers object will be instantiated and called as such:</span><br><span class="hljs-comment"> * NumberContainers* obj = new NumberContainers();</span><br><span class="hljs-comment"> * obj-&gt;change(index,number);</span><br><span class="hljs-comment"> * int param_2 = obj-&gt;find(number);</span><br><span class="hljs-comment"> */</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="2024-02-09-2364-Count-Number-of-Bad-Pairs"><a href="#2024-02-09-2364-Count-Number-of-Bad-Pairs" class="headerlink" title="2024&#x2F;02&#x2F;09 2364. Count Number of Bad Pairs"></a>2024&#x2F;02&#x2F;09 <a target="_blank" rel="noopener" href="https://leetcode.com/problems/count-number-of-bad-pairs/description/?envType=daily-question&envId=2025-02-09">2364. Count Number of Bad Pairs</a></h3><ul>
+<li>用 hash map 記錄 index 和 value 的差值有幾個<ul>
+<li>Time Complexity $O(n)$</li>
+<li>Space Complexity $O(n)$</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">long</span> <span class="hljs-type">long</span> <span class="hljs-title">countBadPairs</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>&#123;<br>        <span class="hljs-type">long</span> <span class="hljs-type">long</span> ret = <span class="hljs-number">0</span>;<br>        unordered_map&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt; mp;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;nums.<span class="hljs-built_in">size</span>(); i++)&#123;<br>            ret += i - mp[i - nums[i]];<br>            mp[i - nums[i]]++;<br>        &#125;<br>        <span class="hljs-keyword">return</span> ret;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -475,6 +493,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -668,6 +692,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/notes/js/local-search.js" ></script>
 
