@@ -3,6 +3,7 @@ title: 不知道這會持續幾天的 leetcode daily
 date: 2025-01-31 21:22:11
 tags: leetcode
 category:
+math: true
 ---
 
 ### 2025/02/01 [3151. Special Array I](https://leetcode.com/problems/special-array-i/description/?envType=daily-question&envId=2025-02-01)
@@ -173,6 +174,63 @@ public:
             res.push_back(cnt);
         }
         return res;
+    }
+};
+```
+
+### 2024/02/08 [2349. Design a Number Container System](https://leetcode.com/problems/design-a-number-container-system/description/?envType=daily-question&envId=2025-02-08)
+
+- 因為 `1 <= index, number <= 109` ，需要開一個 hash map，負責記錄該 index 對應到的值，再開另一個 hash map，記錄 value 有哪些 index 指著。
+  - Time Complexity $O(n \lg(n))$
+  - Space Complexity $O(n)$
+
+```cpp
+class NumberContainers {
+public:
+    NumberContainers() {}
+
+    void change(int index, int number) {
+        if(index_mp.find(index) != index_mp.end()){
+            value_map[index_mp[index]].erase(index);
+            value_map[number].erase(index);
+        }
+        index_mp[index] = number;
+        value_map[number].insert(index);
+    }
+
+    int find(int number) {
+        if(value_map[number].empty()) return -1;
+        return *value_map[number].begin();
+    }
+    unordered_map<int, int> index_mp;
+    unordered_map<int, set<int>> value_map;
+};
+
+/**
+ * Your NumberContainers object will be instantiated and called as such:
+ * NumberContainers* obj = new NumberContainers();
+ * obj->change(index,number);
+ * int param_2 = obj->find(number);
+ */
+```
+
+### 2024/02/09 [2364. Count Number of Bad Pairs](https://leetcode.com/problems/count-number-of-bad-pairs/description/?envType=daily-question&envId=2025-02-09)
+
+- 用 hash map 記錄 index 和 value 的差值有幾個
+  - Time Complexity $O(n)$
+  - Space Complexity $O(n)$
+
+```cpp
+class Solution {
+public:
+    long long countBadPairs(vector<int>& nums) {
+        long long ret = 0;
+        unordered_map<int, int> mp;
+        for(int i=0; i<nums.size(); i++){
+            ret += i - mp[i - nums[i]];
+            mp[i - nums[i]]++;
+        }
+        return ret;
     }
 };
 ```

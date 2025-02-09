@@ -301,3 +301,89 @@ var once = function (fn) {
  * onceFn(2,3,6); // returns undefined without calling fn
  */
 ```
+
+### [2623. Memoize](https://leetcode.com/problems/memoize/description/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+- Map
+
+  - 在 javascript 中，`Map` 不能用中括號來存取，一定要 `Map.get()`、`Map.set()`、`Map.has()`。另外這題可以用 `JSON.stringif()` 把 `args` 變成 `key`
+
+  ```js
+  /**
+   * @param {Function} fn
+   * @return {Function}
+   */
+  function memoize(fn) {
+    const hash = new Map();
+    return function (...args) {
+      const key = JSON.stringify(args);
+      if (hash.has(key)) return hash.get(key);
+      hash.set(key, fn(...args));
+      return hash.get(key);
+    };
+  }
+
+  /**
+   * let callCount = 0;
+   * const memoizedFn = memoize(function (a, b) {
+   *	 callCount += 1;
+   *   return a + b;
+   * })
+   * memoizedFn(2, 3) // 5
+   * memoizedFn(2, 3) // 5
+   * console.log(callCount) // 1
+   */
+  ```
+
+- Object
+
+  - `Object` 就比較靈活
+
+  ```js
+  /**
+   * @param {Function} fn
+   * @return {Function}
+   */
+  function memoize(fn) {
+    const hash = {};
+    return function (...args) {
+      const key = JSON.stringify(args);
+      if (hash[key] != undefined) return hash[key];
+      hash[key] = fn(...args);
+      return hash[key];
+    };
+  }
+  ```
+
+### [2723. Add Two Promises](https://leetcode.com/problems/add-two-promises/description/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+這邊要用 `Promise.all` 來等所有 `promise` 算好一起跑 `then`。
+
+- 直接加
+
+  - 因為這裡 arg 只有兩個數字，可以直接加起來就好
+
+  ```js
+  /**
+   * @param {Promise} promise1
+   * @param {Promise} promise2
+   * @return {Promise}
+   */
+  var addTwoPromises = async function (promise1, promise2) {
+    return Promise.all([promise1, promise2]).then(([a, b]) => a + b);
+  };
+
+  /**
+   * addTwoPromises(Promise.resolve(2), Promise.resolve(2))
+   *   .then(console.log); // 4
+   */
+  ```
+
+- 當 arguments 不只兩個時，可以用 `Array.reduce()`
+  ```js
+  var addTwoPromises = async function (...args) {
+    return Promise.all(args).then((ret) =>
+      ret.reduce((acc, val) => acc + val, 0)
+    );
+  };
+  ```

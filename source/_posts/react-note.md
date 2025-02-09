@@ -9,6 +9,11 @@ category:
 
 # JSX
 
+## shadcn
+
+相見恨晚阿.. 太強了
+[官方文件](https://ui.shadcn.com/docs)
+
 ## TanStack
 
 官方有個非常詳盡的[文件](https://tanstack.com/table/latest)，這裡只有寫大概怎麼用。
@@ -172,6 +177,189 @@ const columns = [
   ));
 }
 ```
+
+## React Hook Form
+
+透過 `useForm hook` 管理表單
+
+- 安裝
+
+  ```sh
+  npm install react-hook-form
+  ```
+
+- `shadui` + `react hook form` + `zod` 驗證範例
+
+  ```jsx
+  import { useForm } from "react-hook-form";
+  import { zodResolver } from "@hookform/resolvers/zod";
+  import * as z from "zod";
+  import { Button } from "@/components/ui/button";
+  import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
+  import { Input } from "@/components/ui/input";
+  import { Checkbox } from "@/components/ui/checkbox";
+
+  const formSchema = z.object({
+    name: z.string().min(2, "名稱至少需要 2 個字"),
+    email: z.string().email("請輸入有效的 Email"),
+    agreeTerms: z.boolean().refine(val => val === true, {
+      message: "您必須同意條款與條件"
+    })
+  });
+
+  export default function MyForm() {
+    const form = useForm({
+      resolver: zodResolver(formSchema),
+      defaultValues: {
+        name: "",
+        email: "",
+        agreeTerms: false
+      }
+    });
+
+    const onSubmit = (data) => {
+      console.log("Submitted data:", data);
+    };
+
+    return (
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 p-4 border rounded-lg w-full max-w-md">
+          {/* Name Field */}
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>名稱</FormLabel>
+                <FormControl>
+                  <Input placeholder="輸入您的名稱" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Email Field */}
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input type="email" placeholder="輸入您的 Email" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Agree Terms Checkbox */}
+          <FormField
+            control={form.control}
+            name="agreeTerms"
+            render={({ field }) => (
+              <FormItem className="flex items-center space-x-2">
+                <FormControl>
+                  <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                </FormControl>
+                <FormLabel>我同意條款與條件</FormLabel>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Submit Button */}
+          <Button type="submit" className="w-full">提交</Button>
+        </form>
+      </Form>
+    );
+  }
+  import { useForm } from "react-hook-form";
+  import { zodResolver } from "@hookform/resolvers/zod";
+  import * as z from "zod";
+  import { Button } from "@/components/ui/button";
+  import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
+  import { Input } from "@/components/ui/input";
+  import { Checkbox } from "@/components/ui/checkbox";
+
+  const formSchema = z.object({
+    name: z.string().min(2, "名稱至少需要 2 個字"),
+    email: z.string().email("請輸入有效的 Email"),
+    agreeTerms: z.boolean().refine(val => val === true, {
+      message: "您必須同意條款與條件"
+    })
+  });
+
+  export default function MyForm() {
+    const form = useForm({
+      resolver: zodResolver(formSchema),
+      defaultValues: {
+        name: "",
+        email: "",
+        agreeTerms: false
+      }
+    });
+
+    const onSubmit = (data) => {
+      console.log("Submitted data:", data);
+    };
+
+    return (
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 p-4 border rounded-lg w-full max-w-md">
+          {/* Name Field */}
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>名稱</FormLabel>
+                <FormControl>
+                  <Input placeholder="輸入您的名稱" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Email Field */}
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input type="email" placeholder="輸入您的 Email" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Agree Terms Checkbox */}
+          <FormField
+            control={form.control}
+            name="agreeTerms"
+            render={({ field }) => (
+              <FormItem className="flex items-center space-x-2">
+                <FormControl>
+                  <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                </FormControl>
+                <FormLabel>我同意條款與條件</FormLabel>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Submit Button */}
+          <Button type="submit" className="w-full">提交</Button>
+        </form>
+      </Form>
+    );
+  }
+  ```
 
 ## Swiper
 
