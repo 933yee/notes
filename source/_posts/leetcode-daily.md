@@ -234,3 +234,23 @@ public:
     }
 };
 ```
+
+### 2024/02/10 [3174. Clear Digits](https://leetcode.com/problems/clear-digits/description/?envType=daily-question&envId=2025-02-10)
+
+- 用 Stack 的方式記錄最後要回傳的值
+  - Time Complexity $O(n)$
+  - Space Complexity $O(1)$
+
+```cpp
+class Solution {
+public:
+    string clearDigits(string s) {
+        string ret;
+        for(char& c:s){
+            if(isdigit(c) && ret.size()) ret.pop_back();
+            else ret.push_back(c);
+        }
+        return ret;
+    }
+};
+```

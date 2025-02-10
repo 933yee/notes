@@ -387,3 +387,22 @@ var once = function (fn) {
     );
   };
   ```
+
+### [2621. Sleep](https://leetcode.com/problems/sleep/description/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+- `resolve()` 是 Promise 提供的 function，用來把 Promise 的狀態變成已完成。所以這邊在 `millis` 時間後執行 `resolve()` 就能完成 `return`。
+
+```js
+/**
+ * @param {number} millis
+ * @return {Promise}
+ */
+async function sleep(millis) {
+  return new Promise((resolve) => setTimeout(resolve, millis));
+}
+
+/**
+ * let t = Date.now()
+ * sleep(100).then(() => console.log(Date.now() - t)) // 100
+ */
+```
