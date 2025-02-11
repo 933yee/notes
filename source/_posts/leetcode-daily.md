@@ -254,3 +254,45 @@ public:
     }
 };
 ```
+
+### 2024/02/11 [1910. Remove All Occurrences of a Substring](https://leetcode.com/problems/remove-all-occurrences-of-a-substring/description/?envType=daily-question&envId=2025-02-11)
+
+> 快忘記 substr 和 find 怎麼用了
+
+- 用 `string.substr()` 每次都往前檢查，找到就刪掉
+  - Time Complexity $O(n^2)$
+  - Space Complexity $O(1)$
+
+```cpp
+class Solution {
+public:
+    string removeOccurrences(string s, string part) {
+        string ret;
+        int n = part.size();
+        for(char& c:s){
+            ret.push_back(c);
+            if(ret.size() >= n && ret.substr(ret.size() - n) == part)
+                ret.erase(ret.size() - n, n);
+        }
+        return ret;
+    }
+};
+```
+
+- 用 `string.find()` 來檢查，可以更簡短
+  - Time Complexity $O(n^2)$
+  - Space Complexity $O(1)$
+
+```cpp
+class Solution {
+public:
+    string removeOccurrences(string s, string part) {
+        int idx = s.find(part);
+        while(idx != string::npos){
+            s.erase(idx, part.size());
+            idx = s.find(part);
+        }
+        return s;
+    }
+};
+```

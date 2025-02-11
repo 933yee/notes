@@ -24,7 +24,7 @@
 <meta property="og:description" content="沒在 leetcode 寫過 js 耶，酷  2667. Create Hello World Function 了解 closure 的概念就好  12345678910111213&#x2F;** * @return &#123;Function&#125; *&#x2F;var createHelloWorld &#x3D; function () &#123;  return function (...args) &amp;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-02-01T15:48:41.000Z">
-<meta property="article:modified_time" content="2025-02-10T15:02:06.749Z">
+<meta property="article:modified_time" content="2025-02-11T15:06:37.834Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary_large_image">
@@ -220,7 +220,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.1k words
+          1.2k words
         
       </span>
     
@@ -231,7 +231,7 @@
         
         
         
-          10 mins
+          11 mins
         
       </span>
     
@@ -395,6 +395,11 @@
 <li><code>resolve()</code> 是 Promise 提供的 function，用來把 Promise 的狀態變成已完成。所以這邊在 <code>millis</code> 時間後執行 <code>resolve()</code> 就能完成 <code>return</code>。</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">number</span>&#125; <span class="hljs-variable">millis</span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-type">Promise</span>&#125;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">sleep</span>(<span class="hljs-params">millis</span>) &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve</span>) =&gt;</span> <span class="hljs-built_in">setTimeout</span>(resolve, millis));<br>&#125;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * let t = Date.now()</span><br><span class="hljs-comment"> * sleep(100).then(() =&gt; console.log(Date.now() - t)) // 100</span><br><span class="hljs-comment"> */</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="2715-Timeout-Cancellation"><a href="#2715-Timeout-Cancellation" class="headerlink" title="2715. Timeout Cancellation"></a><a target="_blank" rel="noopener" href="https://leetcode.com/problems/timeout-cancellation/description/?envType=study-plan-v2&envId=30-days-of-javascript">2715. Timeout Cancellation</a></h3><blockquote>
+<p>滿酷的題目，很有趣</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">Function</span>&#125; <span class="hljs-variable">fn</span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">Array</span>&#125; <span class="hljs-variable">args</span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">number</span>&#125; <span class="hljs-variable">t</span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-type">Function</span>&#125;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">var</span> cancellable = <span class="hljs-keyword">function</span> (<span class="hljs-params">fn, args, t</span>) &#123;<br>  <span class="hljs-keyword">let</span> timeout = <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">fn</span>(...args), t);<br>  <span class="hljs-keyword">return</span> <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">clearTimeout</span>(timeout);<br>&#125;;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> *  const result = [];</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> *  const fn = (x) =&gt; x * 5;</span><br><span class="hljs-comment"> *  const args = [2], t = 20, cancelTimeMs = 50;</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> *  const start = performance.now();</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> *  const log = (...argsArr) =&gt; &#123;</span><br><span class="hljs-comment"> *      const diff = Math.floor(performance.now() - start);</span><br><span class="hljs-comment"> *      result.push(&#123;&quot;time&quot;: diff, &quot;returned&quot;: fn(...argsArr)&#125;);</span><br><span class="hljs-comment"> *  &#125;</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> *  const cancel = cancellable(log, args, t);</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> *  const maxT = Math.max(t, cancelTimeMs);</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> *  setTimeout(cancel, cancelTimeMs);</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> *  setTimeout(() =&gt; &#123;</span><br><span class="hljs-comment"> *      console.log(result); // [&#123;&quot;time&quot;:20,&quot;returned&quot;:10&#125;]</span><br><span class="hljs-comment"> *  &#125;, maxT + 15)</span><br><span class="hljs-comment"> */</span><br></code></pre></td></tr></table></figure>
 
                 
               </div>

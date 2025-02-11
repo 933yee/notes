@@ -24,7 +24,7 @@
 <meta property="og:description" content="2025&#x2F;02&#x2F;01 3151. Special Array I bitwise xor + and 即可 Time Complexity $O(n)$ Space Complexity $O(1)$    12345678910class Solution &#123;public:    bool isArraySpecial(vector&lt;int&gt;&amp;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-01-31T13:22:11.000Z">
-<meta property="article:modified_time" content="2025-02-10T14:59:55.393Z">
+<meta property="article:modified_time" content="2025-02-11T14:54:38.564Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary_large_image">
@@ -220,7 +220,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          875 words
+          1k words
         
       </span>
     
@@ -231,7 +231,7 @@
         
         
         
-          8 mins
+          9 mins
         
       </span>
     
@@ -365,6 +365,27 @@
 </li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">string <span class="hljs-title">clearDigits</span><span class="hljs-params">(string s)</span> </span>&#123;<br>        string ret;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">char</span>&amp; c:s)&#123;<br>            <span class="hljs-keyword">if</span>(<span class="hljs-built_in">isdigit</span>(c) &amp;&amp; ret.<span class="hljs-built_in">size</span>()) ret.<span class="hljs-built_in">pop_back</span>();<br>            <span class="hljs-keyword">else</span> ret.<span class="hljs-built_in">push_back</span>(c);<br>        &#125;<br>        <span class="hljs-keyword">return</span> ret;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2024-02-11-1910-Remove-All-Occurrences-of-a-Substring"><a href="#2024-02-11-1910-Remove-All-Occurrences-of-a-Substring" class="headerlink" title="2024&#x2F;02&#x2F;11 1910. Remove All Occurrences of a Substring"></a>2024&#x2F;02&#x2F;11 <a target="_blank" rel="noopener" href="https://leetcode.com/problems/remove-all-occurrences-of-a-substring/description/?envType=daily-question&envId=2025-02-11">1910. Remove All Occurrences of a Substring</a></h3><blockquote>
+<p>快忘記 substr 和 find 怎麼用了</p>
+</blockquote>
+<ul>
+<li>用 <code>string.substr()</code> 每次都往前檢查，找到就刪掉<ul>
+<li>Time Complexity $O(n^2)$</li>
+<li>Space Complexity $O(1)$</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">string <span class="hljs-title">removeOccurrences</span><span class="hljs-params">(string s, string part)</span> </span>&#123;<br>        string ret;<br>        <span class="hljs-type">int</span> n = part.<span class="hljs-built_in">size</span>();<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">char</span>&amp; c:s)&#123;<br>            ret.<span class="hljs-built_in">push_back</span>(c);<br>            <span class="hljs-keyword">if</span>(ret.<span class="hljs-built_in">size</span>() &gt;= n &amp;&amp; ret.<span class="hljs-built_in">substr</span>(ret.<span class="hljs-built_in">size</span>() - n) == part)<br>                ret.<span class="hljs-built_in">erase</span>(ret.<span class="hljs-built_in">size</span>() - n, n);<br>        &#125;<br>        <span class="hljs-keyword">return</span> ret;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>用 <code>string.find()</code> 來檢查，可以更簡短<ul>
+<li>Time Complexity $O(n^2)$</li>
+<li>Space Complexity $O(1)$</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">string <span class="hljs-title">removeOccurrences</span><span class="hljs-params">(string s, string part)</span> </span>&#123;<br>        <span class="hljs-type">int</span> idx = s.<span class="hljs-built_in">find</span>(part);<br>        <span class="hljs-keyword">while</span>(idx != string::npos)&#123;<br>            s.<span class="hljs-built_in">erase</span>(idx, part.<span class="hljs-built_in">size</span>());<br>            idx = s.<span class="hljs-built_in">find</span>(part);<br>        &#125;<br>        <span class="hljs-keyword">return</span> s;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
                 
               </div>
