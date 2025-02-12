@@ -149,7 +149,7 @@ public:
 };
 ```
 
-### 2024/02/07 [3160. Find the Number of Distinct Colors Among the Balls](https://leetcode.com/problems/find-the-number-of-distinct-colors-among-the-balls/description/?envType=daily-question&envId=2025-02-07)
+### 2025/02/07 [3160. Find the Number of Distinct Colors Among the Balls](https://leetcode.com/problems/find-the-number-of-distinct-colors-among-the-balls/description/?envType=daily-question&envId=2025-02-07)
 
 - 開兩個 hash map，記錄 **球對應的顏色** 和 **某顏色的數量**，當顏色數量變成 0 / 1 時，代表 少一種 / 多一種 顏色。
   - Time Complexity $O(n)$
@@ -178,7 +178,7 @@ public:
 };
 ```
 
-### 2024/02/08 [2349. Design a Number Container System](https://leetcode.com/problems/design-a-number-container-system/description/?envType=daily-question&envId=2025-02-08)
+### 2025/02/08 [2349. Design a Number Container System](https://leetcode.com/problems/design-a-number-container-system/description/?envType=daily-question&envId=2025-02-08)
 
 - 因為 `1 <= index, number <= 109` ，需要開一個 hash map，負責記錄該 index 對應到的值，再開另一個 hash map，記錄 value 有哪些 index 指著。
   - Time Complexity $O(n \lg(n))$
@@ -214,7 +214,7 @@ public:
  */
 ```
 
-### 2024/02/09 [2364. Count Number of Bad Pairs](https://leetcode.com/problems/count-number-of-bad-pairs/description/?envType=daily-question&envId=2025-02-09)
+### 2025/02/09 [2364. Count Number of Bad Pairs](https://leetcode.com/problems/count-number-of-bad-pairs/description/?envType=daily-question&envId=2025-02-09)
 
 - 用 hash map 記錄 index 和 value 的差值有幾個
   - Time Complexity $O(n)$
@@ -235,7 +235,7 @@ public:
 };
 ```
 
-### 2024/02/10 [3174. Clear Digits](https://leetcode.com/problems/clear-digits/description/?envType=daily-question&envId=2025-02-10)
+### 2025/02/10 [3174. Clear Digits](https://leetcode.com/problems/clear-digits/description/?envType=daily-question&envId=2025-02-10)
 
 - 用 Stack 的方式記錄最後要回傳的值
   - Time Complexity $O(n)$
@@ -255,7 +255,7 @@ public:
 };
 ```
 
-### 2024/02/11 [1910. Remove All Occurrences of a Substring](https://leetcode.com/problems/remove-all-occurrences-of-a-substring/description/?envType=daily-question&envId=2025-02-11)
+### 2025/02/11 [1910. Remove All Occurrences of a Substring](https://leetcode.com/problems/remove-all-occurrences-of-a-substring/description/?envType=daily-question&envId=2025-02-11)
 
 > 快忘記 substr 和 find 怎麼用了
 
@@ -293,6 +293,33 @@ public:
             idx = s.find(part);
         }
         return s;
+    }
+};
+```
+
+### 2025/02/12 [2342. Max Sum of a Pair With Equal Sum of Digits](https://leetcode.com/problems/max-sum-of-a-pair-with-equal-sum-of-digits/description/?envType=daily-question&envId=2025-02-12)
+
+- 記錄曾經算出的最大值 `acc` 就好
+  - Time Complexity $O(n)$
+  - Space Complexity $O(n)$
+
+```cpp
+class Solution {
+public:
+    int maximumSum(vector<int>& nums) {
+        unordered_map<int, int> mp;
+        int res = -1;
+        for(int& n:nums){
+            int acc = 0, n_cpy = n;
+            while(n_cpy){
+                acc += n_cpy%10;
+                n_cpy /= 10;
+            }
+            if(mp.find(acc) != mp.end())
+                res = max(res, mp[acc] + n);
+            mp[acc] = max(mp[acc], n);
+        }
+        return res;
     }
 };
 ```

@@ -25,8 +25,11 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://optimization.cbe.cornell.edu/images/thumb/9/93/Numerical_example.jpg/680px-Numerical_example.jpg">
 <meta property="og:image" content="https://www.researchgate.net/publication/368305965/figure/fig4/AS:11431281118383692@1675742756740/Comparison-diagram-of-sigmoid-and-hard-sigmoid.png">
+<meta property="og:image" content="https://machinelearningmastery.com/wp-content/uploads/2018/10/Line-Plot-of-Rectified-Linear-Activation-for-Negative-and-Positive-Inputs.png">
+<meta property="og:image" content="https://miro.medium.com/v2/resize:fit:1400/1*KmNACQdl5FvoXvQt5n41nQ.png">
+<meta property="og:image" content="https://miro.medium.com/v2/resize:fit:1400/1*Rl5VIRnXCJbvR6e6cTsZcg.png">
 <meta property="article:published_time" content="2025-02-12T05:22:11.000Z">
-<meta property="article:modified_time" content="2025-02-12T06:39:58.962Z">
+<meta property="article:modified_time" content="2025-02-12T12:39:13.666Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="ml">
 <meta name="twitter:card" content="summary_large_image">
@@ -223,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          401 words
+          674 words
         
       </span>
     
@@ -234,7 +237,7 @@
         
         
         
-          4 mins
+          6 mins
         
       </span>
     
@@ -294,11 +297,11 @@
 </ul>
 </li>
 </ul>
-<h3 id="步驟"><a href="#步驟" class="headerlink" title="步驟"></a>步驟</h3><ol>
+<h3 id="機器學習的-Framework"><a href="#機器學習的-Framework" class="headerlink" title="機器學習的 Framework"></a>機器學習的 Framework</h3><ol>
 <li><p>找 Model ，ex:$y &#x3D; b + wx$</p>
 <ul>
 <li>帶有未知 parameter 的 function 稱為 <code>Model</code></li>
-<li>$x$ 稱為 <code>feature</code></li>
+<li>$x$ 稱為 <code>feature</code>，為 <strong>輸入給模型的資料</strong></li>
 <li>$w$ 稱為 <code>weight</code></li>
 <li>$b$ 稱為 <code>bias</code></li>
 </ul>
@@ -332,21 +335,42 @@
 </ul>
 </li>
 <li>更新 $w$ 和 $b$，以 $w$ 為例，$w^1 &#x3D; w^0 - \eta \cdot \frac{\partial L}{\partial w}|_{w&#x3D;w^0, b&#x3D;b^0}$</li>
-<li>持續更新，最後 $L$ 可能停在 <code>local minimum </code> 或 <code>global minimum </code></li>
+<li>持續更新，最後 $L$ 會接近 <code>local minimum</code> 或 <code>global minimum</code> 附近</li>
 </ol>
 </li>
 </ul>
 </li>
 </ol>
-<p>上面的 Model 是定為 $y &#x3D; b + wx$，但實際上這種 <code>Linear Model</code> 可能不足以描述現實情況，也就是 Model 不夠力，稱為 <code>Model Bias</code>，這時候就要定一個更複雜的 Model</p>
+<p>實際上在算 Gradient 的時候，不會每次都拿所有訓練資料去算，會把所有訓練資料隨便分成很多 <code>Batch</code>，每次都拿一個 <code>Batch</code> 算出 Gradient，叫做一次 <code>update</code>，如果把所有 <code>Batch</code> 都看過一輪，叫做一個 <code>epoch</code></p>
+<p>此外，上面的 Model 是定為 $y &#x3D; b + wx$，但實際上這種 <code>Linear Model</code> 可能不足以描述現實情況，也就是 Model 不夠力，稱為 <code>Model Bias</code>，這時候可以加入更多 <code>Feature</code>，定出一個更複雜的 Model</p>
 <ul>
 <li>Piecewise Linear</li>
 </ul>
 <p><img src="https://optimization.cbe.cornell.edu/images/thumb/9/93/Numerical_example.jpg/680px-Numerical_example.jpg" srcset="/notes/info/loading.gif" lazyload alt="Piecewise Linear"></p>
-<p><code>Piecewise Linear</code> 可以用很多不同的 <code>Hard Sigmoid</code> 來組合出來，而 <code>Hard Sigmoid</code> 又由 <code>Sigmoid Function</code> 模擬出</p>
+<p>現實中可能是 <code>Continuous Function</code>，可以用 <code>Piecewise Linear</code> 來模擬，<code>Piecewise Linear</code> 又可以用很多不同的 <code>Hard Sigmoid</code> 來組合出來，而 <code>Hard Sigmoid</code> 又可以由 <code>Sigmoid Function</code> 模擬出來</p>
 <p><img src="https://www.researchgate.net/publication/368305965/figure/fig4/AS:11431281118383692@1675742756740/Comparison-diagram-of-sigmoid-and-hard-sigmoid.png" srcset="/notes/info/loading.gif" lazyload alt="Sigmoid vs Hard Sigmoid"></p>
 <ul>
-<li>Sigmoid Function<br>$y &#x3D; c \cdot \frac{1}{1+e^{-b+wx_1}} &#x3D; c \cdot sigmoid(b+wx_1)$</li>
+<li>Sigmoid Function<br>$c \cdot sigmoid(b+wx_1)$ &#x3D; y &#x3D; c \cdot \frac{1}{1+e^{-b+wx_1}}</li>
+</ul>
+<p><code>Hard Sigmoid</code> 也能用兩個 <code>ReLU (Rectified Linear Unit)</code> 算出</p>
+<p><img src="https://machinelearningmastery.com/wp-content/uploads/2018/10/Line-Plot-of-Rectified-Linear-Activation-for-Negative-and-Positive-Inputs.png" srcset="/notes/info/loading.gif" lazyload alt="ReLU"></p>
+<h2 id="機器學習的任務攻略"><a href="#機器學習的任務攻略" class="headerlink" title="機器學習的任務攻略"></a>機器學習的任務攻略</h2><p><img src="https://miro.medium.com/v2/resize:fit:1400/1*KmNACQdl5FvoXvQt5n41nQ.png" srcset="/notes/info/loading.gif" lazyload alt="機器學習的任務攻略"></p>
+<ul>
+<li><p>Model Bias<br>模型不給力</p>
+</li>
+<li><p>Optimization<br>可能是 Optimization 的方式有問題，像是 <code>Gradient Descent</code> 不給力</p>
+</li>
+</ul>
+<p>透過比較不同模型的來區分是不是 Model 的問題</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:1400/1*Rl5VIRnXCJbvR6e6cTsZcg.png" srcset="/notes/info/loading.gif" lazyload alt="Model Bias v.s. Optimization Issue"></p>
+<p>像這個例子中， <code>20-layer</code> 在 <code>Traning Data</code> 上表現的還比 <code>56-layer</code> 好，就可以知道是 <code>Optimization</code> 的問題。可以先測比較淺的 Model 或是比較簡單的 Model，比較不會有 Optimization 的問題。</p>
+<ul>
+<li>Overfitting<br>Traning Data 表現好，Testing Data 表現很爛<ul>
+<li>增加 Traning Data</li>
+<li>Data augmentation<br>根據理解創造出新的資料，ex: 翻轉圖片、放大圖片等</li>
+<li>限制模型，不要讓他彈性那麼大，ex: 減少 <code>Feature</code>、減少 <code>Parameter</code>、Sharing Parameter、Early Stopping、Regularization、Dropout 等</li>
+</ul>
+</li>
 </ul>
 
                 
