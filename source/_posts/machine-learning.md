@@ -34,7 +34,7 @@ math: true
 
    - 假設一開始是 $b = 0.5$、$w = 1$，就以 $y = 0.5 + 1x$ 來算出 `每一筆資料的計算結果` 與 `label` 之間的誤差 $e$
      - 實際上正確的 $y$ 稱為 `label`
-     - 計算誤差的方法有很多，像是
+       計算誤差的方法有很多，像是
        - MAE(Mean Absolute Error): $e = \lvert y - \hat{y} \rvert$
        - MSE(Mean Square Error): $e = (y - \hat{y})^2$
        - Cross-entropy
@@ -53,4 +53,12 @@ math: true
 上面的 Model 是定為 $y = b + wx$，但實際上這種 `Linear Model` 可能不足以描述現實情況，也就是 Model 不夠力，稱為 `Model Bias`，這時候就要定一個更複雜的 Model
 
 - Piecewise Linear
-  ![Piecewise Linear](https://dr282zn36sxxg.cloudfront.net/datastreams/f-d%3A1100872fa13e5fef130e4074ccb4500cb570c129053fedaebc290981%2BIMAGE_THUMB_POSTCARD_TINY%2BIMAGE_THUMB_POSTCARD_TINY.1)
+
+![Piecewise Linear](https://optimization.cbe.cornell.edu/images/thumb/9/93/Numerical_example.jpg/680px-Numerical_example.jpg)
+
+`Piecewise Linear` 可以用很多不同的 `Hard Sigmoid` 來組合出來，而 `Hard Sigmoid` 又由 `Sigmoid Function` 模擬出
+
+![Sigmoid vs Hard Sigmoid](https://www.researchgate.net/publication/368305965/figure/fig4/AS:11431281118383692@1675742756740/Comparison-diagram-of-sigmoid-and-hard-sigmoid.png)
+
+- Sigmoid Function
+  $y = c \cdot \frac{1}{1+e^{-b+wx_1}} = c \cdot sigmoid(b+wx_1)$
