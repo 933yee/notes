@@ -16,23 +16,24 @@
   <meta name="author" content="Kevin Lee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Docker 架構  Docker DaemonDocker Daemon 負責管理和執行容器的所有操作。  Docker Compose定義和管理多個 Docker 容器。讓你能夠用一個 YAML config file 來定義所有容器，然後一個命令就能啟動他們，像是你同時要有前端、後端、資料庫的時候  步驟  建立 Dockerfile 用這個 Dockerfile 來建立 Image 用這個">
+    <meta name="description" content="惡補 ML https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v&#x3D;Ye018rCVvOo&amp;list&#x3D;PLJV_el3uVTsMhtt7_Y6sgTHGHp1Vb2P2J  機器學習基本概念機器學習的核心是讓機器根據資料學習一個模型（function），讓新的輸入做出相對的預測或決策。 分類 Regression ex: 預測東西   Classification ex: Alp">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Docker 筆記">
-<meta property="og:url" content="https://933yee.github.io/notes/2025/02/11/docker/index.html">
+<meta property="og:title" content="機器學習筆記">
+<meta property="og:url" content="https://933yee.github.io/notes/2025/02/12/machine-learning/index.html">
 <meta property="og:site_name" content="933yee&#39;s Notes">
-<meta property="og:description" content="Docker 架構  Docker DaemonDocker Daemon 負責管理和執行容器的所有操作。  Docker Compose定義和管理多個 Docker 容器。讓你能夠用一個 YAML config file 來定義所有容器，然後一個命令就能啟動他們，像是你同時要有前端、後端、資料庫的時候  步驟  建立 Dockerfile 用這個 Dockerfile 來建立 Image 用這個">
+<meta property="og:description" content="惡補 ML https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v&#x3D;Ye018rCVvOo&amp;list&#x3D;PLJV_el3uVTsMhtt7_Y6sgTHGHp1Vb2P2J  機器學習基本概念機器學習的核心是讓機器根據資料學習一個模型（function），讓新的輸入做出相對的預測或決策。 分類 Regression ex: 預測東西   Classification ex: Alp">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2025-02-11T05:23:25.000Z">
-<meta property="article:modified_time" content="2025-02-11T05:59:40.193Z">
+<meta property="og:image" content="https://dr282zn36sxxg.cloudfront.net/datastreams/f-d%3A1100872fa13e5fef130e4074ccb4500cb570c129053fedaebc290981%2BIMAGE_THUMB_POSTCARD_TINY%2BIMAGE_THUMB_POSTCARD_TINY.1">
+<meta property="article:published_time" content="2025-02-12T05:22:11.000Z">
+<meta property="article:modified_time" content="2025-02-12T06:31:21.386Z">
 <meta property="article:author" content="Kevin Lee">
-<meta property="article:tag" content="docker">
-<meta property="article:tag" content="web">
+<meta property="article:tag" content="ml">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://dr282zn36sxxg.cloudfront.net/datastreams/f-d%3A1100872fa13e5fef130e4074ccb4500cb570c129053fedaebc290981%2BIMAGE_THUMB_POSTCARD_TINY%2BIMAGE_THUMB_POSTCARD_TINY.1">
   
   
   
-  <title>Docker 筆記 - 933yee&#39;s Notes</title>
+  <title>機器學習筆記 - 933yee&#39;s Notes</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -198,7 +199,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Docker 筆記"></span>
+            <span id="subtitle" data-typed-text="機器學習筆記"></span>
           
         </div>
 
@@ -209,8 +210,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-02-11 13:23" pubdate>
-          February 11, 2025 pm
+        <time datetime="2025-02-12 13:22" pubdate>
+          February 12, 2025 pm
         </time>
       </span>
     
@@ -221,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          91 words
+          366 words
         
       </span>
     
@@ -232,7 +233,7 @@
         
         
         
-          1 mins
+          4 mins
         
       </span>
     
@@ -269,24 +270,77 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Docker 筆記</h1>
+            <h1 id="seo-header">機器學習筆記</h1>
             
             
               <div class="markdown-body">
                 
-                <p><a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/collabnix/dockerlabs/master/beginners/images/comp_client_server.jpg">Docker 架構</a></p>
+                <blockquote>
+<p>惡補 ML <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Ye018rCVvOo&list=PLJV_el3uVTsMhtt7_Y6sgTHGHp1Vb2P2J">https://www.youtube.com/watch?v=Ye018rCVvOo&amp;list=PLJV_el3uVTsMhtt7_Y6sgTHGHp1Vb2P2J</a></p>
+</blockquote>
+<h2 id="機器學習基本概念"><a href="#機器學習基本概念" class="headerlink" title="機器學習基本概念"></a>機器學習基本概念</h2><p>機器學習的核心是讓機器根據資料學習一個模型（function），讓新的輸入做出相對的預測或決策。</p>
+<h3 id="分類"><a href="#分類" class="headerlink" title="分類"></a>分類</h3><ul>
+<li>Regression<ul>
+<li>ex: 預測東西</li>
+</ul>
+</li>
+<li>Classification<ul>
+<li>ex: Alphago</li>
+</ul>
+</li>
+<li>Structured Learning<ul>
+<li>創造東西，ex: 生成式?</li>
+</ul>
+</li>
+</ul>
+<h3 id="步驟"><a href="#步驟" class="headerlink" title="步驟"></a>步驟</h3><ol>
+<li><p>找 Model ，ex:$y &#x3D; b + wx$</p>
 <ul>
-<li><p>Docker Daemon<br>Docker Daemon 負責管理和執行容器的所有操作。</p>
+<li>帶有未知 parameter 的 function 稱為 <code>Model</code></li>
+<li>$x$ 稱為 <code>feature</code></li>
+<li>$w$ 稱為 <code>weight</code></li>
+<li>$b$ 稱為 <code>bias</code></li>
+</ul>
 </li>
-<li><p>Docker Compose<br>定義和管理多個 Docker 容器。讓你能夠用一個 YAML config file 來定義所有容器，然後一個命令就能啟動他們，像是你同時要有前端、後端、資料庫的時候</p>
+<li><p>定義 <code>Loss Function</code>，ex: $L(b, w)$</p>
+<ul>
+<li>假設一開始是 $b &#x3D; 0.5$、$w &#x3D; 1$，就以 $y &#x3D; 0.5 + 1x$ 來算出 <code>每一筆資料的計算結果</code> 與 <code>label</code> 之間的誤差 $e$<ul>
+<li>實際上正確的 $y$ 稱為 <code>label</code></li>
+<li>計算誤差的方法有很多，像是<ul>
+<li>MAE(Mean Absolute Error): $e &#x3D; \lvert y - \hat{y} \rvert$</li>
+<li>MSE(Mean Square Error): $e &#x3D; (y - \hat{y})^2$</li>
+<li>Cross-entropy</li>
+</ul>
 </li>
-<li><p>步驟</p>
-<ol>
-<li>建立 <code>Dockerfile</code></li>
-<li>用這個 <code>Dockerfile</code> 來建立 <code>Image</code></li>
-<li>用這個 <code>Image</code> 來建立和運行 <code>Container</code></li>
+</ul>
+</li>
+<li>算好後把每個 $e$ 套入 <code>Loss Function</code><ul>
+<li>ex: $L &#x3D; \frac{1}{N}\Sigma_{n}e_n$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Optimization，找到 $w$ 和 $b$ 能夠讓 <code>Loss Function</code> 算出最小的值</p>
+<ul>
+<li>Gradient Descent<ol>
+<li>隨便選一個 $w_0$、$b_0$</li>
+<li>計算斜率，以 $w$ 為例，$\eta \cdot \frac{\partial L}{\partial w}|_{w&#x3D;w^0, b&#x3D;b^0}$<ul>
+<li>$\eta$ 是 <code>learning rate</code>，需要自己設定<ul>
+<li>這種要自己設定的值稱為 <code>hyperparameter</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>更新 $w$ 和 $b$，以 $w$ 為例，$w^1 &#x3D; w^0 - \eta \cdot \frac{\partial L}{\partial w}|_{w&#x3D;w^0, b&#x3D;b^0}$</li>
+<li>持續更新，最後 $L$ 可能停在 <code>local minimum </code> 或 <code>global minimum </code></li>
 </ol>
 </li>
+</ul>
+</li>
+</ol>
+<p>上面的 Model 是定為 $y &#x3D; b + wx$，但實際上這種 <code>Linear Model</code> 可能不足以描述現實情況，也就是 Model 不夠力，稱為 <code>Model Bias</code>，這時候就要定一個更複雜的 Model</p>
+<ul>
+<li>Piecewise Linear<br><img src="https://dr282zn36sxxg.cloudfront.net/datastreams/f-d%3A1100872fa13e5fef130e4074ccb4500cb570c129053fedaebc290981%2BIMAGE_THUMB_POSTCARD_TINY%2BIMAGE_THUMB_POSTCARD_TINY.1" srcset="/notes/info/loading.gif" lazyload alt="Piecewise Linear"></li>
 </ul>
 
                 
@@ -300,9 +354,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/notes/tags/docker/" class="print-no-link">#docker</a>
-      
-        <a href="/notes/tags/web/" class="print-no-link">#web</a>
+        <a href="/notes/tags/ml/" class="print-no-link">#ml</a>
       
     </div>
   
@@ -314,8 +366,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Docker 筆記</div>
-      <div>https://933yee.github.io/notes/2025/02/11/docker/</div>
+      <div>機器學習筆記</div>
+      <div>https://933yee.github.io/notes/2025/02/12/machine-learning/</div>
     </div>
     <div class="license-meta">
       
@@ -327,7 +379,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>February 11, 2025</div>
+          <div>February 12, 2025</div>
         </div>
       
       
@@ -359,18 +411,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/notes/2025/02/12/machine-learning/" title="機器學習筆記">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">機器學習筆記</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/notes/2025/02/05/react-note/" title="React 筆記">
-                        <span class="hidden-mobile">React 筆記</span>
+                      <a href="/notes/2025/02/11/docker/" title="Docker 筆記">
+                        <span class="hidden-mobile">Docker 筆記</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -427,6 +473,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -620,6 +672,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/notes/js/local-search.js" ></script>
 
