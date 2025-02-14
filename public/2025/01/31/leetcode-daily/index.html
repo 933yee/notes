@@ -1,0 +1,812 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/notes/info/fluid.png">
+  <link rel="icon" href="/notes/info/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Kevin Lee">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="2025&#x2F;02&#x2F;01 3151. Special Array I bitwise xor + and 即可 Time Complexity $O(n)$ Space Complexity $O(1)$    12345678910class Solution &#123;public:    bool isArraySpecial(vector&lt;int&gt;&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="不知道這會持續幾天的 leetcode daily">
+<meta property="og:url" content="https://933yee.github.io/notes/2025/01/31/leetcode-daily/index.html">
+<meta property="og:site_name" content="933yee&#39;s Notes">
+<meta property="og:description" content="2025&#x2F;02&#x2F;01 3151. Special Array I bitwise xor + and 即可 Time Complexity $O(n)$ Space Complexity $O(1)$    12345678910class Solution &#123;public:    bool isArraySpecial(vector&lt;int&gt;&amp;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-01-31T13:22:11.000Z">
+<meta property="article:modified_time" content="2025-02-14T05:10:24.026Z">
+<meta property="article:author" content="Kevin Lee">
+<meta property="article:tag" content="leetcode">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>不知道這會持續幾天的 leetcode daily - 933yee&#39;s Notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/notes/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/notes/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/notes/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"933yee.github.io","root":"/notes/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/info/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/notes/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/notes/js/utils.js" ></script>
+  <script  src="/notes/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/notes/">
+      <strong>933yee&#39;s Notes</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/notes/info/default.gif') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.7)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="不知道這會持續幾天的 leetcode daily"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-01-31 21:22" pubdate>
+          January 31, 2025 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.3k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          11 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">不知道這會持續幾天的 leetcode daily</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="2025-02-01-3151-Special-Array-I"><a href="#2025-02-01-3151-Special-Array-I" class="headerlink" title="2025&#x2F;02&#x2F;01 3151. Special Array I"></a>2025&#x2F;02&#x2F;01 <a target="_blank" rel="noopener" href="https://leetcode.com/problems/special-array-i/description/?envType=daily-question&envId=2025-02-01">3151. Special Array I</a></h3><ul>
+<li>bitwise xor + and 即可<ul>
+<li>Time Complexity $O(n)$</li>
+<li>Space Complexity $O(1)$</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">isArraySpecial</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>&#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>; i&lt;nums.<span class="hljs-built_in">size</span>(); i++)&#123;<br>            <span class="hljs-keyword">if</span>(((nums[i] ^ nums[i<span class="hljs-number">-1</span>]) &amp; <span class="hljs-number">1</span>) != <span class="hljs-number">1</span>)<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2025-02-02-1752-Check-if-Array-Is-Sorted-and-Rotated"><a href="#2025-02-02-1752-Check-if-Array-Is-Sorted-and-Rotated" class="headerlink" title="2025&#x2F;02&#x2F;02 1752. Check if Array Is Sorted and Rotated"></a>2025&#x2F;02&#x2F;02 <a target="_blank" rel="noopener" href="https://leetcode.com/problems/check-if-array-is-sorted-and-rotated/description/?envType=daily-question&envId=2025-02-02">1752. Check if Array Is Sorted and Rotated</a></h3><ul>
+<li>drop 只能一次，最後要檢查頭尾<ul>
+<li>Time Complexity $O(n)$</li>
+<li>Space Complexity $O(1)$</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">check</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>&#123;<br>        <span class="hljs-type">bool</span> drop = <span class="hljs-literal">false</span>;<br>        <span class="hljs-type">int</span> n = nums.<span class="hljs-built_in">size</span>();<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>; i&lt;n; i++)&#123;<br>            <span class="hljs-keyword">if</span>(nums[i] &lt; nums[i<span class="hljs-number">-1</span>])&#123;<br>                <span class="hljs-keyword">if</span>(drop) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>                drop = <span class="hljs-literal">true</span>;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> (nums[n<span class="hljs-number">-1</span>] &gt; nums[<span class="hljs-number">0</span>]) ? !drop : <span class="hljs-literal">true</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2025-02-03-3105-Longest-Strictly-Increasing-or-Strictly-Decreasing-Subarray"><a href="#2025-02-03-3105-Longest-Strictly-Increasing-or-Strictly-Decreasing-Subarray" class="headerlink" title="2025&#x2F;02&#x2F;03 3105. Longest Strictly Increasing or Strictly Decreasing Subarray"></a>2025&#x2F;02&#x2F;03 <a target="_blank" rel="noopener" href="https://leetcode.com/problems/longest-strictly-increasing-or-strictly-decreasing-subarray/description/?envType=daily-question&envId=2025-02-03">3105. Longest Strictly Increasing or Strictly Decreasing Subarray</a></h3><ul>
+<li>寫個 cnt，遍歷陣列兩次，算出最長的值<ul>
+<li>Time Complexity $O(n)$</li>
+<li>Space Complexity $O(1)$</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">longestMonotonicSubarray</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>&#123;<br>        <span class="hljs-type">int</span> n = nums.<span class="hljs-built_in">size</span>(), cnt = <span class="hljs-number">1</span>;<br>        <span class="hljs-type">int</span> res = INT_MIN;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>; i&lt;n; i++)&#123;<br>            <span class="hljs-keyword">if</span>(nums[i] &gt; nums[i<span class="hljs-number">-1</span>]) cnt++;<br>            <span class="hljs-keyword">else</span> cnt = <span class="hljs-number">1</span>;<br>            res = <span class="hljs-built_in">max</span>(res, cnt);<br>        &#125;<br>        cnt = <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>; i&lt;n; i++)&#123;<br>            <span class="hljs-keyword">if</span>(nums[i] &lt; nums[i<span class="hljs-number">-1</span>]) cnt++;<br>            <span class="hljs-keyword">else</span> cnt = <span class="hljs-number">1</span>;<br>            res = <span class="hljs-built_in">max</span>(res, cnt);<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">max</span>(res, cnt);<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2025-02-04-1800-Maximum-Ascending-Subarray-Sum"><a href="#2025-02-04-1800-Maximum-Ascending-Subarray-Sum" class="headerlink" title="2025&#x2F;02&#x2F;04 1800. Maximum Ascending Subarray Sum"></a>2025&#x2F;02&#x2F;04 <a target="_blank" rel="noopener" href="https://leetcode.com/problems/maximum-ascending-subarray-sum/description/?envType=daily-question&envId=2025-02-04">1800. Maximum Ascending Subarray Sum</a></h3><ul>
+<li>遍歷一次，符合條件就累加<ul>
+<li>Time Complexity $O(n)$</li>
+<li>Space Complexity $O(1)$</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">maxAscendingSum</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>&#123;<br>        <span class="hljs-type">int</span> res = nums[<span class="hljs-number">0</span>], n = nums.<span class="hljs-built_in">size</span>(), cnt = nums[<span class="hljs-number">0</span>];<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>; i&lt;n; i++)&#123;<br>            nums[i] &gt; nums[i<span class="hljs-number">-1</span>] ? cnt += nums[i] : cnt = nums[i];<br>            res = <span class="hljs-built_in">max</span>(res, cnt);<br>        &#125;<br>        <span class="hljs-keyword">return</span> res;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2025-02-05-1790-Check-if-One-String-Swap-Can-Make-Strings-Equal"><a href="#2025-02-05-1790-Check-if-One-String-Swap-Can-Make-Strings-Equal" class="headerlink" title="2025&#x2F;02&#x2F;05 1790. Check if One String Swap Can Make Strings Equal"></a>2025&#x2F;02&#x2F;05 <a target="_blank" rel="noopener" href="https://leetcode.com/problems/check-if-one-string-swap-can-make-strings-equal/description/?envType=daily-question&envId=2025-02-05">1790. Check if One String Swap Can Make Strings Equal</a></h3><blockquote>
+<p>連五天 easy 耶</p>
+</blockquote>
+<ul>
+<li>題目只允許交換一次，所以記住兩個 idx 就好<ul>
+<li>Time Complexity $O(n)$</li>
+<li>Space Complexity $O(1)$</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">areAlmostEqual</span><span class="hljs-params">(string s1, string s2)</span> </span>&#123;<br>        <span class="hljs-type">int</span> n = s1.<span class="hljs-built_in">size</span>(), cnt = <span class="hljs-number">0</span>;<br>        <span class="hljs-type">int</span> idx1, idx2;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;n; i++)&#123;<br>            <span class="hljs-keyword">if</span>(s1[i] != s2[i])&#123;<br>                cnt++;<br>                <span class="hljs-keyword">if</span>(cnt == <span class="hljs-number">1</span>) idx1 = i;<br>                <span class="hljs-keyword">else</span> idx2 = i;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">if</span>(cnt == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        <span class="hljs-keyword">if</span>(cnt == <span class="hljs-number">2</span> &amp;&amp; s1[idx1] == s2[idx2] &amp;&amp; s1[idx2] == s2[idx1]) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2025-02-06-1726-Tuple-with-Same-Product"><a href="#2025-02-06-1726-Tuple-with-Same-Product" class="headerlink" title="2025&#x2F;02&#x2F;06 1726. Tuple with Same Product"></a>2025&#x2F;02&#x2F;06 <a target="_blank" rel="noopener" href="https://leetcode.com/problems/tuple-with-same-product/description/?envType=daily-question&envId=2025-02-06">1726. Tuple with Same Product</a></h3><ul>
+<li>每個數字都不同，所以考慮在不同位置的情況時可以直接乘以 8。用 hash map 來儲存計算的結果的 counter。<ul>
+<li>Time Complexity $O(n)$</li>
+<li>Space Complexity $O(1)$</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">tupleSameProduct</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>&#123;<br>        unordered_map&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt; mp;<br>        <span class="hljs-type">int</span> n = nums.<span class="hljs-built_in">size</span>(), res = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;n; i++)&#123;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=i+<span class="hljs-number">1</span>; j&lt;n; j++)&#123;<br>                <span class="hljs-type">int</span> p = nums[i] * nums[j];<br>                mp[p]++;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span>&amp; i:mp)<br>            res += (i.second * (i.second - <span class="hljs-number">1</span>)) / <span class="hljs-number">2</span> * <span class="hljs-number">8</span>;<br>        <span class="hljs-keyword">return</span> res;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2025-02-07-3160-Find-the-Number-of-Distinct-Colors-Among-the-Balls"><a href="#2025-02-07-3160-Find-the-Number-of-Distinct-Colors-Among-the-Balls" class="headerlink" title="2025&#x2F;02&#x2F;07 3160. Find the Number of Distinct Colors Among the Balls"></a>2025&#x2F;02&#x2F;07 <a target="_blank" rel="noopener" href="https://leetcode.com/problems/find-the-number-of-distinct-colors-among-the-balls/description/?envType=daily-question&envId=2025-02-07">3160. Find the Number of Distinct Colors Among the Balls</a></h3><ul>
+<li>開兩個 hash map，記錄 <strong>球對應的顏色</strong> 和 <strong>某顏色的數量</strong>，當顏色數量變成 0 &#x2F; 1 時，代表 少一種 &#x2F; 多一種 顏色。<ul>
+<li>Time Complexity $O(n)$</li>
+<li>Space Complexity $O(n)$</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">queryResults</span><span class="hljs-params">(<span class="hljs-type">int</span> limit, vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;&amp; queries)</span> </span>&#123;<br>        vector&lt;<span class="hljs-type">int</span>&gt; res;<br>        unordered_map&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt; ball, color;<br>        <span class="hljs-type">int</span> cnt = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span>&amp; v:queries)&#123;<br>            <span class="hljs-type">int</span> a = v[<span class="hljs-number">0</span>], b = v[<span class="hljs-number">1</span>];<br>            <span class="hljs-keyword">if</span>(ball[a] != b)&#123;<br>                color[ball[a]]--;<br>                <span class="hljs-keyword">if</span>(color[ball[a]] == <span class="hljs-number">0</span>) cnt--;<br>                ball[a] = b;<br>                color[ball[a]]++;<br>                <span class="hljs-keyword">if</span>(color[ball[a]] == <span class="hljs-number">1</span>) cnt++;<br>            &#125;<br>            res.<span class="hljs-built_in">push_back</span>(cnt);<br>        &#125;<br>        <span class="hljs-keyword">return</span> res;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2025-02-08-2349-Design-a-Number-Container-System"><a href="#2025-02-08-2349-Design-a-Number-Container-System" class="headerlink" title="2025&#x2F;02&#x2F;08 2349. Design a Number Container System"></a>2025&#x2F;02&#x2F;08 <a target="_blank" rel="noopener" href="https://leetcode.com/problems/design-a-number-container-system/description/?envType=daily-question&envId=2025-02-08">2349. Design a Number Container System</a></h3><ul>
+<li>因為 <code>1 &lt;= index, number &lt;= 109</code> ，需要開一個 hash map，負責記錄該 index 對應到的值，再開另一個 hash map，記錄 value 有哪些 index 指著。<ul>
+<li>Time Complexity $O(n \lg(n))$</li>
+<li>Space Complexity $O(n)$</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">NumberContainers</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">NumberContainers</span>() &#123;&#125;<br><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">change</span><span class="hljs-params">(<span class="hljs-type">int</span> index, <span class="hljs-type">int</span> number)</span> </span>&#123;<br>        <span class="hljs-keyword">if</span>(index_mp.<span class="hljs-built_in">find</span>(index) != index_mp.<span class="hljs-built_in">end</span>())&#123;<br>            value_map[index_mp[index]].<span class="hljs-built_in">erase</span>(index);<br>            value_map[number].<span class="hljs-built_in">erase</span>(index);<br>        &#125;<br>        index_mp[index] = number;<br>        value_map[number].<span class="hljs-built_in">insert</span>(index);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-type">int</span> number)</span> </span>&#123;<br>        <span class="hljs-keyword">if</span>(value_map[number].<span class="hljs-built_in">empty</span>()) <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>        <span class="hljs-keyword">return</span> *value_map[number].<span class="hljs-built_in">begin</span>();<br>    &#125;<br>    unordered_map&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt; index_mp;<br>    unordered_map&lt;<span class="hljs-type">int</span>, set&lt;<span class="hljs-type">int</span>&gt;&gt; value_map;<br>&#125;;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Your NumberContainers object will be instantiated and called as such:</span><br><span class="hljs-comment"> * NumberContainers* obj = new NumberContainers();</span><br><span class="hljs-comment"> * obj-&gt;change(index,number);</span><br><span class="hljs-comment"> * int param_2 = obj-&gt;find(number);</span><br><span class="hljs-comment"> */</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="2025-02-09-2364-Count-Number-of-Bad-Pairs"><a href="#2025-02-09-2364-Count-Number-of-Bad-Pairs" class="headerlink" title="2025&#x2F;02&#x2F;09 2364. Count Number of Bad Pairs"></a>2025&#x2F;02&#x2F;09 <a target="_blank" rel="noopener" href="https://leetcode.com/problems/count-number-of-bad-pairs/description/?envType=daily-question&envId=2025-02-09">2364. Count Number of Bad Pairs</a></h3><ul>
+<li>用 hash map 記錄 index 和 value 的差值有幾個<ul>
+<li>Time Complexity $O(n)$</li>
+<li>Space Complexity $O(n)$</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">long</span> <span class="hljs-type">long</span> <span class="hljs-title">countBadPairs</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>&#123;<br>        <span class="hljs-type">long</span> <span class="hljs-type">long</span> ret = <span class="hljs-number">0</span>;<br>        unordered_map&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt; mp;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;nums.<span class="hljs-built_in">size</span>(); i++)&#123;<br>            ret += i - mp[i - nums[i]];<br>            mp[i - nums[i]]++;<br>        &#125;<br>        <span class="hljs-keyword">return</span> ret;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2025-02-10-3174-Clear-Digits"><a href="#2025-02-10-3174-Clear-Digits" class="headerlink" title="2025&#x2F;02&#x2F;10 3174. Clear Digits"></a>2025&#x2F;02&#x2F;10 <a target="_blank" rel="noopener" href="https://leetcode.com/problems/clear-digits/description/?envType=daily-question&envId=2025-02-10">3174. Clear Digits</a></h3><ul>
+<li>用 Stack 的方式記錄最後要回傳的值<ul>
+<li>Time Complexity $O(n)$</li>
+<li>Space Complexity $O(1)$</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">string <span class="hljs-title">clearDigits</span><span class="hljs-params">(string s)</span> </span>&#123;<br>        string ret;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">char</span>&amp; c:s)&#123;<br>            <span class="hljs-keyword">if</span>(<span class="hljs-built_in">isdigit</span>(c) &amp;&amp; ret.<span class="hljs-built_in">size</span>()) ret.<span class="hljs-built_in">pop_back</span>();<br>            <span class="hljs-keyword">else</span> ret.<span class="hljs-built_in">push_back</span>(c);<br>        &#125;<br>        <span class="hljs-keyword">return</span> ret;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2025-02-11-1910-Remove-All-Occurrences-of-a-Substring"><a href="#2025-02-11-1910-Remove-All-Occurrences-of-a-Substring" class="headerlink" title="2025&#x2F;02&#x2F;11 1910. Remove All Occurrences of a Substring"></a>2025&#x2F;02&#x2F;11 <a target="_blank" rel="noopener" href="https://leetcode.com/problems/remove-all-occurrences-of-a-substring/description/?envType=daily-question&envId=2025-02-11">1910. Remove All Occurrences of a Substring</a></h3><blockquote>
+<p>快忘記 substr 和 find 怎麼用了</p>
+</blockquote>
+<ul>
+<li>用 <code>string.substr()</code> 每次都往前檢查，找到就刪掉<ul>
+<li>Time Complexity $O(n^2)$</li>
+<li>Space Complexity $O(1)$</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">string <span class="hljs-title">removeOccurrences</span><span class="hljs-params">(string s, string part)</span> </span>&#123;<br>        string ret;<br>        <span class="hljs-type">int</span> n = part.<span class="hljs-built_in">size</span>();<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">char</span>&amp; c:s)&#123;<br>            ret.<span class="hljs-built_in">push_back</span>(c);<br>            <span class="hljs-keyword">if</span>(ret.<span class="hljs-built_in">size</span>() &gt;= n &amp;&amp; ret.<span class="hljs-built_in">substr</span>(ret.<span class="hljs-built_in">size</span>() - n) == part)<br>                ret.<span class="hljs-built_in">erase</span>(ret.<span class="hljs-built_in">size</span>() - n, n);<br>        &#125;<br>        <span class="hljs-keyword">return</span> ret;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>用 <code>string.find()</code> 來檢查，可以更簡短<ul>
+<li>Time Complexity $O(n^2)$</li>
+<li>Space Complexity $O(1)$</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">string <span class="hljs-title">removeOccurrences</span><span class="hljs-params">(string s, string part)</span> </span>&#123;<br>        <span class="hljs-type">int</span> idx = s.<span class="hljs-built_in">find</span>(part);<br>        <span class="hljs-keyword">while</span>(idx != string::npos)&#123;<br>            s.<span class="hljs-built_in">erase</span>(idx, part.<span class="hljs-built_in">size</span>());<br>            idx = s.<span class="hljs-built_in">find</span>(part);<br>        &#125;<br>        <span class="hljs-keyword">return</span> s;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2025-02-12-2342-Max-Sum-of-a-Pair-With-Equal-Sum-of-Digits"><a href="#2025-02-12-2342-Max-Sum-of-a-Pair-With-Equal-Sum-of-Digits" class="headerlink" title="2025&#x2F;02&#x2F;12 2342. Max Sum of a Pair With Equal Sum of Digits"></a>2025&#x2F;02&#x2F;12 <a target="_blank" rel="noopener" href="https://leetcode.com/problems/max-sum-of-a-pair-with-equal-sum-of-digits/description/?envType=daily-question&envId=2025-02-12">2342. Max Sum of a Pair With Equal Sum of Digits</a></h3><ul>
+<li>記錄曾經算出的最大值 <code>acc</code> 就好<ul>
+<li>Time Complexity $O(n)$</li>
+<li>Space Complexity $O(n)$</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">maximumSum</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>&#123;<br>        unordered_map&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt; mp;<br>        <span class="hljs-type">int</span> res = <span class="hljs-number">-1</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span>&amp; n:nums)&#123;<br>            <span class="hljs-type">int</span> acc = <span class="hljs-number">0</span>, n_cpy = n;<br>            <span class="hljs-keyword">while</span>(n_cpy)&#123;<br>                acc += n_cpy%<span class="hljs-number">10</span>;<br>                n_cpy /= <span class="hljs-number">10</span>;<br>            &#125;<br>            <span class="hljs-keyword">if</span>(mp.<span class="hljs-built_in">find</span>(acc) != mp.<span class="hljs-built_in">end</span>())<br>                res = <span class="hljs-built_in">max</span>(res, mp[acc] + n);<br>            mp[acc] = <span class="hljs-built_in">max</span>(mp[acc], n);<br>        &#125;<br>        <span class="hljs-keyword">return</span> res;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2025-02-13-3066-Minimum-Operations-to-Exceed-Threshold-Value-II"><a href="#2025-02-13-3066-Minimum-Operations-to-Exceed-Threshold-Value-II" class="headerlink" title="2025&#x2F;02&#x2F;13 3066. Minimum Operations to Exceed Threshold Value II"></a>2025&#x2F;02&#x2F;13 <a target="_blank" rel="noopener" href="https://leetcode.com/problems/minimum-operations-to-exceed-threshold-value-ii/description/?envType=daily-question&envId=2025-02-13">3066. Minimum Operations to Exceed Threshold Value II</a></h3><ul>
+<li>用 <code>heap</code> 來記錄最小的值<ul>
+<li>Time Complexity $O(n\lg{n})$</li>
+<li>Space Complexity $O(n)$</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">minOperations</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums, <span class="hljs-type">int</span> k)</span> </span>&#123;<br>        priority_queue&lt;<span class="hljs-type">long</span> <span class="hljs-type">long</span>, vector&lt;<span class="hljs-type">long</span> <span class="hljs-type">long</span>&gt;, greater&lt;<span class="hljs-type">long</span> <span class="hljs-type">long</span>&gt;&gt; <span class="hljs-built_in">pq</span>(nums.<span class="hljs-built_in">begin</span>(), nums.<span class="hljs-built_in">end</span>());<br>        <span class="hljs-type">int</span> ret = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">while</span>(!pq.<span class="hljs-built_in">empty</span>())&#123;<br>            <span class="hljs-type">long</span> <span class="hljs-type">long</span> a = pq.<span class="hljs-built_in">top</span>();<br>            pq.<span class="hljs-built_in">pop</span>();<br>            <span class="hljs-keyword">if</span>(a &gt;= k) <span class="hljs-keyword">break</span>;<br>            <span class="hljs-type">long</span> <span class="hljs-type">long</span> b = pq.<span class="hljs-built_in">top</span>();<br>            pq.<span class="hljs-built_in">pop</span>();<br>            pq.<span class="hljs-built_in">push</span>(<span class="hljs-built_in">min</span>(a, b) * <span class="hljs-number">2</span> + <span class="hljs-built_in">max</span>(a, b));<br>            ret++;<br>        &#125;<br>        <span class="hljs-keyword">return</span> ret;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2025-02-14-1352-Product-of-the-Last-K-Numbers"><a href="#2025-02-14-1352-Product-of-the-Last-K-Numbers" class="headerlink" title="2025&#x2F;02&#x2F;14 1352. Product of the Last K Numbers"></a>2025&#x2F;02&#x2F;14 <a target="_blank" rel="noopener" href="https://leetcode.com/problems/product-of-the-last-k-numbers/description/?envType=daily-question&envId=2025-02-14">1352. Product of the Last K Numbers</a></h3><ul>
+<li>儲存最後是 0 的 idx，在 <code>getProduct</code> 的時候才不會除以 <code>0</code>。另外我原本是把 <code> v.size()</code> 直接寫在 <code>if</code> 裡面，後來發現 <code>v.size()</code> 是 <code>unsigned</code> 的型態，算出負數會發生 <code>runtime error</code>。 <ul>
+<li>Time Complexity $O(n)$</li>
+<li>Space Complexity $O(n)$</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">ProductOfNumbers</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">ProductOfNumbers</span>() &#123; &#125;<br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-type">int</span> num)</span> </span>&#123;<br>        <span class="hljs-keyword">if</span>(num == <span class="hljs-number">0</span>)&#123;<br>            v.<span class="hljs-built_in">clear</span>();<br>            v.<span class="hljs-built_in">push_back</span>(<span class="hljs-number">1</span>);<br>            lastIdx = v.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>;<br>        &#125;<span class="hljs-keyword">else</span>&#123;<br>            v.<span class="hljs-built_in">push_back</span>(v.<span class="hljs-built_in">back</span>() * num);<br>        &#125;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">getProduct</span><span class="hljs-params">(<span class="hljs-type">int</span> k)</span> </span>&#123;<br>        <span class="hljs-type">int</span> sz = v.<span class="hljs-built_in">size</span>();<br>        <span class="hljs-keyword">if</span>(sz - <span class="hljs-number">1</span> - k &lt; lastIdx) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">return</span> v.<span class="hljs-built_in">back</span>() / v[sz - <span class="hljs-number">1</span> - k];<br>    &#125;<br>    vector&lt;<span class="hljs-type">int</span>&gt; v&#123;<span class="hljs-number">1</span>&#125;;<br>    <span class="hljs-type">int</span> lastIdx = <span class="hljs-number">0</span>;<br>&#125;;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Your ProductOfNumbers object will be instantiated and called as such:</span><br><span class="hljs-comment"> * ProductOfNumbers* obj = new ProductOfNumbers();</span><br><span class="hljs-comment"> * obj-&gt;add(num);</span><br><span class="hljs-comment"> * int param_2 = obj-&gt;getProduct(k);</span><br><span class="hljs-comment"> */</span><br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/notes/tags/leetcode/" class="print-no-link">#leetcode</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>不知道這會持續幾天的 leetcode daily</div>
+      <div>https://933yee.github.io/notes/2025/01/31/leetcode-daily/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Kevin Lee</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>January 31, 2025</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/notes/2025/02/01/japanese-2/" title="日語筆記 - 單字">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">日語筆記 - 單字</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/notes/2025/01/31/leetcode/" title="不知道這會持續幾天的 leetcode">
+                        <span class="hidden-mobile">不知道這會持續幾天的 leetcode</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/notes/js/events.js" ></script>
+<script  src="/notes/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/notes/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/notes/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/notes/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
