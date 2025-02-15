@@ -519,3 +519,52 @@ var timeLimit = function(fn, t) {
  * limited(150).catch(console.log) // "Time Limit Exceeded" at t=100ms
  */
 ```
+
+### [2622. Cache With Time Limit](https://leetcode.com/problems/cache-with-time-limit/description/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+在 js 中，用 `Function.prototype` 的方式可以宣告這個物件裡面包含的函式，像這題就宣告了 `get`、`set`、`count`
+
+```js
+var TimeLimitedCache = function() {
+    this.cache = {};
+};
+
+/** 
+ * @param {number} key
+ * @param {number} value
+ * @param {number} duration time until expiration in ms
+ * @return {boolean} if un-expired key already existed
+ */
+TimeLimitedCache.prototype.set = function(key, value, duration) {
+    let ret = this.cache[key] != undefined;
+    if(this.cache[key] != undefined)
+        clearTimeout(this.cache[key].timer);
+    else
+        this.cache[key] = {};
+    this.cache[key].val = value;
+    this.cache[key].timer = setTimeout(() => {delete this.cache[key]}, duration);
+    return ret;
+};
+
+/** 
+ * @param {number} key
+ * @return {number} value associated with key
+ */
+TimeLimitedCache.prototype.get = function(key) {
+    return this.cache[key] != undefined ? this.cache[key].val : -1;
+};
+
+/** 
+ * @return {number} count of non-expired keys
+ */
+TimeLimitedCache.prototype.count = function() {
+    return Object.keys(this.cache).length;
+};
+
+/**
+ * const timeLimitedCache = new TimeLimitedCache()
+ * timeLimitedCache.set(1, 42, 1000); // false
+ * timeLimitedCache.get(1) // 42
+ * timeLimitedCache.count() // 1
+ */
+```
