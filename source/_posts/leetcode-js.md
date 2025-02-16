@@ -568,3 +568,71 @@ TimeLimitedCache.prototype.count = function() {
  * timeLimitedCache.count() // 1
  */
 ```
+
+
+### [2627. Debounce](https://leetcode.com/problems/debounce/description/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+- 沒什麼特別的
+
+```js
+/**
+ * @param {Function} fn
+ * @param {number} t milliseconds
+ * @return {Function}
+ */
+var debounce = function(fn, t) {
+    let timer;
+    return function(...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => fn(...args), t);
+    }
+};
+
+/**
+ * const log = debounce(console.log, 100);
+ * log('Hello'); // cancelled
+ * log('Hello'); // cancelled
+ * log('Hello'); // Logged at t=100ms
+ */
+```
+
+### [2721. Execute Asynchronous Functions in Parallel](https://leetcode.com/problems/execute-asynchronous-functions-in-parallel/description/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+好難阿，題目規定不能用 `Promise.all`，要注意回傳的順序，還要確保所有 `Promise` 已經做完。
+
+
+```js
+/**
+ * @param {Array<Function>} functions
+ * @return {Promise<any>}
+ */
+var promiseAll = function(functions) {
+    return new Promise((resolve, reject) => {
+        let res = [];
+        let count = 0;
+        functions.map((fn, idx) => {
+            fn()
+            .then(ret=> {
+                res[idx] = ret;
+                count++;
+                if(count == functions.length)
+                     resolve(res);
+            })
+            .catch(error => reject(error));
+        });
+    });
+};
+
+/**
+ * const promise = promiseAll([() => new Promise(res => res(42))])
+ * promise.then(console.log); // [42]
+ */
+
+```
+
+- 如果可以用 `Promise.all`
+  ```js
+  var promiseAll = (functions) => (
+      Promise.all(functions.map(fn=>fn()))
+  );
+  ```

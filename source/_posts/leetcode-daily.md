@@ -385,3 +385,74 @@ public:
  * int param_2 = obj->getProduct(k);
  */
 ```
+
+
+### 2025/02/15 [2698. Find the Punishment Number of an Integer](https://leetcode.com/problems/find-the-punishment-number-of-an-integer/description/?envType=daily-question&envId=2025-02-15)
+
+暴力 DFS + 剪枝
+
+```cpp
+class Solution {
+public:
+    bool dfs(int cur, int n, int sum){
+        if(cur == 0) return sum == n;
+        for(int i = 10; i <= 1000000; i *= 10){
+            if(dfs(cur / i, n, sum + cur % i))
+                return true;
+        }
+        return false;
+    }
+
+    int punishmentNumber(int n) {
+        int res = 0;
+        for(int i = 1; i <= n; i++){
+            if(dfs(i * i, i, 0))
+                res += i * i;
+        }
+        return res;
+    }
+};
+```
+
+
+### 2025/02/16 [1718. Construct the Lexicographically Largest Valid Sequence](https://leetcode.com/problems/construct-the-lexicographically-largest-valid-sequence/description/?envType=daily-question&envId=2025-02-16)
+
+暴力 DFS + 剪枝，每次放 2~n 的數字進 `vector` 時，可以一起更新 `idx + i` 的值，因為也只能放那邊
+
+```cpp
+class Solution {
+public:
+    vector<int> v, used;
+    bool dfs(int n, int idx){
+        if(v.size() == idx)
+            return true;
+        if(v[idx] != 0)
+            return dfs(n, idx+1);
+        for(int i=n; i>=1; i--){
+            if(!used[i]){
+                used[i] = true;
+                if(i == 1){
+                    v[idx] = 1;
+                    if(dfs(n, idx+1))
+                        return true;
+                    v[idx] = 0;
+                }else if(idx + i < v.size() && v[idx + i] == 0){
+                    v[idx] = v[idx + i] = i;
+                    if(dfs(n, idx+1))
+                        return true;
+                    v[idx] = v[idx + i] = 0;
+                }
+                used[i] = false;
+            }
+        }
+        return false;
+    }
+
+    vector<int> constructDistancedSequence(int n) {
+        used.resize(n+1, false);
+        v.resize(n*2-1, 0);
+        dfs(n, 0);
+        return v;
+    }
+};
+```
