@@ -636,3 +636,27 @@ var promiseAll = function(functions) {
       Promise.all(functions.map(fn=>fn()))
   );
   ```
+
+
+### [2727. Is Object Empty](https://leetcode.com/problems/is-object-empty/description/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+一開始最直覺的方法，直接轉成 `Array` 算 `length`，`Array` 也是 `Object` 的一種，所以不用管 `obj` 是不是 `Array`
+
+```js
+/**
+ * @param {Object|Array} obj
+ * @return {boolean}
+ */
+var isEmpty = function(obj) {
+    return Object.keys(obj).length == 0;
+};
+```
+
+更簡單的方法
+
+```js
+var isEmpty = function(obj) {
+    for (const _ in obj) return false;
+    return true;
+};
+```

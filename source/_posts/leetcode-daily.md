@@ -456,3 +456,31 @@ public:
     }
 };
 ```
+
+### 2025/02/17 [1079. Letter Tile Possibilities](https://leetcode.com/problems/letter-tile-possibilities/description/?envType=daily-question&envId=2025-02-17)
+
+DFS，要加個 `seen` 確保不要在同個地方看同個字母，還有每次準備跑下個 `dfs()` 之前答案都要 `+1`
+
+```cpp
+class Solution {
+public:
+    int used[8] = {};
+    int dfs(string& s, int cnt){
+        if(cnt == s.size()) return 0;
+        int seen[26] = {};
+        int res = 0;
+        for(int i=0; i<s.size(); i++){
+            if(!used[i] && !seen[s[i] - 'A']){
+                used[i] = 1;
+                seen[s[i] - 'A'] = 1;
+                res += 1 + dfs(s, cnt + 1);
+                used[i] = 0;
+            }
+        }
+        return res;
+    }
+    int numTilePossibilities(string tiles) {
+        return dfs(tiles, 0);
+    }
+};
+```

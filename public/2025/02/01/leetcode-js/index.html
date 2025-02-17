@@ -24,7 +24,7 @@
 <meta property="og:description" content="沒在 leetcode 寫過 js 耶，酷  2667. Create Hello World Function 了解 closure 的概念就好  12345678910111213&#x2F;** * @return &#123;Function&#125; *&#x2F;var createHelloWorld &#x3D; function () &#123;  return function (...args) &amp;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-02-01T15:48:41.000Z">
-<meta property="article:modified_time" content="2025-02-16T13:58:36.307Z">
+<meta property="article:modified_time" content="2025-02-17T13:10:58.152Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary_large_image">
@@ -220,7 +220,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.8k words
+          1.9k words
         
       </span>
     
@@ -422,7 +422,11 @@
 <ul>
 <li>如果可以用 <code>Promise.all</code><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> <span class="hljs-title function_">promiseAll</span> = (<span class="hljs-params">functions</span>) =&gt; (<br>    <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">all</span>(functions.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">fn</span>=&gt;</span><span class="hljs-title function_">fn</span>()))<br>);<br></code></pre></td></tr></table></figure></li>
 </ul>
+<h3 id="2727-Is-Object-Empty"><a href="#2727-Is-Object-Empty" class="headerlink" title="2727. Is Object Empty"></a><a target="_blank" rel="noopener" href="https://leetcode.com/problems/is-object-empty/description/?envType=study-plan-v2&envId=30-days-of-javascript">2727. Is Object Empty</a></h3><p>一開始最直覺的方法，直接轉成 <code>Array</code> 算 <code>length</code>，<code>Array</code> 也是 <code>Object</code> 的一種，所以不用管 <code>obj</code> 是不是 <code>Array</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">Object|Array</span>&#125; <span class="hljs-variable">obj</span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-type">boolean</span>&#125;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">var</span> isEmpty = <span class="hljs-keyword">function</span>(<span class="hljs-params">obj</span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(obj).<span class="hljs-property">length</span> == <span class="hljs-number">0</span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
+<p>更簡單的方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> isEmpty = <span class="hljs-keyword">function</span>(<span class="hljs-params">obj</span>) &#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> _ <span class="hljs-keyword">in</span> obj) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
                 
               </div>
             
