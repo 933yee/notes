@@ -91,3 +91,66 @@ math: true
   - Data augmentation
     根據理解創造出新的資料，ex: 翻轉圖片、放大圖片等
   - 限制模型，不要讓他彈性那麼大，ex: 減少 `Feature`、減少 `Parameter`、Sharing Parameter、Early Stopping、Regularization、Dropout 等
+
+## 類神經網路訓練不起來
+
+###　卡在 `Critical Point`
+- `Local Minimum`
+- `Saddle Point`
+
+![Saddle Point](https://media.geeksforgeeks.org/wp-content/uploads/20240829080037/Saddle-Points-02.webp)
+
+### 泰勒展開式
+
+對於 $L(\theta)$，在 $\theta = \theta^\prime$ 可以被近似為：
+
+$$
+L(\theta) \approx L(\theta^\prime) + (\theta - \theta^\prime)^T \cdot g + \frac{1}{2}(\theta - \theta^\prime)^T \cdot H \cdot (\theta - \theta^\prime)
+$$
+
+- $g$ 為 Gradient Vector，$g = \nabla L(\theta^\prime)$ 
+- $H$ 為 Hessian Matrix，$H = \nabla^2 L(\theta^\prime)$
+
+當走到 `Critical Point` 時，Gradient 會等於 0，所以可以得到：
+
+$$
+L(\theta) \approx L(\theta^\prime) + \frac{1}{2}(\theta - \theta^\prime)^T \cdot H \cdot (\theta - \theta^\prime)
+$$
+
+因此可以利用 `Hessian Matrix` 來判斷是 `Local Minimum` 、 `Local Maximum` 還是 `Saddle Point`
+
+- 當 $\frac{1}{2}(\theta - \theta^\prime)^T \cdot H \cdot (\theta - \theta^\prime) > 0$ 時，可以知道任何在 $\theta^\prime$ 附近的 $\theta$，$L(\theta) > L(\theta^\prime)$ ，所以 $L(\theta^\prime)$ 是 `Local Minimum`
+- 當 $\frac{1}{2}(\theta - \theta^\prime)^T \cdot H \cdot (\theta - \theta^\prime) < 0$ 時，可以知道任何在 $\theta^\prime$ 附近的 $\theta$，$L(\theta) < L(\theta^\prime)$ ，所以 $L(\theta^\prime)$ 是 `Local Maximum`
+- 當 $\frac{1}{2}(\theta - \theta^\prime)^T \cdot H \cdot (\theta - \theta^\prime)$ 有時候大於 0 有時候小於 0 時， $\theta^\prime$ 是 `Saddle Point`
+
+基於線性代數的知識，可以知道 `Hessian Matrix` 是 `Symmetric Matrix`，所以可以透過 `Eigenvalue` 來判斷是 `Local Minimum` 、 `Local Maximum` 還是 `Saddle Point`
+
+- 當 `Hessian Matrix` 的 `Eigenvalue` 全部大於 0 時，是 `Local Minimum`
+- 當 `Hessian Matrix` 的 `Eigenvalue` 全部小於 0 時，是 `Local Maximum`
+- 當 `Hessian Matrix` 的 `Eigenvalue` 有正有負時，是 `Saddle Point`
+  
+
+如果是 `Saddle Point`，可以透過 Hessian Matrix 來判斷出 Loss 更小的方向，然後往那個方向走：
+
+$$
+L(\theta) \approx L(\theta^\prime) + \frac{1}{2}(\theta - \theta^\prime)^T \cdot H \cdot (\theta - \theta^\prime)
+$$
+
+假設 $u$ 是 `Hessian Matrix` 的 `Eigen vector`，$\lambda$ 是 `Eigen value`，可以得到：
+
+$$
+u^T \cdot H \cdot u = u^T \cdot (\lambda \cdot u) = \lambda \lVert u \rVert^2
+$$
+
+當 $(\theta - \theta^\prime) = u$ 且 $\lambda < 0$ 時：
+
+$$
+\frac{1}{2}(\theta - \theta^\prime)^T \cdot H \cdot (\theta - \theta^\prime) = \frac{1}{2}u^T \cdot H \cdot u = \frac{1}{2}\lambda \lVert u \rVert^2 < 0
+$$
+
+可以知道 $L(\theta) < L(\theta^\prime)$。因此如果讓 $\theta^\prime$ 往 $u$ 的方向走，$\theta^\prime + u = \theta$，可以得到更小 Loss 的 $\theta$。
+
+
+這只是一種解法，在實作上計算量很大，沒有人會這樣做。
+
+此外，實際上 `Local minimum` 並不常見，Loss 下不去常常是卡在 `Saddle Point`。
