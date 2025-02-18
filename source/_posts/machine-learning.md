@@ -95,6 +95,7 @@ math: true
 ## 類神經網路訓練不起來
 
 ###　卡在 `Critical Point`
+
 - `Local Minimum`
 - `Saddle Point`
 
@@ -108,7 +109,7 @@ $$
 L(\theta) \approx L(\theta^\prime) + (\theta - \theta^\prime)^T \cdot g + \frac{1}{2}(\theta - \theta^\prime)^T \cdot H \cdot (\theta - \theta^\prime)
 $$
 
-- $g$ 為 Gradient Vector，$g = \nabla L(\theta^\prime)$ 
+- $g$ 為 Gradient Vector，$g = \nabla L(\theta^\prime)$
 - $H$ 為 Hessian Matrix，$H = \nabla^2 L(\theta^\prime)$
 
 當走到 `Critical Point` 時，Gradient 會等於 0，所以可以得到：
@@ -128,7 +129,6 @@ $$
 - 當 `Hessian Matrix` 的 `Eigenvalue` 全部大於 0 時，是 `Local Minimum`
 - 當 `Hessian Matrix` 的 `Eigenvalue` 全部小於 0 時，是 `Local Maximum`
 - 當 `Hessian Matrix` 的 `Eigenvalue` 有正有負時，是 `Saddle Point`
-  
 
 如果是 `Saddle Point`，可以透過 Hessian Matrix 來判斷出 Loss 更小的方向，然後往那個方向走：
 
@@ -150,7 +150,48 @@ $$
 
 可以知道 $L(\theta) < L(\theta^\prime)$。因此如果讓 $\theta^\prime$ 往 $u$ 的方向走，$\theta^\prime + u = \theta$，可以得到更小 Loss 的 $\theta$。
 
-
 這只是一種解法，在實作上計算量很大，沒有人會這樣做。
 
 此外，實際上 `Local minimum` 並不常見，Loss 下不去常常是卡在 `Saddle Point`。
+
+### 為什麼要用 Batch
+
+- Batch size = N(Full Batch)
+
+  - 一次拿所有資料去算 Gradient
+  - 每一次的 Gradient 都很穩定
+  - 理論上花的時間比較多，但考慮到平行運算，若以 epoch 為單位，實際上可能更快
+
+- Batch size = 1
+  - 一次只拿一筆資料去算 Gradient
+  - 每一次的 Gradient 都很不穩定，可能會跳來跳去
+
+![Different Batch Size](./images/machine-learning/diff-bacth-size.png)
+
+既然時間差不多，乍看之下 Batch Size 大一點比較好，但實際上小的 Batch Size 可能會有更好的訓練效果
+
+![Different Batch Size](./images/machine-learning/diff-bacth-size-2.png)
+
+上圖可以看到小的 Batch Size Optimization 的效果會比較好
+
+|                            | Batch Size 小 |       Batch Size 大       |
+| :------------------------: | :-----------: | :-----------------------: |
+| 每次 update (沒有平行運算) |      快       |            慢             |
+|  每次 update (有平行運算)  |     一樣      | 一樣 (在不是超大的情況下) |
+|         每個 epoch         |      慢       |            快             |
+|     Gradient 的穩定性      |      差       |           穩定            |
+|    Optimization 的效果     |      好       |            差             |
+
+### Momentum
+
+- 一般的 Gradient Descent
+
+  - $\theta_{t+1} = \theta_t - \eta \cdot \nabla L(\theta_t)$
+
+- Momentum
+
+  - $\theta_{t+1} = \theta_t - \eta \cdot \nabla L(\theta_t) + \gamma \cdot (\theta_t - \theta_{t-1})$
+
+    - $\gamma$ 為 `Momentum`，通常設為 0.9
+
+![Momentum](https://i.imgur.com/DdabCqX.png)
