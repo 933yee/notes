@@ -660,3 +660,45 @@ var isEmpty = function(obj) {
     return true;
 };
 ```
+
+### [2677. Chunk Array](https://leetcode.com/problems/chunk-array/description/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+> 我只會這種醜醜 code qq
+
+
+```js
+/**
+ * @param {Array} arr
+ * @param {number} size
+ * @return {Array}
+ */
+var chunk = function(arr, size) {
+    let ret = [];
+    let cnt = -1;
+    for(let i=0; i<arr.length; i++){
+        if(i % size == 0) {
+            ret.push([]);
+            cnt++;
+        }
+        ret[cnt].push(arr[i]);
+    }
+    return ret;
+};
+
+```
+
+
+- 更簡潔的寫法
+
+  - `Array.slice()` 會回傳一個新的陣列，不會改變原本的陣列
+
+  ```js
+  let chunk = function(arr, size) {
+      let ret = [];
+      for(let i=0; i<arr.length; i+=size)
+          ret.push(arr.slice(i, i+size));
+      return ret;
+  };
+  ```
+
+  `arr.slice` 會回傳 `[i, i+size)` 的陣列，不用擔心 `i+size` 超過 `arr.length` 的問題，因為 `slice` 會自動調整

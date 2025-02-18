@@ -484,3 +484,36 @@ public:
     }
 };
 ```
+
+### 2025/02/18 [2375. Construct Smallest Number From DI String](https://leetcode.com/problems/construct-smallest-number-from-di-string/description/?envType=daily-question&envId=2025-02-18)
+
+DFS，跟前一天差不多
+
+```cpp
+class Solution {
+public:
+    string res;
+    int used[10] = {};
+    bool dfs(string& pattern, int cnt){
+        if(cnt == pattern.size() + 1) return true;
+        for(int i=1; i<=pattern.size() + 1; i++){
+            if(!used[i]){
+                if(cnt >= 1 && pattern[cnt-1] == 'I' && (res.back() - '0') >= i) continue;
+                if(cnt >= 1 && pattern[cnt-1] == 'D' && (res.back() - '0') <= i) continue;
+                used[i] = 1;
+                res.push_back(i + '0');
+                if(dfs(pattern, cnt + 1))
+                    return true;
+                res.pop_back();
+                used[i] = 0;
+            }
+        }
+        return false;
+    }
+
+    string smallestNumber(string pattern) {
+        dfs(pattern, 0);
+        return res;
+    }
+};
+```
