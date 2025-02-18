@@ -29,8 +29,11 @@
 <meta property="og:image" content="https://miro.medium.com/v2/resize:fit:1400/1*KmNACQdl5FvoXvQt5n41nQ.png">
 <meta property="og:image" content="https://miro.medium.com/v2/resize:fit:1400/1*Rl5VIRnXCJbvR6e6cTsZcg.png">
 <meta property="og:image" content="https://media.geeksforgeeks.org/wp-content/uploads/20240829080037/Saddle-Points-02.webp">
+<meta property="og:image" content="https://933yee.github.io/notes/images/machine-learning/diff-bacth-size.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/machine-learning/diff-bacth-size-2.png">
+<meta property="og:image" content="https://i.imgur.com/DdabCqX.png">
 <meta property="article:published_time" content="2025-02-12T05:22:11.000Z">
-<meta property="article:modified_time" content="2025-02-17T18:32:26.600Z">
+<meta property="article:modified_time" content="2025-02-18T16:08:29.100Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="ml">
 <meta name="twitter:card" content="summary_large_image">
@@ -227,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.2k words
+          1.4k words
         
       </span>
     
@@ -238,7 +241,7 @@
         
         
         
-          10 mins
+          12 mins
         
       </span>
     
@@ -381,7 +384,7 @@
 <h3 id="泰勒展開式"><a href="#泰勒展開式" class="headerlink" title="泰勒展開式"></a>泰勒展開式</h3><p>對於 $L(\theta)$，在 $\theta &#x3D; \theta^\prime$ 可以被近似為：</p>
 <p>$$<br>L(\theta) \approx L(\theta^\prime) + (\theta - \theta^\prime)^T \cdot g + \frac{1}{2}(\theta - \theta^\prime)^T \cdot H \cdot (\theta - \theta^\prime)<br>$$</p>
 <ul>
-<li>$g$ 為 Gradient Vector，$g &#x3D; \nabla L(\theta^\prime)$ </li>
+<li>$g$ 為 Gradient Vector，$g &#x3D; \nabla L(\theta^\prime)$</li>
 <li>$H$ 為 Hessian Matrix，$H &#x3D; \nabla^2 L(\theta^\prime)$</li>
 </ul>
 <p>當走到 <code>Critical Point</code> 時，Gradient 會等於 0，所以可以得到：</p>
@@ -407,6 +410,76 @@
 <p>可以知道 $L(\theta) &lt; L(\theta^\prime)$。因此如果讓 $\theta^\prime$ 往 $u$ 的方向走，$\theta^\prime + u &#x3D; \theta$，可以得到更小 Loss 的 $\theta$。</p>
 <p>這只是一種解法，在實作上計算量很大，沒有人會這樣做。</p>
 <p>此外，實際上 <code>Local minimum</code> 並不常見，Loss 下不去常常是卡在 <code>Saddle Point</code>。</p>
+<h3 id="為什麼要用-Batch"><a href="#為什麼要用-Batch" class="headerlink" title="為什麼要用 Batch"></a>為什麼要用 Batch</h3><ul>
+<li><p>Batch size &#x3D; N(Full Batch)</p>
+<ul>
+<li>一次拿所有資料去算 Gradient</li>
+<li>每一次的 Gradient 都很穩定</li>
+<li>理論上花的時間比較多，但考慮到平行運算，若以 epoch 為單位，實際上可能更快</li>
+</ul>
+</li>
+<li><p>Batch size &#x3D; 1</p>
+<ul>
+<li>一次只拿一筆資料去算 Gradient</li>
+<li>每一次的 Gradient 都很不穩定，可能會跳來跳去</li>
+</ul>
+</li>
+</ul>
+<p><img src="/notes/./images/machine-learning/diff-bacth-size.png" srcset="/notes/info/loading.gif" lazyload alt="Different Batch Size"></p>
+<p>既然時間差不多，乍看之下 Batch Size 大一點比較好，但實際上小的 Batch Size 可能會有更好的訓練效果</p>
+<p><img src="/notes/./images/machine-learning/diff-bacth-size-2.png" srcset="/notes/info/loading.gif" lazyload alt="Different Batch Size"></p>
+<p>上圖可以看到小的 Batch Size Optimization 的效果會比較好</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">Batch Size 小</th>
+<th align="center">Batch Size 大</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">每次 update (沒有平行運算)</td>
+<td align="center">快</td>
+<td align="center">慢</td>
+</tr>
+<tr>
+<td align="center">每次 update (有平行運算)</td>
+<td align="center">一樣</td>
+<td align="center">一樣 (在不是超大的情況下)</td>
+</tr>
+<tr>
+<td align="center">每個 epoch</td>
+<td align="center">慢</td>
+<td align="center">快</td>
+</tr>
+<tr>
+<td align="center">Gradient 的穩定性</td>
+<td align="center">差</td>
+<td align="center">穩定</td>
+</tr>
+<tr>
+<td align="center">Optimization 的效果</td>
+<td align="center">好</td>
+<td align="center">差</td>
+</tr>
+</tbody></table>
+<h3 id="Momentum"><a href="#Momentum" class="headerlink" title="Momentum"></a>Momentum</h3><ul>
+<li><p>一般的 Gradient Descent</p>
+<ul>
+<li>$\theta_{t+1} &#x3D; \theta_t - \eta \cdot \nabla L(\theta_t)$</li>
+</ul>
+</li>
+<li><p>Momentum</p>
+<ul>
+<li><p>$\theta_{t+1} &#x3D; \theta_t - \eta \cdot \nabla L(\theta_t) + \gamma \cdot (\theta_t - \theta_{t-1})$</p>
+<ul>
+<li>$\gamma$ 為 <code>Momentum</code>，通常設為 0.9</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.imgur.com/DdabCqX.png" srcset="/notes/info/loading.gif" lazyload alt="Momentum"></p>
 
                 
               </div>
