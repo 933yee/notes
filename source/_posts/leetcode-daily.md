@@ -352,7 +352,7 @@ public:
 
 ### 2025/02/14 [1352. Product of the Last K Numbers](https://leetcode.com/problems/product-of-the-last-k-numbers/description/?envType=daily-question&envId=2025-02-14)
 
-- 儲存最後是 0 的 idx，在 `getProduct` 的時候才不會除以 `0`。另外我原本是把 ` v.size()` 直接寫在 `if` 裡面，後來發現 `v.size()` 是 `unsigned` 的型態，算出負數會發生 `runtime error`。 
+- 儲存最後是 0 的 idx，在 `getProduct` 的時候才不會除以 `0`。另外我原本是把 ` v.size()` 直接寫在 `if` 裡面，後來發現 `v.size()` 是 `unsigned` 的型態，算出負數會發生 `runtime error`。
   - Time Complexity $O(n)$
   - Space Complexity $O(n)$
 
@@ -386,7 +386,6 @@ public:
  */
 ```
 
-
 ### 2025/02/15 [2698. Find the Punishment Number of an Integer](https://leetcode.com/problems/find-the-punishment-number-of-an-integer/description/?envType=daily-question&envId=2025-02-15)
 
 暴力 DFS + 剪枝
@@ -413,7 +412,6 @@ public:
     }
 };
 ```
-
 
 ### 2025/02/16 [1718. Construct the Lexicographically Largest Valid Sequence](https://leetcode.com/problems/construct-the-lexicographically-largest-valid-sequence/description/?envType=daily-question&envId=2025-02-16)
 
@@ -516,4 +514,100 @@ public:
         return res;
     }
 };
+```
+
+### 2025/02/19 [1415. The k-th Lexicographical String of All Happy Strings of Length n](https://leetcode.com/problems/the-k-th-lexicographical-string-of-all-happy-strings-of-length-n/description/?envType=daily-question&envId=2025-02-19)
+
+DFS，確保不要重複，且在找到第 k 個時就可以直接 return
+
+```cpp
+class Solution {
+public:
+    string str = "abc";
+    bool dfs(int& n, int& k, int& k_cnt, string& ret){
+        if(ret.size() == n){
+            k_cnt++;
+            return k_cnt == k;
+        }
+
+        for(char& c:str){
+            if(!ret.empty() && ret.back() == c) continue;
+            ret.push_back(c);
+            if(dfs(n, k, k_cnt, ret))
+                return true;
+            ret.pop_back();
+        }
+        return false;
+    }
+
+    string getHappyString(int n, int k) {
+        string ret;
+        int k_cnt = 0;
+        dfs(n, k, k_cnt, ret);
+        return ret;
+    }
+};
+```
+
+#### 2025/02/20 [1980. Find Unique Binary String](https://leetcode.com/problems/find-unique-binary-string/description/?envType=daily-question&envId=2025-02-20)
+
+`n` 最大到 16，應該也可以窮舉。這裡是直接讓每個 `num` 在不同位置至少有一個不同的位元，就能確保不會有重複的字串。
+
+```cpp
+class Solution {
+public:
+    string findDifferentBinaryString(vector<string>& nums) {
+        string res;
+        for (int i = 0; i < nums.size(); i++) {
+            if (nums[i][i] == '0')
+                res.push_back('1');
+            else
+                res.push_back('0');
+        }
+        return res;
+    }
+};
+
+```
+
+#### 2025/02/21 [1261. Find Elements in a Contaminated Binary Tree](https://leetcode.com/problems/find-elements-in-a-contaminated-binary-tree/description/?envType=daily-question&envId=2025-02-21)
+
+好像有沒有 recover 都沒差，只要把所有的值都存起來就好(X
+
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class FindElements {
+public:
+    unordered_set<int> st;
+    FindElements(TreeNode* root) {
+        recover(root, 0);
+    }
+
+    void recover(TreeNode* node, int new_val){
+        if(node == NULL) return;
+        st.insert(new_val);
+        recover(node->left, new_val * 2 + 1);
+        recover(node->right, new_val * 2 + 2);
+    }
+
+    bool find(int target) {
+        return st.find(target) != st.end();
+    }
+};
+
+/**
+ * Your FindElements object will be instantiated and called as such:
+ * FindElements* obj = new FindElements(root);
+ * bool param_1 = obj->find(target);
+ */
 ```

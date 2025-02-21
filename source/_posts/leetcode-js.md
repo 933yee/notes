@@ -505,13 +505,14 @@ var cancellable = function (fn, args, t) {
  * @param {number} t
  * @return {Function}
  */
-var timeLimit = function(fn, t) {
-    
-    return async function(...args) {
-        const fn1 = fn(...args); 
-        const fn2 = new Promise((resolve, reject) => setTimeout(() => reject("Time Limit Exceeded"), t)); 
-        return Promise.race([fn1, fn2]);
-    }
+var timeLimit = function (fn, t) {
+  return async function (...args) {
+    const fn1 = fn(...args);
+    const fn2 = new Promise((resolve, reject) =>
+      setTimeout(() => reject("Time Limit Exceeded"), t)
+    );
+    return Promise.race([fn1, fn2]);
+  };
 };
 
 /**
@@ -525,40 +526,40 @@ var timeLimit = function(fn, t) {
 在 js 中，用 `Function.prototype` 的方式可以宣告這個物件裡面包含的函式，像這題就宣告了 `get`、`set`、`count`
 
 ```js
-var TimeLimitedCache = function() {
-    this.cache = {};
+var TimeLimitedCache = function () {
+  this.cache = {};
 };
 
-/** 
+/**
  * @param {number} key
  * @param {number} value
  * @param {number} duration time until expiration in ms
  * @return {boolean} if un-expired key already existed
  */
-TimeLimitedCache.prototype.set = function(key, value, duration) {
-    let ret = this.cache[key] != undefined;
-    if(this.cache[key] != undefined)
-        clearTimeout(this.cache[key].timer);
-    else
-        this.cache[key] = {};
-    this.cache[key].val = value;
-    this.cache[key].timer = setTimeout(() => {delete this.cache[key]}, duration);
-    return ret;
+TimeLimitedCache.prototype.set = function (key, value, duration) {
+  let ret = this.cache[key] != undefined;
+  if (this.cache[key] != undefined) clearTimeout(this.cache[key].timer);
+  else this.cache[key] = {};
+  this.cache[key].val = value;
+  this.cache[key].timer = setTimeout(() => {
+    delete this.cache[key];
+  }, duration);
+  return ret;
 };
 
-/** 
+/**
  * @param {number} key
  * @return {number} value associated with key
  */
-TimeLimitedCache.prototype.get = function(key) {
-    return this.cache[key] != undefined ? this.cache[key].val : -1;
+TimeLimitedCache.prototype.get = function (key) {
+  return this.cache[key] != undefined ? this.cache[key].val : -1;
 };
 
-/** 
+/**
  * @return {number} count of non-expired keys
  */
-TimeLimitedCache.prototype.count = function() {
-    return Object.keys(this.cache).length;
+TimeLimitedCache.prototype.count = function () {
+  return Object.keys(this.cache).length;
 };
 
 /**
@@ -568,7 +569,6 @@ TimeLimitedCache.prototype.count = function() {
  * timeLimitedCache.count() // 1
  */
 ```
-
 
 ### [2627. Debounce](https://leetcode.com/problems/debounce/description/?envType=study-plan-v2&envId=30-days-of-javascript)
 
@@ -580,12 +580,12 @@ TimeLimitedCache.prototype.count = function() {
  * @param {number} t milliseconds
  * @return {Function}
  */
-var debounce = function(fn, t) {
-    let timer;
-    return function(...args) {
-        clearTimeout(timer);
-        timer = setTimeout(() => fn(...args), t);
-    }
+var debounce = function (fn, t) {
+  let timer;
+  return function (...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), t);
+  };
 };
 
 /**
@@ -600,43 +600,37 @@ var debounce = function(fn, t) {
 
 好難阿，題目規定不能用 `Promise.all`，要注意回傳的順序，還要確保所有 `Promise` 已經做完。
 
-
 ```js
 /**
  * @param {Array<Function>} functions
  * @return {Promise<any>}
  */
-var promiseAll = function(functions) {
-    return new Promise((resolve, reject) => {
-        let res = [];
-        let count = 0;
-        functions.map((fn, idx) => {
-            fn()
-            .then(ret=> {
-                res[idx] = ret;
-                count++;
-                if(count == functions.length)
-                     resolve(res);
-            })
-            .catch(error => reject(error));
-        });
+var promiseAll = function (functions) {
+  return new Promise((resolve, reject) => {
+    let res = [];
+    let count = 0;
+    functions.map((fn, idx) => {
+      fn()
+        .then((ret) => {
+          res[idx] = ret;
+          count++;
+          if (count == functions.length) resolve(res);
+        })
+        .catch((error) => reject(error));
     });
+  });
 };
 
 /**
  * const promise = promiseAll([() => new Promise(res => res(42))])
  * promise.then(console.log); // [42]
  */
-
 ```
 
 - 如果可以用 `Promise.all`
   ```js
-  var promiseAll = (functions) => (
-      Promise.all(functions.map(fn=>fn()))
-  );
+  var promiseAll = (functions) => Promise.all(functions.map((fn) => fn()));
   ```
-
 
 ### [2727. Is Object Empty](https://leetcode.com/problems/is-object-empty/description/?envType=study-plan-v2&envId=30-days-of-javascript)
 
@@ -647,17 +641,17 @@ var promiseAll = function(functions) {
  * @param {Object|Array} obj
  * @return {boolean}
  */
-var isEmpty = function(obj) {
-    return Object.keys(obj).length == 0;
+var isEmpty = function (obj) {
+  return Object.keys(obj).length == 0;
 };
 ```
 
 更簡單的方法
 
 ```js
-var isEmpty = function(obj) {
-    for (const _ in obj) return false;
-    return true;
+var isEmpty = function (obj) {
+  for (const _ in obj) return false;
+  return true;
 };
 ```
 
@@ -665,40 +659,97 @@ var isEmpty = function(obj) {
 
 > 我只會這種醜醜 code qq
 
-
 ```js
 /**
  * @param {Array} arr
  * @param {number} size
  * @return {Array}
  */
-var chunk = function(arr, size) {
-    let ret = [];
-    let cnt = -1;
-    for(let i=0; i<arr.length; i++){
-        if(i % size == 0) {
-            ret.push([]);
-            cnt++;
-        }
-        ret[cnt].push(arr[i]);
+var chunk = function (arr, size) {
+  let ret = [];
+  let cnt = -1;
+  for (let i = 0; i < arr.length; i++) {
+    if (i % size == 0) {
+      ret.push([]);
+      cnt++;
     }
-    return ret;
+    ret[cnt].push(arr[i]);
+  }
+  return ret;
 };
-
 ```
-
 
 - 更簡潔的寫法
 
   - `Array.slice()` 會回傳一個新的陣列，不會改變原本的陣列
 
   ```js
-  let chunk = function(arr, size) {
-      let ret = [];
-      for(let i=0; i<arr.length; i+=size)
-          ret.push(arr.slice(i, i+size));
-      return ret;
+  let chunk = function (arr, size) {
+    let ret = [];
+    for (let i = 0; i < arr.length; i += size) ret.push(arr.slice(i, i + size));
+    return ret;
   };
   ```
 
   `arr.slice` 會回傳 `[i, i+size)` 的陣列，不用擔心 `i+size` 超過 `arr.length` 的問題，因為 `slice` 會自動調整
+
+### [2619. Array Prototype Last](https://leetcode.com/problems/array-prototype-last/description/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+`this[this.length - 1]` 也可以改成像 Python 那樣， `this.at(-1)`
+
+```js
+/**
+ * @return {null|boolean|number|string|Array|Object}
+ */
+Array.prototype.last = function () {
+  return this.length == 0 ? -1 : this[this.length - 1];
+};
+
+/**
+ * const arr = [1, 2, 3];
+ * arr.last(); // 3
+ */
+```
+
+### [2631. Group By](https://leetcode.com/problems/group-by/description/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+不知道為什麼是 `medium`
+
+```js
+/**
+ * @param {Function} fn
+ * @return {Object}
+ */
+Array.prototype.groupBy = function (fn) {
+  const ret = {};
+  this.forEach((el) => {
+    const key = fn(el);
+    if (ret[key] == undefined) ret[key] = [];
+    ret[key].push(el);
+  });
+  return ret;
+};
+
+/**
+ * [1,2,3].groupBy(String) // {"1":[1],"2":[2],"3":[3]}
+ */
+```
+
+### [2724. Sort By](https://leetcode.com/problems/sort-by/description/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+javascript 中，lambda function 可以直接寫在 `Array.sort()` 裡面
+
+```js
+/**
+ * @param {Array} arr
+ * @param {Function} fn
+ * @return {Array}
+ */
+var sortBy = (arr, fn) => arr.sort((a, b) => fn(a) - fn(b));
+```
+
+不過 `arr.sort()` 會改變原本的 input array，實際上應該要複製一份才對
+
+```js
+var sortBy = (arr, fn) => [...arr].sort((a, b) => fn(a) - fn(b));
+```
