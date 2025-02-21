@@ -11,6 +11,8 @@
 
 **Optical Proximity Correction (OPC)** 是一種 Computational Lithography 的技術，根據 Mask 的設計來修正繞射的問題，得到更好的 Feature。
 
+每層 Layer 的 Metal 最好全部都是同一個方向，這樣可以減少製程的問題。
+
 - EUV Lithography: 極紫外光照
   波長更短，解析度更高，但是光源不穩定，需要更多的功率
 - DUV Lithography: 深紫外光照
