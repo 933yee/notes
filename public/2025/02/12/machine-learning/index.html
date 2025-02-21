@@ -32,8 +32,13 @@
 <meta property="og:image" content="https://933yee.github.io/notes/images/machine-learning/diff-bacth-size.png">
 <meta property="og:image" content="https://933yee.github.io/notes/images/machine-learning/diff-bacth-size-2.png">
 <meta property="og:image" content="https://i.imgur.com/DdabCqX.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/machine-leanring/LearningRate.png">
+<meta property="og:image" content="https://miro.medium.com/v2/resize:fit:1400/1*iFCd4c6Bq8vQgFHpxTXFUA.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/2024073/202402/2024073-20240224095347814-1191623432.png">
+<meta property="og:image" content="https://miro.medium.com/v2/resize:fit:1400/1*nvX_2FTKK6-e2L-XlxZMrw.png">
+<meta property="og:image" content="https://miro.medium.com/v2/resize:fit:4800/format:webp/1*XSpgDZ9r7FG6vlE9Rv9kCA.png">
 <meta property="article:published_time" content="2025-02-12T05:22:11.000Z">
-<meta property="article:modified_time" content="2025-02-19T03:22:21.923Z">
+<meta property="article:modified_time" content="2025-02-19T14:07:17.845Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="ml">
 <meta name="twitter:card" content="summary_large_image">
@@ -230,7 +235,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.4k words
+          2.4k words
         
       </span>
     
@@ -241,7 +246,7 @@
         
         
         
-          12 mins
+          21 mins
         
       </span>
     
@@ -354,7 +359,7 @@
 <p>現實中可能是 <code>Continuous Function</code>，可以用 <code>Piecewise Linear</code> 來模擬，<code>Piecewise Linear</code> 又可以用很多不同的 <code>Hard Sigmoid</code> 來組合出來，而 <code>Hard Sigmoid</code> 又可以由 <code>Sigmoid Function</code> 模擬出來</p>
 <p><img src="https://www.researchgate.net/publication/368305965/figure/fig4/AS:11431281118383692@1675742756740/Comparison-diagram-of-sigmoid-and-hard-sigmoid.png" srcset="/notes/info/loading.gif" lazyload alt="Sigmoid vs Hard Sigmoid"></p>
 <ul>
-<li>Sigmoid Function<br>$c \cdot sigmoid(b+wx_1)$ &#x3D; y &#x3D; c \cdot \frac{1}{1+e^{-b+wx_1}}</li>
+<li>Sigmoid Function<br>$$c \cdot sigmoid(b+wx_1) &#x3D; y &#x3D; c \cdot \frac{1}{1+e^{-b+wx_1}}$$</li>
 </ul>
 <p><code>Hard Sigmoid</code> 也能用兩個 <code>ReLU (Rectified Linear Unit)</code> 算出</p>
 <p><img src="https://machinelearningmastery.com/wp-content/uploads/2018/10/Line-Plot-of-Rectified-Linear-Activation-for-Negative-and-Positive-Inputs.png" srcset="/notes/info/loading.gif" lazyload alt="ReLU"></p>
@@ -409,7 +414,7 @@
 <p>$$<br>\frac{1}{2}(\theta - \theta^\prime)^T \cdot H \cdot (\theta - \theta^\prime) &#x3D; \frac{1}{2}u^T \cdot H \cdot u &#x3D; \frac{1}{2}\lambda \lVert u \rVert^2 &lt; 0<br>$$</p>
 <p>可以知道 $L(\theta) &lt; L(\theta^\prime)$。因此如果讓 $\theta^\prime$ 往 $u$ 的方向走，$\theta^\prime + u &#x3D; \theta$，可以得到更小 Loss 的 $\theta$。</p>
 <p>這只是一種解法，在實作上計算量很大，沒有人會這樣做。</p>
-<p>此外，實際上 <code>Local minimum</code> 並不常見，Loss 下不去常常是卡在 <code>Saddle Point</code>。</p>
+<p>此外，實際上 <code>Local minimum</code> 並不常見，Loss 下不去常常是卡在 <code>Saddle Point</code>，但是用一般的 <code>Gradient Descent</code> 通常不會卡在 <code>Critical Point</code>。</p>
 <h3 id="為什麼要用-Batch"><a href="#為什麼要用-Batch" class="headerlink" title="為什麼要用 Batch"></a>為什麼要用 Batch</h3><ul>
 <li><p>Batch size &#x3D; N(Full Batch)</p>
 <ul>
@@ -470,16 +475,63 @@
 </ul>
 </li>
 <li><p>Momentum</p>
-<ul>
-<li><p>$\theta_{t+1} &#x3D; \theta_t - \eta \cdot \nabla L(\theta_t) + \gamma \cdot (\theta_t - \theta_{t-1})$</p>
-<ul>
-<li>$\gamma$ 為 <code>Momentum</code>，通常設為 0.9</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+<p>$$<br>\begin{aligned}<br>\texttt{Start at} \quad \theta^0 \<br>\texttt{Movement} \quad m^0 &amp;&#x3D; 0 \<br>\texttt{Compute gradient} \quad g^0 \<br>\texttt{Movement} \quad m^1 &amp;&#x3D; \lambda \cdot m^0 - \eta \cdot g^0 \<br>\texttt{Move to} \quad \theta^1 &amp;&#x3D; \theta^0 + m^1 \<br>\texttt{Compute gradient} \quad g^1 \<br>\texttt{Movement} \quad m^2 &amp;&#x3D; \lambda \cdot m^1 - \eta \cdot g^1 \<br>\texttt{Move to} \quad \theta^2 &amp;&#x3D; \theta^1 + m^2 \<br>\end{aligned}<br>$$</p>
+<p>$m^i$ 就像是所有過去 <code>Weighted Gradient</code> 的總和，$g^0, g^1, \cdots g^{i-1}$</p>
+<p>$$<br>\begin{aligned}<br>m^0 &amp;&#x3D; 0 \<br>m^1 &amp;&#x3D; \lambda \cdot m^0 - \eta \cdot g^0 \<br>&amp;&#x3D; -\eta \cdot g^0 \<br>m^2 &amp;&#x3D; \lambda \cdot m^1 - \eta \cdot g^1 \<br>&amp;&#x3D; \lambda \cdot (-\eta \cdot g^0) - \eta \cdot g^1<br>\end{aligned}<br>$$</p>
 <p><img src="https://i.imgur.com/DdabCqX.png" srcset="/notes/info/loading.gif" lazyload alt="Momentum"></p>
+</li>
+</ul>
+<h3 id="Learning-Rate"><a href="#Learning-Rate" class="headerlink" title="Learning Rate"></a>Learning Rate</h3><h4 id="一般情況下的-Learning-Rate-造成的問題"><a href="#一般情況下的-Learning-Rate-造成的問題" class="headerlink" title="一般情況下的 Learning Rate 造成的問題"></a>一般情況下的 Learning Rate 造成的問題</h4><p><img src="/notes/./images/machine-leanring/LearningRate.png" srcset="/notes/info/loading.gif" lazyload alt="Learning Rate"></p>
+<ul>
+<li>當 <code>Learning Rate</code> 設定太大時，可能會造成 <code>Oscillation</code> 的問題，Loss 會一直在上下跳動，無法收斂</li>
+<li>當 <code>Learning Rate</code> 設定太小時，可能會造成 <code>Convergence</code> 的問題，Loss 會一直往下收斂，但是收斂的速度很慢。就像上圖一樣，當 <code>Gradient</code> 很大時，沒什麼問題，但是當 <code>Gradient</code> 很小時，就會卡住</li>
+</ul>
+<p>上述例子中，每個參數的 <code>Learning Rate</code> 都是一樣的，但是實際上每個參數的 <code>Gradient</code> 都不一樣，應該要為每個參數的 <code>Learning Rate</code> 客製化。</p>
+<h4 id="AdaGrad-Adaptive-Gradient"><a href="#AdaGrad-Adaptive-Gradient" class="headerlink" title="AdaGrad (Adaptive Gradient)"></a>AdaGrad (Adaptive Gradient)</h4><p>用 <code>Root Mean Square</code> 來調整 <code>Learning Rate</code></p>
+<p>$$<br>\begin{aligned}<br>\theta^1_i \leftarrow \theta^0_i - \frac{\eta}{\sigma^0_i} \cdot g^0_i &amp;\quad \sigma^0_i &#x3D; \sqrt{(g^0_i)^2} &#x3D; \lvert g^0_i \rvert \<br>\theta^2_i \leftarrow \theta^1_i - \frac{\eta}{\sigma^1_i} \cdot g^1_i &amp;\quad \sigma^1_i &#x3D; \sqrt{\frac{1}{2} \cdot [(g^0_i)^2 + (g^1_i)^2]} \<br>\theta^3_i \leftarrow \theta^2_i - \frac{\eta}{\sigma^2_i} \cdot g^2_i &amp;\quad \sigma^2_i &#x3D; \sqrt{\frac{1}{3} \cdot [(g^0_i)^2 + (g^1_i)^2 + (g^2_i)^2]} \<br>\vdots \<br>\theta^{t+1}<em>i \leftarrow \theta^t_i - \frac{\eta}{\sigma^t_i} \cdot g^t_i &amp;\quad \sigma^t_i &#x3D; \sqrt{\frac{1}{t+1} \cdot \sum</em>{k&#x3D;0}^{t} (g^k_i)^2}<br>\end{aligned}<br>$$</p>
+<p>從公式可以觀察到，當坡度小的時候，<code>Gradient</code> 會比較小，算出來的 $\sigma$ 也會比較小，所以 <code>Learning Rate</code> 會比較大，反之亦然。</p>
+<p>然而，當 <code>t</code> 很大時，當前的 <code>Gradient</code> 可能會被過去累積的 <code>Gradient</code> 稀釋掉，導致收斂速度變慢，不能實時考慮梯度的變化情況。</p>
+<h4 id="RMSprop"><a href="#RMSprop" class="headerlink" title="RMSprop"></a>RMSprop</h4><p><code>RMSprop</code> 增加了 <code>Decay Rate</code> $\alpha$，可以控制 <strong>當前的 <code>Gradient</code></strong> 和 <strong>過去累積的 <code>Gradient</code></strong> 的重要程度</p>
+<p>$$<br>\begin{aligned}<br>\theta^1_i \leftarrow \theta^0_i - \frac{\eta}{\sigma^0_i} \cdot g^0_i &amp;\quad \sigma^0_i &#x3D; \sqrt{(g^0_i)^2} &#x3D; \lvert g^0_i \rvert \<br>\theta^2_i \leftarrow \theta^1_i - \frac{\eta}{\sigma^1_i} \cdot g^1_i &amp;\quad \sigma^1_i &#x3D; \sqrt{\alpha \cdot (\sigma^0_i)^2 + (1 - \alpha) \cdot (g^1_i)^2} \<br>\theta^3_i \leftarrow \theta^2_i - \frac{\eta}{\sigma^2_i} \cdot g^2_i &amp;\quad \sigma^2_i &#x3D; \sqrt{\alpha \cdot (\sigma^1_i)^2 + (1 - \alpha) \cdot (g^2_i)^2} \<br>\vdots \<br>\theta^{t+1}_i \leftarrow \theta^t_i - \frac{\eta}{\sigma^t_i} \cdot g^t_i &amp;\quad \sigma^t_i &#x3D; \sqrt{\alpha \cdot (\sigma^{t-1}_i)^2 + (1 - \alpha) \cdot (g^t_i)^2}<br>\end{aligned}<br>$$</p>
+<ul>
+<li>$\alpha$ 為 <code>Decay Rate</code>，通常設為 0.9</li>
+</ul>
+<p>最常用的 <code>Optimizer</code> 是 <code>Adam</code>，他就是 <code>RMSprop</code> 和 <code>Momentum</code> 的結合</p>
+<h4 id="Learning-Rate-Scheduling"><a href="#Learning-Rate-Scheduling" class="headerlink" title="Learning Rate Scheduling"></a>Learning Rate Scheduling</h4><ul>
+<li><p>Learning Rate Decay</p>
+<p>隨著參數的更新，<code>Learning Rate</code> 逐漸變小</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:1400/1*iFCd4c6Bq8vQgFHpxTXFUA.png" srcset="/notes/info/loading.gif" lazyload alt="Learning Rate Decay"></p>
+<p>左邊是 <code>AdaGrad</code>，當縱軸的 <code>Gradient</code> 一直都是很小的值時，會導致 $\sigma$ 變得很小，造成 <code>Learning Rate</code> 放的很大，因此會飛出去。右邊是加上 <code>Learning Rate Decay</code>。</p>
+</li>
+<li><p>Warm Up</p>
+<p>在一開始的時候，<code>Learning Rate</code> 會比較小，然後逐漸變大，最後再變小</p>
+<p><img src="https://img2023.cnblogs.com/blog/2024073/202402/2024073-20240224095347814-1191623432.png" srcset="/notes/info/loading.gif" lazyload alt="Warm Up"></p>
+<p>左邊是 <code>AdaGrad</code>，右邊是加上 <code>Warm Up</code></p>
+</li>
+</ul>
+<h3 id="Loss-Function"><a href="#Loss-Function" class="headerlink" title="Loss Function"></a>Loss Function</h3><p><code>Loss Function</code> 也會影響到 <code>Optimization</code> 的效果，這邊以分類問題為例。</p>
+<h4 id="Classification"><a href="#Classification" class="headerlink" title="Classification"></a>Classification</h4><p>在 Classification 的問題中，通常會用 one-hot encoding 來表示 label，例如：</p>
+<p>$$<br>\begin{aligned}<br>\hat{y} &amp;&#x3D; [1, 0, 0] \<br>\hat{y} &amp;&#x3D; [0, 1, 0] \<br>\hat{y} &amp;&#x3D; [0, 0, 1]<br>\end{aligned}<br>$$</p>
+<p>最後在 Output 的時候，通常會把輸出 <code>y</code> 通過 <code>Softmax</code> 函數，再讓他和 <code>one-hot encoding</code> 的 <code>label</code> 做比較，計算出 <code>Loss</code></p>
+<p>$$<br>\begin{aligned}<br>\text{Softmax}(z)<em>i &amp;&#x3D; \frac{e^{z_i}}{\sum</em>{j&#x3D;1}^{n} e^{z_j}} \<br>\hat{y} \leftrightarrow y^\prime &amp;&#x3D; \text{Softmax}(y) \<br>\end{aligned}<br>$$</p>
+<ul>
+<li>這裡的 <code>y</code> 稱為 <code>logit</code></li>
+<li><code>Softmax</code> 可以把 <code>Output</code> 變成 <code>Probability</code>，讓 <code>Output</code> 的值在 0 到 1 之間，並且總和為 1</li>
+<li>當只有兩個 Class 時，<code>Softmax</code> 和 <code>Sigmoid</code> 的作用是一樣的</li>
+</ul>
+<h4 id="Loss-Function-of-Classification"><a href="#Loss-Function-of-Classification" class="headerlink" title="Loss Function of Classification"></a>Loss Function of Classification</h4><p>可以直接用 <code>MSE</code>，但是 <code>Cross-entropy</code> 通常表現的比較好</p>
+<ul>
+<li><code>Cross-entropy</code><br>$$L &#x3D; -\sum_{i&#x3D;1}^{n} \hat{y_i} \cdot \ln(\hat{y}_i)$$<ul>
+<li>Minimize <code>Cross-entropy</code> 就是最大化 <code>Likelihood</code></li>
+</ul>
+</li>
+</ul>
+<p><img src="https://miro.medium.com/v2/resize:fit:1400/1*nvX_2FTKK6-e2L-XlxZMrw.png" srcset="/notes/info/loading.gif" lazyload alt="Cross-entropy"></p>
+<p>上圖可以看到，在 <code>Classfication</code> 問題用 <code>MSE</code> 可能會 train 不起來</p>
+<h4 id="Batch-Normalization"><a href="#Batch-Normalization" class="headerlink" title="Batch Normalization"></a>Batch Normalization</h4><p>有時候在 <code>Error Surface</code> 中，不同維度的輸入值可能差很多，導致 <code>Error Surface</code> 很扭曲，斜率、坡度都不同</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:4800/format:webp/1*XSpgDZ9r7FG6vlE9Rv9kCA.png" srcset="/notes/info/loading.gif" lazyload alt="Error Surface"></p>
+<p>對於一個 <code>Batch</code> 的資料，對每一個 <code>Feature</code> 做 <code>Feature Normalization</code>，讓他的 <code>Mean</code> 為 0，<code>Variance</code> 為 1，稱為 <code>Batch Normalization</code></p>
+<p>$$<br>\begin{aligned}<br>\mu &amp;&#x3D; \frac{1}{m} \sum_{i&#x3D;1}^{m} x_i \<br>\sigma^2 &amp;&#x3D; \frac{1}{m} \sum_{i&#x3D;1}^{m} (x_i - \mu)^2 \<br>\hat{x}_i &amp;&#x3D; \frac{x_i - \mu}{\sqrt{\sigma^2 + \epsilon}} \<br>\end{aligned}<br>$$</p>
 
                 
               </div>

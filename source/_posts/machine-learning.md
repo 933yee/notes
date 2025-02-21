@@ -63,7 +63,7 @@ math: true
 ![Sigmoid vs Hard Sigmoid](https://www.researchgate.net/publication/368305965/figure/fig4/AS:11431281118383692@1675742756740/Comparison-diagram-of-sigmoid-and-hard-sigmoid.png)
 
 - Sigmoid Function
-  $c \cdot sigmoid(b+wx_1)$ = y = c \cdot \frac{1}{1+e^{-b+wx_1}}
+  $$c \cdot sigmoid(b+wx_1) = y = c \cdot \frac{1}{1+e^{-b+wx_1}}$$
 
 `Hard Sigmoid` 也能用兩個 `ReLU (Rectified Linear Unit)` 算出
 
@@ -152,7 +152,7 @@ $$
 
 這只是一種解法，在實作上計算量很大，沒有人會這樣做。
 
-此外，實際上 `Local minimum` 並不常見，Loss 下不去常常是卡在 `Saddle Point`。
+此外，實際上 `Local minimum` 並不常見，Loss 下不去常常是卡在 `Saddle Point`，但是用一般的 `Gradient Descent` 通常不會卡在 `Critical Point`。
 
 ### 為什麼要用 Batch
 
@@ -190,8 +190,151 @@ $$
 
 - Momentum
 
-  - $\theta_{t+1} = \theta_t - \eta \cdot \nabla L(\theta_t) + \gamma \cdot (\theta_t - \theta_{t-1})$
+  $$
+  \begin{aligned}
+  \texttt{Start at} \quad \theta^0 \\
+  \texttt{Movement} \quad m^0 &= 0 \\
+  \texttt{Compute gradient} \quad g^0 \\
+  \texttt{Movement} \quad m^1 &= \lambda \cdot m^0 - \eta \cdot g^0 \\
+  \texttt{Move to} \quad \theta^1 &= \theta^0 + m^1 \\
+  \texttt{Compute gradient} \quad g^1 \\
+  \texttt{Movement} \quad m^2 &= \lambda \cdot m^1 - \eta \cdot g^1 \\
+  \texttt{Move to} \quad \theta^2 &= \theta^1 + m^2 \\
+  \end{aligned}
+  $$
 
-    - $\gamma$ 為 `Momentum`，通常設為 0.9
+  $m^i$ 就像是所有過去 `Weighted Gradient` 的總和，$g^0, g^1, \cdots g^{i-1}$
 
-![Momentum](https://i.imgur.com/DdabCqX.png)
+  $$
+  \begin{aligned}
+  m^0 &= 0 \\
+  m^1 &= \lambda \cdot m^0 - \eta \cdot g^0 \\
+  &= -\eta \cdot g^0 \\
+  m^2 &= \lambda \cdot m^1 - \eta \cdot g^1 \\
+  &= \lambda \cdot (-\eta \cdot g^0) - \eta \cdot g^1
+  \end{aligned}
+  $$
+
+  ![Momentum](https://i.imgur.com/DdabCqX.png)
+
+### Learning Rate
+
+#### 一般情況下的 Learning Rate 造成的問題
+
+![Learning Rate](./images/machine-leanring/LearningRate.png)
+
+- 當 `Learning Rate` 設定太大時，可能會造成 `Oscillation` 的問題，Loss 會一直在上下跳動，無法收斂
+- 當 `Learning Rate` 設定太小時，可能會造成 `Convergence` 的問題，Loss 會一直往下收斂，但是收斂的速度很慢。就像上圖一樣，當 `Gradient` 很大時，沒什麼問題，但是當 `Gradient` 很小時，就會卡住
+
+上述例子中，每個參數的 `Learning Rate` 都是一樣的，但是實際上每個參數的 `Gradient` 都不一樣，應該要為每個參數的 `Learning Rate` 客製化。
+
+#### AdaGrad (Adaptive Gradient)
+
+用 `Root Mean Square` 來調整 `Learning Rate`
+
+$$
+\begin{aligned}
+\theta^1_i \leftarrow \theta^0_i - \frac{\eta}{\sigma^0_i} \cdot g^0_i &\quad \sigma^0_i = \sqrt{(g^0_i)^2} = \lvert g^0_i \rvert \\
+\theta^2_i \leftarrow \theta^1_i - \frac{\eta}{\sigma^1_i} \cdot g^1_i &\quad \sigma^1_i = \sqrt{\frac{1}{2} \cdot [(g^0_i)^2 + (g^1_i)^2]} \\
+\theta^3_i \leftarrow \theta^2_i - \frac{\eta}{\sigma^2_i} \cdot g^2_i &\quad \sigma^2_i = \sqrt{\frac{1}{3} \cdot [(g^0_i)^2 + (g^1_i)^2 + (g^2_i)^2]} \\
+\vdots \\
+\theta^{t+1}_i \leftarrow \theta^t_i - \frac{\eta}{\sigma^t_i} \cdot g^t_i &\quad \sigma^t_i = \sqrt{\frac{1}{t+1} \cdot \sum_{k=0}^{t} (g^k_i)^2}
+\end{aligned}
+$$
+
+從公式可以觀察到，當坡度小的時候，`Gradient` 會比較小，算出來的 $\sigma$ 也會比較小，所以 `Learning Rate` 會比較大，反之亦然。
+
+然而，當 `t` 很大時，當前的 `Gradient` 可能會被過去累積的 `Gradient` 稀釋掉，導致收斂速度變慢，不能實時考慮梯度的變化情況。
+
+#### RMSprop
+
+`RMSprop` 增加了 `Decay Rate` $\alpha$，可以控制 **當前的 `Gradient`** 和 **過去累積的 `Gradient`** 的重要程度
+
+$$
+\begin{aligned}
+\theta^1_i \leftarrow \theta^0_i - \frac{\eta}{\sigma^0_i} \cdot g^0_i &\quad \sigma^0_i = \sqrt{(g^0_i)^2} = \lvert g^0_i \rvert \\
+\theta^2_i \leftarrow \theta^1_i - \frac{\eta}{\sigma^1_i} \cdot g^1_i &\quad \sigma^1_i = \sqrt{\alpha \cdot (\sigma^0_i)^2 + (1 - \alpha) \cdot (g^1_i)^2} \\
+\theta^3_i \leftarrow \theta^2_i - \frac{\eta}{\sigma^2_i} \cdot g^2_i &\quad \sigma^2_i = \sqrt{\alpha \cdot (\sigma^1_i)^2 + (1 - \alpha) \cdot (g^2_i)^2} \\
+\vdots \\
+\theta^{t+1}_i \leftarrow \theta^t_i - \frac{\eta}{\sigma^t_i} \cdot g^t_i &\quad \sigma^t_i = \sqrt{\alpha \cdot (\sigma^{t-1}_i)^2 + (1 - \alpha) \cdot (g^t_i)^2}
+\end{aligned}
+$$
+
+- $\alpha$ 為 `Decay Rate`，通常設為 0.9
+
+最常用的 `Optimizer` 是 `Adam`，他就是 `RMSprop` 和 `Momentum` 的結合
+
+#### Learning Rate Scheduling
+
+- Learning Rate Decay
+
+  隨著參數的更新，`Learning Rate` 逐漸變小
+
+  ![Learning Rate Decay](https://miro.medium.com/v2/resize:fit:1400/1*iFCd4c6Bq8vQgFHpxTXFUA.png)
+
+  左邊是 `AdaGrad`，當縱軸的 `Gradient` 一直都是很小的值時，會導致 $\sigma$ 變得很小，造成 `Learning Rate` 放的很大，因此會飛出去。右邊是加上 `Learning Rate Decay`。
+
+- Warm Up
+
+  在一開始的時候，`Learning Rate` 會比較小，然後逐漸變大，最後再變小
+
+  ![Warm Up](https://img2023.cnblogs.com/blog/2024073/202402/2024073-20240224095347814-1191623432.png)
+
+  左邊是 `AdaGrad`，右邊是加上 `Warm Up`
+
+### Loss Function
+
+`Loss Function` 也會影響到 `Optimization` 的效果，這邊以分類問題為例。
+
+#### Classification
+
+在 Classification 的問題中，通常會用 one-hot encoding 來表示 label，例如：
+
+$$
+\begin{aligned}
+\hat{y} &= [1, 0, 0] \\
+\hat{y} &= [0, 1, 0] \\
+\hat{y} &= [0, 0, 1]
+\end{aligned}
+$$
+
+最後在 Output 的時候，通常會把輸出 `y` 通過 `Softmax` 函數，再讓他和 `one-hot encoding` 的 `label` 做比較，計算出 `Loss`
+
+$$
+\begin{aligned}
+\text{Softmax}(z)_i &= \frac{e^{z_i}}{\sum_{j=1}^{n} e^{z_j}} \\
+\hat{y} \leftrightarrow y^\prime &= \text{Softmax}(y) \\
+\end{aligned}
+$$
+
+- 這裡的 `y` 稱為 `logit`
+- `Softmax` 可以把 `Output` 變成 `Probability`，讓 `Output` 的值在 0 到 1 之間，並且總和為 1
+- 當只有兩個 Class 時，`Softmax` 和 `Sigmoid` 的作用是一樣的
+
+#### Loss Function of Classification
+
+可以直接用 `MSE`，但是 `Cross-entropy` 通常表現的比較好
+
+- `Cross-entropy`
+  $$L = -\sum_{i=1}^{n} \hat{y_i} \cdot \ln(\hat{y}_i)$$
+  - Minimize `Cross-entropy` 就是最大化 `Likelihood`
+
+![Cross-entropy](https://miro.medium.com/v2/resize:fit:1400/1*nvX_2FTKK6-e2L-XlxZMrw.png)
+
+上圖可以看到，在 `Classfication` 問題用 `MSE` 可能會 train 不起來
+
+#### Batch Normalization
+
+有時候在 `Error Surface` 中，不同維度的輸入值可能差很多，導致 `Error Surface` 很扭曲，斜率、坡度都不同
+
+![Error Surface](https://miro.medium.com/v2/resize:fit:4800/format:webp/1*XSpgDZ9r7FG6vlE9Rv9kCA.png)
+
+對於一個 `Batch` 的資料，對每一個 `Feature` 做 `Feature Normalization`，讓他的 `Mean` 為 0，`Variance` 為 1，稱為 `Batch Normalization`
+
+$$
+\begin{aligned}
+\mu &= \frac{1}{m} \sum_{i=1}^{m} x_i \\
+\sigma^2 &= \frac{1}{m} \sum_{i=1}^{m} (x_i - \mu)^2 \\
+\hat{x}_i &= \frac{x_i - \mu}{\sqrt{\sigma^2 + \epsilon}} \\
+\end{aligned}
+$$
