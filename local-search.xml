@@ -35,20 +35,7 @@
     <link href="/notes/2025/02/19/vlsi-physical-design-automation/"/>
     <url>/notes/2025/02/19/vlsi-physical-design-automation/</url>
     
-    <content type="html"><![CDATA[<h3 id="IC-Design-Flow"><a href="#IC-Design-Flow" class="headerlink" title="IC Design Flow"></a>IC Design Flow</h3><p>前端設計 (Front-end Design) → 後端設計 (Back-end &#x2F; Physical Design) → Tape-out → 製造 → 測試 → 產品</p><ul><li>Physical Design<br>把 Circuit Netlist 轉換成幾何圖形，並且將其放置在晶片上，並且將其連接起來。<ol><li>Floorplanning</li><li>Placement<br>現在 Floorplanning 和 Placement 通常是一起做的，所以有時候會被合併成一個步驟。差別在於 Floorplanning 是在整個晶片上規劃，Placement 是在晶片上的每個 Cell 規劃。</li><li>Clock Tree Synthesis (CTS)</li><li>Routing</li><li>Layout</li><li>Design Rule Check (DRC)</li><li>Layout vs. Schematic (LVS)</li></ol></li><li>PPA<br>Power, Performance, Area</li></ul>]]></content>
-    
-    
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title></title>
-    <link href="/notes/2025/02/18/tmp/"/>
-    <url>/notes/2025/02/18/tmp/</url>
-    
-    <content type="html"><![CDATA[<h1 id="IC-design"><a href="#IC-design" class="headerlink" title="IC design"></a>IC design</h1><ul><li>Lithography: 光照<br>框出電路圖案，然後進行蝕刻</li><li>Diffraction: 繞射<br>會造成 Lithography 不準確，可以從目標圖案反推出 Mask 的設計，稱為 Computational Lithography</li><li>Immersion Lithography: 浸泡式光照<br>用液體取代空氣，縮短光的波長，就好像換了一個 Light Source，減少繞射的影響</li></ul><p>在 EUV Lithography 之前，可以用 Multi-Patterning，把一個圖案分成多個小圖案，然後分別曝光，最後合併成一個圖案。</p><p><strong>Optical Proximity Correction (OPC)</strong> 是一種 Computational Lithography 的技術，根據 Mask 的設計來修正繞射的問題，得到更好的 Feature。</p><ul><li>EUV Lithography: 極紫外光照<br>波長更短，解析度更高，但是光源不穩定，需要更多的功率</li><li>DUV Lithography: 深紫外光照<br>波長比較長，解析度比較低，但是光源穩定，功率較低</li><li>OPC: Optical Proximity Correction<br>透過 Computational Lithography 來修正繞射的問題</li><li>PSM: Phase Shift Mask<br>透過 Mask 的設計來修正繞射的問題</li><li>RET: Resolution Enhancement Technology<br>透過 Mask 的設計來增加解析度</li><li>DFM: Design for Manufacturability<br>透過 Mask 的設計來增加製造的可行性</li><li>CMP: Chemical Mechanical Polishing<br>用化學和機械的方式來研磨晶圓表面</li><li>PVD: Physical Vapor Deposition<br>用物理的方式來沉積金屬薄膜</li><li>CVD: Chemical Vapor Deposition<br>用化學的方式來沉積金屬薄膜</li><li>ALD: Atomic Layer Deposition<br>用原子層的方式來沉積金屬薄膜</li><li>Etching: 蝕刻<br>用化學的方式來移除金屬薄膜</li><li>Ion Implantation: 離子佈植<br>用離子的方式來改變晶圓的導電性</li><li>Annealing: 退火<br>用高溫的方式來改變晶圓的導電性</li><li>Metrology: 計量<br>用來量測晶圓的尺寸和形狀</li><li>Yield: 產量<br>用來衡量晶圓的良率</li><li>DRC: Design Rule Check<br>用來檢查電路設計是否符合製造的規則</li><li>LVS: Layout vs. Schematic<br>用來檢查電路設計是否符合電路圖</li><li>EDA: Electronic Design Automation<br>用來協助設計電路的軟體</li><li>TCAD: Technology Computer-Aided Design<br>用來協助設計製程的軟體</li></ul>]]></content>
+    <content type="html"><![CDATA[<h3 id="IC-Design-Flow"><a href="#IC-Design-Flow" class="headerlink" title="IC Design Flow"></a>IC Design Flow</h3><p>前端設計 (Front-end Design) → 後端設計 (Back-end &#x2F; Physical Design) → Tape-out → 製造 → 測試 → 產品</p><p>Gate Array</p><ul><li>裡面的 transistor 都做好了，但還沒有做 intra-cell routing 和 inter-cell routing</li><li>可以自己決定要把哪些 transistor 連接起來</li></ul><p>因為現在 Metal 可以很多層，所以 Row 和 Row 之間不用再留 Routing Channel，都直接在 Cell 上面連線</p><p>FPGA</p><ul><li><p>第 31 頁中間是 switch bus</p></li><li><p>主要是 Program 圖中的一堆 switch，設定成 0 或 1</p></li><li><p>Physical Design<br>把 Circuit Netlist 轉換成幾何圖形，並且將其放置在晶片上，並且將其連接起來。</p><ol><li>Floorplanning</li><li>Placement<br>現在 Floorplanning 和 Placement 通常是一起做的，所以有時候會被合併成一個步驟。差別在於 Floorplanning 是在整個晶片上規劃，Placement 是在晶片上的每個 Cell 規劃。</li><li>Clock Tree Synthesis (CTS)</li><li>Routing</li><li>Layout</li><li>Design Rule Check (DRC)</li><li>Layout vs. Schematic (LVS)</li></ol></li><li><p>PPA<br>Power, Performance, Area</p></li></ul>]]></content>
     
     
     
@@ -62,6 +49,19 @@
     <url>/notes/2025/02/18/eda/</url>
     
     <content type="html"><![CDATA[]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/notes/2025/02/18/tmp/"/>
+    <url>/notes/2025/02/18/tmp/</url>
+    
+    <content type="html"><![CDATA[<h1 id="IC-design"><a href="#IC-design" class="headerlink" title="IC design"></a>IC design</h1><ul><li>Lithography: 光照<br>框出電路圖案，然後進行蝕刻</li><li>Diffraction: 繞射<br>會造成 Lithography 不準確，可以從目標圖案反推出 Mask 的設計，稱為 Computational Lithography</li><li>Immersion Lithography: 浸泡式光照<br>用液體取代空氣，縮短光的波長，就好像換了一個 Light Source，減少繞射的影響</li></ul><p>在 EUV Lithography 之前，可以用 Multi-Patterning，把一個圖案分成多個小圖案，然後分別曝光，最後合併成一個圖案。</p><p><strong>Optical Proximity Correction (OPC)</strong> 是一種 Computational Lithography 的技術，根據 Mask 的設計來修正繞射的問題，得到更好的 Feature。</p><p>每層 Layer 的 Metal 最好全部都是同一個方向，這樣可以減少製程的問題。</p><ul><li>EUV Lithography: 極紫外光照<br>波長更短，解析度更高，但是光源不穩定，需要更多的功率</li><li>DUV Lithography: 深紫外光照<br>波長比較長，解析度比較低，但是光源穩定，功率較低</li><li>OPC: Optical Proximity Correction<br>透過 Computational Lithography 來修正繞射的問題</li><li>PSM: Phase Shift Mask<br>透過 Mask 的設計來修正繞射的問題</li><li>RET: Resolution Enhancement Technology<br>透過 Mask 的設計來增加解析度</li><li>DFM: Design for Manufacturability<br>透過 Mask 的設計來增加製造的可行性</li><li>CMP: Chemical Mechanical Polishing<br>用化學和機械的方式來研磨晶圓表面</li><li>PVD: Physical Vapor Deposition<br>用物理的方式來沉積金屬薄膜</li><li>CVD: Chemical Vapor Deposition<br>用化學的方式來沉積金屬薄膜</li><li>ALD: Atomic Layer Deposition<br>用原子層的方式來沉積金屬薄膜</li><li>Etching: 蝕刻<br>用化學的方式來移除金屬薄膜</li><li>Ion Implantation: 離子佈植<br>用離子的方式來改變晶圓的導電性</li><li>Annealing: 退火<br>用高溫的方式來改變晶圓的導電性</li><li>Metrology: 計量<br>用來量測晶圓的尺寸和形狀</li><li>Yield: 產量<br>用來衡量晶圓的良率</li><li>DRC: Design Rule Check<br>用來檢查電路設計是否符合製造的規則</li><li>LVS: Layout vs. Schematic<br>用來檢查電路設計是否符合電路圖</li><li>EDA: Electronic Design Automation<br>用來協助設計電路的軟體</li><li>TCAD: Technology Computer-Aided Design<br>用來協助設計製程的軟體</li></ul>]]></content>
     
     
     
