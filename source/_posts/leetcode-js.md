@@ -781,7 +781,7 @@ var join = function (arr1, arr2) {
 };
 ```
 
-別人精簡的做法，結合我的 `ret` 和 `id_idx_map`，最後用 `Object.values()` 的時候會自動 sort，不過本質上差不多
+別人精簡的做法，結合我的 `ret` 和 `id_idx_map`，最後用 `Object.values()` 的時候會自動根據 `key` 做 sort
 
 ```js
 /**
