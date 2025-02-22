@@ -753,3 +753,60 @@ var sortBy = (arr, fn) => arr.sort((a, b) => fn(a) - fn(b));
 ```js
 var sortBy = (arr, fn) => [...arr].sort((a, b) => fn(a) - fn(b));
 ```
+
+### [2722. Join Two Arrays by ID](https://leetcode.com/problems/join-two-arrays-by-id/description/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+有點麻煩的題目
+
+```js
+/**
+ * @param {Array} arr1
+ * @param {Array} arr2
+ * @return {Array}
+ */
+var join = function (arr1, arr2) {
+  const ret = [];
+  const id_idx_map = {};
+  arr1.forEach((el, idx) => {
+    ret.push(el);
+    id_idx_map[el.id] = idx;
+  });
+  arr2.forEach((el) => {
+    if (id_idx_map[el.id] != undefined) {
+      tar_arr = ret[id_idx_map[el.id]];
+      Object.keys(el).forEach((key) => (tar_arr[key] = el[key]));
+    } else ret.push(el);
+  });
+  return ret.sort((obj1, obj2) => obj1.id - obj2.id);
+};
+```
+
+別人精簡的做法，結合我的 `ret` 和 `id_idx_map`，最後用 `Object.values()` 的時候會自動 sort，不過本質上差不多
+
+```js
+/**
+ * @param {Array} arr1
+ * @param {Array} arr2
+ * @return {Array}
+ */
+var join = function (arr1, arr2) {
+  const result = {};
+
+  // 1. initialization
+  arr1.forEach((item) => {
+    result[item.id] = item;
+  });
+  // 2. joining
+  arr2.forEach((item) => {
+    if (result[item.id]) {
+      Object.keys(item).forEach((key) => {
+        result[item.id][key] = item[key];
+      });
+    } else {
+      result[item.id] = item;
+    }
+  });
+
+  return Object.values(result);
+};
+```

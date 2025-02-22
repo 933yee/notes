@@ -549,7 +549,7 @@ public:
 };
 ```
 
-#### 2025/02/20 [1980. Find Unique Binary String](https://leetcode.com/problems/find-unique-binary-string/description/?envType=daily-question&envId=2025-02-20)
+### 2025/02/20 [1980. Find Unique Binary String](https://leetcode.com/problems/find-unique-binary-string/description/?envType=daily-question&envId=2025-02-20)
 
 `n` 最大到 16，應該也可以窮舉。這裡是直接讓每個 `num` 在不同位置至少有一個不同的位元，就能確保不會有重複的字串。
 
@@ -570,7 +570,7 @@ public:
 
 ```
 
-#### 2025/02/21 [1261. Find Elements in a Contaminated Binary Tree](https://leetcode.com/problems/find-elements-in-a-contaminated-binary-tree/description/?envType=daily-question&envId=2025-02-21)
+### 2025/02/21 [1261. Find Elements in a Contaminated Binary Tree](https://leetcode.com/problems/find-elements-in-a-contaminated-binary-tree/description/?envType=daily-question&envId=2025-02-21)
 
 好像有沒有 recover 都沒差，只要把所有的值都存起來就好(X
 
@@ -610,4 +610,63 @@ public:
  * FindElements* obj = new FindElements(root);
  * bool param_1 = obj->find(target);
  */
+```
+
+### 2025/02/22 [1028. Recover a Tree From Preorder Traversal](https://leetcode.com/problems/recover-a-tree-from-preorder-traversal/description/?envType=daily-question&envId=2025-02-22)
+
+題目給的 input 是 `DFS preorder` 的結果，所以可以用 stack 還原回去。每次都要檢查 `depth` 的值 (就是 dash 的數量) 直到深度差一層為止，那就是 parent。
+
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* recoverFromPreorder(string traversal) {
+        stack<TreeNode*> stk;
+        stack<int> depth_stk;
+        TreeNode* head = new TreeNode(0);
+        stk.push(head);
+        depth_stk.push(-1);
+        int i = 0;
+
+        while(i < traversal.size()){
+            int num_dashes = 0, j = i, cur_num = 0;
+            while(j < traversal.size() && traversal[j] == '-'){
+                num_dashes++;
+                j++;
+            }
+
+            while(j < traversal.size() && traversal[j] != '-'){
+                cur_num = (cur_num * 10) + (traversal[j] - '0');
+                j++;
+            }
+
+            while(depth_stk.top() + 1 != num_dashes){
+                depth_stk.pop();
+                stk.pop();
+            }
+
+            TreeNode* parent = stk.top();
+            TreeNode* newNode = new TreeNode(cur_num);
+            if(parent->left == nullptr)
+                parent->left = newNode;
+            else
+                parent->right = newNode;
+
+            stk.push(newNode);
+            depth_stk.push(num_dashes);
+            i = j;
+        }
+        return head->left;
+    }
+};
 ```
