@@ -168,11 +168,11 @@ $$
   - 一次只拿一筆資料去算 Gradient
   - 每一次的 Gradient 都很不穩定，可能會跳來跳去
 
-![Different Batch Size](./images/machine-learning/diff-bacth-size.png)
+![Different Batch Size](./images/machine-learning/diff-batch-size.png)
 
 既然時間差不多，乍看之下 Batch Size 大一點比較好，但實際上小的 Batch Size 可能會有更好的訓練效果
 
-![Different Batch Size](./images/machine-learning/diff-bacth-size-2.png)
+![Different Batch Size](./images/machine-learning/diff-batch-size-2.png)
 
 上圖可以看到小的 Batch Size Optimization 的效果會比較好
 
@@ -194,14 +194,14 @@ $$
 
   $$
   \begin{aligned}
-  \texttt{Start at} \quad \theta^0 \\
-  \texttt{Movement} \quad m^0 &= 0 \\
-  \texttt{Compute gradient} \quad g^0 \\
-  \texttt{Movement} \quad m^1 &= \lambda \cdot m^0 - \eta \cdot g^0 \\
-  \texttt{Move to} \quad \theta^1 &= \theta^0 + m^1 \\
-  \texttt{Compute gradient} \quad g^1 \\
-  \texttt{Movement} \quad m^2 &= \lambda \cdot m^1 - \eta \cdot g^1 \\
-  \texttt{Move to} \quad \theta^2 &= \theta^1 + m^2 \\
+  \texttt{Start at} \quad \theta^0 \newline
+  \texttt{Movement} \quad m^0 &= 0 \newline
+  \texttt{Compute gradient} \quad g^0 \newline
+  \texttt{Movement} \quad m^1 &= \lambda \cdot m^0 - \eta \cdot g^0 \newline
+  \texttt{Move to} \quad \theta^1 &= \theta^0 + m^1 \newline
+  \texttt{Compute gradient} \quad g^1 \newline
+  \texttt{Movement} \quad m^2 &= \lambda \cdot m^1 - \eta \cdot g^1 \newline
+  \texttt{Move to} \quad \theta^2 &= \theta^1 + m^2 \newline
   \end{aligned}
   $$
 
@@ -209,10 +209,10 @@ $$
 
   $$
   \begin{aligned}
-  m^0 &= 0 \\
-  m^1 &= \lambda \cdot m^0 - \eta \cdot g^0 \\
-  &= -\eta \cdot g^0 \\
-  m^2 &= \lambda \cdot m^1 - \eta \cdot g^1 \\
+  m^0 &= 0 \newline
+  m^1 &= \lambda \cdot m^0 - \eta \cdot g^0 \newline
+  &= -\eta \cdot g^0 \newline
+  m^2 &= \lambda \cdot m^1 - \eta \cdot g^1 \newline
   &= \lambda \cdot (-\eta \cdot g^0) - \eta \cdot g^1
   \end{aligned}
   $$
@@ -223,7 +223,7 @@ $$
 
 #### 一般情況下的 Learning Rate 造成的問題
 
-![Learning Rate](./images/machine-leanring/LearningRate.png)
+![Learning Rate](./images/machine-learning/LearningRate.png)
 
 - 當 `Learning Rate` 設定太大時，可能會造成 `Oscillation` 的問題，Loss 會一直在上下跳動，無法收斂
 - 當 `Learning Rate` 設定太小時，可能會造成 `Convergence` 的問題，Loss 會一直往下收斂，但是收斂的速度很慢。就像上圖一樣，當 `Gradient` 很大時，沒什麼問題，但是當 `Gradient` 很小時，就會卡住
@@ -236,11 +236,11 @@ $$
 
 $$
 \begin{aligned}
-\theta^1_i \leftarrow \theta^0_i - \frac{\eta}{\sigma^0_i} \cdot g^0_i &\quad \sigma^0_i = \sqrt{(g^0_i)^2} = \lvert g^0_i \rvert \\
-\theta^2_i \leftarrow \theta^1_i - \frac{\eta}{\sigma^1_i} \cdot g^1_i &\quad \sigma^1_i = \sqrt{\frac{1}{2} \cdot [(g^0_i)^2 + (g^1_i)^2]} \\
-\theta^3_i \leftarrow \theta^2_i - \frac{\eta}{\sigma^2_i} \cdot g^2_i &\quad \sigma^2_i = \sqrt{\frac{1}{3} \cdot [(g^0_i)^2 + (g^1_i)^2 + (g^2_i)^2]} \\
-\vdots \\
-\theta^{t+1}_i \leftarrow \theta^t_i - \frac{\eta}{\sigma^t_i} \cdot g^t_i &\quad \sigma^t_i = \sqrt{\frac{1}{t+1} \cdot \sum_{k=0}^{t} (g^k_i)^2}
+\theta^1_i \leftarrow \theta^0_i - \frac{\eta}{\sigma^0_i} \cdot g^0_i &\quad \sigma^0_i = \sqrt{(g^0_i)^2} = \lvert g^0_i \rvert \newline
+\theta^2_i \leftarrow \theta^1_i - \frac{\eta}{\sigma^1_i} \cdot g^1_i &\quad \sigma^1_i = \sqrt{\frac{1}{2} \cdot [(g^0_i)^2 + (g^1_i)^2]} \newline
+\theta^3_i \leftarrow \theta^2_i - \frac{\eta}{\sigma^2_i} \cdot g^2_i &\quad \sigma^2_i = \sqrt{\frac{1}{3} \cdot [(g^0_i)^2 + (g^1_i)^2 + (g^2_i)^2]} \newline
+\vdots \newline
+\theta^{t+1}_i \leftarrow \theta^t_i - \frac{\eta}{\sigma^t_i} \cdot g^t_i &\quad \sigma^t_i = \sqrt{\frac{1}{t} \cdot \sum^t_k (g^k_i)^2}
 \end{aligned}
 $$
 
@@ -254,10 +254,10 @@ $$
 
 $$
 \begin{aligned}
-\theta^1_i \leftarrow \theta^0_i - \frac{\eta}{\sigma^0_i} \cdot g^0_i &\quad \sigma^0_i = \sqrt{(g^0_i)^2} = \lvert g^0_i \rvert \\
-\theta^2_i \leftarrow \theta^1_i - \frac{\eta}{\sigma^1_i} \cdot g^1_i &\quad \sigma^1_i = \sqrt{\alpha \cdot (\sigma^0_i)^2 + (1 - \alpha) \cdot (g^1_i)^2} \\
-\theta^3_i \leftarrow \theta^2_i - \frac{\eta}{\sigma^2_i} \cdot g^2_i &\quad \sigma^2_i = \sqrt{\alpha \cdot (\sigma^1_i)^2 + (1 - \alpha) \cdot (g^2_i)^2} \\
-\vdots \\
+\theta^1_i \leftarrow \theta^0_i - \frac{\eta}{\sigma^0_i} \cdot g^0_i &\quad \sigma^0_i = \sqrt{(g^0_i)^2} = \lvert g^0_i \rvert \newline
+\theta^2_i \leftarrow \theta^1_i - \frac{\eta}{\sigma^1_i} \cdot g^1_i &\quad \sigma^1_i = \sqrt{\alpha \cdot (\sigma^0_i)^2 + (1 - \alpha) \cdot (g^1_i)^2} \newline
+\theta^3_i \leftarrow \theta^2_i - \frac{\eta}{\sigma^2_i} \cdot g^2_i &\quad \sigma^2_i = \sqrt{\alpha \cdot (\sigma^1_i)^2 + (1 - \alpha) \cdot (g^2_i)^2} \newline
+\vdots \newline
 \theta^{t+1}_i \leftarrow \theta^t_i - \frac{\eta}{\sigma^t_i} \cdot g^t_i &\quad \sigma^t_i = \sqrt{\alpha \cdot (\sigma^{t-1}_i)^2 + (1 - \alpha) \cdot (g^t_i)^2}
 \end{aligned}
 $$
@@ -280,9 +280,7 @@ $$
 
   在一開始的時候，`Learning Rate` 會比較小，然後逐漸變大，最後再變小
 
-  ![Warm Up](https://img2023.cnblogs.com/blog/2024073/202402/2024073-20240224095347814-1191623432.png)
-
-  左邊是 `AdaGrad`，右邊是加上 `Warm Up`
+  ![Warm Up](./images/machine-learning/WarmUp.png)
 
 ### Loss Function
 
@@ -294,9 +292,9 @@ $$
 
 $$
 \begin{aligned}
-\hat{y} &= [1, 0, 0] \\
-\hat{y} &= [0, 1, 0] \\
-\hat{y} &= [0, 0, 1]
+\hat{y} &= [1, 0, 0] \newline
+\hat{y} &= [0, 1, 0] \newline
+\hat{y} &= [0, 0, 1] \newline
 \end{aligned}
 $$
 
@@ -304,8 +302,8 @@ $$
 
 $$
 \begin{aligned}
-\text{Softmax}(z)_i &= \frac{e^{z_i}}{\sum_{j=1}^{n} e^{z_j}} \\
-\hat{y} \leftrightarrow y^\prime &= \text{Softmax}(y) \\
+\text{Softmax}(z)_i &= \frac{e^{z_i}}{\sum^n_j e^{z_j}} \newline
+\hat{y} \leftrightarrow y^\prime &= \text{Softmax}(y) \newline
 \end{aligned}
 $$
 
@@ -335,9 +333,9 @@ $$
 
 $$
 \begin{aligned}
-\mu &= \frac{1}{m} \sum_{i=1}^{m} x_i \\
-\sigma^2 &= \frac{1}{m} \sum_{i=1}^{m} (x_i - \mu)^2 \\
-\hat{x}_i &= \frac{x_i - \mu}{\sqrt{\sigma^2 + \epsilon}} \\
+\mu &= \frac{1}{m} \sum_{i=1}^{m} x_i \newline
+\sigma^2 &= \frac{1}{m} \sum_{i=1}^{m} (x_i - \mu)^2 \newline
+\hat{x}_i &= \frac{x_i - \mu}{\sqrt{\sigma^2 + \epsilon}} \newline
 \end{aligned}
 $$
 
