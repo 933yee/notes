@@ -810,3 +810,40 @@ var join = function (arr1, arr2) {
   return Object.values(result);
 };
 ```
+
+### [2625. Flatten Deeply Nested Array](https://leetcode.com/problems/flatten-deeply-nested-array/description/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+DFS 陣列裡面的每一層
+
+```js
+/**
+ * @param {Array} arr
+ * @param {number} depth
+ * @return {Array}
+ */
+var flat = function (arr, n) {
+  const dfs = (arr, depth, tar_depth) => {
+    if (Array.isArray(arr) == false) return [arr];
+    const ret_arr = [];
+    arr.forEach((el) => {
+      if (depth < tar_depth) ret_arr.push(...dfs(el, depth + 1, tar_depth));
+      else ret_arr.push(el);
+    });
+    return ret_arr;
+  };
+  return dfs(arr, 0, n);
+};
+```
+
+也可以簡化成下面這樣，本質上是一樣的
+
+```js
+var flat = function (arr, n) {
+  const ret_arr = [];
+  arr.forEach((el) => {
+    if (n > 0 && Array.isArray(el)) ret_arr.push(...flat(el, n - 1));
+    else ret_arr.push(el);
+  });
+  return ret_arr;
+};
+```
