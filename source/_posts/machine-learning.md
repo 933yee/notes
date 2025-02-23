@@ -343,11 +343,25 @@ $$
 
 最常使用 `L1` 和 `L2` Regularization，在 `Loss Function` 中加上 `Regularization Term`，讓 `Model` 不要太複雜
 
+公式來源可以參考 Lagrange Multiplier。
+
 #### L1 Regularization
 
 $$
-Cost = Loss + \lambda \cdot \lVert w \rVert_1
+Loss\_Fn = original\_Loss\_Fn + \lambda \cdot \sum_{i=1}^{n} \lvert w_i \rvert
 $$
+
+#### L2 Regularization
+
+$$
+Loss\_Fn = original\_Loss\_Fn + \lambda \cdot \sum_{i=1}^{n} w_i^2
+$$
+
+![Regularization](./images/machine-learning/Regularization.png)
+
+#### 參考資料
+
+- [L1 , L2 Regularization 到底正則化了什麼 ?](https://allen108108.github.io/blog/2019/10/22/L1%20,%20L2%20Regularization%20%E5%88%B0%E5%BA%95%E6%AD%A3%E5%89%87%E5%8C%96%E4%BA%86%E4%BB%80%E9%BA%BC%20_/)
 
 ## Convolutional Neural Network (CNN)
 
