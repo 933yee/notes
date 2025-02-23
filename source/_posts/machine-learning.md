@@ -339,6 +339,16 @@ $$
 \end{aligned}
 $$
 
+### Regularization
+
+最常使用 `L1` 和 `L2` Regularization，在 `Loss Function` 中加上 `Regularization Term`，讓 `Model` 不要太複雜
+
+#### L1 Regularization
+
+$$
+Cost = Loss + \lambda \cdot \lVert w \rVert_1
+$$
+
 ## Convolutional Neural Network (CNN)
 
 如果用 `Fully Connected Network` 的方式來做圖片的分類，會有很多參數，雖然可以增加 Model 的彈性，但也會增加 `Overfitting` 的風險
@@ -589,7 +599,6 @@ class MyModel(nn.Module):
     # Compute the output of NN
     def forward(self, x):
         return self.nn(x)
-        return x
 ```
 
 ### Training
@@ -647,3 +656,23 @@ torch.save(model.state_dict(), path) # Save the model
 checkpoint = torch.load(path) # Load the model
 model.load_state_dict(checkpoint)
 ```
+
+## 可重現性 (Reproducibility)
+
+為了讓每次執行的結果都保持一樣，不然很難確定效果改進是因為調整 `hyperparameter`，還是來自隨機性的變異。
+
+```python
+myseed = 42069
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.benchmark = False
+np.random.seed(myseed)
+torch.manual_seed(myseed)
+if torch.cuda.is_available():
+    torch.cuda.manual_seed_all(myseed)
+```
+
+- `myseed = 42069`: 設定固定的 `seed`
+- `torch.backends.cudnn.deterministic = True`: `cuDNN` 為了加速計算，會默認選擇最快的方法，可能導致 non-deterministic 的行為發生，改成 `True` 可以確保每次結果都一樣
+- `torch.backends.cudnn.benchmark = False`: 禁止 `cuDNN` 自己選擇最佳的計算方法，使用固定的方法來保證每次計算方式相同
+
+如果為了 Performance 而不在乎 Reproducibility，可以把上面設成相反的
