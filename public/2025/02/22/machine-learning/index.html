@@ -54,10 +54,12 @@
 <meta property="og:image" content="https://miro.medium.com/v2/resize:fit:1400/1*IRvXQeATmX0JxJxz45_XUA.png">
 <meta property="og:image" content="https://miro.medium.com/v2/resize:fit:1400/1*2xKkjuDVe8zTUa6lVf3QGw.png">
 <meta property="og:image" content="https://miro.medium.com/v2/resize:fit:1400/1*qATp1B0W4BK0J4IL-sIsig.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/machine-learning/Encoder.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/machine-learning/Encoder-1.png">
 <meta property="og:image" content="https://933yee.github.io/notes/images/machine-learning/PytorchDNN.png">
 <meta property="og:image" content="https://933yee.github.io/notes/images/machine-learning/DatasetDataLoader.png">
 <meta property="article:published_time" content="2025-02-22T05:22:11.000Z">
-<meta property="article:modified_time" content="2025-02-23T16:57:02.181Z">
+<meta property="article:modified_time" content="2025-02-24T18:36:47.718Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="ml">
 <meta name="twitter:card" content="summary_large_image">
@@ -254,7 +256,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.2k words
+          4.3k words
         
       </span>
     
@@ -265,7 +267,7 @@
         
         
         
-          35 mins
+          37 mins
         
       </span>
     
@@ -627,6 +629,10 @@
 <li>只能 <code>Sequential</code> 計算，無法平行運算</li>
 </ul>
 <p><img src="https://miro.medium.com/v2/resize:fit:1400/1*qATp1B0W4BK0J4IL-sIsig.png" srcset="/notes/info/loading.gif" lazyload alt="Self-Attention vs RNN"></p>
+<h2 id="Transformer"><a href="#Transformer" class="headerlink" title="Transformer"></a>Transformer</h2><p>是一個 <code>Sequence-to-Sequence</code> 的模型，由機器自己決定輸出的長度，常用在 <code>Machine Translation</code>、<code>Speech Recognition</code>、<code>Speech Translation</code>、<code>Chatbot</code></p>
+<p>大部分的 NLP 問題都可以直接看成 <code>QA</code> 問題，而 <code>QA</code> 問題都可以看成 <code>Sequence-to-Sequence</code> 的問題，只要把 <code>Question</code> 和 <code>Context</code> 組合在一起，丟進 <code>Sequence-to-Sequence</code> 的模型裡面，就可以得到答案。但是 NLP 的問題中，客製化模型的表現通常會更好。</p>
+<p>有很多應用都可以硬用 <code>Sequence-to-Sequence</code> 的模型，像是 <code>Syntacic Parsing</code>，可以把這棵樹轉成 <code>Sequence</code>，直接塞進 <code>Sequence-to-Sequence</code> 的模型裡。其他還有 <code>Multi-label Classification</code>、<code>Object Detection</code> 等</p>
+<h3 id="Sequence-to-Sequence-Structure"><a href="#Sequence-to-Sequence-Structure" class="headerlink" title="Sequence-to-Sequence Structure"></a>Sequence-to-Sequence Structure</h3><h4 id="Encoder"><a href="#Encoder" class="headerlink" title="Encoder"></a>Encoder</h4><p><img src="/notes/./images/machine-learning/Encoder.png" srcset="/notes/info/loading.gif" lazyload alt="Encoder"><br><img src="/notes/./images/machine-learning/Encoder-1.png" srcset="/notes/info/loading.gif" lazyload alt="Encoder"></p>
 <h1 id="PyTorch"><a href="#PyTorch" class="headerlink" title="PyTorch"></a>PyTorch</h1><ul>
 <li>PyTorch 是一個開源的機器學習框架<ul>
 <li>可以做 <code>Tensor Computation</code>，像是 <code>Numpy</code>，但可以用 <code>GPU</code> 加速</li>

@@ -480,6 +480,21 @@ $$
 
 ![Self-Attention vs RNN](https://miro.medium.com/v2/resize:fit:1400/1*qATp1B0W4BK0J4IL-sIsig.png)
 
+## Transformer
+
+是一個 `Sequence-to-Sequence` 的模型，由機器自己決定輸出的長度，常用在 `Machine Translation`、`Speech Recognition`、`Speech Translation`、`Chatbot`
+
+大部分的 NLP 問題都可以直接看成 `QA` 問題，而 `QA` 問題都可以看成 `Sequence-to-Sequence` 的問題，只要把 `Question` 和 `Context` 組合在一起，丟進 `Sequence-to-Sequence` 的模型裡面，就可以得到答案。但是 NLP 的問題中，客製化模型的表現通常會更好。
+
+有很多應用都可以硬用 `Sequence-to-Sequence` 的模型，像是 `Syntacic Parsing`，可以把這棵樹轉成 `Sequence`，直接塞進 `Sequence-to-Sequence` 的模型裡。其他還有 `Multi-label Classification`、`Object Detection` 等
+
+### Sequence-to-Sequence Structure
+
+#### Encoder
+
+![Encoder](./images/machine-learning/Encoder.png)
+![Encoder](./images/machine-learning/Encoder-1.png)
+
 # PyTorch
 
 - PyTorch 是一個開源的機器學習框架

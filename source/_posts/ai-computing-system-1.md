@@ -342,6 +342,8 @@ reg  [3:0]  reg1  = 4'hf;                 // Hexadecimal, equals to 4'b1111
   - Instance Normalization
   - Group Normalization
 
+## Lecture
+
 ### AlexNet
 
 ![AlexNet](./images/machine-learning/AlexNet.png)
@@ -359,3 +361,26 @@ reg  [3:0]  reg1  = 4'hf;                 // Hexadecimal, equals to 4'b1111
 ![MobileNetV2](./images/machine-learning/MobileNetV2.png)
 
 [Source](https://www.dropbox.com/scl/fi/2qx0cfz7vim0fdhrmy986/lec02.pdf?rlkey=wdjw92hwohp4bhyos8wf5iinb&e=2&dl=0)
+
+#### Model Analysis
+
+- Latency: 一個任務完成所需的時間
+- Throughput: 一個時間內完成的任務數量
+  `Latency` 跟 `Throughput` 沒有絕對的關聯，優化 `Latency` 會更難一些
+- Power Consumption
+  不同 Building Block 的 Power Consumption 也不同，像是 floating point operation 會比 integer operation 耗電量高、DRAM (off-chip) 耗電量也比 SRAM 高
+- Number of Parameters
+- Model Size
+  `Model Size` = `Number of Parameters` \* `Bit Width`
+- Total/Peak Number of Activations
+  - `Peak Number of Activations` 成為一個系統能不能跑起來的關鍵 (Inference)
+  - Early Layer 的 `Activations` 會比較多，後面的 `Activations` 會比較少，`Weight` 會比較大
+- MACs (Multiply-Accumulate Operations)
+- FLOPs (Floating Point Operations)
+  - `FLOPs` = `MACs` \* `2` (一個 `MAC` 會有兩次 `FLOPs`)
+  - `FLOPS` = `FLOPs` / `second`
+- Roofline Model
+
+## Lab2
+
+`ONNX`(Open Neural Network Exchange)，可以讓不同的深度學習框架之間進行模型的轉換，例如 `PyTorch`、`TensorFlow`、`Caffe2`、`MXNet` 等。
