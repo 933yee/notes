@@ -29,7 +29,7 @@
 <meta property="og:image" content="https://933yee.github.io/notes/images/machine-learning/ResNet-50.png">
 <meta property="og:image" content="https://933yee.github.io/notes/images/machine-learning/MobileNetV2.png">
 <meta property="article:published_time" content="2025-02-19T17:11:23.000Z">
-<meta property="article:modified_time" content="2025-02-24T07:27:51.170Z">
+<meta property="article:modified_time" content="2025-02-24T12:56:40.571Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="Computing">
@@ -227,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k words
+          1.5k words
         
       </span>
     
@@ -238,7 +238,7 @@
         
         
         
-          11 mins
+          13 mins
         
       </span>
     
@@ -422,11 +422,31 @@
 </ul>
 </li>
 </ul>
-<h3 id="AlexNet"><a href="#AlexNet" class="headerlink" title="AlexNet"></a>AlexNet</h3><p><img src="/notes/./images/machine-learning/AlexNet.png" srcset="/notes/info/loading.gif" lazyload alt="AlexNet"></p>
+<h2 id="Lecture-1"><a href="#Lecture-1" class="headerlink" title="Lecture"></a>Lecture</h2><h3 id="AlexNet"><a href="#AlexNet" class="headerlink" title="AlexNet"></a>AlexNet</h3><p><img src="/notes/./images/machine-learning/AlexNet.png" srcset="/notes/info/loading.gif" lazyload alt="AlexNet"></p>
 <h3 id="VGG-16"><a href="#VGG-16" class="headerlink" title="VGG-16"></a>VGG-16</h3><p><img src="/notes/./images/machine-learning/VGG-16.png" srcset="/notes/info/loading.gif" lazyload alt="VGG-16"></p>
 <h3 id="ResNet-50"><a href="#ResNet-50" class="headerlink" title="ResNet-50"></a>ResNet-50</h3><p><img src="/notes/./images/machine-learning/ResNet-50.png" srcset="/notes/info/loading.gif" lazyload alt="ResNet-50"></p>
 <h3 id="MobileNetV2"><a href="#MobileNetV2" class="headerlink" title="MobileNetV2"></a>MobileNetV2</h3><p><img src="/notes/./images/machine-learning/MobileNetV2.png" srcset="/notes/info/loading.gif" lazyload alt="MobileNetV2"></p>
 <p><a target="_blank" rel="noopener" href="https://www.dropbox.com/scl/fi/2qx0cfz7vim0fdhrmy986/lec02.pdf?rlkey=wdjw92hwohp4bhyos8wf5iinb&e=2&dl=0">Source</a></p>
+<h4 id="Model-Analysis"><a href="#Model-Analysis" class="headerlink" title="Model Analysis"></a>Model Analysis</h4><ul>
+<li>Latency: 一個任務完成所需的時間</li>
+<li>Throughput: 一個時間內完成的任務數量<br><code>Latency</code> 跟 <code>Throughput</code> 沒有絕對的關聯，優化 <code>Latency</code> 會更難一些</li>
+<li>Power Consumption<br>不同 Building Block 的 Power Consumption 也不同，像是 floating point operation 會比 integer operation 耗電量高、DRAM (off-chip) 耗電量也比 SRAM 高</li>
+<li>Number of Parameters</li>
+<li>Model Size<br><code>Model Size</code> &#x3D; <code>Number of Parameters</code> * <code>Bit Width</code></li>
+<li>Total&#x2F;Peak Number of Activations<ul>
+<li><code>Peak Number of Activations</code> 成為一個系統能不能跑起來的關鍵 (Inference)</li>
+<li>Early Layer 的 <code>Activations</code> 會比較多，後面的 <code>Activations</code> 會比較少，<code>Weight</code> 會比較大</li>
+</ul>
+</li>
+<li>MACs (Multiply-Accumulate Operations)</li>
+<li>FLOPs (Floating Point Operations)<ul>
+<li><code>FLOPs</code> &#x3D; <code>MACs</code> * <code>2</code> (一個 <code>MAC</code> 會有兩次 <code>FLOPs</code>)</li>
+<li><code>FLOPS</code> &#x3D; <code>FLOPs</code> &#x2F; <code>second</code></li>
+</ul>
+</li>
+<li>Roofline Model</li>
+</ul>
+<h2 id="Lab2"><a href="#Lab2" class="headerlink" title="Lab2"></a>Lab2</h2><p><code>ONNX</code>(Open Neural Network Exchange)，可以讓不同的深度學習框架之間進行模型的轉換，例如 <code>PyTorch</code>、<code>TensorFlow</code>、<code>Caffe2</code>、<code>MXNet</code> 等。</p>
 
                 
               </div>
