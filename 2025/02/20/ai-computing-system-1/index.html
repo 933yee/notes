@@ -24,8 +24,12 @@
 <meta property="og:description" content="單純記錄課堂筆記，不保證正確性。  第一週 Everything is a numberLecture Base Conversion可以直接用 gdb 來看數字的表示方式，例如 12345678(gdb) p&#x2F;t 43275$1 &#x3D; 1010100100001011(gdb) p 0b1010100100001011$2 &#x3D; 43275(gdb) p&#x2F;x 43275$3 &#x3D; 0xa90b(gd">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://course.playlab.tw/md/uploads/5d04d2c9-3cfb-4222-bddb-bdfddc6483cf.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/machine-learning/AlexNet.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/machine-learning/VGG-16.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/machine-learning/ResNet-50.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/machine-learning/MobileNetV2.png">
 <meta property="article:published_time" content="2025-02-19T17:11:23.000Z">
-<meta property="article:modified_time" content="2025-02-21T03:55:13.265Z">
+<meta property="article:modified_time" content="2025-02-24T07:27:51.170Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="Computing">
@@ -223,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.2k words
+          1.3k words
         
       </span>
     
@@ -405,6 +409,24 @@
 
 <p>盡量用 <code>named connection</code>，增加程式碼的可讀性。開心的話也可以用 <code>ordered connection</code>。</p>
 <p>其他像是 <code>If Statement</code>、<code>Case Statement</code> 或 <code>? :</code> 本質上都是 <code>MUX</code>，跟軟體有差</p>
+<h1 id="第二週-AI-Models"><a href="#第二週-AI-Models" class="headerlink" title="第二週 AI Models"></a>第二週 AI Models</h1><p>生成式 AI 模型訓練成本居高不下，很多學者會針對模型的演算法去優化，降低運算量</p>
+<p><code>Zero-Shot</code> 或 <code>Few-Shot</code> 可以讓模型在沒有看過任何樣本的情況下做出預測，是 <code>General Purpose</code> 的模型，可以應用在各種不同的任務上。在 Training 的時候都是用 <code>Unsupervised Learning</code>，不需要標註的資料。</p>
+<ul>
+<li>Grouped Convolution Layer</li>
+<li>Depthwise Convolution Layer</li>
+<li>Normalization Layer<ul>
+<li>Batch Normalization</li>
+<li>Layer Normalization</li>
+<li>Instance Normalization</li>
+<li>Group Normalization</li>
+</ul>
+</li>
+</ul>
+<h3 id="AlexNet"><a href="#AlexNet" class="headerlink" title="AlexNet"></a>AlexNet</h3><p><img src="/notes/./images/machine-learning/AlexNet.png" srcset="/notes/info/loading.gif" lazyload alt="AlexNet"></p>
+<h3 id="VGG-16"><a href="#VGG-16" class="headerlink" title="VGG-16"></a>VGG-16</h3><p><img src="/notes/./images/machine-learning/VGG-16.png" srcset="/notes/info/loading.gif" lazyload alt="VGG-16"></p>
+<h3 id="ResNet-50"><a href="#ResNet-50" class="headerlink" title="ResNet-50"></a>ResNet-50</h3><p><img src="/notes/./images/machine-learning/ResNet-50.png" srcset="/notes/info/loading.gif" lazyload alt="ResNet-50"></p>
+<h3 id="MobileNetV2"><a href="#MobileNetV2" class="headerlink" title="MobileNetV2"></a>MobileNetV2</h3><p><img src="/notes/./images/machine-learning/MobileNetV2.png" srcset="/notes/info/loading.gif" lazyload alt="MobileNetV2"></p>
+<p><a target="_blank" rel="noopener" href="https://www.dropbox.com/scl/fi/2qx0cfz7vim0fdhrmy986/lec02.pdf?rlkey=wdjw92hwohp4bhyos8wf5iinb&e=2&dl=0">Source</a></p>
 
                 
               </div>
