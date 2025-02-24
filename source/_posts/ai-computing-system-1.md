@@ -327,3 +327,35 @@ reg  [3:0]  reg1  = 4'hf;                 // Hexadecimal, equals to 4'b1111
 盡量用 `named connection`，增加程式碼的可讀性。開心的話也可以用 `ordered connection`。
 
 其他像是 `If Statement`、`Case Statement` 或 `? :` 本質上都是 `MUX`，跟軟體有差
+
+# 第二週 AI Models
+
+生成式 AI 模型訓練成本居高不下，很多學者會針對模型的演算法去優化，降低運算量
+
+`Zero-Shot` 或 `Few-Shot` 可以讓模型在沒有看過任何樣本的情況下做出預測，是 `General Purpose` 的模型，可以應用在各種不同的任務上。在 Training 的時候都是用 `Unsupervised Learning`，不需要標註的資料。
+
+- Grouped Convolution Layer
+- Depthwise Convolution Layer
+- Normalization Layer
+  - Batch Normalization
+  - Layer Normalization
+  - Instance Normalization
+  - Group Normalization
+
+### AlexNet
+
+![AlexNet](./images/machine-learning/AlexNet.png)
+
+### VGG-16
+
+![VGG-16](./images/machine-learning/VGG-16.png)
+
+### ResNet-50
+
+![ResNet-50](./images/machine-learning/ResNet-50.png)
+
+### MobileNetV2
+
+![MobileNetV2](./images/machine-learning/MobileNetV2.png)
+
+[Source](https://www.dropbox.com/scl/fi/2qx0cfz7vim0fdhrmy986/lec02.pdf?rlkey=wdjw92hwohp4bhyos8wf5iinb&e=2&dl=0)
