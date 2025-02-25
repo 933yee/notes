@@ -138,4 +138,4 @@ Cell 裡面、Cell 之間的連線都沒有決定，可以根據需求來做 (�
 |  Cell Placement  |  variable   |    in row     |   fixed    |    fiexed    |    fixed     |
 | Interconnections |  variable   |   variable    |  variable  | programmable | programmable |
 
-高度的單位通常用 `Track` 來表示，一個 Track 通常是 1/2 Lambda，Lambda 是製程的最小尺寸
+高度的單位通常用 `Track` 來表示
