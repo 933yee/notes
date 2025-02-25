@@ -1,16 +1,134 @@
-### IC Design Flow
+---
+title: VLSI Physical Design Automation
+date: 2025-02-25 13:17:03
+tags: [vlsi, physical design, automation]
+category: VLSI
+---
 
-前端設計 (Front-end Design) → 後端設計 (Back-end / Physical Design) → Tape-out → 製造 → 測試 → 產品
+## IC Design Flow
+
+- System Specification
+
+  定義系統的需求，例如：功耗、面積、效能、功能等等。
+
+- Functional Design
+
+  定義系統的功能，例如：模擬、驗證、合成等等。
+
+- Logic Synthesis
+
+  把功能描述轉換成電路描述，並做邏輯上的優化，例如：RTL、Netlist。
+
+- Circuit Design
+
+  早期才有，這些 Logic Gate 要用那些 Transistor 來做。現在都用 `Cell Based Design`，從 `Cell Library` 拿標準元件來做，這些元件的 Layout 都已經設計好了。
 
 - Physical Design
-  把 Circuit Netlist 轉換成幾何圖形，並且將其放置在晶片上，並且將其連接起來。
-  1. Floorplanning
-  2. Placement
-     現在 Floorplanning 和 Placement 通常是一起做的，所以有時候會被合併成一個步驟。差別在於 Floorplanning 是在整個晶片上規劃，Placement 是在晶片上的每個 Cell 規劃。
-  3. Clock Tree Synthesis (CTS)
-  4. Routing
-  5. Layout
-  6. Design Rule Check (DRC)
-  7. Layout vs. Schematic (LVS)
-- PPA
-  Power, Performance, Area
+- Fabrication
+- Packaging & Testing
+
+## Physical Desgin
+
+把 `Circuit Netlist` 轉換成 `Layout` 的過程，每個元件要擺哪、要怎麼連接、怎麼樣才能達到最佳的 **Power**, **Performance**, **Area** (PPA)，甚至於 **Security**。
+
+![Circuit Netlist](./images/vlsi-physical-design-automation/CircuitNetlist.png)
+
+#### Computer-Aided Design (CAD)
+
+- **CAD** 是一個廣泛的領域，包含了各種不同的應用，例如：電路設計、機械設計、建築設計、電子設計等等。
+- **EDA** 是 CAD 的一個子集，專門用來設計電子電路。
+
+### Physical Design Flow
+
+- Partitioning
+  將整個設計拆分成較小的模組或區塊，以便於後續的設計。
+- Floorplanning
+  確定各個功能模組 (Functional Unit Block) 的位置
+- Placement
+  將標準單元（Standard Cells）、IPs 放到前面的 Functional Unit Block 裡面，常常跟 Floorplanning 一起做。
+- Clock Tree Synthesis
+  讓所有 Clock 訊號能夠同步傳遞到各個元件
+- Routing
+  根據 Netlist 和 Placement 的資訊，把元件之間的連線接起來
+- Post-routing Optimization
+- Compaction
+  早期才有，把 Placement 的結果做最佳化，現在都直接在 Placement 決定面積要多大
+- Extraction & Verification
+
+不同步驟之間常常會有 feedback loop
+
+#### IP (Intellectual Property)
+
+- Hard IP
+  通常是一個完整的功能模組，例如：CPU、GPU、DDR Controller
+- Soft IP
+  通常是一個功能模組的 RTL Code，Layout 還沒決定，可以根據不同的製程和需求做修改
+
+#### Moore's Law
+
+每隔 18-24 個月，晶片上的元件數量會增加一倍
+
+##### More Moore
+
+依賴於先進製程技術的推進（7nm → 5nm → 3nm → 2nm）。
+
+- FinFET → GAAFET（環繞閘極電晶體）→ CFET (互補場效應電晶體)
+- EUV (Extreme Ultraviolet Lithography)
+- 先進封裝技術，Chiplet、3D IC
+
+##### More than Moore
+
+專注於縮小電晶體尺寸
+
+- Compute-in-Memory
+
+### VLSI Design Considerations
+
+- Design Complexity
+- Performance
+- Time-to-Market
+- Cost: Die Area, Packaging, Testing
+- Power Consumption、Noise、Reliability
+
+考慮到不同的目標，會有不同的設計方法，像是：`Full Custom Design`, `Standard Cell Design`, `Gate Array Design`, `FPGA`, `CPLD`, `SPLD`, `SSI`
+
+#### Full Custom Design
+
+完全自訂，可以達到最佳的 PPA，但是花費時間和金錢最多
+
+#### Standard Cell Design
+
+![Standard Cell Design](./images/vlsi-physical-design-automation/StandardCellDesign.png)
+有一個 `Cell Library`，裡面有很多標準元件，每個都有固定的高度
+
+早期 Metal 層數不多，可以留 Routing Channel、Feedthrough Cell 來連接不同的 Cell。現在層數比較多，連線都在上空，所以可以把整 Row 的 Cell 翻轉，讓 GND 在一邊、VDD 在另一邊，減少 Routing 的複雜度
+
+#### Gate Array Design
+
+![Gate Array Design](./images/vlsi-physical-design-automation/GateArrayDesign.png)
+
+Cell 裡面、Cell 之間的連線都沒有決定，可以根據需求來做
+
+#### FPGA (Field Programmable Gate Array)
+
+![FPGA](./images/vlsi-physical-design-automation/FPGA.png)
+
+可以決定每個 Cell 的功能，線也連好了，線可以用 Switch、Switch Box 控制
+
+##### LUT (Look-Up Table)
+
+把某個計算過程的所有 Input 組合對應的 Output 存起來，這樣就不用每次都重新計算
+
+## Fundenmental of Algorithms
+
+- Graph Algorithms
+
+  把問題轉換成 Graph
+
+- Heuristic Algorithms
+
+  根據經驗和直覺來解決問題，不保證能找到最佳解。EDA 問題很多都是 NP-Hard，常常用到
+
+- Mathematical Programming
+
+  把問題轉換成數學模型，用數學方法來解決

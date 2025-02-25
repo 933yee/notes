@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>VLSI Physical Design Automation</title>
+    <link href="/notes/2025/02/25/vlsi-physical-design-automation/"/>
+    <url>/notes/2025/02/25/vlsi-physical-design-automation/</url>
+    
+    <content type="html"><![CDATA[<h2 id="IC-Design-Flow"><a href="#IC-Design-Flow" class="headerlink" title="IC Design Flow"></a>IC Design Flow</h2><ul><li><p>System Specification</p><p>定義系統的需求，例如：功耗、面積、效能、功能等等。</p></li><li><p>Functional Design</p><p>定義系統的功能，例如：模擬、驗證、合成等等。</p></li><li><p>Logic Synthesis</p><p>把功能描述轉換成電路描述，並做邏輯上的優化，例如：RTL、Netlist。</p></li><li><p>Circuit Design</p><p>早期才有，這些 Logic Gate 要用那些 Transistor 來做。現在都用 <code>Cell Based Design</code>，從 <code>Cell Library</code> 拿標準元件來做，這些元件的 Layout 都已經設計好了。</p></li><li><p>Physical Design</p></li><li><p>Fabrication</p></li><li><p>Packaging &amp; Testing</p></li></ul><h2 id="Physical-Desgin"><a href="#Physical-Desgin" class="headerlink" title="Physical Desgin"></a>Physical Desgin</h2><p>把 <code>Circuit Netlist</code> 轉換成 <code>Layout</code> 的過程，每個元件要擺哪、要怎麼連接、怎麼樣才能達到最佳的 <strong>Power</strong>, <strong>Performance</strong>, <strong>Area</strong> (PPA)，甚至於 <strong>Security</strong>。</p><p><img src="/notes/./images/vlsi-physical-design-automation/CircuitNetlist.png" alt="Circuit Netlist"></p><h4 id="Computer-Aided-Design-CAD"><a href="#Computer-Aided-Design-CAD" class="headerlink" title="Computer-Aided Design (CAD)"></a>Computer-Aided Design (CAD)</h4><ul><li><strong>CAD</strong> 是一個廣泛的領域，包含了各種不同的應用，例如：電路設計、機械設計、建築設計、電子設計等等。</li><li><strong>EDA</strong> 是 CAD 的一個子集，專門用來設計電子電路。</li></ul><h3 id="Physical-Design-Flow"><a href="#Physical-Design-Flow" class="headerlink" title="Physical Design Flow"></a>Physical Design Flow</h3><ul><li>Partitioning<br>將整個設計拆分成較小的模組或區塊，以便於後續的設計。</li><li>Floorplanning<br>確定各個功能模組 (Functional Unit Block) 的位置</li><li>Placement<br>將標準單元（Standard Cells）、IPs 放到前面的 Functional Unit Block 裡面，常常跟 Floorplanning 一起做。</li><li>Clock Tree Synthesis<br>讓所有 Clock 訊號能夠同步傳遞到各個元件</li><li>Routing<br>根據 Netlist 和 Placement 的資訊，把元件之間的連線接起來</li><li>Post-routing Optimization</li><li>Compaction<br>早期才有，把 Placement 的結果做最佳化，現在都直接在 Placement 決定面積要多大</li><li>Extraction &amp; Verification</li></ul><p>不同步驟之間常常會有 feedback loop</p><h4 id="IP-Intellectual-Property"><a href="#IP-Intellectual-Property" class="headerlink" title="IP (Intellectual Property)"></a>IP (Intellectual Property)</h4><ul><li>Hard IP<br>通常是一個完整的功能模組，例如：CPU、GPU、DDR Controller</li><li>Soft IP<br>通常是一個功能模組的 RTL Code，Layout 還沒決定，可以根據不同的製程和需求做修改</li></ul><h4 id="Moore’s-Law"><a href="#Moore’s-Law" class="headerlink" title="Moore’s Law"></a>Moore’s Law</h4><p>每隔 18-24 個月，晶片上的元件數量會增加一倍</p><h5 id="More-Moore"><a href="#More-Moore" class="headerlink" title="More Moore"></a>More Moore</h5><p>依賴於先進製程技術的推進（7nm → 5nm → 3nm → 2nm）。</p><ul><li>FinFET → GAAFET（環繞閘極電晶體）→ CFET (互補場效應電晶體)</li><li>EUV (Extreme Ultraviolet Lithography)</li><li>先進封裝技術，Chiplet、3D IC</li></ul><h5 id="More-than-Moore"><a href="#More-than-Moore" class="headerlink" title="More than Moore"></a>More than Moore</h5><p>專注於縮小電晶體尺寸</p><ul><li>Compute-in-Memory</li></ul><h3 id="VLSI-Design-Considerations"><a href="#VLSI-Design-Considerations" class="headerlink" title="VLSI Design Considerations"></a>VLSI Design Considerations</h3><ul><li>Design Complexity</li><li>Performance</li><li>Time-to-Market</li><li>Cost: Die Area, Packaging, Testing</li><li>Power Consumption、Noise、Reliability</li></ul><p>考慮到不同的目標，會有不同的設計方法，像是：<code>Full Custom Design</code>, <code>Standard Cell Design</code>, <code>Gate Array Design</code>, <code>FPGA</code>, <code>CPLD</code>, <code>SPLD</code>, <code>SSI</code></p><h4 id="Full-Custom-Design"><a href="#Full-Custom-Design" class="headerlink" title="Full Custom Design"></a>Full Custom Design</h4><p>完全自訂，可以達到最佳的 PPA，但是花費時間和金錢最多</p><h4 id="Standard-Cell-Design"><a href="#Standard-Cell-Design" class="headerlink" title="Standard Cell Design"></a>Standard Cell Design</h4><p><img src="/notes/./images/vlsi-physical-design-automation/StandardCellDesign.png" alt="Standard Cell Design"><br>有一個 <code>Cell Library</code>，裡面有很多標準元件，每個都有固定的高度</p><p>早期 Metal 層數不多，可以留 Routing Channel、Feedthrough Cell 來連接不同的 Cell。現在層數比較多，連線都在上空，所以可以把整 Row 的 Cell 翻轉，讓 GND 在一邊、VDD 在另一邊，減少 Routing 的複雜度</p><h4 id="Gate-Array-Design"><a href="#Gate-Array-Design" class="headerlink" title="Gate Array Design"></a>Gate Array Design</h4><p><img src="/notes/./images/vlsi-physical-design-automation/GateArrayDesign.png" alt="Gate Array Design"></p><p>Cell 裡面、Cell 之間的連線都沒有決定，可以根據需求來做</p><h4 id="FPGA-Field-Programmable-Gate-Array"><a href="#FPGA-Field-Programmable-Gate-Array" class="headerlink" title="FPGA (Field Programmable Gate Array)"></a>FPGA (Field Programmable Gate Array)</h4><p><img src="/notes/./images/vlsi-physical-design-automation/FPGA.png" alt="FPGA"></p><p>可以決定每個 Cell 的功能，線也連好了，線可以用 Switch、Switch Box 控制</p><h5 id="LUT-Look-Up-Table"><a href="#LUT-Look-Up-Table" class="headerlink" title="LUT (Look-Up Table)"></a>LUT (Look-Up Table)</h5><p>把某個計算過程的所有 Input 組合對應的 Output 存起來，這樣就不用每次都重新計算</p><h2 id="Fundenmental-of-Algorithms"><a href="#Fundenmental-of-Algorithms" class="headerlink" title="Fundenmental of Algorithms"></a>Fundenmental of Algorithms</h2><ul><li><p>Graph Algorithms</p><p>把問題轉換成 Graph</p></li><li><p>Heuristic Algorithms</p><p>根據經驗和直覺來解決問題，不保證能找到最佳解。EDA 問題很多都是 NP-Hard，常常用到</p></li><li><p>Mathematical Programming</p><p>把問題轉換成數學模型，用數學方法來解決</p></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>VLSI</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>vlsi</tag>
+      
+      <tag>physical design</tag>
+      
+      <tag>automation</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>數學筆記</title>
     <link href="/notes/2025/02/23/math/"/>
     <url>/notes/2025/02/23/math/</url>
@@ -57,19 +86,6 @@
       <tag>Computing</tag>
       
     </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title></title>
-    <link href="/notes/2025/02/19/vlsi-physical-design-automation/"/>
-    <url>/notes/2025/02/19/vlsi-physical-design-automation/</url>
-    
-    <content type="html"><![CDATA[<h3 id="IC-Design-Flow"><a href="#IC-Design-Flow" class="headerlink" title="IC Design Flow"></a>IC Design Flow</h3><p>前端設計 (Front-end Design) → 後端設計 (Back-end &#x2F; Physical Design) → Tape-out → 製造 → 測試 → 產品</p><ul><li>Physical Design<br>把 Circuit Netlist 轉換成幾何圖形，並且將其放置在晶片上，並且將其連接起來。<ol><li>Floorplanning</li><li>Placement<br>現在 Floorplanning 和 Placement 通常是一起做的，所以有時候會被合併成一個步驟。差別在於 Floorplanning 是在整個晶片上規劃，Placement 是在晶片上的每個 Cell 規劃。</li><li>Clock Tree Synthesis (CTS)</li><li>Routing</li><li>Layout</li><li>Design Rule Check (DRC)</li><li>Layout vs. Schematic (LVS)</li></ol></li><li>PPA<br>Power, Performance, Area</li></ul>]]></content>
-    
-    
     
   </entry>
   
@@ -885,9 +901,9 @@
     
     <tags>
       
-      <tag>Algorithm</tag>
-      
       <tag>Recursion</tag>
+      
+      <tag>Algorithm</tag>
       
     </tags>
     
@@ -972,9 +988,9 @@
     
     <tags>
       
-      <tag>Time Complexity</tag>
-      
       <tag>Algorithm</tag>
+      
+      <tag>Time Complexity</tag>
       
     </tags>
     
