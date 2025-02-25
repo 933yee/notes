@@ -1,0 +1,729 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/notes/info/fluid.png">
+  <link rel="icon" href="/notes/info/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Kevin Lee">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="我的數學好爛，忘光光，小補一下  泰勒展開式出發點：希望能夠用多項式來近似任何函數，包含 $sin(x)$、$cos(x)$、$e^x$ 等等，這樣就可以用微積分的方法來解決問題。 $$f(x) &#x3D; f(a) + f’(a)(x-a) + \frac{f’’(a)}{2!}(x-a)^2 + \frac{f’’’(a)}{3!}(x-a)^3 + \cdots + \frac{f^{(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="數學筆記">
+<meta property="og:url" content="https://933yee.github.io/notes/2025/02/23/math/index.html">
+<meta property="og:site_name" content="933yee&#39;s Notes">
+<meta property="og:description" content="我的數學好爛，忘光光，小補一下  泰勒展開式出發點：希望能夠用多項式來近似任何函數，包含 $sin(x)$、$cos(x)$、$e^x$ 等等，這樣就可以用微積分的方法來解決問題。 $$f(x) &#x3D; f(a) + f’(a)(x-a) + \frac{f’’(a)}{2!}(x-a)^2 + \frac{f’’’(a)}{3!}(x-a)^3 + \cdots + \frac{f^{(">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://933yee.github.io/notes/images/math/LevelCurves-1.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/math/LevelCurves-2.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/math/Gradient-0.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/math/Gradient-1.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/math/Gradient-2.png">
+<meta property="article:published_time" content="2025-02-23T10:37:12.000Z">
+<meta property="article:modified_time" content="2025-02-25T07:36:51.035Z">
+<meta property="article:author" content="Kevin Lee">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://933yee.github.io/notes/images/math/LevelCurves-1.png">
+  
+  
+  
+  <title>數學筆記 - 933yee&#39;s Notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/notes/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/notes/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/notes/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"933yee.github.io","root":"/notes/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/info/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/notes/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/notes/js/utils.js" ></script>
+  <script  src="/notes/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/notes/">
+      <strong>933yee&#39;s Notes</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/notes/info/default.gif') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.7)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="數學筆記"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-02-23 18:37" pubdate>
+          February 23, 2025 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.3k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          11 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">數學筆記</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>我的數學好爛，忘光光，小補一下</p>
+</blockquote>
+<h2 id="泰勒展開式"><a href="#泰勒展開式" class="headerlink" title="泰勒展開式"></a>泰勒展開式</h2><p>出發點：希望能夠用多項式來近似任何函數，包含 $sin(x)$、$cos(x)$、$e^x$ 等等，這樣就可以用微積分的方法來解決問題。</p>
+<p>$$<br>f(x) &#x3D; f(a) + f’(a)(x-a) + \frac{f’’(a)}{2!}(x-a)^2 + \frac{f’’’(a)}{3!}(x-a)^3 + \cdots + \frac{f^{(n)}(a)}{n!}(x-a)^n + R_n(x)<br>$$</p>
+<p>其中 $R_n(x)$ 是餘項</p>
+<h3 id="推導"><a href="#推導" class="headerlink" title="推導"></a>推導</h3><p>$$<br>f(x) &#x3D; a_0 + a_1x + a_2x^2 + a_3x^3 + \cdots + a_nx^n<br>$$</p>
+<p>以 $x &#x3D; 0$ 為例，當兩邊微分 $n$ 次後，得到通式 $a_n$：</p>
+<p>$$<br>f^{(n)}(0) &#x3D; n! \cdot a_n \Rightarrow a_n &#x3D; \frac{f^{(n)}(0)}{n!}<br>$$</p>
+<p>把 $a_n$ 代入 $f(x)$ 得到 <strong>馬克勞林級數 (Maclaurin Series)</strong> ：</p>
+<p>$$<br>f(x) &#x3D; f(0) + \frac{f’(0)}{1!}x + \frac{f’’(0)}{2!}x^2 + \frac{f’’’(0)}{3!}x^3 + \cdots + \frac{f^{(n)}(0)}{n!}x^n<br>$$</p>
+<p>現在為了適用於任意點 $a$，以函數平移的角度來看，從 $x &#x3D; 0$ 平移到 $x &#x3D; a$，就是 $x - a$，得到 <strong>泰勒展開式 (Taylor Series)</strong> ：</p>
+<p>$$<br>f(x) &#x3D; f(a) + \frac{f’(a)}{1!}(x-a) + \frac{f’’(a)}{2!}(x-a)^2 + \frac{f’’’(a)}{3!}(x-a)^3 + \cdots + \frac{f^{(n)}(a)}{n!}(x-a)^n<br>$$</p>
+<p>可以看到，<strong>泰勒展開式</strong> 是在 $x &#x3D; a$ 的點展開，<strong>馬克勞林級數</strong> 是在 $x &#x3D; 0$ 的點展開，<strong>泰勒展開式</strong> 是 <strong>馬克勞林級數</strong> 的一般化。</p>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><h4 id="e-x"><a href="#e-x" class="headerlink" title="$e^x$"></a>$e^x$</h4><p>在 $x &#x3D; a$ 展開：</p>
+<p>$$<br>e^x &#x3D; e^a + e^a(x-a) + \frac{e^a}{2!}(x-a)^2 + \frac{e^a}{3!}(x-a)^3 + \cdots + \frac{e^a}{n!}(x-a)^n &#x3D; \sum_{n&#x3D;0}^{\infty} \frac{e^a}{n!}(x-a)^n<br>$$</p>
+<p>在 $x &#x3D; 0$ 展開：</p>
+<p>$$<br>e^x &#x3D; 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots + \frac{x^n}{n!} &#x3D; \sum_{n&#x3D;0}^{\infty} \frac{x^n}{n!}<br>$$</p>
+<h4 id="sin-x"><a href="#sin-x" class="headerlink" title="$sin(x)$"></a>$sin(x)$</h4><p>在 $x &#x3D; 0$ 展開：</p>
+<p>$$<br>sin(x) &#x3D; x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} + \cdots &#x3D; \sum_{n&#x3D;0}^{\infty} (-1)^n \frac{x^{2n+1}}{(2n+1)!}<br>$$</p>
+<h4 id="cos-x"><a href="#cos-x" class="headerlink" title="$cos(x)$"></a>$cos(x)$</h4><p>在 $x &#x3D; 0$ 展開：</p>
+<p>$$<br>cos(x) &#x3D; 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \frac{x^6}{6!} + \cdots &#x3D; \sum_{n&#x3D;0}^{\infty} (-1)^n \frac{x^{2n}}{(2n)!}<br>$$</p>
+<h4 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=ViRvw2Hfto4">如何理解泰勒展开？它有何用途？高中生也能听懂的泰勒展开式</a></li>
+</ul>
+<h2 id="Lagrange-Multipliers"><a href="#Lagrange-Multipliers" class="headerlink" title="Lagrange Multipliers"></a>Lagrange Multipliers</h2><p>用來解決 <strong>帶約束條件的最佳化問題</strong>。當一個函數的極值問題受到其他等式約束時，可以用 <strong>Lagrange Multipliers</strong> 來解決。</p>
+<h3 id="Level-Curves"><a href="#Level-Curves" class="headerlink" title="Level Curves"></a>Level Curves</h3><p>圖中的紫色平面會把藍色函式 $f(x, y) &#x3D; 3x - x^3 -2y^2 + y^4$ 切成不同的等高線，每條等高線代表著相同的函數值。綠色的點為紫色平面上的某一點，可以發現這個點不管在哪裡，其算出的梯度向量 $\nabla f$ 永遠與等高線的切線向量垂直。</p>
+<p><img src="/notes/./images/math/LevelCurves-1.png" srcset="/notes/info/loading.gif" lazyload alt="Level Curves"><br><img src="/notes/./images/math/LevelCurves-2.png" srcset="/notes/info/loading.gif" lazyload alt="Level Curves"></p>
+<h3 id="有限制的最佳化問題"><a href="#有限制的最佳化問題" class="headerlink" title="有限制的最佳化問題"></a>有限制的最佳化問題</h3><p>在這個圖中，綠色為紅色函式的等高線投影，藍色函式為 $x$、$y$ 的限制條件，橘色函式為紅色函式在限制條件下的函式。<br><img src="/notes/./images/math/Gradient-0.png" srcset="/notes/info/loading.gif" lazyload alt="Gradient Example"></p>
+<p>可以發現當極值發生時，等高線的的 <code>Gradient</code> 和限制條件的 <code>Gradient</code> 會平行</p>
+<p><img src="/notes/./images/math/Gradient-1.png" srcset="/notes/info/loading.gif" lazyload alt="Gradient Example"><br><img src="/notes/./images/math/Gradient-2.png" srcset="/notes/info/loading.gif" lazyload alt="Gradient Example"></p>
+<p>因此可以得到</p>
+<p>$$<br>\nabla f(x, y) &#x3D; \lambda \nabla g(x, y)<br>$$</p>
+<p>其中 $\lambda$ 就是 <strong>Lagrange Multipliers</strong></p>
+<h4 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h4><p>求 $f(x, y) &#x3D; x^2 + 2y^2$ 在 $g(x, y) &#x3D; x^2 + y^2 &#x3D; 1$ 的極值。</p>
+<p>已知：</p>
+<p>$$<br>\begin{aligned}<br>f(x, y) &amp;&#x3D; x^2 + 2y^2 \newline<br>g(x, y) &amp;&#x3D; x^2 + y^2 &#x3D; 1 \newline<br>\end{aligned}<br>$$</p>
+<p>Gradient:</p>
+<p>$$<br>\begin{aligned}<br>\nabla f(x, y) &amp;&#x3D; \begin{bmatrix} 2x \ 4y \end{bmatrix} \newline<br>\nabla g(x, y) &amp;&#x3D; \begin{bmatrix} 2x \ 2y \end{bmatrix} \newline\newline<br>\nabla f(x, y) &amp;&#x3D; \lambda \nabla g(x, y) \newline<br>\Rightarrow \begin{bmatrix} 2x \ 4y \end{bmatrix} &amp;&#x3D; \lambda \begin{bmatrix} 2x \ 2y \end{bmatrix} \newline<br>\end{aligned}<br>$$</p>
+<p>得到</p>
+<p>$$<br>\begin{aligned}<br>2x &amp;&#x3D; \lambda 2x \Rightarrow (\lambda-1)x&#x3D;0 \Rightarrow \begin{cases} x&#x3D;0 \Rightarrow y^2&#x3D;1 \Rightarrow y&#x3D;\pm 1\newline \lambda&#x3D;1 \end{cases} \newline<br>&amp;\Rightarrow  (x, y) &#x3D; (0, 1) \text{ or } (0, -1)<br>\end{aligned}<br>$$</p>
+<p>$$<br>\begin{aligned}<br>4y &amp;&#x3D; \lambda 2y \Rightarrow (\lambda-2)y&#x3D;0 \Rightarrow \begin{cases} y&#x3D;0 \Rightarrow x^2&#x3D;1 \Rightarrow x&#x3D;\pm 1\newline \lambda&#x3D;2 \end{cases} \newline<br>&amp;\Rightarrow  (x, y) &#x3D; (1, 0) \text{ or } (-1, 0)<br>\end{aligned}<br>$$</p>
+<p>最後把所有 case 代入 $f(x, y)$ 就可以得到極值</p>
+<h3 id="Langrange-Function"><a href="#Langrange-Function" class="headerlink" title="Langrange Function"></a>Langrange Function</h3><p>同樣的邏輯，可以整理出更系統化的 <strong>Langrange Function</strong>：</p>
+<p>$$<br>L(x, y, \lambda) &#x3D; f(x, y) - \lambda \cdot g(x, y)<br>$$</p>
+<p>且</p>
+<p>$$<br>\frac{\partial L}{\partial x} &#x3D; 0 ,\quad<br>\frac{\partial L}{\partial y} &#x3D; 0 ,\quad<br>\frac{\partial L}{\partial \lambda} &#x3D; 0<br>$$</p>
+<h4 id="Example-1"><a href="#Example-1" class="headerlink" title="Example"></a>Example</h4><p>剛剛的題目，求 $f(x, y) &#x3D; x^2 + 2y^2$ 在 $g(x, y) &#x3D; x^2 + y^2 &#x3D; 1$ 的極值，可以變成：</p>
+<p>$$<br>\begin{aligned}<br>L(x, y, \lambda) &amp;&#x3D; f(x, y) - \lambda \cdot g(x, y) \newline<br>&amp;&#x3D; x^2 + 2y^2 - \lambda(x^2 + y^2 - 1) \newline<br>\end{aligned}<br>$$</p>
+<p>$$<br>\begin{aligned}<br>\frac{\partial L}{\partial x} &amp;&#x3D; 2x-2\lambda x &#x3D;0 \Rightarrow (1 - \lambda)x &#x3D; 0 \Rightarrow \lambda &#x3D; 1 \text{ or } x&#x3D;0\newline<br>\frac{\partial L}{\partial y} &amp;&#x3D; 4y-2\lambda y &#x3D;0 \Rightarrow (2 - \lambda)y &#x3D; 0 \Rightarrow \lambda &#x3D; 2 \text{ or } y&#x3D;0\newline<br>\frac{\partial L}{\partial \lambda} &amp;&#x3D; -(x^2 + y^2 - 1) &#x3D; 0 \Rightarrow x^2 + y^2 &#x3D; 1<br>\end{aligned}<br>$$</p>
+<p>得到</p>
+<p>$$<br>\begin{aligned}<br>\lambda &#x3D; 1 &amp;\Rightarrow y &#x3D; 0 \Rightarrow x &#x3D; \pm 1 \newline<br>\Rightarrow (x, y) &amp;&#x3D; (1, 0) \text{ or } (-1, 0) \newline \newline<br>\lambda &#x3D; 2 &amp;\Rightarrow x &#x3D; 0 \Rightarrow y &#x3D; \pm 1 \newline<br>\Rightarrow (x, y) &amp;&#x3D; (0, 1) \text{ or } (0, -1)<br>\end{aligned}<br>$$</p>
+<p>最後一樣把所有 case 代入 $f(x, y)$ 就可以得到極值</p>
+<h4 id="參考資料-1"><a href="#參考資料-1" class="headerlink" title="參考資料"></a>參考資料</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://www.geogebra.org/m/RGZNtfu3">Gradient and Level Curve</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.geogebra.org/m/cqmCmg7V">Máximos e Mínimos Condicionados</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=fYe0tU1Yimo">30 分鐘快速了解 Lagrange 乘數、Lagrange 函數與有限制條件的函數極值求法</a></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>數學筆記</div>
+      <div>https://933yee.github.io/notes/2025/02/23/math/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Kevin Lee</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>February 23, 2025</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/notes/2025/02/25/vlsi-physical-design-automation/" title="VLSI Physical Design Automation">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">VLSI Physical Design Automation</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/notes/2025/02/22/machine-learning/" title="機器學習筆記">
+                        <span class="hidden-mobile">機器學習筆記</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/notes/js/events.js" ></script>
+<script  src="/notes/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/notes/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/notes/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/notes/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

@@ -352,7 +352,7 @@ public:
 
 ### 2025/02/14 [1352. Product of the Last K Numbers](https://leetcode.com/problems/product-of-the-last-k-numbers/description/?envType=daily-question&envId=2025-02-14)
 
-- 儲存最後是 0 的 idx，在 `getProduct` 的時候才不會除以 `0`。另外我原本是把 ` v.size()` 直接寫在 `if` 裡面，後來發現 `v.size()` 是 `unsigned` 的型態，算出負數會發生 `runtime error`。 
+- 儲存最後是 0 的 idx，在 `getProduct` 的時候才不會除以 `0`。另外我原本是把 ` v.size()` 直接寫在 `if` 裡面，後來發現 `v.size()` 是 `unsigned` 的型態，算出負數會發生 `runtime error`。
   - Time Complexity $O(n)$
   - Space Complexity $O(n)$
 
@@ -386,7 +386,6 @@ public:
  */
 ```
 
-
 ### 2025/02/15 [2698. Find the Punishment Number of an Integer](https://leetcode.com/problems/find-the-punishment-number-of-an-integer/description/?envType=daily-question&envId=2025-02-15)
 
 暴力 DFS + 剪枝
@@ -413,7 +412,6 @@ public:
     }
 };
 ```
-
 
 ### 2025/02/16 [1718. Construct the Lexicographically Largest Valid Sequence](https://leetcode.com/problems/construct-the-lexicographically-largest-valid-sequence/description/?envType=daily-question&envId=2025-02-16)
 
@@ -514,6 +512,208 @@ public:
     string smallestNumber(string pattern) {
         dfs(pattern, 0);
         return res;
+    }
+};
+```
+
+### 2025/02/19 [1415. The k-th Lexicographical String of All Happy Strings of Length n](https://leetcode.com/problems/the-k-th-lexicographical-string-of-all-happy-strings-of-length-n/description/?envType=daily-question&envId=2025-02-19)
+
+DFS，確保不要重複，且在找到第 k 個時就可以直接 return
+
+```cpp
+class Solution {
+public:
+    string str = "abc";
+    bool dfs(int& n, int& k, int& k_cnt, string& ret){
+        if(ret.size() == n){
+            k_cnt++;
+            return k_cnt == k;
+        }
+
+        for(char& c:str){
+            if(!ret.empty() && ret.back() == c) continue;
+            ret.push_back(c);
+            if(dfs(n, k, k_cnt, ret))
+                return true;
+            ret.pop_back();
+        }
+        return false;
+    }
+
+    string getHappyString(int n, int k) {
+        string ret;
+        int k_cnt = 0;
+        dfs(n, k, k_cnt, ret);
+        return ret;
+    }
+};
+```
+
+### 2025/02/20 [1980. Find Unique Binary String](https://leetcode.com/problems/find-unique-binary-string/description/?envType=daily-question&envId=2025-02-20)
+
+`n` 最大到 16，應該也可以窮舉。這裡是直接讓每個 `num` 在不同位置至少有一個不同的位元，就能確保不會有重複的字串。
+
+```cpp
+class Solution {
+public:
+    string findDifferentBinaryString(vector<string>& nums) {
+        string res;
+        for (int i = 0; i < nums.size(); i++) {
+            if (nums[i][i] == '0')
+                res.push_back('1');
+            else
+                res.push_back('0');
+        }
+        return res;
+    }
+};
+
+```
+
+### 2025/02/21 [1261. Find Elements in a Contaminated Binary Tree](https://leetcode.com/problems/find-elements-in-a-contaminated-binary-tree/description/?envType=daily-question&envId=2025-02-21)
+
+好像有沒有 recover 都沒差，只要把所有的值都存起來就好(X
+
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class FindElements {
+public:
+    unordered_set<int> st;
+    FindElements(TreeNode* root) {
+        recover(root, 0);
+    }
+
+    void recover(TreeNode* node, int new_val){
+        if(node == NULL) return;
+        st.insert(new_val);
+        recover(node->left, new_val * 2 + 1);
+        recover(node->right, new_val * 2 + 2);
+    }
+
+    bool find(int target) {
+        return st.find(target) != st.end();
+    }
+};
+
+/**
+ * Your FindElements object will be instantiated and called as such:
+ * FindElements* obj = new FindElements(root);
+ * bool param_1 = obj->find(target);
+ */
+```
+
+### 2025/02/22 [1028. Recover a Tree From Preorder Traversal](https://leetcode.com/problems/recover-a-tree-from-preorder-traversal/description/?envType=daily-question&envId=2025-02-22)
+
+題目給的 input 是 `DFS preorder` 的結果，所以可以用 stack 還原回去。每次都要檢查 `depth` 的值 (就是 dash 的數量) 直到深度差一層為止，那就是 parent。
+
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* recoverFromPreorder(string traversal) {
+        stack<TreeNode*> stk;
+        stack<int> depth_stk;
+        TreeNode* head = new TreeNode(0);
+        stk.push(head);
+        depth_stk.push(-1);
+        int i = 0;
+
+        while(i < traversal.size()){
+            int num_dashes = 0, j = i, cur_num = 0;
+            while(j < traversal.size() && traversal[j] == '-'){
+                num_dashes++;
+                j++;
+            }
+
+            while(j < traversal.size() && traversal[j] != '-'){
+                cur_num = (cur_num * 10) + (traversal[j] - '0');
+                j++;
+            }
+
+            while(depth_stk.top() + 1 != num_dashes){
+                depth_stk.pop();
+                stk.pop();
+            }
+
+            TreeNode* parent = stk.top();
+            TreeNode* newNode = new TreeNode(cur_num);
+            if(parent->left == nullptr)
+                parent->left = newNode;
+            else
+                parent->right = newNode;
+
+            stk.push(newNode);
+            depth_stk.push(num_dashes);
+            i = j;
+        }
+        return head->left;
+    }
+};
+```
+
+### 2025/02/23 [889. Construct Binary Tree from Preorder and Postorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-postorder-traversal/description/?envType=daily-question&envId=2025-02-23)
+
+從 `preorder` 開始遍歷，每個值都去 `postorder` 的位置往右找，第一個已經用過的就是 parent node
+
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* constructFromPrePost(vector<int>& preorder, vector<int>& postorder) {
+        int n = preorder.size();
+        vector<TreeNode*> used(n, nullptr);
+        unordered_map<int, int> idx_mp;
+        for(int i=0; i<n; i++) idx_mp[postorder[i]] = i;
+
+        TreeNode* head = new TreeNode(preorder[0]);
+        used.back() = head;
+
+        for(int i=1; i<n; i++){
+            int cur_val = preorder[i];
+            int cur_idx = idx_mp[cur_val];
+            TreeNode* newVal = new TreeNode(cur_val);
+            used[cur_idx] = newVal;
+            for(int j=cur_idx+1; j<n; j++){
+                if(used[j] != nullptr){
+                    if(used[j]->left == nullptr)
+                        used[j]->left = newVal;
+                    else
+                        used[j]->right = newVal;
+                    break;
+                }
+            }
+        }
+        return head;
     }
 };
 ```
