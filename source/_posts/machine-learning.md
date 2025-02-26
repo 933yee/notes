@@ -423,7 +423,7 @@ $$
 
 ## Self-Attention
 
-先前提到的 `Input` 都只是一個 `Vector`，然而很多時候，模型吃的是 **一組 `Vector`**，又稱 `Vector Set`、`Sequence`，又可以分成三類
+先前提到的 `Input` 都只是一個 `Vector`，然而很多時候，模型吃的是 **一組 Vector**，又稱 `Vector Set`、`Sequence`，又可以分成三類
 
 - 每個 `Vector` 有一個 `Label`，輸入的數量等於輸出的數量，稱為 `Sequence Labeling`
   - ex: `Pos-Tagging`
@@ -494,6 +494,8 @@ $$
 
 ![Encoder](./images/machine-learning/Encoder.png)
 ![Encoder](./images/machine-learning/Encoder-1.png)
+
+#### Decoder - Autoregressive
 
 # PyTorch
 
