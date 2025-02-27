@@ -423,7 +423,7 @@ $$
 
 ## Self-Attention
 
-先前提到的 `Input` 都只是一個 `Vector`，然而很多時候，模型吃的是 **一組 `Vector`**，又稱 `Vector Set`、`Sequence`，又可以分成三類
+先前提到的 `Input` 都只是一個 `Vector`，然而很多時候，模型吃的是 **一組 Vector**，又稱 `Vector Set`、`Sequence`，又可以分成三類
 
 - 每個 `Vector` 有一個 `Label`，輸入的數量等於輸出的數量，稱為 `Sequence Labeling`
   - ex: `Pos-Tagging`
@@ -490,10 +490,20 @@ $$
 
 ### Sequence-to-Sequence Structure
 
+Transformer 的 Encoder 就像一位記憶力超強的老師，他把一整本書（你的輸入句子）讀完，並且整理出一本精華筆記（Encoder 的輸出）。
+然後，Decoder 是一個學生，他想要用自己的話來解釋這本書的內容（生成輸出句子）。
+
+但這位學生不會一次就把整本書背出來，而是一步一步地問老師：「接下來我要怎麼說？」
+每當學生說出一個單詞，他就會回頭看看老師的筆記（Cross-Attention），確認自己沒說錯，然後再繼續下一個單詞。
+
+所以，Encoder 負責總結資訊，Decoder 負責一步步產生句子，並透過 Cross-Attention 確保自己說的話合理。
+
 #### Encoder
 
 ![Encoder](./images/machine-learning/Encoder.png)
 ![Encoder](./images/machine-learning/Encoder-1.png)
+
+#### Decoder - Autoregressive
 
 # PyTorch
 
