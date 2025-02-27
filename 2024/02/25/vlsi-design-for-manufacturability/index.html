@@ -16,21 +16,28 @@
   <meta name="author" content="Kevin Lee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="IC design Lithography: 光照框出電路圖案，然後進行蝕刻 Diffraction: 繞射會造成 Lithography 不準確，可以從目標圖案反推出 Mask 的設計，稱為 Computational Lithography Immersion Lithography: 浸泡式光照用液體取代空氣，縮短光的波長，就好像換了一個 Light Source，減少繞射的影響  在 EU">
+    <meta name="description" content="參考清大麥偉基老師課程講義  Lithography Lithography: 光照框出電路圖案，然後進行蝕刻 Diffraction: 繞射會造成 Lithography 不準確，可以從目標圖案反推出 Mask 的設計，稱為 Computational Lithography    193i 的 i 代表 Immersion Lithography用液體取代空氣，縮短光的波長，就好像換了一個">
 <meta property="og:type" content="article">
-<meta property="og:title" content="933yee&#39;s Notes">
-<meta property="og:url" content="https://933yee.github.io/notes/2025/02/18/tmp/index.html">
+<meta property="og:title" content="VLSI Design for Manufacturability 筆記">
+<meta property="og:url" content="https://933yee.github.io/notes/2024/02/25/vlsi-design-for-manufacturability/index.html">
 <meta property="og:site_name" content="933yee&#39;s Notes">
-<meta property="og:description" content="IC design Lithography: 光照框出電路圖案，然後進行蝕刻 Diffraction: 繞射會造成 Lithography 不準確，可以從目標圖案反推出 Mask 的設計，稱為 Computational Lithography Immersion Lithography: 浸泡式光照用液體取代空氣，縮短光的波長，就好像換了一個 Light Source，減少繞射的影響  在 EU">
+<meta property="og:description" content="參考清大麥偉基老師課程講義  Lithography Lithography: 光照框出電路圖案，然後進行蝕刻 Diffraction: 繞射會造成 Lithography 不準確，可以從目標圖案反推出 Mask 的設計，稱為 Computational Lithography    193i 的 i 代表 Immersion Lithography用液體取代空氣，縮短光的波長，就好像換了一個">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2025-02-18T11:45:06.518Z">
-<meta property="article:modified_time" content="2025-02-25T12:29:27.800Z">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/LithographyDevelopment.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/OPC.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/EndToEndSeperationRule.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/MinimumLengthRule.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/PostProcessing.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/EnhancedMazeRoutingAlgorithm.png">
+<meta property="article:published_time" content="2024-02-25T02:48:15.000Z">
+<meta property="article:modified_time" content="2025-02-27T09:45:03.629Z">
 <meta property="article:author" content="Kevin Lee">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/LithographyDevelopment.png">
   
   
   
-  <title>933yee&#39;s Notes</title>
+  <title>VLSI Design for Manufacturability 筆記 - 933yee&#39;s Notes</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -196,7 +203,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text=""></span>
+            <span id="subtitle" data-typed-text="VLSI Design for Manufacturability 筆記"></span>
           
         </div>
 
@@ -207,8 +214,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-02-18 19:45" pubdate>
-          February 18, 2025 pm
+        <time datetime="2024-02-25 10:48" pubdate>
+          February 25, 2024 am
         </time>
       </span>
     
@@ -219,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          476 words
+          606 words
         
       </span>
     
@@ -230,7 +237,7 @@
         
         
         
-          4 mins
+          6 mins
         
       </span>
     
@@ -267,40 +274,52 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header"></h1>
+            <h1 id="seo-header">VLSI Design for Manufacturability 筆記</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="IC-design"><a href="#IC-design" class="headerlink" title="IC design"></a>IC design</h1><ul>
+                <blockquote>
+<p>參考清大麥偉基老師課程講義</p>
+</blockquote>
+<h2 id="Lithography"><a href="#Lithography" class="headerlink" title="Lithography"></a>Lithography</h2><ul>
 <li>Lithography: 光照<br>框出電路圖案，然後進行蝕刻</li>
 <li>Diffraction: 繞射<br>會造成 Lithography 不準確，可以從目標圖案反推出 Mask 的設計，稱為 Computational Lithography</li>
-<li>Immersion Lithography: 浸泡式光照<br>用液體取代空氣，縮短光的波長，就好像換了一個 Light Source，減少繞射的影響</li>
 </ul>
-<p>在 EUV Lithography 之前，可以用 Multi-Patterning，把一個圖案分成多個小圖案，然後分別曝光，最後合併成一個圖案。</p>
-<p><strong>Optical Proximity Correction (OPC)</strong> 是一種 Computational Lithography 的技術，根據 Mask 的設計來修正繞射的問題，得到更好的 Feature。</p>
-<p>每層 Layer 的 Metal 最好全部都是同一個方向，這樣可以減少製程的問題。</p>
+<p><img src="/notes/./images/vlsi-design-for-manufacturability/LithographyDevelopment.png" srcset="/notes/info/loading.gif" lazyload alt="Lithography Development"></p>
 <ul>
-<li>EUV Lithography: 極紫外光照<br>波長更短，解析度更高，但是光源不穩定，需要更多的功率</li>
-<li>DUV Lithography: 深紫外光照<br>波長比較長，解析度比較低，但是光源穩定，功率較低</li>
-<li>OPC: Optical Proximity Correction<br>透過 Computational Lithography 來修正繞射的問題</li>
-<li>PSM: Phase Shift Mask<br>透過 Mask 的設計來修正繞射的問題</li>
-<li>RET: Resolution Enhancement Technology<br>透過 Mask 的設計來增加解析度</li>
-<li>DFM: Design for Manufacturability<br>透過 Mask 的設計來增加製造的可行性</li>
-<li>CMP: Chemical Mechanical Polishing<br>用化學和機械的方式來研磨晶圓表面</li>
-<li>PVD: Physical Vapor Deposition<br>用物理的方式來沉積金屬薄膜</li>
-<li>CVD: Chemical Vapor Deposition<br>用化學的方式來沉積金屬薄膜</li>
-<li>ALD: Atomic Layer Deposition<br>用原子層的方式來沉積金屬薄膜</li>
-<li>Etching: 蝕刻<br>用化學的方式來移除金屬薄膜</li>
-<li>Ion Implantation: 離子佈植<br>用離子的方式來改變晶圓的導電性</li>
-<li>Annealing: 退火<br>用高溫的方式來改變晶圓的導電性</li>
-<li>Metrology: 計量<br>用來量測晶圓的尺寸和形狀</li>
-<li>Yield: 產量<br>用來衡量晶圓的良率</li>
-<li>DRC: Design Rule Check<br>用來檢查電路設計是否符合製造的規則</li>
-<li>LVS: Layout vs. Schematic<br>用來檢查電路設計是否符合電路圖</li>
-<li>EDA: Electronic Design Automation<br>用來協助設計電路的軟體</li>
-<li>TCAD: Technology Computer-Aided Design<br>用來協助設計製程的軟體</li>
+<li>193i 的 <code>i</code> 代表 Immersion Lithography<br>用液體取代空氣，縮短光的波長，就好像換了一個 Light Source，減少繞射的影響，而且波長 193nm 的技術已經很成熟</li>
+<li>EUV 代表 Extreme Ultraviolet Lithography<br>波長更短，繞射更少，但是製程更難，因為要用真空，光源也很難做</li>
+<li>Multi-Patterning<br>把一個圖案分成多個小圖案，然後分別曝光，最後合併成一個圖案。在 EUV Lithography 之前很常用，現在因為 EUV 很貴，有些先進製程還是用 193i + Multi-Patterning</li>
+<li>隨著技術進步，單位面積上的 Transistor 數量越來越多，但是製程成本也越來越高，所以不是每個裝置都用最先進的製程</li>
 </ul>
+<h2 id="Routing-in-Advanced-Nodes"><a href="#Routing-in-Advanced-Nodes" class="headerlink" title="Routing in Advanced Nodes"></a>Routing in Advanced Nodes</h2><p>受限於 <code>Lithography printability</code>、<code>Process Variation</code> 等，即使你用一樣的方法，做出來的也不一定是你要的。所以要考慮 <code>Design for Manufacturability</code>。</p>
+<h3 id="Design-Rule-Handling"><a href="#Design-Rule-Handling" class="headerlink" title="Design Rule Handling"></a>Design Rule Handling</h3><p><strong>Optical Proximity Correction (OPC)</strong> 是一種 Computational Lithography 的技術，修改 mask 來補償繞射和光刻製程中的非理想效應，讓實際製造出的 Pattern 更接近設計的目標。</p>
+<ul>
+<li>OPC 會造成線寬變寬，所以要考慮 <code>Design Rule</code>，ex：兩條線之間要留多少空間</li>
+</ul>
+<p><img src="/notes/./images/vlsi-design-for-manufacturability/OPC.png" srcset="/notes/info/loading.gif" lazyload alt="OPC"></p>
+<h4 id="End-to-End-Seperation-Rule"><a href="#End-to-End-Seperation-Rule" class="headerlink" title="End-to-End Seperation Rule"></a>End-to-End Seperation Rule</h4><p><img src="/notes/./images/vlsi-design-for-manufacturability/EndToEndSeperationRule.png" srcset="/notes/info/loading.gif" lazyload alt="End-to-End Seperation Rule"></p>
+<ul>
+<li>如果一條 Wire 的端點的相鄰軌道上有另一條 Wire，那這條 Wire 的末端至少要留 <strong>S2</strong> 的空間</li>
+<li>其他情況只需要預留 <strong>S1</strong> 的空間</li>
+</ul>
+<h4 id="Minimum-Length-Rule"><a href="#Minimum-Length-Rule" class="headerlink" title="Minimum Length Rule"></a>Minimum Length Rule</h4><p>每條線至少要有多長</p>
+<p><img src="/notes/./images/vlsi-design-for-manufacturability/MinimumLengthRule.png" srcset="/notes/info/loading.gif" lazyload alt="Minimum Length Rule"></p>
+<h3 id="MANA-A-Shortest-Path-MAze-Algorithm-under-Separation-and-Minimum-Length-NAnometer-Rules"><a href="#MANA-A-Shortest-Path-MAze-Algorithm-under-Separation-and-Minimum-Length-NAnometer-Rules" class="headerlink" title="MANA (A Shortest Path MAze Algorithm under Separation and Minimum Length NAnometer Rules)"></a>MANA (A Shortest Path MAze Algorithm under Separation and Minimum Length NAnometer Rules)</h3><p>傳統的 Maze Routing Algorithm 是在 Grid 上找一條最短的路徑，可能用 BFS 或 Dijkstra 等等，但是在 VLSI 設計中，還要考慮一些 <code>Design Rule</code></p>
+<h4 id="考慮到-Design-Rule-的-Maze-Routing-Algorithm"><a href="#考慮到-Design-Rule-的-Maze-Routing-Algorithm" class="headerlink" title="考慮到 Design Rule 的 Maze Routing Algorithm"></a>考慮到 Design Rule 的 Maze Routing Algorithm</h4><ul>
+<li><p>Post-Processing<br>把找到的路徑再做一些調整，像是延伸 Wire，讓他們符合先前提到的 <code>Design Rule</code>，不過這方法沒那麼好，會花很多資源</p>
+<p><img src="/notes/./images/vlsi-design-for-manufacturability/PostProcessing.png" srcset="/notes/info/loading.gif" lazyload alt="Post-Processing"></p>
+</li>
+<li><p>增強型 Maze Routing Algorithm<br>在找路徑的時候就考慮 <code>Design Rule</code>，像是「每條 Wire 至少要有多長」<br><img src="/notes/./images/vlsi-design-for-manufacturability/EnhancedMazeRoutingAlgorithm.png" srcset="/notes/info/loading.gif" lazyload alt="Enhanced Maze Routing Algorithm"></p>
+</li>
+</ul>
+<h2 id="Redundant-Via-Insertion"><a href="#Redundant-Via-Insertion" class="headerlink" title="Redundant Via Insertion"></a>Redundant Via Insertion</h2><p>一個 IC 有幾十億個 <code>via</code>，任何一個掛掉，整個 IC 也會掛掉</p>
+<h3 id="Double-Via-Insertion"><a href="#Double-Via-Insertion" class="headerlink" title="Double Via Insertion"></a>Double Via Insertion</h3><p>可以讓上下兩層 <code>metal</code> 凸出來一個，多塞一個 <code>via</code> 進去，這樣就算其中一個 <code>via</code> 掛掉，還有另一個 <code>via</code> 可以通電，增加 <code>Reliabllity</code>。多出來的 <code>metal</code> 可以不用符合 <code>Design Rule</code> (L 型 metal)</p>
+<p>相鄰的 <code>via</code> 不能在同個位置，稱之為 <code>via conflict</code>，還要考慮 <code>via enclosure</code>，每個 <code>via</code> 要有一個最小的空間</p>
+<!-- 這可以看成是 `Maximum Independent Set` 的問題，找到最大的 `Independent Set`，然後把其他的 `via` 都拔掉，是 `NP-Hard` 問題 (Polynomial Time 完成不了)
+
+因此我們著重於 `Maximal Independent Set` (Polynomial Time)，從最小 `degree` 的 `vertex` (via) 開始，因為它所連接的 `vertex` 最少，最不會影響別人。 -->
 
                 
               </div>
@@ -318,8 +337,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div></div>
-      <div>https://933yee.github.io/notes/2025/02/18/tmp/</div>
+      <div>VLSI Design for Manufacturability 筆記</div>
+      <div>https://933yee.github.io/notes/2024/02/25/vlsi-design-for-manufacturability/</div>
     </div>
     <div class="license-meta">
       
@@ -331,7 +350,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>February 18, 2025</div>
+          <div>February 25, 2024</div>
         </div>
       
       
@@ -363,9 +382,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/notes/2025/02/20/ai-computing-system-1/" title="人工智慧運算架構與系統 (一) 筆記">
+                      <a href="/notes/2024/02/25/ue4-cs-aceyan/" title="Unreal Engine 4 - GPGPU flocking 解析">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">人工智慧運算架構與系統 (一) 筆記</span>
+                        <span class="hidden-mobile">Unreal Engine 4 - GPGPU flocking 解析</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -373,8 +392,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/notes/2025/02/18/eda/" title="">
-                        <span class="hidden-mobile"></span>
+                      <a href="/notes/2024/02/21/gpgpu/" title="GPGPU">
+                        <span class="hidden-mobile">GPGPU</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -431,6 +450,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -624,6 +649,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/notes/js/local-search.js" ></script>
 
