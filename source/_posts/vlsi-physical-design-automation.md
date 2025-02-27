@@ -138,4 +138,28 @@ Cell 裡面、Cell 之間的連線都沒有決定，可以根據需求來做 (�
 |  Cell Placement  |  variable   |    in row     |   fixed    |    fiexed    |    fixed     |
 | Interconnections |  variable   |   variable    |  variable  | programmable | programmable |
 
-高度的單位通常用 `Track` 來表示，一個 Track 通常是 1/2 Lambda，Lambda 是製程的最小尺寸
+高度的單位通常用 `Track` (**T**) 表示
+
+##### Macro Cells
+
+包含數個 `Standard Cells`，感覺有點像 `IP`
+
+##### Structured ASIC
+
+> 越低層的 Metal，RC 的表現越差，Timing 會比較長，上層表現比較好
+
+介於 `Gate Array` 和 `FPGA` 之間，有幾層 Layer 已經是 Pre-Defined，還有一些 Layer 可以自己設計。
+
+流行於 `Engineering Change Order (ECO)`，只需要改某些 Layer，不用全部重新做
+
+##### Design Rule Checking (DRC)
+
+- Size Rules
+- Spacing (Separation) Rules
+  Minimum spaceing 不是一個常數，要考慮到兩條相鄰的線重疊的長度來決定
+- OVerlap Rules
+  每一層 Metal 都會分別做光照，上下兩層的 Overlapping 面積不能太小，光照的時候沒辦法 Align
+
+## Partitioning
+
+比較重要的 edge 或是 input 有數個的 output，讓他們的 weight 大一點。
