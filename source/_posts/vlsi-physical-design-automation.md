@@ -71,19 +71,19 @@ math: true
 
 每隔 18-24 個月，晶片上的元件數量會增加一倍
 
-##### More Moore
+- **More Moore**
 
-依賴於先進製程技術的推進（7nm → 5nm → 3nm → 2nm）。
+  依賴於先進製程技術的推進（7nm → 5nm → 3nm → 2nm）。
 
-- FinFET → GAAFET（環繞閘極電晶體）→ CFET (互補場效應電晶體)
-- EUV (Extreme Ultraviolet Lithography)
-- 先進封裝技術，Chiplet、3D IC
+  - FinFET → GAAFET（環繞閘極電晶體）→ CFET (互補場效應電晶體)
+  - EUV (Extreme Ultraviolet Lithography)
+  - 先進封裝技術，Chiplet、3D IC
 
-##### More than Moore
+- **More than Moore**
 
-專注於縮小電晶體尺寸
+  專注於縮小電晶體尺寸
 
-- Compute-in-Memory
+  - Compute-in-Memory
 
 ### VLSI Design Considerations
 
