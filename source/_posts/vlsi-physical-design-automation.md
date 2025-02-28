@@ -134,7 +134,7 @@ Cell 裡面、Cell 之間的連線都沒有決定，可以根據需求來做 (�
 |  Cell Placement  |  variable   |    in row     |   fixed    |    fiexed    |    fixed     |
 | Interconnections |  variable   |   variable    |  variable  | programmable | programmable |
 
-高度的單位通常用 `Track` 表示。因為 Standard Cell 的高度不是固定的，有些是 5 Track、有些是 7 Track，所以在做 Placement 的時候要考慮這些高度不同的 Cell (哪些 Row 要放某種高度的 Cell 之類的)
+高度的單位通常用 `Track` (**T**) 表示。因為 Standard Cell 的高度不是固定的，有些是 5 Track、有些是 7 Track，所以在做 Placement 的時候要考慮這些高度不同的 Cell (哪些 Row 要放某種高度的 Cell 之類的)
 
 |                               | Full Custom | Standard Cell | Gate Array | FPGA | SPLD |
 | :---------------------------: | :---------: | :-----------: | :--------: | :--: | :--: |
