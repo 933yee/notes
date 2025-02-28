@@ -3,6 +3,7 @@ title: VLSI Physical Design Automation
 date: 2025-02-25 13:17:03
 tags: [vlsi, physical design, automation]
 category: VLSI
+math: true
 ---
 
 > 參考清大王廷基老師課程講義
