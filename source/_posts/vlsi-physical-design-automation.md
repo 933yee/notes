@@ -187,8 +187,160 @@ Structured ASIC 介於 FPGA 和 Gate Array 之間，會事先定義好一些 Met
 
 ![Partitioning](./images/vlsi-physical-design-automation/Partitioning.png)
 
-- Cutset
-  一個 Cut 包含很多被切掉的 Net，Cutset 就是這些 Net 的集合
-- Cut size
-  Cutset 的大小
+- Cutset: 一個 Cut 包含很多被切掉的 Net，Cutset 就是這些 Net 的集合
+- Cut size: Cutset 的大小
 - 有些 Edge 可以賦予 Weight (像是 Critical Path 上的 Edge)
+
+### Problem
+
+給定 Graph $G = (V, E)$，每個 Vertex $v \in V$ 有 Size $s(v)$，每個 Edge $e \in E$ 有 Weight $w(e)$，要把 set $V$ 分成 $k$ 個 Partition，使得每個 Partition 的 Size 在某限制範圍內，並且最小化 Cutset 的 Weight。
+
+就算是在 $k = 2$、每個頂點 size 都一樣、每條邊的 weight 也一樣的情況下，在有 Size Constraint 的情況下，這個問題還是 NP-Hard
+
+> 若沒有 Size Constraint，這個問題就是 Maximum Flow Minimum Cut 問題，可以在 Polynomial Time 解決
+
+### Kernighan-Lin (KL) Algorithm
+
+KL Algorithm 是一種 Greedy 的 Heuristic Algorithm，不保證找到最佳解，但是通常結果不錯
+
+針對 2-way Partitioning、每個頂點 Size 一樣、每條邊都是 2-terminal nets 的情況，且兩個集合的 Size 要一樣大 (又稱 Balanced Partitioning、Bi-sectioning)
+
+1. 隨機把所有頂點分成兩個集合 $A$、$B$
+2. Pass
+   1. 選出 Gain 最大的 Pair $(u, v)$，$u \in A$、$v \in B$，並且交換 $u$、$v$ 的 Partition
+   2. Lock $u$、$v$，之後交換不再考慮這兩個頂點
+   3. 直到所有頂點都被 Lock
+   4. 算出最大的 Partial Sum Gain $G$，這個 Gain 就是這次 Pass 的 Gain
+   5. 假設前 $k$ 個 Pair 的 Gain 總和 $G_k$ 是最大的，就真的去交換前 $k$ 個 Pair
+3. 重複 Pass，直到 Partial Sum Gain $G = 0$
+
+- Gain
+  $$
+  \text{Gain}(u, v) = \text{Old\_Cutset}(A, B) - \text{New\_Cutset}(A, B)
+  $$
+  在同個 Pass 中，第二次算 Gain 的時候，它的 $\text{Old\_Cutset}(A, B)$ 是第一次算 Gain 的結果
+
+![KL Algorithm Example](./images/vlsi-physical-design-automation/KLAlgorithmExample.png)
+
+可以發現交換頂點 $u$、$v$ 之後，$u \in A$、$v \in B$，原本 $u$ 和集合 $B$ 所有頂點的連線都不用算在 Cut (**$u$、$v$ 連線除外**)，但原本 $u$ 和集合 $A$ 所有頂點的連線都要多算，同理於 $v$。因此在計算的時候只要考慮 `External Cost` 和 `Internal Cost` 就好
+
+- External Cost
+
+  $$
+  \text{External\_Cost}(u) = \sum_{v \in B} w(u, v)
+  $$
+
+- Internal Cost
+
+  $$
+  \text{Internal\_Cost}(u) = \sum_{v \in A} w(u, v)
+  $$
+
+- Cost Reduction for moving $u$ (D-value)
+
+  $$
+  \text{D-value}(u) = \text{External\_Cost}(u) - \text{Internal\_Cost}(u)
+  $$
+
+- Cost Reduction for swapping $u$ and $v$ (Gain)
+  $$
+  \text{Gain}(u, v) = \text{D-value}(u) + \text{D-value}(v) - 2w(u, v)
+  $$
+
+假設上述的 $u$、$v$ 是第一次交換，且 $x \in A - \{u\}$ 會在第二次被交換。第一次交換後必須更新 $x$ 的 D-value，因為 $x$ 的 Internal Cost 和 External Cost 都可能改變。
+
+原本 $x$ 和 $u$ 的連線不用算在 Cut，但是 $x$ 和 $v$ 的連線要算在 Cut，交換後一來一回都各自差兩倍
+
+$$
+\text{D-value}^\prime(x) = \text{D-value}(x) + 2w(x, u) - 2w(x, v)
+$$
+
+#### Time Complexity
+
+- 算出每個頂點的 D-value: $O(n^2)$
+- 一次 Pass 中，要交換所有頂點，每次交換都要找到所有 Pair 中最大的 Gain: $O(n \cdot n^2) = O(n^3)$
+- 若總共有 $r$ 次 Pass: $O(r \cdot n^3)$
+
+要做幾次 Pass 跟 Initial Partition 有關，但不管要做幾次，最後這個演算法一定可以結束，$r$ 一定是 _Finite Number_
+
+對於 K-way Partitioning 的問題，也可以用 KL Algorithm 來做
+
+- 一開始 Partition 成 K 個 set，讓這些 set 彼此之間套用 KL Algorithm，直到所有 set 都不再改變
+- 一開始 Partition 成 2 個 set，用 Recursive 的方式來做，直到 Partition 成 K 個 set，一樣兩兩套用 KL Algorithm
+
+#### KL Algorithm 的缺點
+
+- 假設所有頂點的 Size 都一樣
+
+  對於真實的 Logic Gate 來說，每個 Gate 的 Size (面積、大小) 都不一樣。
+
+  可以把這個頂點變成很多個單位頂點，形成一個 `Clique`，兩兩之間都有 Edge 相連，且讓他們的 Weight 超大，在做 KL 的時候可以保證這些頂點會在同一個 Partition。
+
+  但是這樣整個 Graph 的 Size 會變很大，頂點數量和邊數都大幅增加
+
+- KL Algorithm 只能考慮集合的 Size 相同的情況
+
+  要處理 Unbalanced Partitioning 的問題的話可以加入一些 Dummy Vertices
+
+- KL Algorithm 不能處理 Hypergraph
+
+  Hypergraph 是一種 Graph 的延伸，一個 Edge 可以連接多個 Vertex。要處裡這種問題要先把 Hypergraph 轉換成一般的 Graph
+
+- 複雜度高: $O(n^3)$
+
+### Fiduccia-Mattheyses (FM) Algorithm
+
+FM Algorithm 一樣是 Greedy 的 Heuristic Algorithm，為 KL Algorithm 的改良版，可以把 Pass 的複雜度降到 Linear Time
+
+#### 與 KL Algorithm 不同的地方
+
+- 一次只搬運一個 Vertex
+
+  可以想像一次只搬運一個 Vertex 的 Solutuon Space 會更大，更有機會找到更好的解
+
+- Vertex 可以有不同的 Size
+- 可以處理 Unbalanced Partitioning
+- 用 Bucket Sort 來選擇要移動的 Vertex
+- 每次 Pass 的時間複雜度是 $O(P)$，$P$ 是 Pin 的數量
+
+#### Notation
+
+- $n(i)$: Net $i$ 連到 Cell 的數量，ex: $n(1) = 4$
+- $s(i)$: Cell $i$ 的 Size
+- $p(i)$: Cell $i$ 的 Pin 的數量，ex: $p(6) = 3$
+- $C$: Cell 的總數，ex: $C = 6$
+- $N$: Net 的總數，ex: $N = 6$
+- $P$: Pin 的總數，ex: $P = p(1) + p(2) + \cdots + p(C)$
+
+![FM Algorithm Example](./images/vlsi-physical-design-automation/FMAlgorithmExample.png)
+
+#### Cut
+
+![Cut](./images/vlsi-physical-design-automation/Cut.png)
+
+- Cutstate: 這個 Net 有沒有被切到
+  - Net 1 和 Net 3 的狀態是 `Cut`
+  - Net 2、Net 4、Net 5 和 Net 6 的狀態是 `Uncut`
+- Cutset: 被切到的 Net 的集合
+  - Cutset = {Net 1, Net 3}
+- $\lvert A \rvert$ = size of set $A$ = $s(1) + s(5)$
+- $\lvert B \rvert$ = $s(2) + s(3) + s(4) + s(6)$
+
+本質上是一個 `Balanced Partitioning` 的問題加上一點彈性。給定一個常數 $r$，把一個 Hypergraph Partition 成兩個集合 $A$、$B$ 後，要滿足
+
+$$
+\frac{\lvert A \rvert}{\lvert A \rvert + \lvert B \rvert} \approx r
+$$
+
+也就是 **分在 A 那邊的面積** 要佔整個面積的 $r$，且希望 Cutset 的 Size 越小越好
+
+其中 $r$ 的意義是
+
+$$
+rW - S_{\text{max}} \leq \lvert A \rvert \leq rW + S_{\text{max}}
+$$
+
+其中
+
+- $W$ 是整個 Hypergraph 的總面積，$W = \lvert A \rvert + \lvert B \rvert$
+- $S_{\text{max}}$ 是最大的 Cell 的 Size
