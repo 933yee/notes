@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-physical-design-automation/FMAlgorithmExample.png">
 <meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-physical-design-automation/Cut.png">
 <meta property="article:published_time" content="2025-02-25T05:17:03.000Z">
-<meta property="article:modified_time" content="2025-02-28T15:38:05.429Z">
+<meta property="article:modified_time" content="2025-02-28T15:47:03.870Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="vlsi">
 <meta property="article:tag" content="physical design">
@@ -781,6 +781,12 @@
   
 
 
+  
+  
+
+
+
+
 
 
 
@@ -972,6 +978,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/notes/js/local-search.js" ></script>
 
