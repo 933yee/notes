@@ -9,7 +9,7 @@ math: true
 
 ## Lithography
 
-- Lithography: 光照
+- Lithography: 光刻
   框出電路圖案，然後進行蝕刻
 - Diffraction: 繞射
   會造成 Lithography 不準確，可以從目標圖案反推出 Mask 的設計，稱為 Computational Lithography

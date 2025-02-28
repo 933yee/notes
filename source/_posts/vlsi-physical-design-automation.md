@@ -5,6 +5,8 @@ tags: [vlsi, physical design, automation]
 category: VLSI
 ---
 
+> 參考清大王廷基老師課程講義
+
 ## IC Design Flow
 
 - System Specification
@@ -22,18 +24,6 @@ category: VLSI
 - Circuit Design
 
   早期才有，這些 Logic Gate 要用那些 Transistor 來做。現在都用 `Cell Based Design`，從 `Cell Library` 拿標準元件來做，這些元件的 Layout 都已經設計好了。
-
-Gate Array
-
-- 裡面的 transistor 都做好了，但還沒有做 intra-cell routing 和 inter-cell routing
-- 可以自己決定要把哪些 transistor 連接起來
-
-因為現在 Metal 可以很多層，所以 Row 和 Row 之間不用再留 Routing Channel，都直接在 Cell 上面連線
-
-FPGA
-
-- 第 31 頁中間是 switch bus
-- 主要是 Program 圖中的一堆 switch，設定成 0 或 1
 
 - Physical Design
 - Fabrication
@@ -111,7 +101,7 @@ FPGA
 #### Standard Cell Design
 
 ![Standard Cell Design](./images/vlsi-physical-design-automation/StandardCellDesign.png)
-有一個 `Cell Library`，裡面有很多標準元件，每個都有固定的高度
+有一個 `Cell Library`，裡面有很多標準元件，每個都有固定的高度。Layout 都已經設計好了，只要做 Metal Layer 就好
 
 早期 Metal 層數不多，可以留 Routing Channel、Feedthrough Cell 來連接不同的 Cell。現在層數比較多，連線都在上空，所以可以把整 Row 的 Cell 翻轉，讓 GND 在一邊、VDD 在另一邊，減少 Routing 的複雜度
 
@@ -131,6 +121,12 @@ Cell 裡面、Cell 之間的連線都沒有決定，可以根據需求來做 (�
 
 把某個計算過程的所有 Input 組合對應的 Output 存起來，這樣就不用每次都重新計算
 
+#### SPLD (Simple Programmable Logic Device)
+
+比 FPGA 簡單，只有一個矩陣，沒有 LUT
+
+#### Comparison
+
 |                  | Full Custom | Standard Cell | Gate Array |     FPGA     |     SPLD     |
 | :--------------: | :---------: | :-----------: | :--------: | :----------: | :----------: |
 |    Cell Size     |  variable   | fixed height  |   fixed    |    fixed     |    fixed     |
@@ -138,4 +134,61 @@ Cell 裡面、Cell 之間的連線都沒有決定，可以根據需求來做 (�
 |  Cell Placement  |  variable   |    in row     |   fixed    |    fiexed    |    fixed     |
 | Interconnections |  variable   |   variable    |  variable  | programmable | programmable |
 
-高度的單位通常用 `Track` 來表示
+高度的單位通常用 `Track` 表示。因為 Standard Cell 的高度不是固定的，有些是 5 Track、有些是 7 Track，所以在做 Placement 的時候要考慮這些高度不同的 Cell (哪些 Row 要放某種高度的 Cell 之類的)
+
+|                               | Full Custom | Standard Cell | Gate Array | FPGA | SPLD |
+| :---------------------------: | :---------: | :-----------: | :--------: | :--: | :--: |
+|       Fabrication Time        |     ---     |      --       |     +      | +++  |  ++  |
+|        Packing Density        |     +++     |      ++       |     +      |  --  | ---  |
+|  Unit Cost in Large Quantity  |     +++     |      ++       |     +      |  --  |  -   |
+|  Unit Cost in Small Quantity  |     ---     |      --       |     +      | +++  |  ++  |
+|  Easy Desgin and Simulation   |     ---     |      --       |     -      |  ++  |  +   |
+|      Easy Desgin Change       |     ---     |      --       |     -      |  ++  |  ++  |
+| Accuracy of Timing Simulation |      -      |       -       |     -      |  +   |  ++  |
+|          Chip Speed           |     +++     |      ++       |     +      |  -   |  --  |
+
+#### Macro Cells
+
+Macro 是常常用到的，很大片的 Logic Cell，可能包含很多個 Standard Cell，例如：ALU、Multiplier、Memory
+
+![Macro Cells](./images/vlsi-physical-design-automation/MacroCells.png)
+
+#### Structured ASIC (Application Specific Integrated Circuit)
+
+- ASIC
+  專門為某個應用設計的晶片，常常被用來跟 FPGA 做區隔，不是 FPGA 的就稱為 ASIC
+
+Structured ASIC 介於 FPGA 和 Gate Array 之間，會事先定義好一些 Metal Layers 和 Via Layers (Cut Layers)，剩下的 Layers 都是 Customizable，根據需求來客製化。很適合 ECO (Engineering Change Order)，只要改 Customizable 的部分就好
+
+> 越低層的 Layer 的線會比較細，RC 特性比較差，Timing 也會比較差，Delay 比較大。反之，越高層的 Layer，線會比較粗，Delay 比較小，因此越重要的 Signal 會放在越高層的 Layer
+
+### Design Rules
+
+- Size Rules
+  限制最小的長度、寬度
+
+- Seperation Rules
+  限制元件之間最小的間距，可能是同一層或相鄰層，可能是 Rectilinear、Euclidean diagonal distance，避免短路。Spacing 的部分不是常數，會隨著與相鄰 (不同 Track) Metal 重疊的部分有所不同
+
+- Overlap Rules
+  限制元件之間的重疊的最小面積。每一層 Layer 會有不同的光罩，有時候會有誤差，所以會需要一些 Overlap 來保護
+
+![Design Rules](./images/vlsi-physical-design-automation/DesignRules.png)
+
+## Partitioning
+
+把整個設計拆分成較小的電路或系統，每個部分可以獨立設計，最後再合併在一起。Decomposition 必須最小化這蠍子系統間的 Interconnection。其他還要考慮的點有
+
+- Constraints
+  確保每個部分都符合劃定的條件，像是你每個子系統都要用一個 FPGA 來實現，就要確保子系統的元件數量、I/O Pin 的數量不超過 FPGA 的限制
+
+- Communication
+  子系統之間的連線訊號不要出現在 Critical Path 上，晶片內的 Timing 跟 PCB 的 Timing 不一樣
+
+![Partitioning](./images/vlsi-physical-design-automation/Partitioning.png)
+
+- Cutset
+  一個 Cut 包含很多被切掉的 Net，Cutset 就是這些 Net 的集合
+- Cut size
+  Cutset 的大小
+- 有些 Edge 可以賦予 Weight (像是 Critical Path 上的 Edge)
