@@ -16,19 +16,22 @@
   <meta name="author" content="Kevin Lee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="IC Design Flow System Specification 定義系統的需求，例如：功耗、面積、效能、功能等等。  Functional Design 定義系統的功能，例如：模擬、驗證、合成等等。  Logic Synthesis 把功能描述轉換成電路描述，並做邏輯上的優化，例如：RTL、Netlist。  Circuit Design 早期才有，這些 Logic Gate 要用那些 T">
+    <meta name="description" content="參考清大王廷基老師課程講義  IC Design Flow System Specification 定義系統的需求，例如：功耗、面積、效能、功能等等。  Functional Design 定義系統的功能，例如：模擬、驗證、合成等等。  Logic Synthesis 把功能描述轉換成電路描述，並做邏輯上的優化，例如：RTL、Netlist。  Circuit Design 早期才有，這些 L">
 <meta property="og:type" content="article">
 <meta property="og:title" content="VLSI Physical Design Automation">
 <meta property="og:url" content="https://933yee.github.io/notes/2025/02/25/vlsi-physical-design-automation/index.html">
 <meta property="og:site_name" content="933yee&#39;s Notes">
-<meta property="og:description" content="IC Design Flow System Specification 定義系統的需求，例如：功耗、面積、效能、功能等等。  Functional Design 定義系統的功能，例如：模擬、驗證、合成等等。  Logic Synthesis 把功能描述轉換成電路描述，並做邏輯上的優化，例如：RTL、Netlist。  Circuit Design 早期才有，這些 Logic Gate 要用那些 T">
+<meta property="og:description" content="參考清大王廷基老師課程講義  IC Design Flow System Specification 定義系統的需求，例如：功耗、面積、效能、功能等等。  Functional Design 定義系統的功能，例如：模擬、驗證、合成等等。  Logic Synthesis 把功能描述轉換成電路描述，並做邏輯上的優化，例如：RTL、Netlist。  Circuit Design 早期才有，這些 L">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-physical-design-automation/CircuitNetlist.png">
 <meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-physical-design-automation/StandardCellDesign.png">
 <meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-physical-design-automation/GateArrayDesign.png">
 <meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-physical-design-automation/FPGA.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-physical-design-automation/MacroCells.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-physical-design-automation/DesignRules.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-physical-design-automation/Partitioning.png">
 <meta property="article:published_time" content="2025-02-25T05:17:03.000Z">
-<meta property="article:modified_time" content="2025-02-25T12:29:32.125Z">
+<meta property="article:modified_time" content="2025-02-28T09:30:03.133Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="vlsi">
 <meta property="article:tag" content="physical design">
@@ -227,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          773 words
+          1.2k words
         
       </span>
     
@@ -238,7 +241,7 @@
         
         
         
-          7 mins
+          11 mins
         
       </span>
     
@@ -280,7 +283,10 @@
             
               <div class="markdown-body">
                 
-                <h2 id="IC-Design-Flow"><a href="#IC-Design-Flow" class="headerlink" title="IC Design Flow"></a>IC Design Flow</h2><ul>
+                <blockquote>
+<p>參考清大王廷基老師課程講義</p>
+</blockquote>
+<h2 id="IC-Design-Flow"><a href="#IC-Design-Flow" class="headerlink" title="IC Design Flow"></a>IC Design Flow</h2><ul>
 <li><p>System Specification</p>
 <p>定義系統的需求，例如：功耗、面積、效能、功能等等。</p>
 </li>
@@ -292,19 +298,6 @@
 </li>
 <li><p>Circuit Design</p>
 <p>早期才有，這些 Logic Gate 要用那些 Transistor 來做。現在都用 <code>Cell Based Design</code>，從 <code>Cell Library</code> 拿標準元件來做，這些元件的 Layout 都已經設計好了。</p>
-</li>
-</ul>
-<p>Gate Array</p>
-<ul>
-<li>裡面的 transistor 都做好了，但還沒有做 intra-cell routing 和 inter-cell routing</li>
-<li>可以自己決定要把哪些 transistor 連接起來</li>
-</ul>
-<p>因為現在 Metal 可以很多層，所以 Row 和 Row 之間不用再留 Routing Channel，都直接在 Cell 上面連線</p>
-<p>FPGA</p>
-<ul>
-<li><p>第 31 頁中間是 switch bus</p>
-</li>
-<li><p>主要是 Program 圖中的一堆 switch，設定成 0 或 1</p>
 </li>
 <li><p>Physical Design</p>
 </li>
@@ -354,14 +347,15 @@
 </ul>
 <p>考慮到不同的目標，會有不同的設計方法，像是：<code>Full Custom Design</code>, <code>Standard Cell Design</code>, <code>Gate Array Design</code>, <code>FPGA</code>, <code>CPLD</code>, <code>SPLD</code>, <code>SSI</code></p>
 <h4 id="Full-Custom-Design"><a href="#Full-Custom-Design" class="headerlink" title="Full Custom Design"></a>Full Custom Design</h4><p>完全自訂，可以達到最佳的 PPA，但是花費時間和金錢最多</p>
-<h4 id="Standard-Cell-Design"><a href="#Standard-Cell-Design" class="headerlink" title="Standard Cell Design"></a>Standard Cell Design</h4><p><img src="/notes/./images/vlsi-physical-design-automation/StandardCellDesign.png" srcset="/notes/info/loading.gif" lazyload alt="Standard Cell Design"><br>有一個 <code>Cell Library</code>，裡面有很多標準元件，每個都有固定的高度</p>
+<h4 id="Standard-Cell-Design"><a href="#Standard-Cell-Design" class="headerlink" title="Standard Cell Design"></a>Standard Cell Design</h4><p><img src="/notes/./images/vlsi-physical-design-automation/StandardCellDesign.png" srcset="/notes/info/loading.gif" lazyload alt="Standard Cell Design"><br>有一個 <code>Cell Library</code>，裡面有很多標準元件，每個都有固定的高度。Layout 都已經設計好了，只要做 Metal Layer 就好</p>
 <p>早期 Metal 層數不多，可以留 Routing Channel、Feedthrough Cell 來連接不同的 Cell。現在層數比較多，連線都在上空，所以可以把整 Row 的 Cell 翻轉，讓 GND 在一邊、VDD 在另一邊，減少 Routing 的複雜度</p>
 <h4 id="Gate-Array-Design"><a href="#Gate-Array-Design" class="headerlink" title="Gate Array Design"></a>Gate Array Design</h4><p><img src="/notes/./images/vlsi-physical-design-automation/GateArrayDesign.png" srcset="/notes/info/loading.gif" lazyload alt="Gate Array Design"></p>
 <p>Cell 裡面、Cell 之間的連線都沒有決定，可以根據需求來做 (沒什麼人在用?</p>
 <h4 id="FPGA-Field-Programmable-Gate-Array"><a href="#FPGA-Field-Programmable-Gate-Array" class="headerlink" title="FPGA (Field Programmable Gate Array)"></a>FPGA (Field Programmable Gate Array)</h4><p><img src="/notes/./images/vlsi-physical-design-automation/FPGA.png" srcset="/notes/info/loading.gif" lazyload alt="FPGA"></p>
 <p>可以決定每個 Cell 的功能，線也連好了，線可以用 Switch、Switch Box 控制</p>
 <h5 id="LUT-Look-Up-Table"><a href="#LUT-Look-Up-Table" class="headerlink" title="LUT (Look-Up Table)"></a>LUT (Look-Up Table)</h5><p>把某個計算過程的所有 Input 組合對應的 Output 存起來，這樣就不用每次都重新計算</p>
-<table>
+<h4 id="SPLD-Simple-Programmable-Logic-Device"><a href="#SPLD-Simple-Programmable-Logic-Device" class="headerlink" title="SPLD (Simple Programmable Logic Device)"></a>SPLD (Simple Programmable Logic Device)</h4><p>比 FPGA 簡單，只有一個矩陣，沒有 LUT</p>
+<h4 id="Comparison"><a href="#Comparison" class="headerlink" title="Comparison"></a>Comparison</h4><table>
 <thead>
 <tr>
 <th align="center"></th>
@@ -405,7 +399,114 @@
 <td align="center">programmable</td>
 </tr>
 </tbody></table>
-<p>高度的單位通常用 <code>Track</code> 來表示</p>
+<p>高度的單位通常用 <code>Track</code> 表示。因為 Standard Cell 的高度不是固定的，有些是 5 Track、有些是 7 Track，所以在做 Placement 的時候要考慮這些高度不同的 Cell (哪些 Row 要放某種高度的 Cell 之類的)</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">Full Custom</th>
+<th align="center">Standard Cell</th>
+<th align="center">Gate Array</th>
+<th align="center">FPGA</th>
+<th align="center">SPLD</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Fabrication Time</td>
+<td align="center">—</td>
+<td align="center">–</td>
+<td align="center">+</td>
+<td align="center">+++</td>
+<td align="center">++</td>
+</tr>
+<tr>
+<td align="center">Packing Density</td>
+<td align="center">+++</td>
+<td align="center">++</td>
+<td align="center">+</td>
+<td align="center">–</td>
+<td align="center">—</td>
+</tr>
+<tr>
+<td align="center">Unit Cost in Large Quantity</td>
+<td align="center">+++</td>
+<td align="center">++</td>
+<td align="center">+</td>
+<td align="center">–</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="center">Unit Cost in Small Quantity</td>
+<td align="center">—</td>
+<td align="center">–</td>
+<td align="center">+</td>
+<td align="center">+++</td>
+<td align="center">++</td>
+</tr>
+<tr>
+<td align="center">Easy Desgin and Simulation</td>
+<td align="center">—</td>
+<td align="center">–</td>
+<td align="center">-</td>
+<td align="center">++</td>
+<td align="center">+</td>
+</tr>
+<tr>
+<td align="center">Easy Desgin Change</td>
+<td align="center">—</td>
+<td align="center">–</td>
+<td align="center">-</td>
+<td align="center">++</td>
+<td align="center">++</td>
+</tr>
+<tr>
+<td align="center">Accuracy of Timing Simulation</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">+</td>
+<td align="center">++</td>
+</tr>
+<tr>
+<td align="center">Chip Speed</td>
+<td align="center">+++</td>
+<td align="center">++</td>
+<td align="center">+</td>
+<td align="center">-</td>
+<td align="center">–</td>
+</tr>
+</tbody></table>
+<h4 id="Macro-Cells"><a href="#Macro-Cells" class="headerlink" title="Macro Cells"></a>Macro Cells</h4><p>Macro 是常常用到的，很大片的 Logic Cell，可能包含很多個 Standard Cell，例如：ALU、Multiplier、Memory</p>
+<p><img src="/notes/./images/vlsi-physical-design-automation/MacroCells.png" srcset="/notes/info/loading.gif" lazyload alt="Macro Cells"></p>
+<h4 id="Structured-ASIC-Application-Specific-Integrated-Circuit"><a href="#Structured-ASIC-Application-Specific-Integrated-Circuit" class="headerlink" title="Structured ASIC (Application Specific Integrated Circuit)"></a>Structured ASIC (Application Specific Integrated Circuit)</h4><ul>
+<li>ASIC<br>專門為某個應用設計的晶片，常常被用來跟 FPGA 做區隔，不是 FPGA 的就稱為 ASIC</li>
+</ul>
+<p>Structured ASIC 介於 FPGA 和 Gate Array 之間，會事先定義好一些 Metal Layers 和 Via Layers (Cut Layers)，剩下的 Layers 都是 Customizable，根據需求來客製化。很適合 ECO (Engineering Change Order)，只要改 Customizable 的部分就好</p>
+<blockquote>
+<p>越低層的 Layer 的線會比較細，RC 特性比較差，Timing 也會比較差，Delay 比較大。反之，越高層的 Layer，線會比較粗，Delay 比較小，因此越重要的 Signal 會放在越高層的 Layer</p>
+</blockquote>
+<h3 id="Design-Rules"><a href="#Design-Rules" class="headerlink" title="Design Rules"></a>Design Rules</h3><ul>
+<li><p>Size Rules<br>限制最小的長度、寬度</p>
+</li>
+<li><p>Seperation Rules<br>限制元件之間最小的間距，可能是同一層或相鄰層，可能是 Rectilinear、Euclidean diagonal distance，避免短路。Spacing 的部分不是常數，會隨著與相鄰 (不同 Track) Metal 重疊的部分有所不同</p>
+</li>
+<li><p>Overlap Rules<br>限制元件之間的重疊的最小面積。每一層 Layer 會有不同的光罩，有時候會有誤差，所以會需要一些 Overlap 來保護</p>
+</li>
+</ul>
+<p><img src="/notes/./images/vlsi-physical-design-automation/DesignRules.png" srcset="/notes/info/loading.gif" lazyload alt="Design Rules"></p>
+<h2 id="Partitioning"><a href="#Partitioning" class="headerlink" title="Partitioning"></a>Partitioning</h2><p>把整個設計拆分成較小的電路或系統，每個部分可以獨立設計，最後再合併在一起。Decomposition 必須最小化這蠍子系統間的 Interconnection。其他還要考慮的點有</p>
+<ul>
+<li><p>Constraints<br>確保每個部分都符合劃定的條件，像是你每個子系統都要用一個 FPGA 來實現，就要確保子系統的元件數量、I&#x2F;O Pin 的數量不超過 FPGA 的限制</p>
+</li>
+<li><p>Communication<br>子系統之間的連線訊號不要出現在 Critical Path 上，晶片內的 Timing 跟 PCB 的 Timing 不一樣</p>
+</li>
+</ul>
+<p><img src="/notes/./images/vlsi-physical-design-automation/Partitioning.png" srcset="/notes/info/loading.gif" lazyload alt="Partitioning"></p>
+<ul>
+<li>Cutset<br>一個 Cut 包含很多被切掉的 Net，Cutset 就是這些 Net 的集合</li>
+<li>Cut size<br>Cutset 的大小</li>
+<li>有些 Edge 可以賦予 Weight (像是 Critical Path 上的 Edge)</li>
+</ul>
 
                 
               </div>
