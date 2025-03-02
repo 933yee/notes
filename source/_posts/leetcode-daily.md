@@ -717,3 +717,87 @@ public:
     }
 };
 ```
+
+### 2025/03/01 [2460. Apply Operations to an Array](https://leetcode.com/problems/apply-operations-to-an-array/description/?envType=daily-question&envId=2025-03-01)
+
+可以在初始化的時候就先塞好一堆 0，`vector<int> ret(n, 0);`
+
+```cpp
+class Solution {
+public:
+    vector<int> applyOperations(vector<int>& nums) {
+        int n = nums.size(), cnt = 0;
+        vector<int> ret(n, 0);
+        for(int i=0; i<n-1; i++){
+            if(nums[i] == nums[i+1]){
+                nums[i] *= 2;
+                nums[i+1] = 0;
+            }
+        }
+
+        for(int i=0, j=0; i<n; i++)
+            if(nums[i] != 0)
+                ret[j++] = nums[i];
+
+        return ret;
+    }
+};
+```
+
+### 2025/03/02 [2570. Merge Two 2D Arrays by Summing Values](https://leetcode.com/problems/merge-two-2d-arrays-by-summing-values/description/?envType=daily-question&envId=2025-03-02)
+
+直接用 hash 存起來
+
+```cpp
+class Solution {
+public:
+    vector<vector<int>> mergeArrays(vector<vector<int>>& nums1, vector<vector<int>>& nums2) {
+        map <int, int> mp;
+        for(auto& i:nums1) mp[i[0]] = i[1];
+        for(auto& i:nums2){
+            if(mp.find(i[0]) != mp.end())
+                mp[i[0]] += i[1];
+            else
+                mp[i[0]] = i[1];
+        }
+        vector<vector<int>> ret;
+        for(auto& i:mp)
+            ret.push_back({i.first, i.second});
+        return ret;
+    }
+};
+```
+
+因為兩個 vector 都是根據 id sorted，所以可以直接用 `two pointer` 的方式來做
+
+```cpp
+class Solution {
+public:
+    vector<vector<int>> mergeArrays(vector<vector<int>>& nums1, vector<vector<int>>& nums2) {
+        int n = nums1.size(), m = nums2.size();
+        int idx1 = 0, idx2 = 0;
+        vector<vector<int>> ret;
+        while(idx1 < n || idx2 < m){
+            if(idx1 < n && idx2 < m){
+                if(nums1[idx1][0] < nums2[idx2][0]){
+                    ret.push_back(nums1[idx1]);
+                    idx1++;
+                } else if(nums1[idx1][0] > nums2[idx2][0]){
+                    ret.push_back(nums2[idx2]);
+                    idx2++;
+                } else{
+                    ret.push_back({nums1[idx1][0], nums1[idx1][1] + nums2[idx2][1]});
+                    idx1++; idx2++;
+                }
+            } else if(idx1 < n){
+                ret.push_back(nums1[idx1]);
+                idx1++;
+            } else{
+                ret.push_back(nums2[idx2]);
+                idx2++;
+            }
+        }
+        return ret;
+    }
+};
+```
