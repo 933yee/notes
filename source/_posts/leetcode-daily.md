@@ -718,6 +718,30 @@ public:
 };
 ```
 
+### 2025/02/25 [1524. Number of Sub-arrays With Odd Sum](https://leetcode.com/problems/number-of-sub-arrays-with-odd-sum/description/?envType=daily-question&envId=2025-02-25)
+
+記錄當前全部的總和、prefix sum 的奇數和偶數個數。如果當前的總和是偶數，代表它扣掉前面 prefix sum 的奇數個數就是 `包含當前數字的 subarray sum 為奇數的個數`，反之，如果當前的總和是奇數，代表它扣掉前面 prefix sum 的偶數個數就是 `包含當前數字的 subarray sum 為奇數的個數`，但是要加上 `1`，因為自己本身也是一個 subarray。
+
+```cpp
+class Solution {
+public:
+    int numOfSubarrays(vector<int>& arr) {
+        long long cur_sum = 0, odd = 0, even = 0, res = 0;
+        for(int& i:arr){
+            cur_sum += i;
+            if(cur_sum & 1){
+                res += 1 + even;
+                odd++;
+            } else{
+                res += odd;
+                even++;
+            }
+        }
+        return res % 1000000007;
+    }
+};
+```
+
 ### 2025/03/01 [2460. Apply Operations to an Array](https://leetcode.com/problems/apply-operations-to-an-array/description/?envType=daily-question&envId=2025-03-01)
 
 可以在初始化的時候就先塞好一堆 0，`vector<int> ret(n, 0);`
