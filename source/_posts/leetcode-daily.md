@@ -825,3 +825,29 @@ public:
     }
 };
 ```
+
+### 2025/03/03 [2161. Partition Array According to Given Pivot](https://leetcode.com/problems/partition-array-according-to-given-pivot/description/?envType=daily-question&envId=2025-03-03)
+
+用兩個 index 來記錄小於 pivot 和大於 pivot 的位置，最後再把剩下的補上
+
+```cpp
+class Solution {
+public:
+    vector<int> pivotArray(vector<int>& nums, int pivot) {
+        int n = nums.size();
+        vector<int> ret(n);
+        int cnt1 = 0, cnt2 = 0;
+        for(int i=0; i<n; i++){
+            if(nums[i] < pivot) cnt1++;
+            else if(nums[i] > pivot) cnt2++;
+        }
+        int idx1 = 0, idx2 = n - cnt2;
+        for(int i=cnt1; i<idx2; i++) ret[i] = pivot;
+        for(int i=0; i<n; i++){
+            if(nums[i] < pivot) ret[idx1++] = nums[i];
+            else if(nums[i] > pivot) ret[idx2++] = nums[i];
+        }
+        return ret;
+    }
+};
+```

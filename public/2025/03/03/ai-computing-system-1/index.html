@@ -28,8 +28,9 @@
 <meta property="og:image" content="https://933yee.github.io/notes/images/machine-learning/VGG-16.png">
 <meta property="og:image" content="https://933yee.github.io/notes/images/machine-learning/ResNet-50.png">
 <meta property="og:image" content="https://933yee.github.io/notes/images/machine-learning/MobileNetV2.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/ai-computing-system/LeNet.png">
 <meta property="article:published_time" content="2025-03-03T09:56:23.000Z">
-<meta property="article:modified_time" content="2025-03-03T09:56:47.754Z">
+<meta property="article:modified_time" content="2025-03-03T16:13:33.403Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="Computing">
@@ -488,8 +489,7 @@
 <p>最後可以用以下指令把 SavedModel 轉換成 ONNX</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">!python3 -m tf2onnx.convert --saved-model models/tf_cnn_models --output models/tf2onnx_cnn_model.onnx<br></code></pre></td></tr></table></figure>
 
-<ul>
-<li><p>可以用 <code>--opset</code> (Operator Set Version) 來指定使用的 ONNX Operator 版本，越新的支援越多，預設是 <code>9</code></p>
+<p>可以用 <code>--opset</code> (Operator Set Version) 來指定使用的 ONNX Operator 版本，越新的支援越多，預設是 <code>9</code></p>
 <table>
 <thead>
 <tr>
@@ -534,9 +534,14 @@
 <td align="center">Adds more new features (e.g., <code>Reshape</code> with variable dimensions)</td>
 </tr>
 </tbody></table>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">python -m tf2onnx.convert --saved-model &lt;tensorflow_model_name&gt; --opset 13 --output &lt;onnx_model_name&gt;<br></code></pre></td></tr></table></figure></li>
-</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">python -m tf2onnx.convert --saved-model &lt;tensorflow_model_name&gt; --opset 13 --output &lt;onnx_model_name&gt;<br></code></pre></td></tr></table></figure>
+
 <h3 id="ONNS"><a href="#ONNS" class="headerlink" title="ONNS"></a>ONNS</h3><h4 id="Inferencing"><a href="#Inferencing" class="headerlink" title="Inferencing"></a>Inferencing</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> onnxruntime <span class="hljs-keyword">as</span> ort<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-comment"># 載入 ONNX 模型</span><br>onnx_session = ort.InferenceSession(<span class="hljs-string">&quot;models/tf2onnx_cnn_model.onnx&quot;</span>)<br><br><span class="hljs-comment"># Test data</span><br>test_input = np.random.rand(<span class="hljs-number">1</span>, <span class="hljs-number">224</span>, <span class="hljs-number">224</span>, <span class="hljs-number">3</span>).astype(np.float32)<br><br><span class="hljs-comment"># Inference</span><br>onnx_input_name = onnx_session.get_inputs()[<span class="hljs-number">0</span>].name<br>onnx_output = onnx_session.run(<span class="hljs-literal">None</span>, &#123;onnx_input_name: test_input&#125;)<br></code></pre></td></tr></table></figure>
+
+<h3 id="Netron"><a href="#Netron" class="headerlink" title="Netron"></a>Netron</h3><p>Netron 是一個功能強大的機器學習模型的 <strong>可視化</strong> 工具，支援各種模型格式，包括 ONNX、TensorFlow、PyTorch、Keras 等等，可以用來看模型每一層的結構、輸入輸出、權重等等。可以用指令或 <a target="_blank" rel="noopener" href="https://netron.app/">官方網站</a> 來開啟模型</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">netron models/lenet.onnx<br></code></pre></td></tr></table></figure>
+
+<p><img src="/notes/./images/ai-computing-system/LeNet.png" srcset="/notes/info/loading.gif" lazyload alt="LetNet Architecture"></p>
 
                 
               </div>

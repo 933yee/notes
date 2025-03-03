@@ -579,21 +579,21 @@ tf.saved_model.save(simple_cnn_model, directory)
 !python3 -m tf2onnx.convert --saved-model models/tf_cnn_models --output models/tf2onnx_cnn_model.onnx
 ```
 
-- 可以用 `--opset` (Operator Set Version) 來指定使用的 ONNX Operator 版本，越新的支援越多，預設是 `9`
+可以用 `--opset` (Operator Set Version) 來指定使用的 ONNX Operator 版本，越新的支援越多，預設是 `9`
 
-  | opset | ONNX Version |                            Description                            |
-  | :---: | :----------: | :---------------------------------------------------------------: |
-  |   9   |     1.4      |             Default version, includes basic operators             |
-  |  10   |     1.5      |   Supports `Slice` improvements, new `QuantizeLinear` operator    |
-  |  11   |     1.6      |     Supports `Loop` and `Range`, optimized for dynamic length     |
-  |  12   |     1.7      |           Adds `GatherND`, improved `Reshape` operator            |
-  |  13   |     1.8      |  `Softmax`, `ReduceMean`, etc. support more flexible dimensions   |
-  |  14   |     1.9      |       Improved `ConvTranspose`, supports more data formats        |
-  |  15+  |    1.10+     | Adds more new features (e.g., `Reshape` with variable dimensions) |
+| opset | ONNX Version |                            Description                            |
+| :---: | :----------: | :---------------------------------------------------------------: |
+|   9   |     1.4      |             Default version, includes basic operators             |
+|  10   |     1.5      |   Supports `Slice` improvements, new `QuantizeLinear` operator    |
+|  11   |     1.6      |     Supports `Loop` and `Range`, optimized for dynamic length     |
+|  12   |     1.7      |           Adds `GatherND`, improved `Reshape` operator            |
+|  13   |     1.8      |  `Softmax`, `ReduceMean`, etc. support more flexible dimensions   |
+|  14   |     1.9      |       Improved `ConvTranspose`, supports more data formats        |
+|  15+  |    1.10+     | Adds more new features (e.g., `Reshape` with variable dimensions) |
 
-  ```shell
-  python -m tf2onnx.convert --saved-model <tensorflow_model_name> --opset 13 --output <onnx_model_name>
-  ```
+```shell
+python -m tf2onnx.convert --saved-model <tensorflow_model_name> --opset 13 --output <onnx_model_name>
+```
 
 ### ONNS
 
@@ -613,3 +613,13 @@ test_input = np.random.rand(1, 224, 224, 3).astype(np.float32)
 onnx_input_name = onnx_session.get_inputs()[0].name
 onnx_output = onnx_session.run(None, {onnx_input_name: test_input})
 ```
+
+### Netron
+
+Netron 是一個功能強大的機器學習模型的 **可視化** 工具，支援各種模型格式，包括 ONNX、TensorFlow、PyTorch、Keras 等等，可以用來看模型每一層的結構、輸入輸出、權重等等。可以用指令或 [官方網站](https://netron.app/) 來開啟模型
+
+```shell
+netron models/lenet.onnx
+```
+
+![LetNet Architecture](./images/ai-computing-system/LeNet.png)
