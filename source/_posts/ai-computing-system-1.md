@@ -1,6 +1,6 @@
 ---
-title: 人工智慧運算架構與系統 (一) 筆記
-date: 2025-02-20 01:11:23
+title: AIAS 筆記
+date: 2025-03-03 17:56:23
 tags: [AI, Computing]
 category: AI
 math: true
@@ -360,7 +360,7 @@ reg  [3:0]  reg1  = 4'hf;                 // Hexadecimal, equals to 4'b1111
 
 ![MobileNetV2](./images/machine-learning/MobileNetV2.png)
 
-[Source](https://www.dropbox.com/scl/fi/2qx0cfz7vim0fdhrmy986/lec02.pdf?rlkey=wdjw92hwohp4bhyos8wf5iinb&e=2&dl=0)
+[EfficientML.ai Lecture 02: Basics of Neural Networks](https://www.dropbox.com/scl/fi/2qx0cfz7vim0fdhrmy986/lec02.pdf?rlkey=wdjw92hwohp4bhyos8wf5iinb&e=2&dl=0)
 
 #### Model Analysis
 
@@ -384,3 +384,232 @@ reg  [3:0]  reg1  = 4'hf;                 // Hexadecimal, equals to 4'b1111
 ## Lab2
 
 `ONNX`(Open Neural Network Exchange)，可以讓不同的深度學習框架之間進行模型的轉換，例如 `PyTorch`、`TensorFlow`、`Caffe2`、`MXNet` 等。
+
+### Pytorch
+
+#### PyTorch Model 轉換成 ONNX
+
+```python
+import torch
+import torchvision.models as models
+
+# 下載並載入預訓練的 AlexNet 模型
+model = models.alexnet(pretrained=True)
+
+# 創建一個隨機的輸入張量（Dummy Input），形狀為 (10, 3, 224, 224)
+# 代表 10 張 RGB 影像，每張大小為 224x224
+dummy_input = torch.randn(10, 3, 224, 224)
+
+# 定義 ONNX 模型的輸入名稱
+# 第一個輸入名稱為 "actual_input_1"（實際的輸入）
+# 後面 16 個 "learned_X" 其實是多餘的，通常用於標記權重或內部變數（但這裡不需要）
+input_names = ["actual_input_1"] + ["learned_%d" % i for i in range(16)]
+
+# 定義 ONNX 模型的輸出名稱
+# 這裡只設定一個輸出名稱 "output1"，代表分類結果（1000 個類別的機率分佈）
+output_names = ["output1"]
+
+# 將 PyTorch 的 AlexNet 模型轉換為 ONNX 格式，並儲存為 "models/alexnet.onnx"
+torch.onnx.export(
+    model,            # PyTorch 模型
+    dummy_input,      # 範例輸入，用來確保模型的輸入形狀正確
+    "models/alexnet.onnx",  # 轉換後的 ONNX 模型儲存路徑
+    verbose=True,     # 顯示轉換過程的詳細資訊
+    input_names=input_names,  # 設定 ONNX 模型的輸入名稱
+    output_names=output_names  # 設定 ONNX 模型的輸出名稱
+)
+```
+
+#### Model Analysis
+
+- 取得 Parameter Size
+
+  ```python
+  total_params = sum(p.numel() for p in model.parameters())
+  print("Total number of parameters: ", total_params)
+  ```
+
+  印出這個 Model 總共的參數數量，其中 `p.numel()` 會回傳某個 Tensor 裡面總共有多少個元素
+
+- 算出總共需要多少 Memory
+
+  ```python
+  param_size = sum(p.numel() * p.element_size() for p in model.parameters())
+  print("Total memory for parameters: ", param_size)
+  ```
+
+  `p.element_size()` 會回傳某個 Tensor 裡面的 Data Type 佔用多少 Bytes
+
+- Summary
+
+  ```python
+  from torchvision import models
+  from torchsummary import summary
+
+  model = models.alexnet(pretrained=True)
+  summary(model, (3, 224, 224))
+  ```
+
+  這樣可以印出這個 Model 的 Summary，包含模型的結構、每層輸出的大小、參數數量、總參數數量等等
+
+  ```
+  ----------------------------------------------------------------
+            Layer (type)               Output Shape         Param #
+    ================================================================
+                Conv2d-1           [-1, 64, 55, 55]          23,296
+                  ReLU-2           [-1, 64, 55, 55]               0
+            MaxPool2d-3           [-1, 64, 27, 27]               0
+                Conv2d-4          [-1, 192, 27, 27]         307,392
+                  ReLU-5          [-1, 192, 27, 27]               0
+            MaxPool2d-6          [-1, 192, 13, 13]               0
+                Conv2d-7          [-1, 384, 13, 13]         663,936
+                  ReLU-8          [-1, 384, 13, 13]               0
+                Conv2d-9          [-1, 256, 13, 13]         884,992
+                ReLU-10          [-1, 256, 13, 13]               0
+              Conv2d-11          [-1, 256, 13, 13]         590,080
+                ReLU-12          [-1, 256, 13, 13]               0
+            MaxPool2d-13            [-1, 256, 6, 6]               0
+    AdaptiveAvgPool2d-14            [-1, 256, 6, 6]               0
+              Dropout-15                 [-1, 9216]               0
+              Linear-16                 [-1, 4096]      37,752,832
+                ReLU-17                 [-1, 4096]               0
+              Dropout-18                 [-1, 4096]               0
+              Linear-19                 [-1, 4096]      16,781,312
+                ReLU-20                 [-1, 4096]               0
+              Linear-21                 [-1, 1000]       4,097,000
+    ================================================================
+    Total params: 61,100,840
+    Trainable params: 61,100,840
+    Non-trainable params: 0
+    ----------------------------------------------------------------
+    Input size (MB): 0.57
+    Forward/backward pass size (MB): 8.38
+    Params size (MB): 233.08
+    Estimated Total Size (MB): 242.03
+    ----------------------------------------------------------------
+  ```
+
+  如果單純用 `print(model)` 只會印出這個 Model 的結構，但是不會有其他資訊
+
+  ```
+  AlexNet(
+  (features): Sequential(
+    (0): Conv2d(3, 64, kernel_size=(11, 11), stride=(4, 4), padding=(2, 2))
+    (1): ReLU(inplace=True)
+    (2): MaxPool2d(kernel_size=3, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (3): Conv2d(64, 192, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2))
+    (4): ReLU(inplace=True)
+    (5): MaxPool2d(kernel_size=3, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (6): Conv2d(192, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (7): ReLU(inplace=True)
+    (8): Conv2d(384, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (9): ReLU(inplace=True)
+    (10): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (11): ReLU(inplace=True)
+    (12): MaxPool2d(kernel_size=3, stride=2, padding=0, dilation=1, ceil_mode=False)
+  )
+  (avgpool): AdaptiveAvgPool2d(output_size=(6, 6))
+  (classifier): Sequential(
+    (0): Dropout(p=0.5, inplace=False)
+    (1): Linear(in_features=9216, out_features=4096, bias=True)
+    (2): ReLU(inplace=True)
+    (3): Dropout(p=0.5, inplace=False)
+    (4): Linear(in_features=4096, out_features=4096, bias=True)
+    (5): ReLU(inplace=True)
+    (6): Linear(in_features=4096, out_features=1000, bias=True)
+  )
+  )
+  ```
+
+- torchinfo
+  如果需要更更更詳細的模型資訊，可以使用 `torchinfo`，控制格式和詳細程度 (col_names、verbose)
+
+  ```python
+  import torchinfo
+  torchinfo.summary(model, (3, 224, 224), batch_dim=0, col_names=("input_size", "output_size", "num_params", "kernel_size", "mult_adds"), verbose=0)
+  ```
+
+### TensorFlow
+
+TensorFlow 有很多儲存 Model 的格式，這些都可以用 Tensorflow-onnx 工具轉換成 ONNX 格式
+
+- Checkpoint (.ckpt)
+  TensorFlow 會用 `checkpoint` 儲存 Model 訓練的權重，但是不包含 Computation Graph，之後可以繼續訓練
+
+- Frozen Graph (.pb)
+  把 Graph 和權重都儲存起來，可以直接用來做 Inference，但是權重是 `Frozen Weight`，不能再繼續訓練 (TensorFlow 2.x 不推薦這種方式)
+
+- SavedModel (包含 saved_model.pb、variables、assets)
+  是 TensorFlow 推薦的完整儲存格式，封裝了 Model 架構、Graph、權重和 Inference 的方式，不用額外指定輸入輸出，更容易導入 ONNX
+
+- TFLite (.tflite)
+  TensorFlow Lite 是為了在行動裝置或嵌入式上做 Inference 而設計的，可以將 SavedModel 轉換成 TFLite，並且可以做 Quantization 來減少 Model 的大小
+
+#### 把 TensorFlow Model 轉換成 ONNX
+
+```python
+import tensorflow as tf
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
+import os
+
+# 定義一個簡單的 CNN 模型
+def create_simple_cnn_model(input_shape=(224, 224, 3), num_classes=10):
+    model = tf.keras.Sequential([  # 使用 Keras Sequential 模型
+        Conv2D(32, (3, 3), activation='relu', input_shape=input_shape),  # 第一層 Convolution Layer，32 個 3x3 Filter
+        MaxPooling2D((2, 2)),
+        Flatten(),
+        Dense(128, activation='relu'),  # Fully Connected Layer，128 個 Neurons
+        Dense(num_classes, activation='softmax')  # 輸出層，10 個 Neurons（10 個類別）
+    ])
+    return model
+
+directory = "models/tf_cnn_models"
+if not os.path.exists(directory):
+    os.makedirs(directory)
+
+simple_cnn_model = create_simple_cnn_model()
+
+# 儲存模型為 TensorFlow 的 SavedModel 格式
+tf.saved_model.save(simple_cnn_model, directory)
+```
+
+最後可以用以下指令把 SavedModel 轉換成 ONNX
+
+```shell
+!python3 -m tf2onnx.convert --saved-model models/tf_cnn_models --output models/tf2onnx_cnn_model.onnx
+```
+
+- 可以用 `--opset` (Operator Set Version) 來指定使用的 ONNX Operator 版本，越新的支援越多，預設是 `9`
+
+  | opset | ONNX Version |                            Description                            |
+  | :---: | :----------: | :---------------------------------------------------------------: |
+  |   9   |     1.4      |             Default version, includes basic operators             |
+  |  10   |     1.5      |   Supports `Slice` improvements, new `QuantizeLinear` operator    |
+  |  11   |     1.6      |     Supports `Loop` and `Range`, optimized for dynamic length     |
+  |  12   |     1.7      |           Adds `GatherND`, improved `Reshape` operator            |
+  |  13   |     1.8      |  `Softmax`, `ReduceMean`, etc. support more flexible dimensions   |
+  |  14   |     1.9      |       Improved `ConvTranspose`, supports more data formats        |
+  |  15+  |    1.10+     | Adds more new features (e.g., `Reshape` with variable dimensions) |
+
+  ```shell
+  python -m tf2onnx.convert --saved-model <tensorflow_model_name> --opset 13 --output <onnx_model_name>
+  ```
+
+### ONNS
+
+#### Inferencing
+
+```python
+import onnxruntime as ort
+import numpy as np
+
+# 載入 ONNX 模型
+onnx_session = ort.InferenceSession("models/tf2onnx_cnn_model.onnx")
+
+# Test data
+test_input = np.random.rand(1, 224, 224, 3).astype(np.float32)
+
+# Inference
+onnx_input_name = onnx_session.get_inputs()[0].name
+onnx_output = onnx_session.run(None, {onnx_input_name: test_input})
+```
