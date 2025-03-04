@@ -32,7 +32,7 @@ math: true
   - Quantization: 把類比轉成數位訊號。
     會先在時間軸上做 Sampling，再對 Sample 出的訊號強度做數值 Mapping。
 
-## Lab1
+## Lab
 
 ### Python
 
@@ -375,13 +375,13 @@ reg  [3:0]  reg1  = 4'hf;                 // Hexadecimal, equals to 4'b1111
 - Total/Peak Number of Activations
   - `Peak Number of Activations` 成為一個系統能不能跑起來的關鍵 (Inference)
   - Early Layer 的 `Activations` 會比較多，後面的 `Activations` 會比較少，`Weight` 會比較大
-- MACs (Multiply-Accumulate Operations)
+- MACs (Multiply-Accumulate Operations)，一次乘法和一次加法
 - FLOPs (Floating Point Operations)
   - `FLOPs` = `MACs` \* `2` (一個 `MAC` 會有兩次 `FLOPs`)
   - `FLOPS` = `FLOPs` / `second`
 - Roofline Model
 
-## Lab2
+## Lab
 
 `ONNX`(Open Neural Network Exchange)，可以讓不同的深度學習框架之間進行模型的轉換，例如 `PyTorch`、`TensorFlow`、`Caffe2`、`MXNet` 等。
 
@@ -595,7 +595,7 @@ tf.saved_model.save(simple_cnn_model, directory)
 python -m tf2onnx.convert --saved-model <tensorflow_model_name> --opset 13 --output <onnx_model_name>
 ```
 
-### ONNS
+### ONNX
 
 #### Inferencing
 
@@ -623,3 +623,317 @@ netron models/lenet.onnx
 ```
 
 ![LetNet Architecture](./images/ai-computing-system/LeNet.png)
+
+### Protobuf
+
+ONNX 格式將模型儲存為 Protobuf（Protocol Buffers）的結構，其中 Protobuf 是一種 Google 開發的 **Data Serialization Format**，可以將 ONNX 模型的 Graph、Layer 結構、權重等資訊儲存在裡面
+
+```python
+import onnx
+
+onnx_model = onnx.load('./models/lenet.onnx')
+
+# The model is represented as a protobuf structure and it can be accessed
+# using the standard python-for-protobuf methods
+
+## list all the operator types in the model
+node_list = []
+count = []
+for i in onnx_model.graph.node:
+    if (i.op_type not in node_list):
+        node_list.append(i.op_type)
+        count.append(1)
+    else:
+        idx = node_list.index(i.op_type)
+        count[idx] = count[idx]+1
+print(node_list)
+print(count)
+```
+
+```
+['Reshape', 'Conv', 'Add', 'Relu', 'MaxPool', 'Identity']
+[4, 4, 4, 3, 2, 1]
+```
+
+這樣可以看到這個 ONNX Model 有哪些 Operator Type，以及每個 Operator Type 的數量。
+
+可以參考 [onnx.proto](https://github.com/onnx/onnx/blob/main/onnx/onnx.proto) 和 [Protocol Buffers Documentation](https://protobuf.dev/programming-guides/proto3/)，能看到 ONNX 最外層的結構是 ModelProto，裡面包含 GraphProto，其由 NodeProto 組成，包含 Graph 的許多資訊
+
+```python
+# find the IR version
+print(onnx_model.ir_version)
+## find the computation graph
+print(onnx_model.graph)
+## find the number of inputs
+print(len(onnx_model.graph.input))
+## find the number of nodes in the graph
+print(len(onnx_model.graph.node))
+```
+
+以下方式可以印出這個 ONNX Model 的 Convolution Layer 輸入輸出的 Size，其中
+
+- input_nlist: 模型所有的輸入，包含 Placeholder 和 Initializer
+- initializer_nlist: 模型所有的權重，是 input_nlist 的子集
+- value_info_nlist: 模型中間的計算結果
+
+```python
+## parse_model.py
+import onnx
+
+onnx_model = onnx.load('./models/lenet.onnx')
+
+## need to run shape inference in order to get a full value_info list
+onnx_model = onnx.shape_inference.infer_shapes(onnx_model)
+
+## List all tensor names in the graph
+input_nlist = [k.name for k in onnx_model.graph.input]
+initializer_nlist = [k.name for k in onnx_model.graph.initializer]
+value_info_nlist = [k.name for k in onnx_model.graph.value_info]
+
+print('\ninput list: {}'.format(input_nlist))
+print('\ninitializer list: {}'.format(initializer_nlist))
+print('\nvalue_info list: {}'.format(value_info_nlist))
+
+## a simple function to calculate the tensor size and extract dimension information
+def get_size(shape):
+    dims = []
+    ndim = len(shape.dim)
+    size = 1;
+    for i in range(ndim):
+        size = size * shape.dim[i].dim_value
+        dims.append(shape.dim[i].dim_value)
+    return dims, size
+
+## find all `Conv` operators and print its input information
+for i in onnx_model.graph.node:
+    if (i.op_type == 'Conv'):
+        print('\n-- Conv "{}" --'.format(i.name))
+        for j in i.input:
+            if j in input_nlist:
+                idx = input_nlist.index(j)
+                (dims, size) = get_size(onnx_model.graph.input[idx].type.tensor_type.shape)
+                print('input {} has {} elements dims = {}'.format(j, size, dims  ))
+            elif j in initializer_nlist:
+                idx = initializer_nlist.index(j)
+                (dims, size) = get_size(onnx_model.graph.initializer[idx].type.tensor_type.shape)
+                print('input {} has {} elements dims = {}'.format(j, size, dims))
+            elif j in value_info_nlist:
+                idx = value_info_nlist.index(j)
+                (dims, size) = get_size(onnx_model.graph.value_info[idx].type.tensor_type.shape)
+                print('input {} has {} elements dims = {}'.format(j, size, dims))
+```
+
+這樣可以除了可以印出 input、initializer、value_info 的名稱，還可以印出所有 Convolution Layer 需要的輸入輸出大小
+
+```txt
+-- Conv "import/conv1first/Conv2D" --
+input import/Placeholder:0 has 784 elements dims = [1, 1, 28, 28]
+input import/conv1first/Variable:0 has 800 elements dims = [32, 1, 5, 5]
+
+-- Conv "import/conv2/Conv2D" --
+input import/pool1/MaxPool:0 has 6272 elements dims = [1, 32, 14, 14]
+input import/conv2/Variable:0 has 51200 elements dims = [64, 32, 5, 5]
+
+-- Conv "import/conv3/Conv2D" --
+input import/pool2/MaxPool:0 has 3136 elements dims = [1, 64, 7, 7]
+input import/conv3/Variable:0 has 3211264 elements dims = [1024, 64, 7, 7]
+
+-- Conv "import/conv4last/Conv2D" --
+input import/conv3/Relu:0 has 1024 elements dims = [1, 1024, 1, 1]
+input import/conv4last/Variable:0 has 10240 elements dims = [10, 1024, 1, 1]
+```
+
+### Hooks
+
+Hooks 是 PyTorch 中的一個功能，可以註冊在 Forward Pass 或 Backward Pass 中，用來觀察模型的中間過程，例如輸入、輸出、權重、梯度等等，用來檢視每一層算完後到底發生什麼事
+
+```python
+import torchvision.models as models
+import torch
+activation = {}
+
+# Define a hook function
+def get_activation(name):
+    def hook(model, input, output):
+        activation[name] = output.detach()
+    return hook
+
+model = models.alexnet(pretrained=True)
+model.eval()
+
+# Register hook to each linear layer
+for layer_name, layer in model.named_modules():
+    if isinstance(layer, torch.nn.Linear):
+        # Register forward hook
+        layer.register_forward_hook(get_activation(layer_name))
+
+# Run model inference
+data = torch.randn(1, 3, 224, 224)
+output = model(data)
+
+# Access the saved activations
+for layer in activation:
+    print(f"Activation from layer {layer}: {activation[layer].shape}")
+```
+
+這樣可以印出每個 Fully-connected Layer 的 Activation Shape，在 inference 的過程每一層的 Activation 都會被存起來，用來觀察每一層的輸出
+
+```txt
+Activation from layer classifier.1: torch.Size([1, 4096])
+Activation from layer classifier.4: torch.Size([1, 4096])
+Activation from layer classifier.6: torch.Size([1, 1000])
+```
+
+輸出的大小分別是 `[1, 4096]`、`[1, 4096]`、`[1, 1000]`。
+
+### MACs and FLOPs
+
+這是計算 AlexNet MACs 的例子，計算裡面的 Convolutions 和 Fully-connected Layers 總共的 MACs 數量
+
+```python
+import torch
+import torchvision.models as models
+import torch.nn as nn
+
+def calculate_output_shape(input_shape, layer):
+    # Calculate the output shape for Conv2d, MaxPool2d, and Linear layers
+    if isinstance(layer, (nn.Conv2d, nn.MaxPool2d)):
+        kernel_size = (
+            layer.kernel_size
+            if isinstance(layer.kernel_size, tuple)
+            else (layer.kernel_size, layer.kernel_size)
+        )
+        stride = (
+            layer.stride
+            if isinstance(layer.stride, tuple)
+            else (layer.stride, layer.stride)
+        )
+        padding = (
+            layer.padding
+            if isinstance(layer.padding, tuple)
+            else (layer.padding, layer.padding)
+        )
+        dilation = (
+            layer.dilation
+            if isinstance(layer.dilation, tuple)
+            else (layer.dilation, layer.dilation)
+        )
+
+        output_height = (
+            input_shape[1] + 2 * padding[0] - dilation[0] * (kernel_size[0] - 1) - 1
+        ) // stride[0] + 1
+        output_width = (
+            input_shape[2] + 2 * padding[1] - dilation[1] * (kernel_size[1] - 1) - 1
+        ) // stride[1] + 1
+        return (
+            layer.out_channels if hasattr(layer, "out_channels") else input_shape[0],
+            output_height,
+            output_width,
+        )
+    elif isinstance(layer, nn.Linear):
+        # For Linear layers, the output shape is simply the layer's output features
+        return (layer.out_features,)
+    else:
+        return input_shape
+
+
+def calculate_macs(layer, input_shape, output_shape):
+    # Calculate MACs for Conv2d and Linear layers
+    if isinstance(layer, nn.Conv2d):
+        kernel_ops = (
+            layer.kernel_size[0]
+            * layer.kernel_size[1]
+            * (layer.in_channels / layer.groups)
+        )
+        output_elements = output_shape[1] * output_shape[2]
+        macs = int(kernel_ops * output_elements * layer.out_channels)
+        return macs
+    elif isinstance(layer, nn.Linear):
+        # For Linear layers, MACs are the product of input features and output features
+        macs = int(layer.in_features * layer.out_features)
+        return macs
+    else:
+        return 0
+
+model = models.alexnet(pretrained=True)
+
+# Initial input shape
+input_shape = (3, 224, 224)
+total_macs = 0
+
+# Iterate through the layers of the model
+for name, layer in model.named_modules():
+    if isinstance(layer, (nn.Conv2d, nn.MaxPool2d, nn.ReLU, nn.Linear)):
+        output_shape = calculate_output_shape(input_shape, layer)
+        macs = calculate_macs(layer, input_shape, output_shape)
+        total_macs += macs
+        if isinstance(layer, (nn.Conv2d, nn.Linear)):
+            print(
+                f"Layer: {name}, Type: {type(layer).__name__}, Input Shape: {input_shape}, Output Shape: {output_shape}, MACs: {macs}"
+            )
+        elif isinstance(layer, nn.MaxPool2d):
+            # Also print shape transformation for MaxPool2d layers (no MACs calculated)
+            print(
+                f"Layer: {name}, Type: {type(layer).__name__}, Input Shape: {input_shape}, Output Shape: {output_shape}, MACs: N/A"
+            )
+        input_shape = output_shape  # Update the input shape for the next layer
+
+print(f"Total MACs: {total_macs}")
+```
+
+輸出如下
+
+```txt
+Layer: features.0, Type: Conv2d, Input Shape: (3, 224, 224), Output Shape: (64, 55, 55), MACs: 70276800
+Layer: features.2, Type: MaxPool2d, Input Shape: (64, 55, 55), Output Shape: (64, 27, 27), MACs: N/A
+Layer: features.3, Type: Conv2d, Input Shape: (64, 27, 27), Output Shape: (192, 27, 27), MACs: 223948800
+Layer: features.5, Type: MaxPool2d, Input Shape: (192, 27, 27), Output Shape: (192, 13, 13), MACs: N/A
+Layer: features.6, Type: Conv2d, Input Shape: (192, 13, 13), Output Shape: (384, 13, 13), MACs: 112140288
+Layer: features.8, Type: Conv2d, Input Shape: (384, 13, 13), Output Shape: (256, 13, 13), MACs: 149520384
+Layer: features.10, Type: Conv2d, Input Shape: (256, 13, 13), Output Shape: (256, 13, 13), MACs: 99680256
+Layer: features.12, Type: MaxPool2d, Input Shape: (256, 13, 13), Output Shape: (256, 6, 6), MACs: N/A
+Layer: classifier.1, Type: Linear, Input Shape: (256, 6, 6), Output Shape: (4096,), MACs: 37748736
+Layer: classifier.4, Type: Linear, Input Shape: (4096,), Output Shape: (4096,), MACs: 16777216
+Layer: classifier.6, Type: Linear, Input Shape: (4096,), Output Shape: (1000,), MACs: 4096000
+Total MACs: 714188480
+```
+
+> Some layers in GoogleNet enable ceil_mode, which will affect the calculation formula for output_shape.
+
+### Profiling
+
+```python
+import torch
+import torchvision.models as models
+from torch.profiler import profile, record_function, ProfilerActivity
+
+model = models.alexnet(pretrained=True)
+model.eval()  # Set the model to evaluation mode
+inputs = torch.randn(5, 3, 224, 224)
+
+with profile(activities=[ProfilerActivity.CPU], profile_memory=True, record_shapes=True) as prof:
+    model(inputs)
+
+print(prof.key_averages().table(sort_by="self_cpu_memory_usage", row_limit=10))
+
+```
+
+這樣可以印出這個 Model 的 Profiling 結果，包含每一個 Operator 的 CPU Time、Memory Usage、Input Shape、Output Shape 等等
+
+```txt
+---------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
+                             Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg       CPU Mem  Self CPU Mem    # of Calls
+---------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
+                      aten::empty         0.11%      60.000us         0.11%      60.000us       5.455us       9.25 Mb       9.25 Mb            11
+    aten::max_pool2d_with_indices         3.52%       1.838ms         3.52%       1.838ms     612.667us       5.05 Mb       5.05 Mb             3
+                    aten::resize_         0.01%       6.000us         0.01%       6.000us       1.000us     180.00 Kb     180.00 Kb             6
+                      aten::addmm        36.23%      18.939ms        36.32%      18.984ms       6.328ms     179.53 Kb     179.53 Kb             3
+                     aten::conv2d         0.07%      36.000us        58.54%      30.601ms       6.120ms       9.25 Mb           0 b             5
+                aten::convolution         0.21%     111.000us        58.47%      30.565ms       6.113ms       9.25 Mb           0 b             5
+               aten::_convolution         0.10%      54.000us        58.26%      30.454ms       6.091ms       9.25 Mb           0 b             5
+         aten::mkldnn_convolution        57.99%      30.313ms        58.15%      30.400ms       6.080ms       9.25 Mb           0 b             5
+                aten::as_strided_         0.05%      24.000us         0.05%      24.000us       4.800us           0 b           0 b             5
+                      aten::relu_         0.34%     178.000us         0.86%     447.000us      63.857us           0 b           0 b             7
+---------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
+Self CPU time total: 52.275ms
+```
