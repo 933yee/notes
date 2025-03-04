@@ -851,3 +851,40 @@ public:
     }
 };
 ```
+
+### 2025/03/04 [1780. Check if Number is a Sum of Powers of Three](https://leetcode.com/problems/check-if-number-is-a-sum-of-powers-of-three/description/?envType=daily-question&envId=2025-03-04)
+
+最直覺的方法是直接 DFS 爆開，因為 `n` 最大只到 `10^7`，最多只會到 $3^15$
+
+```cpp
+class Solution {
+public:
+    vector<int> tmp{1};
+    bool dfs(int idx, int cur){
+        if(cur < 0 || idx > 15) return false;
+        if(cur == 0) return true;
+        return dfs(idx+1, cur-tmp[idx]) || dfs(idx+1, cur);
+    }
+
+    bool checkPowersOfThree(int n) {
+        for(int i=0; i<15; i++)
+            tmp.push_back(tmp.back() * 3);
+        return dfs(0, n);
+    }
+};
+```
+
+討論區看到一個很猛的方法，直接把 `n` 看成 3 進位，每次檢查 LSB，如果有出現 `2` 就代表不是由 `3^x` 組成的
+
+```cpp
+class Solution {
+public:
+    bool checkPowersOfThree(int n) {
+        while(n > 0){
+            if(n % 3 == 2) return false;
+            n /= 3;
+        }
+        return true;
+    }
+};
+```
