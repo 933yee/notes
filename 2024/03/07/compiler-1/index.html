@@ -25,12 +25,12 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjy5NjmBdRfsrfg96b3KYpevQqRBAygBtuvsszgZpXmPhyy7M9VH81zkvqd-uhdJBBtWL_u0_iaHC8nhSWK1gW7_0DNHxSofoPpj5CD76mp5wCRN7fSz5cDkzZmns_HZ12pRbBD37q9jYY/s1600/aandSmodel.bmp">
 <meta property="og:image" content="https://cdn1.byjus.com/wp-content/uploads/2022/03/phase-of-compiler.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/compiler-1/AnalysisPhasesExample.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/compiler-1/IntermediateCodeGenerationExample.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/compiler-1/CodeOptimizationExample.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/compiler-1/CodeGenerationExample.png">
+<meta property="og:image" content="https://933yee.github.io/images/compiler-1/AnalysisPhasesExample.png">
+<meta property="og:image" content="https://933yee.github.io/images/compiler-1/IntermediateCodeGenerationExample.png">
+<meta property="og:image" content="https://933yee.github.io/images/compiler-1/CodeOptimizationExample.png">
+<meta property="og:image" content="https://933yee.github.io/images/compiler-1/CodeGenerationExample.png">
 <meta property="article:published_time" content="2024-03-07T07:51:12.000Z">
-<meta property="article:modified_time" content="2024-07-02T06:12:04.613Z">
+<meta property="article:modified_time" content="2025-03-05T16:16:26.723Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="compiler">
 <meta name="twitter:card" content="summary_large_image">
@@ -319,7 +319,7 @@
 <li>Syntax Analysis</li>
 <li>Semantic Analysis</li>
 </ul>
-<p><img src="/notes/./images/compiler-1/AnalysisPhasesExample.png" srcset="/notes/info/loading.gif" lazyload alt="Analysis Phases Example"></p>
+<p><img src="/notes/../images/compiler-1/AnalysisPhasesExample.png" srcset="/notes/info/loading.gif" lazyload alt="Analysis Phases Example"></p>
 <h3 id="Intermediate-Code-Generation"><a href="#Intermediate-Code-Generation" class="headerlink" title="Intermediate Code Generation"></a>Intermediate Code Generation</h3><ul>
 <li>Two properties<ul>
 <li>Easy to produce</li>
@@ -336,21 +336,21 @@
 </ul>
 </li>
 </ul>
-<p><img src="/notes/./images/compiler-1/IntermediateCodeGenerationExample.png" srcset="/notes/info/loading.gif" lazyload alt="Intermediate Code Generation Example"></p>
+<p><img src="/notes/../images/compiler-1/IntermediateCodeGenerationExample.png" srcset="/notes/info/loading.gif" lazyload alt="Intermediate Code Generation Example"></p>
 <h3 id="Code-Optimization"><a href="#Code-Optimization" class="headerlink" title="Code Optimization"></a>Code Optimization</h3><ul>
 <li>Attempts to improve the intermediate code<ul>
 <li>So the faster-running machine code will result</li>
 </ul>
 </li>
 </ul>
-<p><img src="/notes/./images/compiler-1/CodeOptimizationExample.png" srcset="/notes/info/loading.gif" lazyload alt="Code Optimization Example"></p>
+<p><img src="/notes/../images/compiler-1/CodeOptimizationExample.png" srcset="/notes/info/loading.gif" lazyload alt="Code Optimization Example"></p>
 <h3 id="Code-Generation"><a href="#Code-Generation" class="headerlink" title="Code Generation"></a>Code Generation</h3><ul>
 <li>Generates target code<ul>
 <li>Consisting of reocatable machine code or assembly code</li>
 </ul>
 </li>
 </ul>
-<p><img src="/notes/./images/compiler-1/CodeGenerationExample.png" srcset="/notes/info/loading.gif" lazyload alt="Code Generation Example"></p>
+<p><img src="/notes/../images/compiler-1/CodeGenerationExample.png" srcset="/notes/info/loading.gif" lazyload alt="Code Generation Example"></p>
 <h3 id="Counsins-of-the-compiler"><a href="#Counsins-of-the-compiler" class="headerlink" title="Counsins of the compiler"></a>Counsins of the compiler</h3><ul>
 <li>Preprocessors<ul>
 <li>Produce input to compilers</li>
@@ -400,7 +400,7 @@
 </ul>
 <h3 id="Assignment-oriented-language"><a href="#Assignment-oriented-language" class="headerlink" title="Assignment-oriented language"></a>Assignment-oriented language</h3><ul>
 <li>賦值操作來實現程式邏輯的語言</li>
-<li>Ex: C, Java, </li>
+<li>Ex: C, Java,</li>
 <li>反例: Haskell</li>
 </ul>
 <h3 id="Third-generation-language"><a href="#Third-generation-language" class="headerlink" title="Third-generation language"></a>Third-generation language</h3><ul>
@@ -418,16 +418,14 @@
 </ul>
 <h3 id="補充"><a href="#補充" class="headerlink" title="補充"></a>補充</h3><p>如果是說 imperative programming 和 declarative programming，我查到的都是程式碼的寫法</p>
 <ul>
-<li><p>Imperative language</p>
-<ul>
+<li>Imperative language<ul>
 <li>命令式編程</li>
 <li>著重在 <strong>HOW</strong>，具體表達程式碼該做什麼才能達到目標，程式一步一步按著順序照著你給他指示執行。</li>
 <li>Imperative 比較常運用 Statement ，像是是 if, while, for, switch 等。</li>
 <li>You tell the compiler what you want to happen, step by step.</li>
 </ul>
 </li>
-<li><p>Delcarative language</p>
-<ul>
+<li>Delcarative language<ul>
 <li>宣告式編程</li>
 <li>著重在該做什麼 <strong>WHAT</strong> ，採取抽象化流程。Declarative 比較常運用表達式 expression，</li>
 <li>Delcarative 特色是單純運算並一定會有返回值</li>
@@ -436,8 +434,10 @@
 </ul>
 <p>Example: choose the odd numbers</p>
 <figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cs">List&lt;<span class="hljs-built_in">int</span>&gt; collection = <span class="hljs-keyword">new</span> List&lt;<span class="hljs-built_in">int</span>&gt; &#123; <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span> &#125;;<br></code></pre></td></tr></table></figure>
+
 <p>With <strong>imperative programming</strong>, we’d step through this, and decide what we want:</p>
 <figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cs">List&lt;<span class="hljs-built_in">int</span>&gt; results = <span class="hljs-keyword">new</span> List&lt;<span class="hljs-built_in">int</span>&gt;();<br><span class="hljs-keyword">foreach</span>(<span class="hljs-keyword">var</span> num <span class="hljs-keyword">in</span> collection)<br>&#123;<br>    <span class="hljs-keyword">if</span> (num % <span class="hljs-number">2</span> != <span class="hljs-number">0</span>)<br>          results.Add(num);<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>With <strong>declarative programming</strong>, on the other hand, you declare your desired results, but not the step-by-step:</p>
 <figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">var</span> results = collection.Where( num =&gt; num % <span class="hljs-number">2</span> != <span class="hljs-number">0</span>);<br></code></pre></td></tr></table></figure>
 
@@ -465,7 +465,7 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> bar = <span class="hljs-number">30</span>;<br>[bar]() &#123; <span class="hljs-keyword">return</span> bar * <span class="hljs-number">3</span>; &#125;<br></code></pre></td></tr></table></figure>
 
 <p><strong>[this]</strong> 按值捕獲當前物件的指標（常用於 lambda 在 class 內部的情況）</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyClass</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">MyClass</span>(<span class="hljs-type">int</span> value) : <span class="hljs-built_in">value</span>(value) &#123;&#125;<br><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">printValue</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-comment">// Lambda 捕獲當前物件的指標，可以使用內部的變數和函式</span><br>        <span class="hljs-keyword">auto</span> lambda = [<span class="hljs-keyword">this</span>]() &#123;<br>            std::cout &lt;&lt; <span class="hljs-string">&quot;Value inside lambda: &quot;</span> &lt;&lt; value &lt;&lt; std::endl; <span class="hljs-comment">// 訪問物件變數</span><br>            <span class="hljs-built_in">someMethod</span>(); <span class="hljs-comment">// 呼叫物件函式</span><br>        &#125;;<br><br>        <span class="hljs-built_in">lambda</span>(); <br>    &#125;<br><br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-type">int</span> value;<br><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">someMethod</span><span class="hljs-params">()</span> </span>&#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;Inside someMethod&quot;</span> &lt;&lt; std::endl;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyClass</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">MyClass</span>(<span class="hljs-type">int</span> value) : <span class="hljs-built_in">value</span>(value) &#123;&#125;<br><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">printValue</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-comment">// Lambda 捕獲當前物件的指標，可以使用內部的變數和函式</span><br>        <span class="hljs-keyword">auto</span> lambda = [<span class="hljs-keyword">this</span>]() &#123;<br>            std::cout &lt;&lt; <span class="hljs-string">&quot;Value inside lambda: &quot;</span> &lt;&lt; value &lt;&lt; std::endl; <span class="hljs-comment">// 訪問物件變數</span><br>            <span class="hljs-built_in">someMethod</span>(); <span class="hljs-comment">// 呼叫物件函式</span><br>        &#125;;<br><br>        <span class="hljs-built_in">lambda</span>();<br>    &#125;<br><br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-type">int</span> value;<br><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">someMethod</span><span class="hljs-params">()</span> </span>&#123;<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;Inside someMethod&quot;</span> &lt;&lt; std::endl;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
 <h2 id="First-Class-Object"><a href="#First-Class-Object" class="headerlink" title="First Class Object"></a>First Class Object</h2><ul>
 <li>Entity can be stored into a variable</li>
@@ -490,7 +490,8 @@
 </ul>
 <figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">define</span></span> x <span class="hljs-number">10</span>)  <span class="hljs-comment">; 定義變數 x，並賦值為 10</span><br><br>(<span class="hljs-name">displayln</span> <span class="hljs-string">&quot;在動態賦值之前：&quot;</span>)<br>(<span class="hljs-name">displayln</span> x)  <span class="hljs-comment">; 輸出當前變數 x 的值</span><br><br><span class="hljs-comment">; 在這個程式碼塊內，我們動態地改變變數 x 的值</span><br>(<span class="hljs-name"><span class="hljs-built_in">let</span></span> ((<span class="hljs-name">x</span> := <span class="hljs-number">20</span> during<br>       (<span class="hljs-name"><span class="hljs-built_in">begin</span></span><br>         (<span class="hljs-name">displayln</span> <span class="hljs-string">&quot;在動態賦值內部：&quot;</span>)<br>         (<span class="hljs-name">displayln</span> x)  <span class="hljs-comment">; 輸出改變後的 x 的值</span><br>         (<span class="hljs-name"><span class="hljs-built_in">set!</span></span> x (<span class="hljs-name"><span class="hljs-built_in">*</span></span> x <span class="hljs-number">2</span>))  <span class="hljs-comment">; 修改 x 的值</span><br>         (<span class="hljs-name">displayln</span> <span class="hljs-string">&quot;在動態賦值內部修改後：&quot;</span>)<br>         (<span class="hljs-name">displayln</span> x)  <span class="hljs-comment">; 輸出修改後的 x 的值</span><br>       )))<br>  <span class="hljs-comment">; 這裡的 x 仍然是原始值</span><br>  (<span class="hljs-name">displayln</span> <span class="hljs-string">&quot;在動態賦值之後：&quot;</span>)<br>  (<span class="hljs-name">displayln</span> x)  <span class="hljs-comment">; 輸出原始值</span><br>)<br></code></pre></td></tr></table></figure>
 
-<h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs delphi"><span class="hljs-keyword">program</span> parameter-passing;<br>  <span class="hljs-keyword">var</span> i: integer;<br>  a: <span class="hljs-keyword">array</span> [<span class="hljs-number">1</span>..<span class="hljs-number">3</span>] <span class="hljs-keyword">of</span> integer;<br><br>  <span class="hljs-function"><span class="hljs-keyword">procedure</span> <span class="hljs-title">mess</span>;</span><br>    <span class="hljs-keyword">begin</span><br>      <span class="hljs-keyword">var</span> y: integer;<br>      y = a[i] + <span class="hljs-number">5</span>;<br>      writeln(<span class="hljs-string">&#x27;y=&#x27;</span>, y);<br>    <span class="hljs-keyword">end</span>;<br><br>  <span class="hljs-function"><span class="hljs-keyword">procedure</span> <span class="hljs-title">sub1</span>;</span><br>    <span class="hljs-keyword">var</span> i: integer;<br>    a: <span class="hljs-keyword">array</span> [<span class="hljs-number">1</span>..<span class="hljs-number">3</span>] <span class="hljs-keyword">of</span> integer;<br>    <span class="hljs-keyword">begin</span><br>      i := <span class="hljs-number">2</span>;<br>      a[<span class="hljs-number">1</span>] := <span class="hljs-number">5</span> ; a[<span class="hljs-number">2</span>] := <span class="hljs-number">7</span>; a[<span class="hljs-number">3</span>] := <span class="hljs-number">9</span>;<br>    mess;<br>  <span class="hljs-keyword">end</span>;<br><br>  <span class="hljs-keyword">begin</span> <br>    i := <span class="hljs-number">1</span>;<br>    a[<span class="hljs-number">1</span>] :=<span class="hljs-number">1</span> ; a[<span class="hljs-number">2</span>] := <span class="hljs-number">4</span>; a[<span class="hljs-number">3</span>] :=<span class="hljs-number">8</span> ;<br>    sub1;<br>  <span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs delphi"><span class="hljs-keyword">program</span> parameter-passing;<br>  <span class="hljs-keyword">var</span> i: integer;<br>  a: <span class="hljs-keyword">array</span> [<span class="hljs-number">1</span>..<span class="hljs-number">3</span>] <span class="hljs-keyword">of</span> integer;<br><br>  <span class="hljs-function"><span class="hljs-keyword">procedure</span> <span class="hljs-title">mess</span>;</span><br>    <span class="hljs-keyword">begin</span><br>      <span class="hljs-keyword">var</span> y: integer;<br>      y = a[i] + <span class="hljs-number">5</span>;<br>      writeln(<span class="hljs-string">&#x27;y=&#x27;</span>, y);<br>    <span class="hljs-keyword">end</span>;<br><br>  <span class="hljs-function"><span class="hljs-keyword">procedure</span> <span class="hljs-title">sub1</span>;</span><br>    <span class="hljs-keyword">var</span> i: integer;<br>    a: <span class="hljs-keyword">array</span> [<span class="hljs-number">1</span>..<span class="hljs-number">3</span>] <span class="hljs-keyword">of</span> integer;<br>    <span class="hljs-keyword">begin</span><br>      i := <span class="hljs-number">2</span>;<br>      a[<span class="hljs-number">1</span>] := <span class="hljs-number">5</span> ; a[<span class="hljs-number">2</span>] := <span class="hljs-number">7</span>; a[<span class="hljs-number">3</span>] := <span class="hljs-number">9</span>;<br>    mess;<br>  <span class="hljs-keyword">end</span>;<br><br>  <span class="hljs-keyword">begin</span><br>    i := <span class="hljs-number">1</span>;<br>    a[<span class="hljs-number">1</span>] :=<span class="hljs-number">1</span> ; a[<span class="hljs-number">2</span>] := <span class="hljs-number">4</span>; a[<span class="hljs-number">3</span>] :=<span class="hljs-number">8</span> ;<br>    sub1;<br>  <span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
 <ul>
 <li><p>Suppose static binding (also known as lexical binding) is used for variable scopes. What’s the printout value of y?</p>
 <blockquote>
@@ -523,6 +524,7 @@
 <li>例如定義 <code>f(v: integer)</code> ，呼叫 <code>f(a[i])</code> ，則 <code>f</code> 當中的每個 <code>v</code> 都需要替換成 <code>a[i]</code></li>
 </ul>
 <h4 id="Example-1"><a href="#Example-1" class="headerlink" title="Example"></a>Example</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs css">program parameter-passing;<br>  <span class="hljs-selector-tag">var</span> <span class="hljs-selector-tag">i</span>: integer;<br>  <span class="hljs-selector-tag">a</span>: array [<span class="hljs-number">1</span>..<span class="hljs-number">3</span>] of integer;<br><br>  procedure mess(v : integer);<br>    begin<br>      v := v + <span class="hljs-number">1</span>;<br>      <span class="hljs-selector-tag">a</span><span class="hljs-selector-attr">[i]</span> := <span class="hljs-number">5</span>;<br>      <span class="hljs-selector-tag">i</span> := <span class="hljs-number">3</span>;<br>      v := v + <span class="hljs-number">1</span>;<br>    end;<br><br>  begin<br>    for <span class="hljs-selector-tag">i</span>:= <span class="hljs-number">1</span> to <span class="hljs-number">3</span> do a[i] := <span class="hljs-number">0</span>;<br>    <span class="hljs-selector-tag">a</span><span class="hljs-selector-attr">[2]</span> := <span class="hljs-number">10</span>;<br>    <span class="hljs-selector-tag">i</span> := <span class="hljs-number">2</span>;<br>    mess(<span class="hljs-selector-tag">a</span><span class="hljs-selector-attr">[i]</span>);<br>  end<br></code></pre></td></tr></table></figure>
+
 <ul>
 <li>If by assuming <strong>Call-by-Text</strong>, what’s the value in the array a and the variable i?</li>
 </ul>

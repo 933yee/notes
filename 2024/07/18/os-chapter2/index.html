@@ -16,29 +16,29 @@
   <meta name="author" content="Kevin Lee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="周志遠教授作業系統開放式課程  OS ServicesUser InterfaceCLI (Command Line Interface) GUI 是 based on CLI，所以 GUI 能做到的是 CLI 一定可以  Shell: Command-line Interpreter (CSHELL, BASH)  不屬於 OS，你打的指令不是直接交給 OS，是交給 Shell，方便使用者使用">
+    <meta name="description" content="周志遠教授作業系統開放式課程  OS ServicesUser InterfaceCLI (Command Line Interface) GUI 是 based on CLI，所以 GUI 能做到的是 CLI 一定可以 Shell: Command-line Interpreter (CSHELL, BASH) 不屬於 OS，你打的指令不是直接交給 OS，是交給 Shell，方便使用者使用指令">
 <meta property="og:type" content="article">
 <meta property="og:title" content="作業系統筆記 OS Structure">
 <meta property="og:url" content="https://933yee.github.io/notes/2024/07/18/os-chapter2/index.html">
 <meta property="og:site_name" content="933yee&#39;s Notes">
-<meta property="og:description" content="周志遠教授作業系統開放式課程  OS ServicesUser InterfaceCLI (Command Line Interface) GUI 是 based on CLI，所以 GUI 能做到的是 CLI 一定可以  Shell: Command-line Interpreter (CSHELL, BASH)  不屬於 OS，你打的指令不是直接交給 OS，是交給 Shell，方便使用者使用">
+<meta property="og:description" content="周志遠教授作業系統開放式課程  OS ServicesUser InterfaceCLI (Command Line Interface) GUI 是 based on CLI，所以 GUI 能做到的是 CLI 一定可以 Shell: Command-line Interpreter (CSHELL, BASH) 不屬於 OS，你打的指令不是直接交給 OS，是交給 Shell，方便使用者使用指令">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter2/Communication.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter2/OSInterface.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter2/SimpleOSArchitecture.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter2/LayeredOSArchitecture.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter2/MicrokernelOS.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter2/ModularOSArchitecture.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter2/VirtualMachine.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter2/FullVirtualization.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter2/Para-virtualization.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter2/JavaVirtualMachine.png">
+<meta property="og:image" content="https://933yee.github.io/images/os-chapter2/Communication.png">
+<meta property="og:image" content="https://933yee.github.io/images/os-chapter2/OSInterface.png">
+<meta property="og:image" content="https://933yee.github.io/images/os-chapter2/SimpleOSArchitecture.png">
+<meta property="og:image" content="https://933yee.github.io/images/os-chapter2/LayeredOSArchitecture.png">
+<meta property="og:image" content="https://933yee.github.io/images/os-chapter2/MicrokernelOS.png">
+<meta property="og:image" content="https://933yee.github.io/images/os-chapter2/ModularOSArchitecture.png">
+<meta property="og:image" content="https://933yee.github.io/images/os-chapter2/VirtualMachine.png">
+<meta property="og:image" content="https://933yee.github.io/images/os-chapter2/FullVirtualization.png">
+<meta property="og:image" content="https://933yee.github.io/images/os-chapter2/Para-virtualization.png">
+<meta property="og:image" content="https://933yee.github.io/images/os-chapter2/JavaVirtualMachine.png">
 <meta property="article:published_time" content="2024-07-18T09:33:12.000Z">
-<meta property="article:modified_time" content="2024-07-24T03:53:06.951Z">
+<meta property="article:modified_time" content="2025-03-05T16:16:25.931Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="OS">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://933yee.github.io/notes/images/os-chapter2/Communication.png">
+<meta name="twitter:image" content="https://933yee.github.io/images/os-chapter2/Communication.png">
   
   
   
@@ -288,10 +288,8 @@
 <p>周志遠教授作業系統開放式課程</p>
 </blockquote>
 <h1 id="OS-Services"><a href="#OS-Services" class="headerlink" title="OS Services"></a>OS Services</h1><h2 id="User-Interface"><a href="#User-Interface" class="headerlink" title="User Interface"></a>User Interface</h2><h3 id="CLI-Command-Line-Interface"><a href="#CLI-Command-Line-Interface" class="headerlink" title="CLI (Command Line Interface)"></a>CLI (Command Line Interface)</h3><ul>
-<li><p>GUI 是 based on CLI，所以 GUI 能做到的是 CLI 一定可以</p>
-</li>
-<li><p><strong>Shell</strong>: Command-line Interpreter (CSHELL, BASH)</p>
-<ul>
+<li>GUI 是 based on CLI，所以 GUI 能做到的是 CLI 一定可以</li>
+<li><strong>Shell</strong>: Command-line Interpreter (CSHELL, BASH)<ul>
 <li>不屬於 OS，你打的指令不是直接交給 OS，是交給 Shell，方便使用者使用指令</li>
 <li>一台電腦可能有很多使用者，每個使用者的喜好不同，介面、顏色、指令等等，可以做一些客製化的調整</li>
 </ul>
@@ -311,13 +309,13 @@
 <li>也需要透過 System Call 去建立這塊 Shared Memory，不過像是 Multi-thread 預設就有</li>
 <li>會有 Synchronization 的問題</li>
 </ul>
-<p><img src="/notes/./images/os-chapter2/Communication.png" srcset="/notes/info/loading.gif" lazyload alt="Communication"></p>
+<p><img src="/notes/../images/os-chapter2/Communication.png" srcset="/notes/info/loading.gif" lazyload alt="Communication"></p>
 <p>OS Service 除了 User interface 和 Communication 以外，還有</p>
 <ul>
-<li>Program Execution </li>
-<li>I&#x2F;O operations </li>
+<li>Program Execution</li>
+<li>I&#x2F;O operations</li>
 <li>File-system manipulation</li>
-<li>Error detection </li>
+<li>Error detection</li>
 <li>Resource allocation</li>
 <li>Accounting</li>
 <li>Protection and security</li>
@@ -350,18 +348,18 @@
 </ul>
 </li>
 </ul>
-<p><img src="/notes/./images/os-chapter2/OSInterface.png" srcset="/notes/info/loading.gif" lazyload alt="OS Interface"></p>
+<p><img src="/notes/../images/os-chapter2/OSInterface.png" srcset="/notes/info/loading.gif" lazyload alt="OS Interface"></p>
 <h1 id="OS-Structure"><a href="#OS-Structure" class="headerlink" title="OS Structure"></a>OS Structure</h1><h2 id="Simple-OS-Architecture"><a href="#Simple-OS-Architecture" class="headerlink" title="Simple OS Architecture"></a>Simple OS Architecture</h2><ul>
 <li>開發很快，但是系統裡面的架構全部混在一起</li>
 <li>定義不清楚，非常不安全，也不好維護</li>
 </ul>
-<p><img src="/notes/./images/os-chapter2/SimpleOSArchitecture.png" srcset="/notes/info/loading.gif" lazyload alt="Simple OS Architecture"></p>
+<p><img src="/notes/../images/os-chapter2/SimpleOSArchitecture.png" srcset="/notes/info/loading.gif" lazyload alt="Simple OS Architecture"></p>
 <h2 id="Layered-OS-Architecture"><a href="#Layered-OS-Architecture" class="headerlink" title="Layered OS Architecture"></a>Layered OS Architecture</h2><ul>
 <li>功能分割得很清楚，上層可以 Call 下層，下層無法 Call 上層</li>
 <li>很好 Debug、維護</li>
 <li>因為是 Layerd，可能涉及到許多 Memory Copy，效能不好</li>
 </ul>
-<p><img src="/notes/./images/os-chapter2/LayeredOSArchitecture.png" srcset="/notes/info/loading.gif" lazyload alt="Layered OS Architecture"></p>
+<p><img src="/notes/../images/os-chapter2/LayeredOSArchitecture.png" srcset="/notes/info/loading.gif" lazyload alt="Layered OS Architecture"></p>
 <h2 id="Microkernel-OS"><a href="#Microkernel-OS" class="headerlink" title="Microkernel OS"></a>Microkernel OS</h2><ul>
 <li><p>Kernel 的程式碼越少越好，比較 Reliable，不要有 bug 就好</p>
 </li>
@@ -374,17 +372,17 @@
 </ul>
 </li>
 </ul>
-<p><img src="/notes/./images/os-chapter2/MicrokernelOS.png" srcset="/notes/info/loading.gif" lazyload alt="Microkernel OS"></p>
+<p><img src="/notes/../images/os-chapter2/MicrokernelOS.png" srcset="/notes/info/loading.gif" lazyload alt="Microkernel OS"></p>
 <h2 id="Modular-OS-Architecture"><a href="#Modular-OS-Architecture" class="headerlink" title="Modular OS Architecture"></a>Modular OS Architecture</h2><ul>
 <li>很常見，現在大多是使用這種架構</li>
 <li>跟 Microkernel OS 的差別在，都是在 Kernel Space，方便 Module 之間溝通，跑起來更有效率</li>
 </ul>
-<p><img src="/notes/./images/os-chapter2/ModularOSArchitecture.png" srcset="/notes/info/loading.gif" lazyload alt="Modular OS Architecture"></p>
+<p><img src="/notes/../images/os-chapter2/ModularOSArchitecture.png" srcset="/notes/info/loading.gif" lazyload alt="Modular OS Architecture"></p>
 <h2 id="Virtual-Machine"><a href="#Virtual-Machine" class="headerlink" title="Virtual Machine"></a>Virtual Machine</h2><ul>
 <li>一台電腦有很多使用者，每個人可能會需要自己的 OS</li>
 <li>VM 能夠做一個硬體抽象層，映射到原本電腦的硬體，讓 VM 使用</li>
 </ul>
-<p><img src="/notes/./images/os-chapter2/VirtualMachine.png" srcset="/notes/info/loading.gif" lazyload alt="Virtual Machine"></p>
+<p><img src="/notes/../images/os-chapter2/VirtualMachine.png" srcset="/notes/info/loading.gif" lazyload alt="Virtual Machine"></p>
 <h3 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h3><ul>
 <li><p>VM 全部都是跑在 User Space，無法直接執行 Privileged Instruction</p>
 <ul>
@@ -408,19 +406,19 @@
 <li>Guest OS 的程式碼完全不用動，可以直接裝在原本的 OS 上</li>
 <li>Vmware</li>
 </ul>
-<p><img src="/notes/./images/os-chapter2/FullVirtualization.png" srcset="/notes/info/loading.gif" lazyload alt="Full Virtualization"></p>
+<p><img src="/notes/../images/os-chapter2/FullVirtualization.png" srcset="/notes/info/loading.gif" lazyload alt="Full Virtualization"></p>
 <h3 id="Para-virtualization"><a href="#Para-virtualization" class="headerlink" title="Para-virtualization"></a>Para-virtualization</h3><ul>
 <li>Guest OS 會需要修改</li>
 <li>有一個 Manager 去管理所有 Guest OS</li>
 <li>Xen</li>
 </ul>
-<p><img src="/notes/./images/os-chapter2/Para-virtualization.png" srcset="/notes/info/loading.gif" lazyload alt="Para-virtualization"></p>
+<p><img src="/notes/../images/os-chapter2/Para-virtualization.png" srcset="/notes/info/loading.gif" lazyload alt="Para-virtualization"></p>
 <h3 id="Java-Virtual-Machine"><a href="#Java-Virtual-Machine" class="headerlink" title="Java Virtual Machine"></a>Java Virtual Machine</h3><ul>
 <li>Java 執行的方式就像跑在一個 Virual Machine 上</li>
 <li>跟 Nachos 很像，只做 Instruction 的轉換，把 Java Machine 上 Compile 出的 Bytecodes 轉換成其它的</li>
 <li>有一些 Translation 上的優化，像是 **Just-In-Time (JIT)**，記錄 Translation 過的 Instruction</li>
 </ul>
-<p><img src="/notes/./images/os-chapter2/JavaVirtualMachine.png" srcset="/notes/info/loading.gif" lazyload alt="Java Virtual Machine"></p>
+<p><img src="/notes/../images/os-chapter2/JavaVirtualMachine.png" srcset="/notes/info/loading.gif" lazyload alt="Java Virtual Machine"></p>
 
                 
               </div>

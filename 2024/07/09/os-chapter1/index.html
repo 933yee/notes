@@ -23,23 +23,23 @@
 <meta property="og:site_name" content="933yee&#39;s Notes">
 <meta property="og:description" content="周志遠教授作業系統開放式課程  Computer System 由 Hardware、OS、Application、User 組成 User：people、machines Application：使用 system resources 來解決問題的方式，像是各種軟體 Operation System：controls 與 coordinates 資源的使用 Hardware：提供基本的計算資源">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter1/GeneralPurposeOperatingSystems.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter1/ComputerSystemOrganization.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter1/DeviceController.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter1/InterruptDrivenIO.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter1/Hardwareinterrupt.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter1/Softwareinterrupt.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter1/StorageDeviceHierarchy.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter1/PerformanceOfVariousStorage.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter1/Caching.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter1/UseofBaseandLimitRegister.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/os-chapter1/HardwareAddressProtection.png">
+<meta property="og:image" content="https://933yee.github.io/images/os-chapter1/GeneralPurposeOperatingSystems.png">
+<meta property="og:image" content="https://933yee.github.io/images/os-chapter1/ComputerSystemOrganization.png">
+<meta property="og:image" content="https://933yee.github.io/images/os-chapter1/DeviceController.png">
+<meta property="og:image" content="https://933yee.github.io/images/os-chapter1/InterruptDrivenIO.png">
+<meta property="og:image" content="https://933yee.github.io/images/os-chapter1/Hardwareinterrupt.png">
+<meta property="og:image" content="https://933yee.github.io/images/os-chapter1/Softwareinterrupt.png">
+<meta property="og:image" content="https://933yee.github.io/images/os-chapter1/StorageDeviceHierarchy.png">
+<meta property="og:image" content="https://933yee.github.io/images/os-chapter1/PerformanceOfVariousStorage.png">
+<meta property="og:image" content="https://933yee.github.io/images/os-chapter1/Caching.png">
+<meta property="og:image" content="https://933yee.github.io/images/os-chapter1/UseofBaseandLimitRegister.png">
+<meta property="og:image" content="https://933yee.github.io/images/os-chapter1/HardwareAddressProtection.png">
 <meta property="article:published_time" content="2024-07-09T09:50:22.000Z">
-<meta property="article:modified_time" content="2024-07-23T03:22:38.025Z">
+<meta property="article:modified_time" content="2025-03-05T16:16:26.381Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="OS">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://933yee.github.io/notes/images/os-chapter1/GeneralPurposeOperatingSystems.png">
+<meta name="twitter:image" content="https://933yee.github.io/images/os-chapter1/GeneralPurposeOperatingSystems.png">
   
   
   
@@ -298,13 +298,11 @@
 </li>
 </ul>
 <h1 id="What-is-an-Operation-System"><a href="#What-is-an-Operation-System" class="headerlink" title="What is an Operation System"></a>What is an Operation System</h1><ul>
-<li><p><strong>Permanent</strong> Software</p>
-<ul>
+<li><strong>Permanent</strong> Software<ul>
 <li>電腦啟動後永遠存在，沒有它電腦就不會運作</li>
 </ul>
 </li>
-<li><p><strong>Abstracts</strong> 硬體資源給使用者使用</p>
-<ul>
+<li><strong>Abstracts</strong> 硬體資源給使用者使用<ul>
 <li>把底層的各種資源變成一堆 API，給使用者方便使用，virtual 的概念</li>
 </ul>
 </li>
@@ -317,7 +315,7 @@
 </li>
 <li>Device drivers 是 OS 的一部分</li>
 </ul>
-<p><img src="/notes/./images/os-chapter1/GeneralPurposeOperatingSystems.png" srcset="/notes/info/loading.gif" lazyload alt="General-Purpose Operating Systems"></p>
+<p><img src="/notes/../images/os-chapter1/GeneralPurposeOperatingSystems.png" srcset="/notes/info/loading.gif" lazyload alt="General-Purpose Operating Systems"></p>
 <h2 id="OS-的定義"><a href="#OS-的定義" class="headerlink" title="OS 的定義"></a>OS 的定義</h2><ul>
 <li>Resource allocator<ul>
 <li><strong>manages</strong> 和 <strong>allocates resources</strong> 來確保公平性和效率</li>
@@ -352,7 +350,7 @@
 <h1 id="Computer-System-Organization"><a href="#Computer-System-Organization" class="headerlink" title="Computer-System Organization"></a>Computer-System Organization</h1><ul>
 <li>由一個 Bus 連接 CPU、Memory、IO Device 等，作業系統就負責 <strong>Control</strong> 和 <strong>Coordinate</strong></li>
 </ul>
-<p><img src="/notes/./images/os-chapter1/ComputerSystemOrganization.png" srcset="/notes/info/loading.gif" lazyload alt="Computer-System Organization"></p>
+<p><img src="/notes/../images/os-chapter1/ComputerSystemOrganization.png" srcset="/notes/info/loading.gif" lazyload alt="Computer-System Organization"></p>
 <h2 id="Device-Controller-Hardware"><a href="#Device-Controller-Hardware" class="headerlink" title="Device Controller (Hardware)"></a>Device Controller (Hardware)</h2><ul>
 <li>負責控制最 low level 的硬體，每個 Device 會有一個 Device Controller 來做溝通</li>
 <li>Status reg 用來記錄現在 device controller 是 busy 還是 idle</li>
@@ -360,7 +358,7 @@
 <li>CPU 下指令後，Device controller 就能夠去 access disk 資料到自己的 local buffer</li>
 <li>Memory 是 CPU 在用的，所以 CPU 負責 移入&#x2F; 移出 memory 的資料到 Device Controller 上的 local buffer</li>
 </ul>
-<p><img src="/notes/./images/os-chapter1/DeviceController.png" srcset="/notes/info/loading.gif" lazyload alt="Device Controller"></p>
+<p><img src="/notes/../images/os-chapter1/DeviceController.png" srcset="/notes/info/loading.gif" lazyload alt="Device Controller"></p>
 <p>由於 Device Controller 上的 Buffer 空間是有限的，因此會需要用一些技巧來解決，像是 Busy&#x2F; wait、Interrupt</p>
 <h2 id="Busy-wait-output"><a href="#Busy-wait-output" class="headerlink" title="Busy&#x2F;wait output"></a>Busy&#x2F;wait output</h2><ul>
 <li>最簡單暴力的運行方式，但是很浪費 CPU，CPU 變成用來監控 Buffer</li>
@@ -371,7 +369,7 @@
 <li>原本 CPU 在執行某程式碼，Interrupt 可以打斷這件事情，要求 CPU 先做其他事情，做完之後再回去執行原本的程式碼</li>
 <li>現在的作業系統都是這種形式</li>
 </ul>
-<p><img src="/notes/./images/os-chapter1/InterruptDrivenIO.png" srcset="/notes/info/loading.gif" lazyload alt="Interrupt-Driven I/O"></p>
+<p><img src="/notes/../images/os-chapter1/InterruptDrivenIO.png" srcset="/notes/info/loading.gif" lazyload alt="Interrupt-Driven I/O"></p>
 <p>又可以分成 Hardware 和 Software</p>
 <h3 id="Hardware-Interrupt"><a href="#Hardware-Interrupt" class="headerlink" title="Hardware Interrupt"></a>Hardware Interrupt</h3><ul>
 <li>又稱為 Signal</li>
@@ -384,7 +382,7 @@
 <li>signal 都會有一個 singal number，根據這個 number 去找 vector 上的欄位</li>
 <li>每個 port 的 hardware 有燒死的 singal number， 裝 driver 的時候會 overwrite 那個欄位的 fucntion pointer 的位置，去執行你要處理的程式碼</li>
 </ul>
-<p><img src="/notes/./images/os-chapter1/Hardwareinterrupt.png" srcset="/notes/info/loading.gif" lazyload alt="Hardware interrupt"></p>
+<p><img src="/notes/../images/os-chapter1/Hardwareinterrupt.png" srcset="/notes/info/loading.gif" lazyload alt="Hardware interrupt"></p>
 <h3 id="Softwarae-Interrupt"><a href="#Softwarae-Interrupt" class="headerlink" title="Softwarae Interrupt"></a>Softwarae Interrupt</h3><ul>
 <li>又稱為 Trap</li>
 </ul>
@@ -397,10 +395,10 @@
 </ul>
 </li>
 </ul>
-<p><img src="/notes/./images/os-chapter1/Softwareinterrupt.png" srcset="/notes/info/loading.gif" lazyload alt="Software interrupt"></p>
+<p><img src="/notes/../images/os-chapter1/Softwareinterrupt.png" srcset="/notes/info/loading.gif" lazyload alt="Software interrupt"></p>
 <p>不管是 Hardware Interrupt 或是 Software Interrupt，Interrupt 的時候必須記得被打斷的程式的 Instruction Address，才能再處理完 Interrupt 回去繼續執行。</p>
 <p>有時候 Interrupt 還會有 Hierachy，像是有時候動滑鼠會沒有反應，是因為它卡在某 Interrupt routine 裡面，所以沒有處理到滑鼠的 Interrupt</p>
-<h1 id="Storage-Device-Hierarchy"><a href="#Storage-Device-Hierarchy" class="headerlink" title="Storage-Device Hierarchy"></a>Storage-Device Hierarchy</h1><p><img src="/notes/./images/os-chapter1/StorageDeviceHierarchy.png" srcset="/notes/info/loading.gif" lazyload alt="Storage-Device Hierarchy"></p>
+<h1 id="Storage-Device-Hierarchy"><a href="#Storage-Device-Hierarchy" class="headerlink" title="Storage-Device Hierarchy"></a>Storage-Device Hierarchy</h1><p><img src="/notes/../images/os-chapter1/StorageDeviceHierarchy.png" srcset="/notes/info/loading.gif" lazyload alt="Storage-Device Hierarchy"></p>
 <ul>
 <li>真正的大型的系統最後還是用 tapes，因為非常 reliable，不太容易壞，而且很便宜</li>
 <li>這是最傳統的架構，現在有很多其他的 storage device 會插在中間</li>
@@ -421,7 +419,7 @@
 <ul>
 <li>one transistor</li>
 <li>less power</li>
-<li>must be periodically refreshed </li>
+<li>must be periodically refreshed</li>
 <li>體積小，速度比較慢</li>
 <li>因為 CPU 有很多 core， RAM 的速度其實就那樣，channel 的 bus 其實才是真正的 bottleneck</li>
 <li>Main Memory</li>
@@ -445,12 +443,12 @@
 </li>
 <li>如果是連續資料的讀取，其實 Hard Drive 並不會輸 SSD</li>
 </ul>
-<p><img src="/notes/./images/os-chapter1/PerformanceOfVariousStorage.png" srcset="/notes/info/loading.gif" lazyload alt="Performance Of Various Storage"></p>
+<p><img src="/notes/../images/os-chapter1/PerformanceOfVariousStorage.png" srcset="/notes/info/loading.gif" lazyload alt="Performance Of Various Storage"></p>
 <h3 id="Caching"><a href="#Caching" class="headerlink" title="Caching"></a>Caching</h3><ul>
 <li>把速度比較慢的 Storage 複製到速度比較快的 Storage</li>
 <li>如果這層找不到資料，會一層一層往下檢查，直到找到，所以有時候會比沒有 Caching 還慢</li>
 </ul>
-<p><img src="/notes/./images/os-chapter1/Caching.png" srcset="/notes/info/loading.gif" lazyload alt="Caching"></p>
+<p><img src="/notes/../images/os-chapter1/Caching.png" srcset="/notes/info/loading.gif" lazyload alt="Caching"></p>
 <h4 id="Coherency-and-Consistency-Issue"><a href="#Coherency-and-Consistency-Issue" class="headerlink" title="Coherency and Consistency Issue"></a>Coherency and Consistency Issue</h4><ul>
 <li><p>對資料做修改時，如果 Cache 修改資料時沒有更新到 Memory，其他程式在讀取時，會發生這種問題。像是 Multi-Core Processor 就會需要去處理，因為大家的 L1 Cache 是不同的，但是 L2、L3 相同</p>
 </li>
@@ -488,14 +486,12 @@
 <li>早期有個 Bypass Hack 的方式，也就是去改寫 Interrupt Vector 裡面的值，所以 OS 就能去執行我自己想要的程式碼</li>
 </ul>
 <h2 id="Memory-Protection"><a href="#Memory-Protection" class="headerlink" title="Memory Protection"></a>Memory Protection</h2><ul>
-<li><p>Protect</p>
-<ul>
+<li>Protect<ul>
 <li>要保護 Interrupt Vector、Interrupt Service Routines</li>
 <li>不能 Overwrite 別人的程式碼</li>
 </ul>
 </li>
-<li><p>Haredware Support: 使用兩個 register 來記錄能夠讀取的記憶體區間</p>
-<ul>
+<li>Haredware Support: 使用兩個 register 來記錄能夠讀取的記憶體區間<ul>
 <li>Base register: 開始的位址</li>
 <li>Limit register: 這段佔記憶體多長</li>
 <li>超過這段空間就會有 <strong>Segmentation Fault</strong></li>
@@ -503,7 +499,7 @@
 </ul>
 </li>
 </ul>
-<p><img src="/notes/./images/os-chapter1/UseofBaseandLimitRegister.png" srcset="/notes/info/loading.gif" lazyload alt="Use of Base and Limit Register"><br><img src="/notes/./images/os-chapter1/HardwareAddressProtection.png" srcset="/notes/info/loading.gif" lazyload alt="Hardware Address Protection"></p>
+<p><img src="/notes/../images/os-chapter1/UseofBaseandLimitRegister.png" srcset="/notes/info/loading.gif" lazyload alt="Use of Base and Limit Register"><br><img src="/notes/../images/os-chapter1/HardwareAddressProtection.png" srcset="/notes/info/loading.gif" lazyload alt="Hardware Address Protection"></p>
 <h2 id="CPU-Protection"><a href="#CPU-Protection" class="headerlink" title="CPU Protection"></a>CPU Protection</h2><ul>
 <li>阻止某隻程式霸佔 CPU，像是無窮迴圈</li>
 <li>Hardware Support: <strong>Timer</strong><ul>
