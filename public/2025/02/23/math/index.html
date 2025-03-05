@@ -23,16 +23,16 @@
 <meta property="og:site_name" content="933yee&#39;s Notes">
 <meta property="og:description" content="我的數學好爛，忘光光，小補一下  泰勒展開式出發點：希望能夠用多項式來近似任何函數，包含 $sin(x)$、$cos(x)$、$e^x$ 等等，這樣就可以用微積分的方法來解決問題。 $$f(x) &#x3D; f(a) + f’(a)(x-a) + \frac{f’’(a)}{2!}(x-a)^2 + \frac{f’’’(a)}{3!}(x-a)^3 + \cdots + \frac{f^{(">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://933yee.github.io/notes/images/math/LevelCurves-1.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/math/LevelCurves-2.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/math/Gradient-0.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/math/Gradient-1.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/math/Gradient-2.png">
+<meta property="og:image" content="https://933yee.github.io/images/math/LevelCurves-1.png">
+<meta property="og:image" content="https://933yee.github.io/images/math/LevelCurves-2.png">
+<meta property="og:image" content="https://933yee.github.io/images/math/Gradient-0.png">
+<meta property="og:image" content="https://933yee.github.io/images/math/Gradient-1.png">
+<meta property="og:image" content="https://933yee.github.io/images/math/Gradient-2.png">
 <meta property="article:published_time" content="2025-02-23T10:37:12.000Z">
-<meta property="article:modified_time" content="2025-02-23T10:34:01.724Z">
+<meta property="article:modified_time" content="2025-03-05T16:16:26.107Z">
 <meta property="article:author" content="Kevin Lee">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://933yee.github.io/notes/images/math/LevelCurves-1.png">
+<meta name="twitter:image" content="https://933yee.github.io/images/math/LevelCurves-1.png">
   
   
   
@@ -305,10 +305,10 @@
 </ul>
 <h2 id="Lagrange-Multipliers"><a href="#Lagrange-Multipliers" class="headerlink" title="Lagrange Multipliers"></a>Lagrange Multipliers</h2><p>用來解決 <strong>帶約束條件的最佳化問題</strong>。當一個函數的極值問題受到其他等式約束時，可以用 <strong>Lagrange Multipliers</strong> 來解決。</p>
 <h3 id="Level-Curves"><a href="#Level-Curves" class="headerlink" title="Level Curves"></a>Level Curves</h3><p>圖中的紫色平面會把藍色函式 $f(x, y) &#x3D; 3x - x^3 -2y^2 + y^4$ 切成不同的等高線，每條等高線代表著相同的函數值。綠色的點為紫色平面上的某一點，可以發現這個點不管在哪裡，其算出的梯度向量 $\nabla f$ 永遠與等高線的切線向量垂直。</p>
-<p><img src="/notes/./images/math/LevelCurves-1.png" srcset="/notes/info/loading.gif" lazyload alt="Level Curves"><br><img src="/notes/./images/math/LevelCurves-2.png" srcset="/notes/info/loading.gif" lazyload alt="Level Curves"></p>
-<h3 id="有限制的最佳化問題"><a href="#有限制的最佳化問題" class="headerlink" title="有限制的最佳化問題"></a>有限制的最佳化問題</h3><p>在這個圖中，綠色為紅色函式的等高線投影，藍色函式為 $x$、$y$ 的限制條件，橘色函式為紅色函式在限制條件下的函式。<br><img src="/notes/./images/math/Gradient-0.png" srcset="/notes/info/loading.gif" lazyload alt="Gradient Example"></p>
+<p><img src="/notes/../images/math/LevelCurves-1.png" srcset="/notes/info/loading.gif" lazyload alt="Level Curves"><br><img src="/notes/../images/math/LevelCurves-2.png" srcset="/notes/info/loading.gif" lazyload alt="Level Curves"></p>
+<h3 id="有限制的最佳化問題"><a href="#有限制的最佳化問題" class="headerlink" title="有限制的最佳化問題"></a>有限制的最佳化問題</h3><p>在這個圖中，綠色為紅色函式的等高線投影，藍色函式為 $x$、$y$ 的限制條件，橘色函式為紅色函式在限制條件下的函式。<br><img src="/notes/../images/math/Gradient-0.png" srcset="/notes/info/loading.gif" lazyload alt="Gradient Example"></p>
 <p>可以發現當極值發生時，等高線的的 <code>Gradient</code> 和限制條件的 <code>Gradient</code> 會平行</p>
-<p><img src="/notes/./images/math/Gradient-1.png" srcset="/notes/info/loading.gif" lazyload alt="Gradient Example"><br><img src="/notes/./images/math/Gradient-2.png" srcset="/notes/info/loading.gif" lazyload alt="Gradient Example"></p>
+<p><img src="/notes/../images/math/Gradient-1.png" srcset="/notes/info/loading.gif" lazyload alt="Gradient Example"><br><img src="/notes/../images/math/Gradient-2.png" srcset="/notes/info/loading.gif" lazyload alt="Gradient Example"></p>
 <p>因此可以得到</p>
 <p>$$<br>\nabla f(x, y) &#x3D; \lambda \nabla g(x, y)<br>$$</p>
 <p>其中 $\lambda$ 就是 <strong>Lagrange Multipliers</strong></p>

@@ -2,9 +2,10 @@
 title: Flutter 筆記
 date: 2024-05-03 23:37:31
 tags: Flutter
-category: 
+category:
 math: true
 ---
+
 ```dart
 import 'package:flutter/material.dart';
 
@@ -72,7 +73,7 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-![demo 1](./images/flutter-notes/demo1.png)
+![demo 1](../images/flutter-notes/demo1.png)
 
 ### ListView and GridView
 
@@ -127,9 +128,7 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-
-![demo 2](./images/flutter-notes/demo2.png)
-
+![demo 2](../images/flutter-notes/demo2.png)
 
 ### Stack and GestureDetector
 
@@ -177,10 +176,10 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-
-![demo 3](./images/flutter-notes/demo3.png)
+![demo 3](../images/flutter-notes/demo3.png)
 
 ### Navigation
+
 #### Main
 
 ```dart
@@ -244,6 +243,7 @@ class SecondPage extends StatelessWidget {
 ### Drawer And Navigation
 
 #### Main
+
 ```dart
 void main() {
   runApp(MyApp());
@@ -268,6 +268,7 @@ class MyApp extends StatelessWidget {
 ```
 
 #### First Page
+
 ```dart
 class FirstPage extends StatelessWidget {
   const FirstPage({super.key});
@@ -309,6 +310,7 @@ class FirstPage extends StatelessWidget {
 ```
 
 #### Home
+
 ```dart
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -322,11 +324,12 @@ class HomePage extends StatelessWidget {
 }
 ```
 
-![demo 4](./images/flutter-notes/demo4.png)
-
+![demo 4](../images/flutter-notes/demo4.png)
 
 ### Bottom Navigation
+
 #### Main
+
 ```dart
 void main() {
   runApp(MyApp());
@@ -351,6 +354,7 @@ class MyApp extends StatelessWidget {
 ```
 
 #### First Page (StateFul)
+
 ```dart
 class FirstPage extends StatefulWidget {
   FirstPage({super.key});
@@ -395,6 +399,7 @@ class _FirstPageState extends State<FirstPage> {
 ```
 
 #### Hone
+
 ```dart
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -409,11 +414,12 @@ class HomePage extends StatelessWidget {
 }
 ```
 
-![demo 5](./images/flutter-notes/demo5.png)
-
+![demo 5](../images/flutter-notes/demo5.png)
 
 ### Counter App
+
 #### Main
+
 ```dart
 void main() {
   runApp(const MyApp());
@@ -433,6 +439,7 @@ class MyApp extends StatelessWidget {
 ```
 
 #### Counter Page
+
 ```dart
 class CounterPage extends StatefulWidget {
   const CounterPage({super.key});
@@ -474,6 +481,7 @@ class _CounterPageState extends State<CounterPage> {
 ### TextField
 
 #### Main
+
 ```dart
 void main() {
   runApp(const MyApp());
@@ -493,6 +501,7 @@ class MyApp extends StatelessWidget {
 ```
 
 #### ToDoPage
+
 ```dart
 class ToDoPage extends StatefulWidget {
   const ToDoPage({super.key});
@@ -538,5 +547,4 @@ class _ToDoPageState extends State<ToDoPage> {
 }
 ```
 
-
-![demo 6](./images/flutter-notes/demo6.png)
+![demo 6](../images/flutter-notes/demo6.png)

@@ -23,13 +23,13 @@
 <meta property="og:site_name" content="933yee&#39;s Notes">
 <meta property="og:description" content="半導體 Semiconductor 自由電子數量介於 導體(Conductor) 與 絕緣體(Insulator) 之間  導體 Conductor 材料上有許多自由電子 (free electron) 給予外加電壓後，產生電場，自由電子開始移動 自由電子移動，且數量夠多時，量測的到電流，我們稱它為導體 在室溫下，自由電子濃度大概是 $10^22 &#x2F; cm^3$  絕緣體 (Insula">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://933yee.github.io/notes/images/circuits-and-electronics-1/SemiconductorCurrentEquation.png">
+<meta property="og:image" content="https://933yee.github.io/images/circuits-and-electronics-1/SemiconductorCurrentEquation.png">
 <meta property="og:image" content="https://i.sstatic.net/BO3H1.png">
 <meta property="article:published_time" content="2024-09-07T14:54:32.000Z">
-<meta property="article:modified_time" content="2024-09-10T10:05:51.802Z">
+<meta property="article:modified_time" content="2025-03-05T16:16:26.642Z">
 <meta property="article:author" content="Kevin Lee">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://933yee.github.io/notes/images/circuits-and-electronics-1/SemiconductorCurrentEquation.png">
+<meta name="twitter:image" content="https://933yee.github.io/images/circuits-and-electronics-1/SemiconductorCurrentEquation.png">
   
   
   
@@ -317,7 +317,7 @@
 <h3 id="電子濃度公式"><a href="#電子濃度公式" class="headerlink" title="電子濃度公式"></a>電子濃度公式</h3><ul>
 <li>$ n_i(T) &#x3D; BT^{3&#x2F;2} e^{(-Eg&#x2F;2kT)}$<ul>
 <li>i: intrinsic</li>
-<li>B: Semi Constant for Si, B &#x3D; 5.23 * $10^{15}$ </li>
+<li>B: Semi Constant for Si, B &#x3D; 5.23 * $10^{15}$</li>
 <li>Eg: Bandgap energy (eV) for Si, Eg &#x3D; 1.1 eV</li>
 <li>T: 絕對溫度 (K), K &#x3D; 273.15 + $^\circ C$</li>
 <li>k: Boltzmann’s Constant, k &#x3D; 86 * $10^{-6}$ eV&#x2F;K</li>
@@ -332,7 +332,7 @@
 <li>這邊以摻雜五價元素為例，稱為 <strong>N 型半導體</strong><ul>
 <li>原先 Si 濃度是 5 * $10^22$ 原子&#x2F;$cm^3$</li>
 <li>摻雜的 P 濃度是 5 * $10^15$ 原子&#x2F;$cn^3$</li>
-<li>摻雜過後的 Si 濃度是 5 * $10^22$ - 5 * $10^15$，還是 5 * $10^22$ 原子&#x2F;$cm^3$<ul>
+<li>摻雜過後的 Si 濃度是 5 _ $10^22$ - 5 _ $10^15$，還是 5 * $10^22$ 原子&#x2F;$cm^3$<ul>
 <li>可以發現 Si 濃度幾乎沒有改變，因此熔點等物理特性、化學特性不會變，但是 <strong>導電性</strong> 會改變</li>
 </ul>
 </li>
@@ -363,7 +363,7 @@
 </ul>
 <h2 id="飄移與擴散-Drift-and-Diffusion"><a href="#飄移與擴散-Drift-and-Diffusion" class="headerlink" title="飄移與擴散 Drift and Diffusion"></a>飄移與擴散 Drift and Diffusion</h2><h3 id="飄移"><a href="#飄移" class="headerlink" title="飄移"></a>飄移</h3><ul>
 <li>外力，像是施予電壓產生電場</li>
-<li>電場產生力給載子，移動裡面的電子與電洞 <ul>
+<li>電場產生力給載子，移動裡面的電子與電洞<ul>
 <li>雖然電子與電洞方向不同，但他們貢獻的方向是相同的，不會抵銷</li>
 <li>所有載子的平均速度，就是 <strong>飄移速度</strong>，會隨著電壓變大而變快<ul>
 <li>當飄移速度變快時，電流也會越大</li>
@@ -385,20 +385,20 @@
 </ul>
 </li>
 </ul>
-<h3 id="半導體電流公式"><a href="#半導體電流公式" class="headerlink" title="半導體電流公式"></a>半導體電流公式</h3><p><img src="/notes/./images/circuits-and-electronics-1/SemiconductorCurrentEquation.png" srcset="/notes/info/loading.gif" lazyload alt="Semiconductor Current Equation"></p>
+<h3 id="半導體電流公式"><a href="#半導體電流公式" class="headerlink" title="半導體電流公式"></a>半導體電流公式</h3><p><img src="/notes/../images/circuits-and-electronics-1/SemiconductorCurrentEquation.png" srcset="/notes/info/loading.gif" lazyload alt="Semiconductor Current Equation"></p>
 <h4 id="電子-n"><a href="#電子-n" class="headerlink" title="電子 n"></a>電子 n</h4><p>我們有 $I_n$ &#x3D; $\frac{N \cdot q}{t}$ 、 $V_{dn}$ &#x3D; $\frac{-L}{t}$ (- 為方向)，因此 $I_n &#x3D; qN \cdot \frac{(-V_{dn})}{L}$<br>電流密度 $J_n &#x3D; \frac{I_n}{A} &#x3D; \frac{qN \dot (-V_{dn})}{L\cdot A}$ &#x3D; $q \cdot n (-V_{dn})$ (n 為電子濃度)<br>結合前面的飄移速度公式，可以得到 $J_n &#x3D; q \cdot n \cdot (-V_{dn}) &#x3D;  q \cdot n \cdot (-) (-\mu_n) \cdot E &#x3D; q \cdot n \mu_n \cdot E$</p>
 <h4 id="電洞-p"><a href="#電洞-p" class="headerlink" title="電洞 p"></a>電洞 p</h4><p>基本上跟電子類似，可以得到 $J_p &#x3D; q \cdot p \mu_p \cdot E$</p>
 <p>可以知道 <strong>半導體的電流密度</strong> $J &#x3D; J_n + J_p &#x3D; (q \cdot n \mu_n + q \cdot p \mu_p) \cdot E$</p>
 <h4 id="導電係數-sigma"><a href="#導電係數-sigma" class="headerlink" title="導電係數 $\sigma$"></a>導電係數 $\sigma$</h4><p>半導體的電流密度 中的 $(q \cdot n \mu_n + q \cdot p \mu_p)$ 又稱為 <strong>導電係數 conductivity</strong></p>
-<p>在探討 <strong>歐姆定律 (Ohm’s laws)</strong> 時，我們有 $I &#x3D; \frac{V}{R} &#x3D; \frac{V \cdot A}{\rho \cdot L} &#x3D; J \cdot A$ </p>
+<p>在探討 <strong>歐姆定律 (Ohm’s laws)</strong> 時，我們有 $I &#x3D; \frac{V}{R} &#x3D; \frac{V \cdot A}{\rho \cdot L} &#x3D; J \cdot A$</p>
 <ul>
 <li>$\rho$ 為 <strong>電阻係數</strong></li>
 <li>$L$ 為長度</li>
 <li>$A$ 為截面積</li>
 </ul>
-<p>可以發現 $J &#x3D; \frac{1}{\rho} \cdot \frac{V}{L} &#x3D; (\frac{1}{\rho}) \cdot E$ 且 $J &#x3D; \sigma \cdot E$<br>所以 $\sigma &#x3D; \frac{1}{\rho}$ </p>
+<p>可以發現 $J &#x3D; \frac{1}{\rho} \cdot \frac{V}{L} &#x3D; (\frac{1}{\rho}) \cdot E$ 且 $J &#x3D; \sigma \cdot E$<br>所以 $\sigma &#x3D; \frac{1}{\rho}$</p>
 <h5 id="例題"><a href="#例題" class="headerlink" title="例題"></a>例題</h5><p>本質半導體 Si 在 300 K 的溫度下， $\mu_n &#x3D; 1350 \frac{cm^3}{V \cdot s}$，$\mu_p &#x3D; 480 \frac{cm^3}{V \cdot s}$，$N_d &#x3D; 1 \cdot 10^{16} 1&#x2F;cm^3$，求導電係數 $\sigma$？</p>
-<p>$n &#x3D; N_d &#x3D; 1 \cdot 10^{16}$<br>$p &#x3D; \frac{n_i^2}{N_d} &#x3D; \frac{(1.5 \cdot 10^{10})^2}{10^{16}} &#x3D; 2.25 \cdot 10^4$<br>可以發現 $q \cdot p \cdot \mu_p$ 跟 $q \cdot n \cdot \mu_n$ 比起來極小，可以省略<br>因此 $J &#x3D; q \cdot n \cdot \mu_n &#x3D; 1.6 \cdot 10^{-19} \cdot 10^{16} \cdot 1350 &#x3D; 2.16$ </p>
+<p>$n &#x3D; N_d &#x3D; 1 \cdot 10^{16}$<br>$p &#x3D; \frac{n_i^2}{N_d} &#x3D; \frac{(1.5 \cdot 10^{10})^2}{10^{16}} &#x3D; 2.25 \cdot 10^4$<br>可以發現 $q \cdot p \cdot \mu_p$ 跟 $q \cdot n \cdot \mu_n$ 比起來極小，可以省略<br>因此 $J &#x3D; q \cdot n \cdot \mu_n &#x3D; 1.6 \cdot 10^{-19} \cdot 10^{16} \cdot 1350 &#x3D; 2.16$</p>
 <ul>
 <li>可以觀察到，如果沒有參雜雜質，$p$ 或 $n$ 都遠不及有參雜雜質的，因此 <strong>導電性</strong> 會差很多倍</li>
 </ul>

@@ -1,13 +1,15 @@
 ---
 title: Graphcis Programming and Application Lecture Program 解析 (2)
 date: 2024-11-11 10:53:03
-tags: 
-category: 
+tags:
+category:
 math: true
 ---
+
 # Grass
+
 ```cpp
-#include "../../Include/Common.h"
+#include ".../.../Include/Common.h"
 
 using namespace glm;
 
@@ -178,7 +180,7 @@ void My_Display()
 	// 	GLsizei count,
 	// 	GLsizei instancecount
 	// );
- 
+
     glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, 6, 1024 * 1024);
 
 	glutSwapBuffers();
@@ -235,8 +237,9 @@ int main(int argc, char *argv[])
 ```
 
 # Instanced_Attributes
+
 ```cpp
-#include "../../Include/Common.h"
+#include ".../.../Include/Common.h"
 
 static const char * square_vs_source[] =
 {
@@ -402,8 +405,9 @@ int main(int argc, char *argv[])
 ```
 
 # Point Sprite
+
 ```cpp
-#include "../../Include/Common.h"
+#include ".../.../Include/Common.h"
 #define MENU_TIMER_START 1
 #define MENU_TIMER_STOP 2
 #define MENU_EXIT 3
@@ -470,7 +474,7 @@ static const char * vs_source[] =
 };
 
 static const char * fs_source[] =
-{ 
+{
 	"#version 410 core                                              \n"
 	"                                                               \n"
 	"out vec4 color;										        \n"
@@ -538,7 +542,7 @@ void My_Init()
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
 	glBufferData(GL_ARRAY_BUFFER, NUM_STARS * sizeof(star_t), NULL, GL_STATIC_DRAW);
 
-	// void *glMapBufferRange(	
+	// void *glMapBufferRange(
 	//  GLenum target,
 	// 	GLintptr offset,
 	// 	GLsizeiptr length,
@@ -570,7 +574,7 @@ void My_Init()
 	glActiveTexture( GL_TEXTURE0 );
 
 	glEnable(GL_POINT_SPRITE); //點精靈會根據視點自動調整其大小和方向，這樣在三維空間中，它們看起來更自然。
-	TextureData tdata = loadImg("../../Media/Textures/star.png");
+	TextureData tdata = loadImg(".../.../Media/Textures/star.png");
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_ONE, GL_ONE);
@@ -664,7 +668,7 @@ int main(int argc, char *argv[])
 	///////////////////////////////
 	glutDisplayFunc(My_Display);
 	glutReshapeFunc(My_Reshape);
-	glutTimerFunc(timer_speed, My_Timer, 0); 
+	glutTimerFunc(timer_speed, My_Timer, 0);
 	///////////////////////////////
 
 	// Enter main event loop.
@@ -676,8 +680,9 @@ int main(int argc, char *argv[])
 ```
 
 # GrayScale_Cube
+
 ```cpp
-#include "../../Include/Common.h"
+#include ".../.../Include/Common.h"
 #define GLM_SWIZZLE
 
 #include <cstdio>
@@ -960,10 +965,10 @@ void My_Display()
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 
 	glBindFramebuffer( GL_DRAW_FRAMEBUFFER, 0 );
-	
+
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 	glClearColor( 1.0f, 0.0f, 0.0f, 1.0f );
-	
+
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture( GL_TEXTURE_2D, FBODataTexture );
 	glBindVertexArray(window_vao);
@@ -1041,7 +1046,7 @@ int main(int argc, char *argv[])
 	///////////////////////////////
 	glutDisplayFunc(My_Display);
 	glutReshapeFunc(My_Reshape);
-	glutTimerFunc(timer_speed, My_Timer, 0); 
+	glutTimerFunc(timer_speed, My_Timer, 0);
 	///////////////////////////////
 
 	// Enter main event loop.
@@ -1053,8 +1058,9 @@ int main(int argc, char *argv[])
 ```
 
 # Image Processing
+
 ```cpp
-#include "../../Include/Common.h"
+#include ".../.../Include/Common.h"
 
 #define MENU_TIMER_START 1
 #define MENU_TIMER_STOP 2
@@ -1229,7 +1235,7 @@ void My_Init()
 	};
 	glBufferData(GL_ARRAY_BUFFER, sizeof(data), data, GL_STATIC_DRAW);
 
-	TextureData tdata = loadImg("../../Media/Textures/hawk.png"); 
+	TextureData tdata = loadImg(".../.../Media/Textures/hawk.png");
 
 	glGenTextures( 1, &hawk_texture );
 	glBindTexture( GL_TEXTURE_2D, hawk_texture);
@@ -1238,7 +1244,7 @@ void My_Init()
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
-	
+
 	///////////////////////////////////////////////////////////////////////////
 	printf("\nNote : Use Right Click Menu to switch Effect\n");
 	//////////////////////////////////////////////////////////////////////////
@@ -1251,7 +1257,7 @@ void My_Display()
 
 	float f_timer_cnt = timer_cnt / 255.0f;
 
-	
+
 	glUniform1i(Shader_now_Loc,shader_now);
 	glUniformMatrix4fv(um4mvp, 1, GL_FALSE, value_ptr(mvp));
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
@@ -1361,7 +1367,7 @@ int main(int argc, char *argv[])
 	///////////////////////////////
 	glutDisplayFunc(My_Display);
 	glutReshapeFunc(My_Reshape);
-	glutTimerFunc(timer_speed, My_Timer, 0); 
+	glutTimerFunc(timer_speed, My_Timer, 0);
 	///////////////////////////////
 
 	// Enter main event loop.

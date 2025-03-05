@@ -1,16 +1,17 @@
 ---
 title: Graphcis Programming and Application Lecture Program 解析
 date: 2024-10-06 20:43:02
-tags: 
-category: 
+tags:
+category:
 math: true
 ---
 
 # Alienrain
 
 ## 前置作業和 Shaders
+
 ```cpp
-#include "../../Include/Common.h"
+#include ".../.../Include/Common.h"
 
 using namespace glm;
 
@@ -99,7 +100,6 @@ float           droplet_fall_speed[256];
 
 ```
 
-
 ```cpp
 int main(int argc, char *argv[])
 {
@@ -117,7 +117,7 @@ int main(int argc, char *argv[])
 	glutInitWindowSize(600, 600); // 視窗的長寬
 	glutCreateWindow(__FILENAME__); // 視窗的名稱（一定要這行！不然不能跑）
 
-#ifdef _MSC_VER 
+#ifdef _MSC_VER
 	glewInit(); // glew init
 #endif
 
@@ -146,9 +146,9 @@ void My_Init()
 	program = glCreateProgram(); // 新增一個 shader program，回傳 GLuint ID
 	GLuint fs = glCreateShader(GL_FRAGMENT_SHADER); // 宣告他是 Fragment Shader
 	glShaderSource(fs, 1, fs_source, NULL); // 寫入 shader 的內容
-	glCompileShader(fs); // 把 shader 編譯成 GPU 可執行的程式 
+	glCompileShader(fs); // 把 shader 編譯成 GPU 可執行的程式
 
-	GLuint vs = glCreateShader(GL_VERTEX_SHADER); 
+	GLuint vs = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vs, 1, vs_source, NULL);
 	glCompileShader(vs);
 
@@ -163,7 +163,7 @@ void My_Init()
 	glGenVertexArrays(1, &vao); // glGenVertexArrays( vao 數量, vao GLuint ID)，生成 vao
 	glBindVertexArray(vao); // 綁定到 vao，這樣之後才能寫入 attribute，像是 glVertexAttribI1i(1, alien_index);
 
-	TextureData tex = loadImg("../../Media/Textures/aliens.png"); // custom function，回傳 TextureData，包含高、寬、字元
+	TextureData tex = loadImg(".../.../Media/Textures/aliens.png"); // custom function，回傳 TextureData，包含高、寬、字元
 	glGenTextures(1, &tex_alien_array); // 生成 texture，寫 ID 到 text_alien_array
 	glBindTexture(GL_TEXTURE_2D_ARRAY, tex_alien_array); // 綁定這個 ID，這邊用 GL_TEXTURE_2D_ARRAY，之後寫入宣告 GL_TEXTURE_2D_ARRAY 都會到對應的 ID
 
@@ -200,14 +200,14 @@ void My_Init()
 void My_Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // 清除顏色、深度
-	
+
 	float currentTime = glutGet(GLUT_ELAPSED_TIME) * 0.001f; // glutGet(GLUT_ELAPSED_TIME) 可以得到程式從開始到現在的時間 (毫秒
 
     // glMapBufferRange(target, offset, length, access)
     // 這裡的 GL_UNIFORM_BUFFER 就是對應到前面寫的 rain_buffer
-    // GL_MAP_WRITE_BIT: 允許寫入 map 到的 memory 
+    // GL_MAP_WRITE_BIT: 允許寫入 map 到的 memory
     // GL_MAP_INVALIDATE_BUFFER_BIT: map 前的內容可以被捨棄
-	vec4 * droplet = (vec4 *)glMapBufferRange(GL_UNIFORM_BUFFER, 0, 256 * sizeof(vec4), GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT); 
+	vec4 * droplet = (vec4 *)glMapBufferRange(GL_UNIFORM_BUFFER, 0, 256 * sizeof(vec4), GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT);
 	for (int i = 0; i < 256; i++)
 	{
 		droplet[i][0] = droplet_x_offset[i];
@@ -220,13 +220,14 @@ void My_Display()
 	int alien_index;
 	for (alien_index = 0; alien_index < 256; alien_index++)
 	{
-		glVertexAttribI1i(1, alien_index); // location = 1, 
+		glVertexAttribI1i(1, alien_index); // location = 1,
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4); // 從 0 開始畫四個 vertex
 	}
 
 	glutSwapBuffers();
 }
 ```
+
 ```cpp
 void My_Reshape(int width, int height)
 {
@@ -242,8 +243,9 @@ void My_Timer(int val)
 ```
 
 # Simple_Texture_Coords
+
 ```cpp
-#include "../../Include/Common.h"
+#include ".../.../Include/Common.h"
 
 using namespace glm;
 using namespace std;
@@ -259,7 +261,7 @@ struct
     GLint       proj_matrix;
 } uniforms;
 
-static const char *render_fs_glsl[] = 
+static const char *render_fs_glsl[] =
 {
     "#version 410 core                                            \n"
     "                                                             \n"
@@ -278,7 +280,7 @@ static const char *render_fs_glsl[] =
     "}                                                            \n"
 };
 
-static const char *render_vs_glsl[] = 
+static const char *render_vs_glsl[] =
 {
     "#version 410 core                            \n"
     "                                             \n"
@@ -351,7 +353,7 @@ void My_Init()
 
     glGenTextures(1, &tex_object[0]);
     glBindTexture(GL_TEXTURE_2D, tex_object[0]);
-	
+
 	// void glTexImage2D(
 	//  GLenum target,
 	// 	GLint level,
@@ -369,7 +371,7 @@ void My_Init()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 	// load
-    TextureData tex = loadImg("../../Media/Textures/pattern1.png");
+    TextureData tex = loadImg(".../.../Media/Textures/pattern1.png");
 	glGenTextures(1, &tex_object[1]);
 	glBindTexture(GL_TEXTURE_2D, tex_object[1]);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex.width, tex.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, tex.data);
@@ -388,8 +390,8 @@ void My_Init()
 	//  glGenerateMipmap(GL_TEXTURE_2D);
 
 	vector<MeshData> meshes;
-	meshes = loadObj("../../Media/Objects/torus_nrms_tc.obj");
-	
+	meshes = loadObj(".../.../Media/Objects/torus_nrms_tc.obj");
+
 	GLuint vao;
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
@@ -406,7 +408,7 @@ void My_Init()
 	// glVertexAttribPointer(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void * pointer);
 	// index: attribute 位置 (location = 0)
 	// size: vec3
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0); 
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(0); // 啟動
 
 	vertex_count = meshes[0].positions.size() / 3;
@@ -522,8 +524,9 @@ int main(int argc, char *argv[])
 ```
 
 # Simple Texture
+
 ```cpp
-#include "../../Include/Common.h"
+#include ".../.../Include/Common.h"
 
 static const char * vs_source[] =
 {
@@ -600,7 +603,7 @@ void My_Init()
 		GL_RGBA,        // Four channel data
 		GL_FLOAT,       // Floating point data
 		data);          // Pointer to data
-    
+
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
@@ -682,8 +685,9 @@ int main(int argc, char *argv[])
 ```
 
 # Single Triangle Buffer
+
 ```cpp
-#include "../../Include/Common.h"
+#include ".../.../Include/Common.h"
 
 static const char * vs_source[] =
 {
@@ -740,7 +744,7 @@ void My_Init()
 
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
-    
+
     GLuint buffer;
     glGenBuffers(1, &buffer);
     glBindBuffer(GL_ARRAY_BUFFER, buffer);
@@ -817,7 +821,7 @@ int main(int argc, char *argv[])
 # Spinning Cube
 
 ```cpp
-#include "../../Include/Common.h"
+#include ".../.../Include/Common.h"
 
 using namespace glm;
 
@@ -1018,7 +1022,7 @@ int main(int argc, char *argv[])
 	///////////////////////////////
 	glutDisplayFunc(My_Display);
 	glutReshapeFunc(My_Reshape);
-	glutTimerFunc(16, My_Timer, 0); 
+	glutTimerFunc(16, My_Timer, 0);
 	///////////////////////////////
 
 	// Enter main event loop.
@@ -1032,7 +1036,7 @@ int main(int argc, char *argv[])
 # Tunnel
 
 ```cpp
-#include "../../Include/Common.h"
+#include ".../.../Include/Common.h"
 
 using namespace glm;
 
@@ -1141,21 +1145,21 @@ void My_Init()
 	uniforms.mvp = glGetUniformLocation(program, "mvp");
 	uniforms.offset = glGetUniformLocation(program, "offset");
 
-	TextureData tex = loadImg("../../Media/Textures/brick.png");
+	TextureData tex = loadImg(".../.../Media/Textures/brick.png");
 	glGenTextures(1, &tex_wall);
 	glBindTexture(GL_TEXTURE_2D, tex_wall);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex.width, tex.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, tex.data);
 	glGenerateMipmap(GL_TEXTURE_2D);
 	delete[] tex.data;
 
-	tex = loadImg("../../Media/Textures/ceiling.png");
+	tex = loadImg(".../.../Media/Textures/ceiling.png");
 	glGenTextures(1, &tex_ceiling);
 	glBindTexture(GL_TEXTURE_2D, tex_ceiling);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex.width, tex.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, tex.data);
 	glGenerateMipmap(GL_TEXTURE_2D);
 	delete[] tex.data;
 
-	tex = loadImg("../../Media/Textures/floor.png");
+	tex = loadImg(".../.../Media/Textures/floor.png");
 	glGenTextures(1, &tex_floor);
 	glBindTexture(GL_TEXTURE_2D, tex_floor);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex.width, tex.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, tex.data);
@@ -1208,9 +1212,9 @@ void My_Display()
 void My_Reshape(int width, int height)
 {
 	glViewport(0, 0, width, height);
-	
+
 	float viewportAspect = (float)width / (float)height;
-	
+
 	proj_matrix = perspective(deg2rad(60.0f), viewportAspect, 0.1f, 1000.0f);
 }
 
@@ -1230,7 +1234,7 @@ void My_Menu(int val)
 		for (int i = 0; i < 3; i++)
 		{
 			glBindTexture(GL_TEXTURE_2D, textures[i]);
-			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 1.0f); 
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 1.0f);
 		}
 	}
 
@@ -1268,7 +1272,7 @@ void My_Menu(int val)
 			glBindTexture(GL_TEXTURE_2D, textures[i]);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, maxAniso); 
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, maxAniso);
 		}
 	}
 }
@@ -1309,7 +1313,7 @@ int main(int argc, char *argv[])
 	///////////////////////////////
 	glutDisplayFunc(My_Display);
 	glutReshapeFunc(My_Reshape);
-	glutTimerFunc(16, My_Timer, 0); 
+	glutTimerFunc(16, My_Timer, 0);
 	///////////////////////////////
 
 	// Enter main event loop.
@@ -1321,8 +1325,9 @@ int main(int argc, char *argv[])
 ```
 
 # Wrapmode
+
 ```cpp
-#include "../../Include/Common.h"
+#include ".../.../Include/Common.h"
 
 static const char * vs_source[] =
 {
@@ -1396,7 +1401,7 @@ void My_Init()
 	glGenTextures(1, &texture);
 
 	// Load texture from file
-	TextureData tex = loadImg("../../Media/Textures/rightarrows.png");
+	TextureData tex = loadImg(".../.../Media/Textures/rightarrows.png");
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex.width, tex.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, tex.data);

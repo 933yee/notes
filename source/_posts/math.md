@@ -88,18 +88,18 @@ $$
 
 圖中的紫色平面會把藍色函式 $f(x, y) = 3x - x^3 -2y^2 + y^4$ 切成不同的等高線，每條等高線代表著相同的函數值。綠色的點為紫色平面上的某一點，可以發現這個點不管在哪裡，其算出的梯度向量 $\nabla f$ 永遠與等高線的切線向量垂直。
 
-![Level Curves](./images/math/LevelCurves-1.png)
-![Level Curves](./images/math/LevelCurves-2.png)
+![Level Curves](../images/math/LevelCurves-1.png)
+![Level Curves](../images/math/LevelCurves-2.png)
 
 ### 有限制的最佳化問題
 
 在這個圖中，綠色為紅色函式的等高線投影，藍色函式為 $x$、$y$ 的限制條件，橘色函式為紅色函式在限制條件下的函式。
-![Gradient Example](./images/math/Gradient-0.png)
+![Gradient Example](../images/math/Gradient-0.png)
 
 可以發現當極值發生時，等高線的的 `Gradient` 和限制條件的 `Gradient` 會平行
 
-![Gradient Example](./images/math/Gradient-1.png)
-![Gradient Example](./images/math/Gradient-2.png)
+![Gradient Example](../images/math/Gradient-1.png)
+![Gradient Example](../images/math/Gradient-2.png)
 
 因此可以得到
 

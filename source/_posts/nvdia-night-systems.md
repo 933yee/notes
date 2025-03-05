@@ -1,32 +1,35 @@
 ---
 title: NVDIA Night Systems
 date: 2024-10-02 16:52:14
-tags: 
-category: 
+tags:
+category:
 math: true
 ---
 
 # NVDIA Night Systems
+
 - 主要用來分析 GPU 的 Performance
 - 因為有直覺得 Timeline，可以看某個程式在哪個時間點再做什麼，所以也可以看 CPU 執行的程式
 - Single thread/ Multi-thread (pthread/OpenMP)
-  - `srun -n1 -cX nsys profile <nsys options> ./your_program <program args>`
+  - `srun -n1 -cX nsys profile <nsys options> ../your_program <program args>`
 - MPI
-`srun -nX ./wrapper.sh ./your_program <program args>`
+  `srun -nX ../wrapper.sh ../your_program <program args>`
 
 - wrapper.sh
+
 ```sh
   #! /bin/bash
 
   mkdir -p nsys_reports
 
-  # Output to ./nsys_reports/rank_$N.nsys-rep
+  # Output to ../nsys_reports/rank_$N.nsys-rep
   nsys profile \
-  -o "./nsys_reports/rank_$PMI_RANK.nsys-rep" \  
+  -o "../nsys_reports/rank_$PMI_RANK.nsys-rep" \
   --mpi-impl openmpi \
   --trace mpi,ucx,osrt \
   $@
 ```
+
 讓每個 Process 輸出到不同名稱的檔案，裡面的 PMI_RANK 就會自動填入對應的 rank
 
 --trace <events>: cuda, mpi, ucs, nvtx, ...
@@ -34,5 +37,6 @@ math: true
 --duration Y: profile 跑幾秒
 --mpi-impl: openmpi (for OpenMPI)/ mpich (for Intel MPI)
 
-# NVTX 
+# NVTX
+
 可以結合 Nsystem，插偵來更好的監測結果，不過會有一些 Profile Overhead

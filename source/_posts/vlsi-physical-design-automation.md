@@ -36,7 +36,7 @@ math: true
 
 把 `Circuit Netlist` 轉換成 `Layout` 的過程，每個元件要擺哪、要怎麼連接、怎麼樣才能達到最佳的 **Power**, **Performance**, **Area** (PPA)，甚至於 **Security**。
 
-![Circuit Netlist](./images/vlsi-physical-design-automation/CircuitNetlist.png)
+![Circuit Netlist](../images/vlsi-physical-design-automation/CircuitNetlist.png)
 
 #### Computer-Aided Design (CAD)
 
@@ -103,20 +103,20 @@ math: true
 
 #### Standard Cell Design
 
-![Standard Cell Design](./images/vlsi-physical-design-automation/StandardCellDesign.png)
+![Standard Cell Design](../images/vlsi-physical-design-automation/StandardCellDesign.png)
 有一個 `Cell Library`，裡面有很多標準元件，每個都有固定的高度。Layout 都已經設計好了，只要做 Metal Layer 就好
 
 早期 Metal 層數不多，可以留 Routing Channel、Feedthrough Cell 來連接不同的 Cell。現在層數比較多，連線都在上空，所以可以把整 Row 的 Cell 翻轉，讓 GND 在一邊、VDD 在另一邊，減少 Routing 的複雜度
 
 #### Gate Array Design
 
-![Gate Array Design](./images/vlsi-physical-design-automation/GateArrayDesign.png)
+![Gate Array Design](../images/vlsi-physical-design-automation/GateArrayDesign.png)
 
 Cell 裡面、Cell 之間的連線都沒有決定，可以根據需求來做 (沒什麼人在用?
 
 #### FPGA (Field Programmable Gate Array)
 
-![FPGA](./images/vlsi-physical-design-automation/FPGA.png)
+![FPGA](../images/vlsi-physical-design-automation/FPGA.png)
 
 可以決定每個 Cell 的功能，線也連好了，線可以用 Switch、Switch Box 控制
 
@@ -154,7 +154,7 @@ Cell 裡面、Cell 之間的連線都沒有決定，可以根據需求來做 (�
 
 Macro 是常常用到的，很大片的 Logic Cell，可能包含很多個 Standard Cell，例如：ALU、Multiplier、Memory
 
-![Macro Cells](./images/vlsi-physical-design-automation/MacroCells.png)
+![Macro Cells](../images/vlsi-physical-design-automation/MacroCells.png)
 
 #### Structured ASIC (Application Specific Integrated Circuit)
 
@@ -176,7 +176,7 @@ Structured ASIC 介於 FPGA 和 Gate Array 之間，會事先定義好一些 Met
 - Overlap Rules
   限制元件之間的重疊的最小面積。每一層 Layer 會有不同的光罩，有時候會有誤差，所以會需要一些 Overlap 來保護
 
-![Design Rules](./images/vlsi-physical-design-automation/DesignRules.png)
+![Design Rules](../images/vlsi-physical-design-automation/DesignRules.png)
 
 ## Partitioning
 
@@ -188,7 +188,7 @@ Structured ASIC 介於 FPGA 和 Gate Array 之間，會事先定義好一些 Met
 - Communication
   子系統之間的連線訊號不要出現在 Critical Path 上，晶片內的 Timing 跟 PCB 的 Timing 不一樣
 
-![Partitioning](./images/vlsi-physical-design-automation/Partitioning.png)
+![Partitioning](../images/vlsi-physical-design-automation/Partitioning.png)
 
 - Cutset: 一個 Cut 包含很多被切掉的 Net，Cutset 就是這些 Net 的集合
 - Cut size: Cutset 的大小
@@ -223,7 +223,7 @@ KL Algorithm 是一種 Greedy 的 Heuristic Algorithm，不保證找到最佳解
   $$
   在同個 Pass 中，第二次算 Gain 的時候，它的 $\text{Old\_Cutset}(A, B)$ 是第一次算 Gain 的結果
 
-![KL Algorithm Example](./images/vlsi-physical-design-automation/KLAlgorithmExample.png)
+![KL Algorithm Example](../images/vlsi-physical-design-automation/KLAlgorithmExample.png)
 
 可以發現交換頂點 $u$、$v$ 之後，$u \in A$、$v \in B$，原本 $u$ 和集合 $B$ 所有頂點的連線都不用算在 Cut (**$u$、$v$ 連線除外**)，但原本 $u$ 和集合 $A$ 所有頂點的連線都要多算，同理於 $v$。因此在計算的時候只要考慮 `External Cost` 和 `Internal Cost` 就好
 
@@ -315,11 +315,11 @@ FM Algorithm 一樣是 Greedy 的 Heuristic Algorithm，為 KL Algorithm 的改�
 - $N$: Net 的總數，ex: $N = 6$
 - $P$: Pin 的總數，ex: $P = p(1) + p(2) + \cdots + p(C)$
 
-![FM Algorithm Example](./images/vlsi-physical-design-automation/FMAlgorithmExample.png)
+![FM Algorithm Example](../images/vlsi-physical-design-automation/FMAlgorithmExample.png)
 
 #### Cut
 
-![Cut](./images/vlsi-physical-design-automation/Cut.png)
+![Cut](../images/vlsi-physical-design-automation/Cut.png)
 
 - Cutstate: 這個 Net 有沒有被切到
   - Net 1 和 Net 3 的狀態是 `Cut`
@@ -433,12 +433,12 @@ $$
 - Power Ring
   在 Core 周圍建立一個封閉的電源環，讓所有元件都能夠穩定的接上 VDD 和 VSS
 
-  ![Power Ring](./images/vlsi-physical-design-automation/PowerRing.png)
+  ![Power Ring](../images/vlsi-physical-design-automation/PowerRing.png)
 
 - Power Stripes
   在 Core 內部建立一個電源線，連到 Power Ring，形成完整的 Power Network
 
-  ![Power Stripes](./images/vlsi-physical-design-automation/PowerStripes.png)
+  ![Power Stripes](../images/vlsi-physical-design-automation/PowerStripes.png)
 
 ### Placement (place_opt_design)
 
@@ -448,13 +448,13 @@ $$
 - Placement Optimization
   透過 Placement Optimization 來最佳化 Placement，達到 Power Optimization 或 Timing Optimization
 
-![Placement](./images/vlsi-physical-design-automation/Placement.png)
+![Placement](../images/vlsi-physical-design-automation/Placement.png)
 
 ### Clock Tree Synthesis
 
 CLK 控制晶片裡所有 Flip-Flop 的 Timing，要確保所有 Flip-Flop 都能在同一個 Clock Cycle 內正確的被觸發
 
-![Clock Tree Synthesis](./images/vlsi-physical-design-automation/ClockTreeSynthesis.png)
+![Clock Tree Synthesis](../images/vlsi-physical-design-automation/ClockTreeSynthesis.png)
 
 圖中的紅色、綠色、黃色線就是 CLK 訊號
 
@@ -463,4 +463,4 @@ CLK 控制晶片裡所有 Flip-Flop 的 Timing，要確保所有 Flip-Flop 都�
 - `routeDesign`
   將所有標準單元、Macro 之間的連線轉換為實際金屬導線，並確保符合 Timing 和 DRC 規則，自動插入 Via 連接不同金屬層
 
-![Routing](./images/vlsi-physical-design-automation/Routing.png)
+![Routing](../images/vlsi-physical-design-automation/Routing.png)
