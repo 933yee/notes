@@ -24,7 +24,7 @@
 <meta property="og:description" content="NVDIA Night Systems 主要用來分析 GPU 的 Performance  因為有直覺得 Timeline，可以看某個程式在哪個時間點再做什麼，所以也可以看 CPU 執行的程式  Single thread&#x2F; Multi-thread (pthread&#x2F;OpenMP)  srun -n1 -cX nsys profile &lt;nsys options&gt;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-10-02T08:52:14.000Z">
-<meta property="article:modified_time" content="2025-03-05T16:16:26.221Z">
+<meta property="article:modified_time" content="2025-03-05T18:34:03.532Z">
 <meta property="article:author" content="Kevin Lee">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -279,15 +279,15 @@
 </li>
 <li><p>Single thread&#x2F; Multi-thread (pthread&#x2F;OpenMP)</p>
 <ul>
-<li><code>srun -n1 -cX nsys profile &lt;nsys options&gt; ../your_program &lt;program args&gt;</code></li>
+<li><code>srun -n1 -cX nsys profile &lt;nsys options&gt; ./your_program &lt;program args&gt;</code></li>
 </ul>
 </li>
-<li><p>MPI<br><code>srun -nX ../wrapper.sh ../your_program &lt;program args&gt;</code></p>
+<li><p>MPI<br><code>srun -nX ./wrapper.sh ./your_program &lt;program args&gt;</code></p>
 </li>
 <li><p>wrapper.sh</p>
 </li>
 </ul>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-meta">#! /bin/bash</span><br><br><span class="hljs-built_in">mkdir</span> -p nsys_reports<br><br><span class="hljs-comment"># Output to ../nsys_reports/rank_$N.nsys-rep</span><br>nsys profile \<br>-o <span class="hljs-string">&quot;../nsys_reports/rank_<span class="hljs-variable">$PMI_RANK</span>.nsys-rep&quot;</span> \<br>--mpi-impl openmpi \<br>--trace mpi,ucx,osrt \<br><span class="hljs-variable">$@</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-meta">#! /bin/bash</span><br><br><span class="hljs-built_in">mkdir</span> -p nsys_reports<br><br><span class="hljs-comment"># Output to ./nsys_reports/rank_$N.nsys-rep</span><br>nsys profile \<br>-o <span class="hljs-string">&quot;./nsys_reports/rank_<span class="hljs-variable">$PMI_RANK</span>.nsys-rep&quot;</span> \<br>--mpi-impl openmpi \<br>--trace mpi,ucx,osrt \<br><span class="hljs-variable">$@</span><br></code></pre></td></tr></table></figure>
 
 <p>讓每個 Process 輸出到不同名稱的檔案，裡面的 PMI_RANK 就會自動填入對應的 rank</p>
 <p>–trace <events>: cuda, mpi, ucs, nvtx, …<br>–start-later X: X 秒之後再開始 profile，因為像是 initialization 就不重要，且通常只要監測幾秒就好，不用全看<br>–duration Y: profile 跑幾秒<br>–mpi-impl: openmpi (for OpenMPI)&#x2F; mpich (for Intel MPI)</p>
