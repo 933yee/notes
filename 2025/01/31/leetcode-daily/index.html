@@ -24,7 +24,7 @@
 <meta property="og:description" content="2025&#x2F;02&#x2F;01 3151. Special Array I bitwise xor + and 即可 Time Complexity $O(n)$ Space Complexity $O(1)$    12345678910class Solution &#123;public:    bool isArraySpecial(vector&lt;int&gt;&amp;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-01-31T13:22:11.000Z">
-<meta property="article:modified_time" content="2025-03-04T07:26:22.916Z">
+<meta property="article:modified_time" content="2025-03-05T07:11:20.319Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary_large_image">
@@ -220,7 +220,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.3k words
+          3.4k words
         
       </span>
     
@@ -231,7 +231,7 @@
         
         
         
-          28 mins
+          29 mins
         
       </span>
     
@@ -461,6 +461,12 @@
 
 <p>討論區看到一個很猛的方法，直接把 <code>n</code> 看成 3 進位，每次檢查 LSB，如果有出現 <code>2</code> 就代表不是由 <code>3^x</code> 組成的</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">checkPowersOfThree</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> </span>&#123;<br>        <span class="hljs-keyword">while</span>(n &gt; <span class="hljs-number">0</span>)&#123;<br>            <span class="hljs-keyword">if</span>(n % <span class="hljs-number">3</span> == <span class="hljs-number">2</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>            n /= <span class="hljs-number">3</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2025-03-05-2579-Count-Total-Number-of-Colored-Cells"><a href="#2025-03-05-2579-Count-Total-Number-of-Colored-Cells" class="headerlink" title="2025&#x2F;03&#x2F;05 2579. Count Total Number of Colored Cells"></a>2025&#x2F;03&#x2F;05 <a target="_blank" rel="noopener" href="https://leetcode.com/problems/count-total-number-of-colored-cells/description/?envType=daily-question&envId=2025-03-05">2579. Count Total Number of Colored Cells</a></h3><p>直接算兩個三角形去掉重疊的部分</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">long</span> <span class="hljs-type">long</span> <span class="hljs-title">coloredCells</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> (<span class="hljs-type">long</span> <span class="hljs-type">long</span>)<span class="hljs-number">2</span>*n*n-(<span class="hljs-number">2</span>*n<span class="hljs-number">-1</span>);<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>也可以用遞迴</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">long</span> <span class="hljs-type">long</span> <span class="hljs-title">coloredCells</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> </span>&#123;<br>        <span class="hljs-keyword">if</span>(n == <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">return</span> (n<span class="hljs-number">-2</span>) * <span class="hljs-number">4</span> + <span class="hljs-number">4</span> + <span class="hljs-built_in">coloredCells</span>(n<span class="hljs-number">-1</span>);<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
                 
               </div>
