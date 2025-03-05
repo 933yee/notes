@@ -108,7 +108,7 @@ math: true
 
 ### 半導體電流公式
 
-![Semiconductor Current Equation](../images/circuits-and-electronics-1/SemiconductorCurrentEquation.png)
+![Semiconductor Current Equation](./images/circuits-and-electronics-1/SemiconductorCurrentEquation.png)
 
 #### 電子 n
 

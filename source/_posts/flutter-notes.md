@@ -73,7 +73,7 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-![demo 1](../images/flutter-notes/demo1.png)
+![demo 1](./images/flutter-notes/demo1.png)
 
 ### ListView and GridView
 
@@ -128,7 +128,7 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-![demo 2](../images/flutter-notes/demo2.png)
+![demo 2](./images/flutter-notes/demo2.png)
 
 ### Stack and GestureDetector
 
@@ -176,7 +176,7 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-![demo 3](../images/flutter-notes/demo3.png)
+![demo 3](./images/flutter-notes/demo3.png)
 
 ### Navigation
 
@@ -324,7 +324,7 @@ class HomePage extends StatelessWidget {
 }
 ```
 
-![demo 4](../images/flutter-notes/demo4.png)
+![demo 4](./images/flutter-notes/demo4.png)
 
 ### Bottom Navigation
 
@@ -414,7 +414,7 @@ class HomePage extends StatelessWidget {
 }
 ```
 
-![demo 5](../images/flutter-notes/demo5.png)
+![demo 5](./images/flutter-notes/demo5.png)
 
 ### Counter App
 
@@ -547,4 +547,4 @@ class _ToDoPageState extends State<ToDoPage> {
 }
 ```
 
-![demo 6](../images/flutter-notes/demo6.png)
+![demo 6](./images/flutter-notes/demo6.png)

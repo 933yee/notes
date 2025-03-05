@@ -8,7 +8,7 @@ math: true
 
 > 參考 清華大學 李政崑老師 編譯器設計講義
 
-![Relations](../images/compiler-3/Relation.png)
+![Relations](./images/compiler-3/Relation.png)
 
 ## Regular Expression
 
@@ -56,7 +56,7 @@ D = [0 ~ 9]
 
 #### Vending Machine
 
-![Vending Machine](../images/compiler-3/VendingMachine.png)
+![Vending Machine](./images/compiler-3/VendingMachine.png)
 
 - M = (Q, $\Sigma$, $\delta$, $q_{0}$, F)
 - Q = {$q_{0}, q_{5}, q_{10}, q_{15}, q_{20}$}
@@ -96,13 +96,13 @@ D = [0 ~ 9]
 - If we want to denote a null move, I.e.. one state going to other state without any input symbol, then epsilon is used
   - [What is the difference between epsilon and phi in Automata?](https://www.quora.com/What-is-the-difference-between-epsilon-and-phi-in-Automata)
 
-![epsilon](../images/compiler-3/epsilon.png)
+![epsilon](./images/compiler-3/epsilon.png)
 
 ##### r = $\phi$
 
 - Denotes empty i.e. no input string exists.
 
-![phi](../images/compiler-3/phi.png)
+![phi](./images/compiler-3/phi.png)
 
 ### Conversion of NFA without $\epsilon$-transition to DFA
 
@@ -143,11 +143,11 @@ D = [0 ~ 9]
 - $\epsilon$-closure($q_9$) = {$q_9$}
 - $\epsilon$-closure($q_10$) = {$q_10$}
 
-![Epsilon-Closure Example](../images/compiler-3/EpsilonClosureExample.png)
+![Epsilon-Closure Example](./images/compiler-3/EpsilonClosureExample.png)
 
 #### Conversion Example
 
-![Epsilon-closure Conversion](../images/compiler-3/Epsilon-closureConversion.png)
+![Epsilon-closure Conversion](./images/compiler-3/Epsilon-closureConversion.png)
 
 - $\epsilon$-closure($q_0$) = {$q_0, q_1, q_2$}
 - $\delta$($q_0$, 0) = $\epsilon$-closure($\delta$($\epsilon$-closure($q_0$), 0))
@@ -164,7 +164,7 @@ $$
 
 - 對每個 State 都做一次上面的操作
 
-![Epsilon-closure Conversion](../images/compiler-3/Epsilon-closureConversion2.png)
+![Epsilon-closure Conversion](./images/compiler-3/Epsilon-closureConversion2.png)
 
 ### Minimizing the number of states of a DFA
 

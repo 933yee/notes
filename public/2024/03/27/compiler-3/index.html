@@ -23,21 +23,21 @@
 <meta property="og:site_name" content="933yee&#39;s Notes">
 <meta property="og:description" content="參考 清華大學 李政崑老師 編譯器設計講義   Regular Expression A Language is a set of strings that can be formed from the given alphabet Grammar defines a Language  Example 1 a | b denotes {a, b} (a | b)(a | b) denotes">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://933yee.github.io/images/compiler-3/Relation.png">
-<meta property="og:image" content="https://933yee.github.io/images/compiler-3/VendingMachine.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/compiler-3/Relation.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/compiler-3/VendingMachine.png">
 <meta property="og:image" content="https://www.researchgate.net/publication/2659477/figure/fig1/AS:647496795713537@1531386674269/NFA-and-DFA-for-Pattern-Matching-of-any-counterexample-Angluin-and-Kharitonov-1991.png">
 <meta property="og:image" content="https://i.stack.imgur.com/hXhcF.png">
-<meta property="og:image" content="https://933yee.github.io/images/compiler-3/epsilon.png">
-<meta property="og:image" content="https://933yee.github.io/images/compiler-3/phi.png">
-<meta property="og:image" content="https://933yee.github.io/images/compiler-3/EpsilonClosureExample.png">
-<meta property="og:image" content="https://933yee.github.io/images/compiler-3/Epsilon-closureConversion.png">
-<meta property="og:image" content="https://933yee.github.io/images/compiler-3/Epsilon-closureConversion2.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/compiler-3/epsilon.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/compiler-3/phi.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/compiler-3/EpsilonClosureExample.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/compiler-3/Epsilon-closureConversion.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/compiler-3/Epsilon-closureConversion2.png">
 <meta property="article:published_time" content="2024-03-27T12:27:05.000Z">
-<meta property="article:modified_time" content="2025-03-05T16:16:26.601Z">
+<meta property="article:modified_time" content="2025-03-05T18:34:03.395Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="Compilier">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://933yee.github.io/images/compiler-3/Relation.png">
+<meta name="twitter:image" content="https://933yee.github.io/notes/images/compiler-3/Relation.png">
   
   
   
@@ -286,7 +286,7 @@
                 <blockquote>
 <p>參考 清華大學 李政崑老師 編譯器設計講義</p>
 </blockquote>
-<p><img src="/notes/../images/compiler-3/Relation.png" srcset="/notes/info/loading.gif" lazyload alt="Relations"></p>
+<p><img src="/notes/./images/compiler-3/Relation.png" srcset="/notes/info/loading.gif" lazyload alt="Relations"></p>
 <h2 id="Regular-Expression"><a href="#Regular-Expression" class="headerlink" title="Regular Expression"></a>Regular Expression</h2><ul>
 <li>A Language is a set of strings that can be formed from the given alphabet</li>
 <li>Grammar defines a Language</li>
@@ -310,7 +310,7 @@
 <li>$q_0$ is the initial state</li>
 <li>F is a set of final states</li>
 </ul>
-<h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><h4 id="Vending-Machine"><a href="#Vending-Machine" class="headerlink" title="Vending Machine"></a>Vending Machine</h4><p><img src="/notes/../images/compiler-3/VendingMachine.png" srcset="/notes/info/loading.gif" lazyload alt="Vending Machine"></p>
+<h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><h4 id="Vending-Machine"><a href="#Vending-Machine" class="headerlink" title="Vending Machine"></a>Vending Machine</h4><p><img src="/notes/./images/compiler-3/VendingMachine.png" srcset="/notes/info/loading.gif" lazyload alt="Vending Machine"></p>
 <ul>
 <li>M &#x3D; (Q, $\Sigma$, $\delta$, $q_{0}$, F)</li>
 <li>Q &#x3D; {$q_{0}, q_{5}, q_{10}, q_{15}, q_{20}$}</li>
@@ -348,11 +348,11 @@
 </ul>
 </li>
 </ul>
-<p><img src="/notes/../images/compiler-3/epsilon.png" srcset="/notes/info/loading.gif" lazyload alt="epsilon"></p>
+<p><img src="/notes/./images/compiler-3/epsilon.png" srcset="/notes/info/loading.gif" lazyload alt="epsilon"></p>
 <h5 id="r-phi"><a href="#r-phi" class="headerlink" title="r &#x3D; $\phi$"></a>r &#x3D; $\phi$</h5><ul>
 <li>Denotes empty i.e. no input string exists.</li>
 </ul>
-<p><img src="/notes/../images/compiler-3/phi.png" srcset="/notes/info/loading.gif" lazyload alt="phi"></p>
+<p><img src="/notes/./images/compiler-3/phi.png" srcset="/notes/info/loading.gif" lazyload alt="phi"></p>
 <h3 id="Conversion-of-NFA-without-epsilon-transition-to-DFA"><a href="#Conversion-of-NFA-without-epsilon-transition-to-DFA" class="headerlink" title="Conversion of NFA without $\epsilon$-transition to DFA"></a>Conversion of NFA without $\epsilon$-transition to DFA</h3><ul>
 <li><p>Every DFA is an NFA, but not vice versa</p>
 </li>
@@ -395,8 +395,8 @@
 <li>$\epsilon$-closure($q_9$) &#x3D; {$q_9$}</li>
 <li>$\epsilon$-closure($q_10$) &#x3D; {$q_10$}</li>
 </ul>
-<p><img src="/notes/../images/compiler-3/EpsilonClosureExample.png" srcset="/notes/info/loading.gif" lazyload alt="Epsilon-Closure Example"></p>
-<h4 id="Conversion-Example"><a href="#Conversion-Example" class="headerlink" title="Conversion Example"></a>Conversion Example</h4><p><img src="/notes/../images/compiler-3/Epsilon-closureConversion.png" srcset="/notes/info/loading.gif" lazyload alt="Epsilon-closure Conversion"></p>
+<p><img src="/notes/./images/compiler-3/EpsilonClosureExample.png" srcset="/notes/info/loading.gif" lazyload alt="Epsilon-Closure Example"></p>
+<h4 id="Conversion-Example"><a href="#Conversion-Example" class="headerlink" title="Conversion Example"></a>Conversion Example</h4><p><img src="/notes/./images/compiler-3/Epsilon-closureConversion.png" srcset="/notes/info/loading.gif" lazyload alt="Epsilon-closure Conversion"></p>
 <ul>
 <li>$\epsilon$-closure($q_0$) &#x3D; {$q_0, q_1, q_2$}</li>
 <li>$\delta$($q_0$, 0) &#x3D; $\epsilon$-closure($\delta$($\epsilon$-closure($q_0$), 0))</li>
@@ -405,7 +405,7 @@
 <ul>
 <li>對每個 State 都做一次上面的操作</li>
 </ul>
-<p><img src="/notes/../images/compiler-3/Epsilon-closureConversion2.png" srcset="/notes/info/loading.gif" lazyload alt="Epsilon-closure Conversion"></p>
+<p><img src="/notes/./images/compiler-3/Epsilon-closureConversion2.png" srcset="/notes/info/loading.gif" lazyload alt="Epsilon-closure Conversion"></p>
 <h3 id="Minimizing-the-number-of-states-of-a-DFA"><a href="#Minimizing-the-number-of-states-of-a-DFA" class="headerlink" title="Minimizing the number of states of a DFA"></a>Minimizing the number of states of a DFA</h3><ul>
 <li>一開始把 Final states 和不是 Final states 的 state 分成兩組<ul>
 <li>ex: {A, B, C}, {D, E}</li>

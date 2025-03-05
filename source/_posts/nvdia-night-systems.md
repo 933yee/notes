@@ -11,9 +11,9 @@ math: true
 - 主要用來分析 GPU 的 Performance
 - 因為有直覺得 Timeline，可以看某個程式在哪個時間點再做什麼，所以也可以看 CPU 執行的程式
 - Single thread/ Multi-thread (pthread/OpenMP)
-  - `srun -n1 -cX nsys profile <nsys options> ../your_program <program args>`
+  - `srun -n1 -cX nsys profile <nsys options> ./your_program <program args>`
 - MPI
-  `srun -nX ../wrapper.sh ../your_program <program args>`
+  `srun -nX ./wrapper.sh ./your_program <program args>`
 
 - wrapper.sh
 
@@ -22,9 +22,9 @@ math: true
 
   mkdir -p nsys_reports
 
-  # Output to ../nsys_reports/rank_$N.nsys-rep
+  # Output to ./nsys_reports/rank_$N.nsys-rep
   nsys profile \
-  -o "../nsys_reports/rank_$PMI_RANK.nsys-rep" \
+  -o "./nsys_reports/rank_$PMI_RANK.nsys-rep" \
   --mpi-impl openmpi \
   --trace mpi,ucx,osrt \
   $@

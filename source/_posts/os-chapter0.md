@@ -25,7 +25,7 @@ tags: OS
   - IO 非常慢，導致 CPU 常常掛機，浪費資源
     - IO 速度遠比 CPU 速度慢
 
-![Batch System](../images/os-chapter0/BatchSystem.png)
+![Batch System](./images/os-chapter0/BatchSystem.png)
 
 ## Multi-programming
 
@@ -54,7 +54,7 @@ tags: OS
   - File system 和 disk management，有了 interactive，使用者就可以直接管理檔案
   - Process synchronization 和 deadlock，程式和程式之間可以溝通，當他們同時修改 memory 的內容時就會有問題
 
-![Mainframe System Summary](../images/os-chapter0/MainframeSystemSummary.png)
+![Mainframe System Summary](./images/os-chapter0/MainframeSystemSummary.png)
 
 # Computer-system architecture
 
@@ -79,7 +79,7 @@ tags: OS
     - 一個 CPU 掛了，其他還能繼續工作
 - 現今所有系統都是這種系統
 
-![Parallel Systems](../images/os-chapter0/ParallelSystems.png)
+![Parallel Systems](./images/os-chapter0/ParallelSystems.png)
 
 ### SMP (Symmetric multiprocessor system)
 
@@ -97,7 +97,7 @@ tags: OS
 
 - 一個 CPU 裡面有很多 Core
 
-![Multi-Core Processor](../images/os-chapter0/MultiCoreProcessor.png)
+![Multi-Core Processor](./images/os-chapter0/MultiCoreProcessor.png)
 
 ### Many-Core Processor
 
@@ -114,7 +114,7 @@ tags: OS
 - 每個 CPU access memory 的速度相同，使用者不用在乎現在是在哪個 CPU 上執行
 - CPU 增加時，memory 可能開始有 bottleneck
 
-![UMA](../images/os-chapter0/UMA.png)
+![UMA](./images/os-chapter0/UMA.png)
 
 #### Non-Uniform Memory Access (NUMA)
 
@@ -122,7 +122,7 @@ tags: OS
 - hierarchy 的架構，可以建構更大的電腦
 - 高效能計算系統都是 NUMA
 
-![NUMA](../images/os-chapter0/NUMA.png)
+![NUMA](./images/os-chapter0/NUMA.png)
 
 ## Distributed Systems: loosely coupled
 
@@ -152,7 +152,7 @@ tags: OS
 - 通常用 Local Area Network (LAN)，在同個區域，所以會更快
 - Asymmetric clustering, Symmetric clustering
 
-![System Architecture](../images/os-chapter0/SystemArchitecture.png)
+![System Architecture](./images/os-chapter0/SystemArchitecture.png)
 
 # Special-purpose Systems
 

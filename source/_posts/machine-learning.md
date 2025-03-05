@@ -168,11 +168,11 @@ $$
   - 一次只拿一筆資料去算 Gradient
   - 每一次的 Gradient 都很不穩定，可能會跳來跳去
 
-![Different Batch Size](../images/machine-learning/diff-batch-size.png)
+![Different Batch Size](./images/machine-learning/diff-batch-size.png)
 
 既然時間差不多，乍看之下 Batch Size 大一點比較好，但實際上小的 Batch Size 可能會有更好的訓練效果
 
-![Different Batch Size](../images/machine-learning/diff-batch-size-2.png)
+![Different Batch Size](./images/machine-learning/diff-batch-size-2.png)
 
 上圖可以看到小的 Batch Size Optimization 的效果會比較好
 
@@ -223,7 +223,7 @@ $$
 
 #### 一般情況下的 Learning Rate 造成的問題
 
-![Learning Rate](../images/machine-learning/LearningRate.png)
+![Learning Rate](./images/machine-learning/LearningRate.png)
 
 - 當 `Learning Rate` 設定太大時，可能會造成 `Oscillation` 的問題，Loss 會一直在上下跳動，無法收斂
 - 當 `Learning Rate` 設定太小時，可能會造成 `Convergence` 的問題，Loss 會一直往下收斂，但是收斂的速度很慢。就像上圖一樣，當 `Gradient` 很大時，沒什麼問題，但是當 `Gradient` 很小時，就會卡住
@@ -280,7 +280,7 @@ $$
 
   在一開始的時候，`Learning Rate` 會比較小，然後逐漸變大，最後再變小
 
-  ![Warm Up](../images/machine-learning/WarmUp.png)
+  ![Warm Up](./images/machine-learning/WarmUp.png)
 
 ### Loss Function
 
@@ -357,7 +357,7 @@ $$
 Loss\_Fn = original\_Loss\_Fn + \lambda \cdot \sum_{i=1}^{n} w_i^2
 $$
 
-![Regularization](../images/machine-learning/Regularization.png)
+![Regularization](./images/machine-learning/Regularization.png)
 
 #### 參考資料
 
@@ -367,7 +367,7 @@ $$
 
 如果用 `Fully Connected Network` 的方式來做圖片的分類，會有很多參數，雖然可以增加 Model 的彈性，但也會增加 `Overfitting` 的風險
 
-![Fully Connected Network](../images/machine-learning/CNN-1.png)
+![Fully Connected Network](./images/machine-learning/CNN-1.png)
 
 像上圖這個例子，圖片大小是 `100 x 100`，算上 `RGB` 三個 Channel，就有 `100 x 100 x 3` 個 `Feature`，第一層有 `1000` 個 `Neuron`，每個 `Neuron` 對於這 `100 x 100 x 3` 個 `Feature` 都有一個 `Weight`，所以總共有 `100 x 100 x 3 x 1000` 個 `Weight`
 
@@ -375,7 +375,7 @@ $$
 
 然而對於圖片辨識來說，他只在乎圖片有沒有重要的 `Pattern`，因此這些 `Neuron` 其實不用把整張圖片當作輸入，只要關心自己的 `Receptive Field` 就好
 
-![Receptive Field](../images/machine-learning/ReceptiveField.png)
+![Receptive Field](./images/machine-learning/ReceptiveField.png)
 
 典型的設置方式是像下圖
 
@@ -385,7 +385,7 @@ $$
 - 超出去的部分要補 `Padding`
 - 每個 `Receptive Field` 會有一組 `Neuron` 看著
 
-![CNN Typical Setting](../images/machine-learning/CNNTypicalSetting.png)
+![CNN Typical Setting](./images/machine-learning/CNNTypicalSetting.png)
 
 雖然 `Kernel Size` 只有 `3 x 3`，但當 Model 疊的越深，每個 `Receptive Field` 就會看到更大的 `Pattern`，不用擔心太大的 `Pattern` 偵測不到
 
@@ -393,15 +393,15 @@ $$
 
 有時候同樣的 `Pattern` 會在不同圖片的不同位置出現，這些 `Neuron` 做的事情其實是一樣的
 
-![Same Pattern Different Regions](../images/machine-learning/SamePatternDifferentRegions.png)
+![Same Pattern Different Regions](./images/machine-learning/SamePatternDifferentRegions.png)
 
 這時候可以用 `Shared Parameter` 來解決，讓不同的 `Receptive Field` 的不同 `Neuron` 用同樣的 `Weight`，減少參數。(在實作上，其實就是一個 `Filter` 掃過整張圖片)
 
-![Shared Patameters](../images/machine-learning/SharedPatameters.png)
+![Shared Patameters](./images/machine-learning/SharedPatameters.png)
 
 `Fully Connected Network` 很彈性，可以做各式各樣的事情，但可能沒辦法在任何特定的任務上做好。`CNN` 則是專注在圖片辨識上，即使 `Model Bias` 比較大，比較不會 `Overfitting`
 
-![CNN Benefit](../images/machine-learning/CNNBenefit.png)
+![CNN Benefit](./images/machine-learning/CNNBenefit.png)
 
 ### Pooling
 
@@ -411,7 +411,7 @@ $$
 
 一般都是在 `Convolutional Layer` 後面接 `Pooling Layer`，交替使用
 
-![Max Pooling](../images/machine-learning/MaxPooling.png)
+![Max Pooling](./images/machine-learning/MaxPooling.png)
 
 不過 `Pooling` 可能會造成 `Information Loss`，有些比較細微的特徵會偵測不到，因此也有人從頭到尾都只用 `Convolution`，像是 `AlphaGo`
 
@@ -419,7 +419,7 @@ $$
 
 在 `CNN` 中 `Convolutional Layer` 和 `Pooling Layer` 的最後，`Flatten` 過後會再接幾層 `Fully Connected Layer`，再接一個 `Softmax` 來做分類
 
-![CNN Structure](../images/machine-learning/CNNStructure.png)
+![CNN Structure](./images/machine-learning/CNNStructure.png)
 
 ## Self-Attention
 
@@ -500,8 +500,8 @@ Transformer 的 Encoder 就像一位記憶力超強的老師，他把一整本�
 
 #### Encoder
 
-![Encoder](../images/machine-learning/Encoder.png)
-![Encoder](../images/machine-learning/Encoder-1.png)
+![Encoder](./images/machine-learning/Encoder.png)
+![Encoder](./images/machine-learning/Encoder-1.png)
 
 #### Decoder - Autoregressive
 
@@ -608,7 +608,7 @@ x = x.to('cuda') # 把 tensor 放到 GPU 上計算
 
 ## DNN 的架構
 
-![PyTorch DNN](../images/machine-learning/PytorchDNN.png)
+![PyTorch DNN](./images/machine-learning/PytorchDNN.png)
 
 ### Gradient
 
@@ -642,7 +642,7 @@ dataset = MyDataset()
 dataloader = DataLoader(dataset, batch_size=4, shuffle=True)
 ```
 
-![Dataset & DataLoader](../images/machine-learning/DatasetDataLoader.png)
+![Dataset & DataLoader](./images/machine-learning/DatasetDataLoader.png)
 
 ### Neural Network Layers
 

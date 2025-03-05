@@ -33,7 +33,7 @@ tags: Unity
 
 Unity Hub 是 Unity 的一個管理工具，能夠讓你輕鬆管理和更新 Unity 的各種版本，也能夠在需要時隨時切換。
 
-![Unity Download](../images/unity-tutorial/UnityDownload.png)
+![Unity Download](./images/unity-tutorial/UnityDownload.png)
 
 ### Unity Editor
 
@@ -41,11 +41,11 @@ Unity Editor 版本就相當於你的 Unity 版本，不同版本之間使用上
 
 下載好 Unity Hub 後，我們可以看到這個畫面，下面的那兩個專案是我之前建立的
 
-![Unity Hub](../images/unity-tutorial/UnityHub.png)
+![Unity Hub](./images/unity-tutorial/UnityHub.png)
 
 這邊點選左邊的**安裝**，下面的那兩個 Unity Editor 版本也是我之前下載的
 
-![Unity Hub](../images/unity-tutorial/UnityHub2.png)
+![Unity Hub](./images/unity-tutorial/UnityHub2.png)
 
 在這邊可以新增你想要的 Unity Editor 版本，也可以管理你已經擁有的版本
 
@@ -53,19 +53,19 @@ Unity Editor 版本就相當於你的 Unity 版本，不同版本之間使用上
 
 在新增專案之前，可以看到上面會跟你說 _`沒有可用授權 要建立並開啟專案，您需要有一個有效的授權`_
 
-![Unity Hub](../images/unity-tutorial/UnityHub3.png)
+![Unity Hub](./images/unity-tutorial/UnityHub3.png)
 
 這時候可以點選右上角的**管理授權**
 
-![Unity Hub](../images/unity-tutorial/UnityHub4.png)
+![Unity Hub](./images/unity-tutorial/UnityHub4.png)
 
 然後點選**新增授權**
 
-![Unity Hub](../images/unity-tutorial/UnityHub5.png)
+![Unity Hub](./images/unity-tutorial/UnityHub5.png)
 
 這邊選擇**取得免費的個人版授權**就好
 
-![Unity Hub](../images/unity-tutorial/UnityHub6.png)
+![Unity Hub](./images/unity-tutorial/UnityHub6.png)
 
 重開後會發現現在已經有授權了～不過這授權是有時效的，過期後再做一遍剛剛做的事就好，現在就可以開始建立專案了。
 
@@ -73,19 +73,19 @@ Unity Editor 版本就相當於你的 Unity 版本，不同版本之間使用上
 
 授權好後，現在我們來建立一個自己的專案
 
-![Unity Hub](../images/unity-tutorial/UnityHub7.png)
+![Unity Hub](./images/unity-tutorial/UnityHub7.png)
 
 這邊點選右上角的 **新專案**
 
-![Unity Hub](../images/unity-tutorial/UnityHub8.png)
+![Unity Hub](./images/unity-tutorial/UnityHub8.png)
 
 可以看到一個專案也有各種不同的範本，像是 2D、3D、2D Mobile、3D Mobile...，這邊我們先選擇 3D (Built-in)，最上方可以選擇 Unity 的版本，右邊可以命名專案的名稱和專案存放的位置
 
-![Unity Hub](../images/unity-tutorial/UnityHub9.png)
+![Unity Hub](./images/unity-tutorial/UnityHub9.png)
 
 建立好後，能夠看到這個預設畫面，現在就可以開始製作自己的遊戲了～
 
-![Unity Editor](../images/unity-tutorial/UnityEditor.png)
+![Unity Editor](./images/unity-tutorial/UnityEditor.png)
 
 ---
 

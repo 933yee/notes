@@ -36,7 +36,7 @@ math: true
 
 把 `Circuit Netlist` 轉換成 `Layout` 的過程，每個元件要擺哪、要怎麼連接、怎麼樣才能達到最佳的 **Power**, **Performance**, **Area** (PPA)，甚至於 **Security**。
 
-![Circuit Netlist](../images/vlsi-physical-design-automation/CircuitNetlist.png)
+![Circuit Netlist](./images/vlsi-physical-design-automation/CircuitNetlist.png)
 
 #### Computer-Aided Design (CAD)
 
@@ -103,20 +103,20 @@ math: true
 
 #### Standard Cell Design
 
-![Standard Cell Design](../images/vlsi-physical-design-automation/StandardCellDesign.png)
+![Standard Cell Design](./images/vlsi-physical-design-automation/StandardCellDesign.png)
 有一個 `Cell Library`，裡面有很多標準元件，每個都有固定的高度。Layout 都已經設計好了，只要做 Metal Layer 就好
 
 早期 Metal 層數不多，可以留 Routing Channel、Feedthrough Cell 來連接不同的 Cell。現在層數比較多，連線都在上空，所以可以把整 Row 的 Cell 翻轉，讓 GND 在一邊、VDD 在另一邊，減少 Routing 的複雜度
 
 #### Gate Array Design
 
-![Gate Array Design](../images/vlsi-physical-design-automation/GateArrayDesign.png)
+![Gate Array Design](./images/vlsi-physical-design-automation/GateArrayDesign.png)
 
 Cell 裡面、Cell 之間的連線都沒有決定，可以根據需求來做 (沒什麼人在用?
 
 #### FPGA (Field Programmable Gate Array)
 
-![FPGA](../images/vlsi-physical-design-automation/FPGA.png)
+![FPGA](./images/vlsi-physical-design-automation/FPGA.png)
 
 可以決定每個 Cell 的功能，線也連好了，線可以用 Switch、Switch Box 控制
 
@@ -154,7 +154,7 @@ Cell 裡面、Cell 之間的連線都沒有決定，可以根據需求來做 (�
 
 Macro 是常常用到的，很大片的 Logic Cell，可能包含很多個 Standard Cell，例如：ALU、Multiplier、Memory
 
-![Macro Cells](../images/vlsi-physical-design-automation/MacroCells.png)
+![Macro Cells](./images/vlsi-physical-design-automation/MacroCells.png)
 
 #### Structured ASIC (Application Specific Integrated Circuit)
 
@@ -176,7 +176,7 @@ Structured ASIC 介於 FPGA 和 Gate Array 之間，會事先定義好一些 Met
 - Overlap Rules
   限制元件之間的重疊的最小面積。每一層 Layer 會有不同的光罩，有時候會有誤差，所以會需要一些 Overlap 來保護
 
-![Design Rules](../images/vlsi-physical-design-automation/DesignRules.png)
+![Design Rules](./images/vlsi-physical-design-automation/DesignRules.png)
 
 ## Partitioning
 
@@ -188,7 +188,7 @@ Structured ASIC 介於 FPGA 和 Gate Array 之間，會事先定義好一些 Met
 - Communication
   子系統之間的連線訊號不要出現在 Critical Path 上，晶片內的 Timing 跟 PCB 的 Timing 不一樣
 
-![Partitioning](../images/vlsi-physical-design-automation/Partitioning.png)
+![Partitioning](./images/vlsi-physical-design-automation/Partitioning.png)
 
 - Cutset: 一個 Cut 包含很多被切掉的 Net，Cutset 就是這些 Net 的集合
 - Cut size: Cutset 的大小
@@ -215,7 +215,7 @@ KL Algorithm 是一種 Greedy 的 Heuristic Algorithm，不保證找到最佳解
    3. 直到所有頂點都被 Lock
    4. 算出最大的 Partial Sum Gain $G$，這個 Gain 就是這次 Pass 的 Gain
    5. 假設前 $k$ 個 Pair 的 Gain 總和 $G_k$ 是最大的，就真的去交換前 $k$ 個 Pair
-3. 重複 Pass，直到 Partial Sum Gain $G = 0$
+3. 重複 Pass，直到 Partial Sum Gain $G \leq 0$
 
 - Gain
   $$
@@ -223,7 +223,7 @@ KL Algorithm 是一種 Greedy 的 Heuristic Algorithm，不保證找到最佳解
   $$
   在同個 Pass 中，第二次算 Gain 的時候，它的 $\text{Old\_Cutset}(A, B)$ 是第一次算 Gain 的結果
 
-![KL Algorithm Example](../images/vlsi-physical-design-automation/KLAlgorithmExample.png)
+![KL Algorithm Example](./images/vlsi-physical-design-automation/KLAlgorithmExample.png)
 
 可以發現交換頂點 $u$、$v$ 之後，$u \in A$、$v \in B$，原本 $u$ 和集合 $B$ 所有頂點的連線都不用算在 Cut (**$u$、$v$ 連線除外**)，但原本 $u$ 和集合 $A$ 所有頂點的連線都要多算，同理於 $v$。因此在計算的時候只要考慮 `External Cost` 和 `Internal Cost` 就好
 
@@ -302,7 +302,7 @@ FM Algorithm 一樣是 Greedy 的 Heuristic Algorithm，為 KL Algorithm 的改�
   可以想像一次只搬運一個 Vertex 的 Solutuon Space 會更大，更有機會找到更好的解
 
 - Vertex 可以有不同的 Size
-- 可以處理 Unbalanced Partitioning
+- 可以處理不嚴格的 Unbalanced Partitioning
 - 用 Bucket Sort 來選擇要移動的 Vertex
 - 每次 Pass 的時間複雜度是 $O(P)$，$P$ 是 Pin 的數量
 
@@ -315,11 +315,11 @@ FM Algorithm 一樣是 Greedy 的 Heuristic Algorithm，為 KL Algorithm 的改�
 - $N$: Net 的總數，ex: $N = 6$
 - $P$: Pin 的總數，ex: $P = p(1) + p(2) + \cdots + p(C)$
 
-![FM Algorithm Example](../images/vlsi-physical-design-automation/FMAlgorithmExample.png)
+![FM Algorithm Example](./images/vlsi-physical-design-automation/FMAlgorithmExample.png)
 
 #### Cut
 
-![Cut](../images/vlsi-physical-design-automation/Cut.png)
+![Cut](./images/vlsi-physical-design-automation/Cut.png)
 
 - Cutstate: 這個 Net 有沒有被切到
   - Net 1 和 Net 3 的狀態是 `Cut`
@@ -347,6 +347,95 @@ $$
 
 - $W$ 是整個 Hypergraph 的總面積，$W = \lvert A \rvert + \lvert B \rvert$
 - $S_{\text{max}}$ 是最大的 Cell 的 Size
+
+#### Input Data Structure
+
+根據傳進來的 Netlist，可以建立 Cell Array 和 Net Array，分別需要 $O(P)$ (Pin 數量) 的時間複雜度
+![Input Data Structure](./images/vlsi-physical-design-automation/InputDataStructure.png)
+
+#### Balance & Movement
+
+- Initial Balance
+
+  先讓 A 為空集合，B 為所有 Cell 的集合，老師提供兩種方法：一種是把 B 按照 Size 做排序，一個一個 Cell 放進 A，直到滿足 $r$ 的條件；另一種是不排序，隨機挑選 Cell 放進 A，直到滿足 $r$ 的條件
+
+- Gain
+
+  $$
+  \text{Gain}(i) = \text{Cutset}(A, B) - \text{Cutset}(A - \{i\}, B \cup \{i\})
+  $$
+
+  也就是把 Cell $i$ 從 A 搬到 B，Cutset 的 Size 會變小多少
+
+- Movement
+
+  每次只搬一個 Cell，兩邊之中選一個 Gain 最大的 Cell 搬過去，如果符合 $r$ 的條件就搬，不符合就不搬，並且 Lock 這個 Cell，之後不再考慮 (沒搬成功的不要 Lock)
+
+  最後跟 KL 一樣，直到所有 Cell 都被 Lock 之後，找出最大的 Partial Sum Gain，這個 Gain 就是這次 Pass 的 Gain，真的去搬那些 Cell
+
+#### Cell Gains and Data Structure Manipulation
+
+首先要知道的是，每個 Cell 移動的 Gain 值跟它的 Pin 數量有關
+
+![Cell Gains](./images/vlsi-physical-design-automation/CellGains.png)
+
+因此可以確定移動一個 Cell 的 Gain 絕對不會超出它本身 Pin 的數量
+
+$$
+-p(i) \leq \text{Gain}(i) \leq p(i)
+$$
+
+接著集合 A 和 B 個有一個 Size 為 $(2 \cdot P_\text{max} + 1)$ 的 `Bucket List`，每個 Entry 代表一個 Gain 的值，每個 Entry 裡面存放 Gain 值相同的 Cell 的編號，用 Doubly Linked List 儲存起來
+
+> $P_\text{max}$ 是所有 Cell 中 Pin 數量最多那個值
+
+除此之外，還會有個 Cell Array，每個 Cell 有一個指標指向它在 Bucket List 中的位置，這樣可以在 $O(1)$ 的時間內找到目標 Cell
+
+最後，Bucket 裡面還有一個 Max Gain 變數，用來記錄這個集合中最大的 Gain 值，就可以藉由這個變數去找目標 Entry 的第一個 Cell，也就是 Gain 最大的 Cell
+
+![Bucket List](./images/vlsi-physical-design-automation/BucketList.png)
+
+#### Net Distribution and Critical Nets
+
+- Distribution of Net i 的定義
+
+  $(A(i), B(i)) = (2, 3)$ 代表 Net $i$ 有 2 個 Pin 在 A，3 個 Pin 在 B
+
+  計算所有 Net 的 Distribution 的時間複雜度是 $O(P)$
+
+- Critical Nets
+
+  如果移動任何一個 Cell 會改變這個 Net 的 Cutstate，這個 Net 就稱為 **Critical Net**。
+
+  可以想像只有 **Cut->Uncut** 或 **Uncut->Cut** 兩種情況，因此只會發生在 **移動前後所有 Pin 都在同一邊** 的情況下，也就是
+
+  $$
+  (A(i), B(i)) = (0, n(i)) \text{ or } (n(i), 0)
+  $$
+
+  只有 Critical Nets 才會影響 Gain 的計算
+
+![Critical Nets](./images/vlsi-physical-design-automation/CriticalNets.png)
+
+#### Computing Cell Gains
+
+一開始要對每個 Cell **Iterate 一次所有連到它的 Net** ，藉此計算它的 Gain，時間複雜度為 $O(P)$
+
+![Computing Cell Gains Example](./images/vlsi-physical-design-automation/ComputingCellGainsExample.png)
+
+可以看到對於某 Net $n$，在 $F(n) = 1$ 時，移動這個 Cell $i$ 會讓 Net $n$ 從 Cut 變成 Uncut，因此這個 Net 對於這個 Cell 貢獻的 Gain 就是 1
+
+另一種情況是當 $T(n) = 0$ 時，移動這個 Cell $i$ 會讓 Net $n$ 從 Uncut 變成 Cut，因此這個 Net 對於這個 Cell 貢獻的 Gain 就是 -1
+
+#### Algorithm for Updating Cell Gains
+
+![Algorithm for Updating Cell Gains](./images/vlsi-physical-design-automation/AlgorithmForUpdatingCellGains.png)
+
+只要想成 **目標是 Cut Size 越小越好**，所以要找 **Gain 最大的 Cell**，**我們越傾向於移過去某 Cell 後 Net 會變 Uncut 的情況**，因此該 Net 對於該 Cell 的 Gain 就是 1，反之越不希望 Net 變 Cut，該 Net 對於該 Cell 的 Gain 就是 -1
+
+每次 Update 的時間複雜度是 $O(P)$
+
+### Simulated Annealing (SA) Algorithm
 
 # Assignment
 
@@ -433,12 +522,12 @@ $$
 - Power Ring
   在 Core 周圍建立一個封閉的電源環，讓所有元件都能夠穩定的接上 VDD 和 VSS
 
-  ![Power Ring](../images/vlsi-physical-design-automation/PowerRing.png)
+  ![Power Ring](./images/vlsi-physical-design-automation/PowerRing.png)
 
 - Power Stripes
   在 Core 內部建立一個電源線，連到 Power Ring，形成完整的 Power Network
 
-  ![Power Stripes](../images/vlsi-physical-design-automation/PowerStripes.png)
+  ![Power Stripes](./images/vlsi-physical-design-automation/PowerStripes.png)
 
 ### Placement (place_opt_design)
 
@@ -448,13 +537,13 @@ $$
 - Placement Optimization
   透過 Placement Optimization 來最佳化 Placement，達到 Power Optimization 或 Timing Optimization
 
-![Placement](../images/vlsi-physical-design-automation/Placement.png)
+![Placement](./images/vlsi-physical-design-automation/Placement.png)
 
 ### Clock Tree Synthesis
 
 CLK 控制晶片裡所有 Flip-Flop 的 Timing，要確保所有 Flip-Flop 都能在同一個 Clock Cycle 內正確的被觸發
 
-![Clock Tree Synthesis](../images/vlsi-physical-design-automation/ClockTreeSynthesis.png)
+![Clock Tree Synthesis](./images/vlsi-physical-design-automation/ClockTreeSynthesis.png)
 
 圖中的紅色、綠色、黃色線就是 CLK 訊號
 
@@ -463,4 +552,4 @@ CLK 控制晶片裡所有 Flip-Flop 的 Timing，要確保所有 Flip-Flop 都�
 - `routeDesign`
   將所有標準單元、Macro 之間的連線轉換為實際金屬導線，並確保符合 Timing 和 DRC 規則，自動插入 Via 連接不同金屬層
 
-![Routing](../images/vlsi-physical-design-automation/Routing.png)
+![Routing](./images/vlsi-physical-design-automation/Routing.png)

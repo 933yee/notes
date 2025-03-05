@@ -74,7 +74,7 @@ C 語言沒有 garbage collection，記憶體要自己控制，可以用 `valgri
 > 編譯時要加上 `-g` 參數，才能看到程式碼的行數。
 
 ```shell
-valgrind {-valgrind parameter} ../my_program {-program parameter}
+valgrind {-valgrind parameter} ./my_program {-program parameter}
 ```
 
 Valgrind 訊息可以分成幾種：
@@ -346,19 +346,19 @@ reg  [3:0]  reg1  = 4'hf;                 // Hexadecimal, equals to 4'b1111
 
 ### AlexNet
 
-![AlexNet](../images/machine-learning/AlexNet.png)
+![AlexNet](./images/machine-learning/AlexNet.png)
 
 ### VGG-16
 
-![VGG-16](../images/machine-learning/VGG-16.png)
+![VGG-16](./images/machine-learning/VGG-16.png)
 
 ### ResNet-50
 
-![ResNet-50](../images/machine-learning/ResNet-50.png)
+![ResNet-50](./images/machine-learning/ResNet-50.png)
 
 ### MobileNetV2
 
-![MobileNetV2](../images/machine-learning/MobileNetV2.png)
+![MobileNetV2](./images/machine-learning/MobileNetV2.png)
 
 [EfficientML.ai Lecture 02: Basics of Neural Networks](https://www.dropbox.com/scl/fi/2qx0cfz7vim0fdhrmy986/lec02.pdf?rlkey=wdjw92hwohp4bhyos8wf5iinb&e=2&dl=0)
 
@@ -641,7 +641,7 @@ Netron 是一個功能強大的機器學習模型的 **可視化** 工具，支�
 netron models/lenet.onnx
 ```
 
-![LetNet Architecture](../images/ai-computing-system/LeNet.png)
+![LetNet Architecture](./images/ai-computing-system/LeNet.png)
 
 ### Protobuf
 
@@ -650,7 +650,7 @@ ONNX 格式將模型儲存為 Protobuf（Protocol Buffers）的結構，其中 P
 ```python
 import onnx
 
-onnx_model = onnx.load('../models/lenet.onnx')
+onnx_model = onnx.load('./models/lenet.onnx')
 
 # The model is represented as a protobuf structure and it can be accessed
 # using the standard python-for-protobuf methods
@@ -699,7 +699,7 @@ print(len(onnx_model.graph.node))
 ## parse_model.py
 import onnx
 
-onnx_model = onnx.load('../models/lenet.onnx')
+onnx_model = onnx.load('./models/lenet.onnx')
 
 ## need to run shape inference in order to get a full value_info list
 onnx_model = onnx.shape_inference.infer_shapes(onnx_model)
@@ -976,7 +976,7 @@ transform = T.Compose(
     [T.Resize(224),
      T.ToTensor(),
      T.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
-train_set = torchvision.datasets.CIFAR10(root='../data', train=True, download=True, transform=transform)
+train_set = torchvision.datasets.CIFAR10(root='./data', train=True, download=True, transform=transform)
 train_loader = torch.utils.data.DataLoader(train_set, batch_size=32, shuffle=True)
 
 device = torch.device("cpu")
@@ -996,7 +996,7 @@ def train(data):
 
 with torch.profiler.profile(
         schedule=torch.profiler.schedule(wait=1, warmup=1, active=3, repeat=1),
-        on_trace_ready=torch.profiler.tensorboard_trace_handler('../log/resnet18'),
+        on_trace_ready=torch.profiler.tensorboard_trace_handler('./log/resnet18'),
         record_shapes=True,
         profile_memory=True,
         with_stack=True
@@ -1015,7 +1015,7 @@ tensorboard --logdir='~/projects/lab02/lab2-3/log/' --bind_all --port=10000 > te
 kill $(ps -e | grep 'tensorboard' | awk '{print $1}') # Stop TensorBoard
 ```
 
-![TensorBoard](../images/ai-computing-system/TensorBoard.png)
+![TensorBoard](./images/ai-computing-system/TensorBoard.png)
 
 ### Python C++ Frontend
 
@@ -1127,7 +1127,7 @@ int main(int argc, const char* argv[]) {
 
   ```shell
   ## create config
-  $ cmake -DCMAKE_PREFIX_PATH=../libtorch ..
+  $ cmake -DCMAKE_PREFIX_PATH=./libtorch ..
 
   ## compile
   $ cmake --build . --config Release -j ${nproc}
@@ -1136,7 +1136,7 @@ int main(int argc, const char* argv[]) {
 - Build 完後，可以跑 C++ 程式，並輸入剛剛轉出來的 TorchScript (.pt) 檔案
 
   ```shell
-  ../analyzer .../.../traced_resnet18.pt
+  ./analyzer ../../traced_resnet18.pt
   ```
 
 可以參考 [PyTorch C++ API](https://pytorch.org/cppdocs/index.html) 了解更多 C++ API 的使用方式

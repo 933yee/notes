@@ -35,7 +35,7 @@ tags: OS
 - 也需要透過 System Call 去建立這塊 Shared Memory，不過像是 Multi-thread 預設就有
 - 會有 Synchronization 的問題
 
-![Communication](../images/os-chapter2/Communication.png)
+![Communication](./images/os-chapter2/Communication.png)
 
 OS Service 除了 User interface 和 Communication 以外，還有
 
@@ -70,7 +70,7 @@ OS Service 除了 User interface 和 Communication 以外，還有
 
   - **Java** API for **Java Virtual Machine** (JVM)
 
-![OS Interface](../images/os-chapter2/OSInterface.png)
+![OS Interface](./images/os-chapter2/OSInterface.png)
 
 # OS Structure
 
@@ -79,7 +79,7 @@ OS Service 除了 User interface 和 Communication 以外，還有
 - 開發很快，但是系統裡面的架構全部混在一起
 - 定義不清楚，非常不安全，也不好維護
 
-![Simple OS Architecture](../images/os-chapter2/SimpleOSArchitecture.png)
+![Simple OS Architecture](./images/os-chapter2/SimpleOSArchitecture.png)
 
 ## Layered OS Architecture
 
@@ -87,7 +87,7 @@ OS Service 除了 User interface 和 Communication 以外，還有
 - 很好 Debug、維護
 - 因為是 Layerd，可能涉及到許多 Memory Copy，效能不好
 
-![Layered OS Architecture](../images/os-chapter2/LayeredOSArchitecture.png)
+![Layered OS Architecture](./images/os-chapter2/LayeredOSArchitecture.png)
 
 ## Microkernel OS
 
@@ -98,21 +98,21 @@ OS Service 除了 User interface 和 Communication 以外，還有
   - User Space 的東西之間要溝通，都需要 **System Call**
   - 為了避免 Synchronization 的問題，都是透過 **Message Passing**
 
-![Microkernel OS](../images/os-chapter2/MicrokernelOS.png)
+![Microkernel OS](./images/os-chapter2/MicrokernelOS.png)
 
 ## Modular OS Architecture
 
 - 很常見，現在大多是使用這種架構
 - 跟 Microkernel OS 的差別在，都是在 Kernel Space，方便 Module 之間溝通，跑起來更有效率
 
-![Modular OS Architecture](../images/os-chapter2/ModularOSArchitecture.png)
+![Modular OS Architecture](./images/os-chapter2/ModularOSArchitecture.png)
 
 ## Virtual Machine
 
 - 一台電腦有很多使用者，每個人可能會需要自己的 OS
 - VM 能夠做一個硬體抽象層，映射到原本電腦的硬體，讓 VM 使用
 
-![Virtual Machine](../images/os-chapter2/VirtualMachine.png)
+![Virtual Machine](./images/os-chapter2/VirtualMachine.png)
 
 ### 問題
 
@@ -136,7 +136,7 @@ OS Service 除了 User interface 和 Communication 以外，還有
 - Guest OS 的程式碼完全不用動，可以直接裝在原本的 OS 上
 - Vmware
 
-![Full Virtualization](../images/os-chapter2/FullVirtualization.png)
+![Full Virtualization](./images/os-chapter2/FullVirtualization.png)
 
 ### Para-virtualization
 
@@ -144,7 +144,7 @@ OS Service 除了 User interface 和 Communication 以外，還有
 - 有一個 Manager 去管理所有 Guest OS
 - Xen
 
-![Para-virtualization](../images/os-chapter2/Para-virtualization.png)
+![Para-virtualization](./images/os-chapter2/Para-virtualization.png)
 
 ### Java Virtual Machine
 
@@ -152,4 +152,4 @@ OS Service 除了 User interface 和 Communication 以外，還有
 - 跟 Nachos 很像，只做 Instruction 的轉換，把 Java Machine 上 Compile 出的 Bytecodes 轉換成其它的
 - 有一些 Translation 上的優化，像是 **Just-In-Time (JIT)**，記錄 Translation 過的 Instruction
 
-![Java Virtual Machine](../images/os-chapter2/JavaVirtualMachine.png)
+![Java Virtual Machine](./images/os-chapter2/JavaVirtualMachine.png)

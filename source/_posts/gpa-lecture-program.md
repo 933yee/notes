@@ -11,7 +11,7 @@ math: true
 ## 前置作業和 Shaders
 
 ```cpp
-#include ".../.../Include/Common.h"
+#include "../../Include/Common.h"
 
 using namespace glm;
 
@@ -163,7 +163,7 @@ void My_Init()
 	glGenVertexArrays(1, &vao); // glGenVertexArrays( vao 數量, vao GLuint ID)，生成 vao
 	glBindVertexArray(vao); // 綁定到 vao，這樣之後才能寫入 attribute，像是 glVertexAttribI1i(1, alien_index);
 
-	TextureData tex = loadImg(".../.../Media/Textures/aliens.png"); // custom function，回傳 TextureData，包含高、寬、字元
+	TextureData tex = loadImg("../../Media/Textures/aliens.png"); // custom function，回傳 TextureData，包含高、寬、字元
 	glGenTextures(1, &tex_alien_array); // 生成 texture，寫 ID 到 text_alien_array
 	glBindTexture(GL_TEXTURE_2D_ARRAY, tex_alien_array); // 綁定這個 ID，這邊用 GL_TEXTURE_2D_ARRAY，之後寫入宣告 GL_TEXTURE_2D_ARRAY 都會到對應的 ID
 
@@ -245,7 +245,7 @@ void My_Timer(int val)
 # Simple_Texture_Coords
 
 ```cpp
-#include ".../.../Include/Common.h"
+#include "../../Include/Common.h"
 
 using namespace glm;
 using namespace std;
@@ -371,7 +371,7 @@ void My_Init()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 	// load
-    TextureData tex = loadImg(".../.../Media/Textures/pattern1.png");
+    TextureData tex = loadImg("../../Media/Textures/pattern1.png");
 	glGenTextures(1, &tex_object[1]);
 	glBindTexture(GL_TEXTURE_2D, tex_object[1]);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex.width, tex.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, tex.data);
@@ -390,7 +390,7 @@ void My_Init()
 	//  glGenerateMipmap(GL_TEXTURE_2D);
 
 	vector<MeshData> meshes;
-	meshes = loadObj(".../.../Media/Objects/torus_nrms_tc.obj");
+	meshes = loadObj("../../Media/Objects/torus_nrms_tc.obj");
 
 	GLuint vao;
 	glGenVertexArrays(1, &vao);
@@ -526,7 +526,7 @@ int main(int argc, char *argv[])
 # Simple Texture
 
 ```cpp
-#include ".../.../Include/Common.h"
+#include "../../Include/Common.h"
 
 static const char * vs_source[] =
 {
@@ -687,7 +687,7 @@ int main(int argc, char *argv[])
 # Single Triangle Buffer
 
 ```cpp
-#include ".../.../Include/Common.h"
+#include "../../Include/Common.h"
 
 static const char * vs_source[] =
 {
@@ -821,7 +821,7 @@ int main(int argc, char *argv[])
 # Spinning Cube
 
 ```cpp
-#include ".../.../Include/Common.h"
+#include "../../Include/Common.h"
 
 using namespace glm;
 
@@ -1036,7 +1036,7 @@ int main(int argc, char *argv[])
 # Tunnel
 
 ```cpp
-#include ".../.../Include/Common.h"
+#include "../../Include/Common.h"
 
 using namespace glm;
 
@@ -1145,21 +1145,21 @@ void My_Init()
 	uniforms.mvp = glGetUniformLocation(program, "mvp");
 	uniforms.offset = glGetUniformLocation(program, "offset");
 
-	TextureData tex = loadImg(".../.../Media/Textures/brick.png");
+	TextureData tex = loadImg("../../Media/Textures/brick.png");
 	glGenTextures(1, &tex_wall);
 	glBindTexture(GL_TEXTURE_2D, tex_wall);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex.width, tex.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, tex.data);
 	glGenerateMipmap(GL_TEXTURE_2D);
 	delete[] tex.data;
 
-	tex = loadImg(".../.../Media/Textures/ceiling.png");
+	tex = loadImg("../../Media/Textures/ceiling.png");
 	glGenTextures(1, &tex_ceiling);
 	glBindTexture(GL_TEXTURE_2D, tex_ceiling);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex.width, tex.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, tex.data);
 	glGenerateMipmap(GL_TEXTURE_2D);
 	delete[] tex.data;
 
-	tex = loadImg(".../.../Media/Textures/floor.png");
+	tex = loadImg("../../Media/Textures/floor.png");
 	glGenTextures(1, &tex_floor);
 	glBindTexture(GL_TEXTURE_2D, tex_floor);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex.width, tex.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, tex.data);
@@ -1327,7 +1327,7 @@ int main(int argc, char *argv[])
 # Wrapmode
 
 ```cpp
-#include ".../.../Include/Common.h"
+#include "../../Include/Common.h"
 
 static const char * vs_source[] =
 {
@@ -1401,7 +1401,7 @@ void My_Init()
 	glGenTextures(1, &texture);
 
 	// Load texture from file
-	TextureData tex = loadImg(".../.../Media/Textures/rightarrows.png");
+	TextureData tex = loadImg("../../Media/Textures/rightarrows.png");
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex.width, tex.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, tex.data);

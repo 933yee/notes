@@ -8,9 +8,9 @@ tags: Unity
 
 相信大家在遊戲中都有看過一些很複雜炫泡的特效，一定會很好奇為什麼這樣做不會 Lag，像是各種複雜的粒子效果、大量物體同時移動、物理模擬等等。
 
-![Compute Shader Demo](../images/unity-render-1/ComputeShaderDemo.gif)
+![Compute Shader Demo](./images/unity-render-1/ComputeShaderDemo.gif)
 
-![Compute Shader Demo](../images/unity-render-1/ComputeShaderDemo1.gif)
+![Compute Shader Demo](./images/unity-render-1/ComputeShaderDemo1.gif)
 
 這些酷酷特效的背後到底做了哪些工作呢？這篇文章將來探討如何在 Unity 使用 Compute Shader 加速計算，還會提及一些比較常見的優化遊戲效能的技術。
 
@@ -65,18 +65,18 @@ CPU 就像是一個天才，什麼都會、什麼都能做，能夠精確地完�
 
 想像一下現在有個場景長這樣
 
-![Compute Shader Demo](../images/unity-render-1/ComputeShaderDemo2.gif)
+![Compute Shader Demo](./images/unity-render-1/ComputeShaderDemo2.gif)
 
 場景共有 1000000 個粒子，如果把這些全部都塞在 Update() (CPU 端) 裡面去算會是多可怕的事情，因此我們勢必要直接丟給 GPU 去計算並直接渲染出來，這時候就可以用 Compute Shader 來達成這件事情，CPU 做的事情就只有準備 Data (記憶體要給多少之類的) 以及啟動 Compute Shader。
 
 ### 建立 Compute Shader
 
 在 Unity 新增 Compute Shader，點擊右鍵就可以直接新增 .compute 檔案
-![Add Compute Shader](../images/unity-render-1/AddComputeShader.png)
+![Add Compute Shader](./images/unity-render-1/AddComputeShader.png)
 
 這邊順便新增等等會用到的檔案
 
-![Assets](../images/unity-render-1/Assets.png)
+![Assets](./images/unity-render-1/Assets.png)
 
 ### 執行 Compute Shader
 
@@ -84,7 +84,7 @@ CPU 就像是一個天才，什麼都會、什麼都能做，能夠精確地完�
 
 Unity 的 Compute Shader 的語言是 HLSL，打開檔案可以看到下面的內容
 
-![Compute Shader Start Example](../images/unity-render-1/ComputeShaderStart.png)
+![Compute Shader Start Example](./images/unity-render-1/ComputeShaderStart.png)
 
 - `#pragma kernel CSMain` 代表的是 compute kernel，這個 kernel 會對應到檔案中的一個函式名稱。一個檔案可以定義多個 kernel，也就是多個 `#pragma kernel 函式名稱`，這樣你可以全部塞同個檔案，之後要用的時候就在 C# call `shader.FindKernel(函式名稱)` 就好。
 - `RWTexture2D<float4> Result;` 是一個可以讀寫的 Texture，GPU 可以把算好的資料存進去，之後拿來用
@@ -122,15 +122,15 @@ public class TestComputeShader : MonoBehaviour
 
 到目前為止，程式碼的部分已經完成，剩下一些步驟
 
-![Render Texture](../images/unity-render-1/RenderTexture.png)
+![Render Texture](./images/unity-render-1/RenderTexture.png)
 
 記得要勾選 Random Write，這樣這個 Texture 才能支援 [Random Access](https://zh.wikipedia.org/zh-tw/%E9%9A%A8%E6%A9%9F%E5%AD%98%E5%8F%96)
 
-![Test Compute Shader](../images/unity-render-1/TestComputeShader.png)
+![Test Compute Shader](./images/unity-render-1/TestComputeShader.png)
 
 隨便個物件，塞入我們剛剛建立好的 assets，並執行它
 
-![Test Compute Shader Result](../images/unity-render-1/TestComputeShaderResult.png)
+![Test Compute Shader Result](./images/unity-render-1/TestComputeShaderResult.png)
 
 遊戲開始的時候可以看到我們的 Render Texture 長相變了！上面的顏色就是你 Texture 上每個 Texel 的 RGB 值，也就是 Unity 預設的 `Result[id.xy] = float4(id.x & id.y, (id.x & 15)/15.0, (id.y & 15)/15.0, 0.0);`，float4 的四個參數就是 RGBA。這樣的結果代表你的 Compute Shader 確實有執行，並且成功把結果寫進你的 Texture 裡面。
 
@@ -159,7 +159,7 @@ public class TestComputeShader : MonoBehaviour
 
 #### Shader 端
 
-![Compute Shader Example Time](../images/unity-render-1/ComputeShaderExampleTime.png)
+![Compute Shader Example Time](./images/unity-render-1/ComputeShaderExampleTime.png)
 
 #### C# 端
 
@@ -188,11 +188,11 @@ public class TestComputeShader : MonoBehaviour
 
 #### 結果
 
-![Compute Shader Demo](../images/unity-render-1/ComputeShaderDemo3.gif)
+![Compute Shader Demo](./images/unity-render-1/ComputeShaderDemo3.gif)
 
 現在你已經知道怎麼在 Unity 中建立並啟動 Compute Shader，並輸出一個簡單的結果，你也可以試著改改看 Compute Shader 的內容，輸出各種不同的結果
 
-![More Compute Shader Example](../images/unity-render-1/MoreComputeShaderExample.gif)
+![More Compute Shader Example](./images/unity-render-1/MoreComputeShaderExample.gif)
 
 以上這些都是透過 GPU 去計算出來的結果，更多範例可以參考 [Shader Toy](https://www.shadertoy.com/)，不過要注意的是這網站使用的語言是 **GLSL**，而且是寫在 **Fragment Shader** 上面，這裡提供的例子使用的語言是 **HLSL**，而且是寫在**Compute Shader**上面。接下來會介紹更多 Compute Shader 的應用方式
 
@@ -249,7 +249,7 @@ void Update()
 
 #### 效果
 
-![Naive](../images/unity-render-1/Naive.gif)
+![Naive](./images/unity-render-1/Naive.gif)
 
 可以發現這種直白作法的 FPS 差不多是 24 FPS，代表一秒只能畫 24 張，最主要原因就是 CPU loading 太大，拖累了進度
 
@@ -343,7 +343,7 @@ void CSMain (uint3 id : SV_DispatchThreadID)
 
 #### 效果
 
-![CPU Read Back](../images/unity-render-1/CPUReadBack.gif)
+![CPU Read Back](./images/unity-render-1/CPUReadBack.gif)
 
 可以發現這種作法的 FPS 有些許上升，來到了 32，代表一秒可以畫 32 張，但是上升的很不明顯，最主要就是因為 CPU 在等 GPU 算完才繼續執行，白白浪費時間在那邊掛機。雖然 GPU 確實算很快，但這作法不能完全發揮 Compute Shader 的功力
 
@@ -355,7 +355,7 @@ void CSMain (uint3 id : SV_DispatchThreadID)
 
 在 Unity 中，CPU 命令 GPU 去繪製 Mesh + Material 的步驟就是 **Draw Call**，當場景中有大量物件時，意味這我們會有很多 CPU 命令 GPU 做事的步驟，但是這是一件非常花時間的事情
 
-![CPU Bottleneck](../images/unity-render-1/Bottleneck.png)
+![CPU Bottleneck](./images/unity-render-1/Bottleneck.png)
 
 既然我們要畫 Mesh 和 Material 都一樣，為什麼不畫一次就好？GPU instancing 的概念就像是告訴 GPU 說：「嘿，這些方塊都長得一樣，你只要畫一次，然後把它們放到對的地方就好。」，這樣就不需要重複告訴 GPU 如何畫每個方塊，而是告訴 GPU 如何畫一個方塊，然後告訴它在哪裡重複使用這個畫好的方塊。這種做法可以大幅提高效能。
 
@@ -447,7 +447,7 @@ void Update()
 
 #### 效果
 
-![GPU Instancing](../images/unity-render-1/GPUInstancing.gif)
+![GPU Instancing](./images/unity-render-1/GPUInstancing.gif)
 
 可以發現這種作法大幅提升了效能，FPS 竟然能上升到 110 左右，可見 Draw Call 是多可怕的東西，這也叫做 CPU Bottleneck。另外，上圖中的 Batches 就是 Draw Call 的數量，從原本的 1000 多減少到 67。
 
@@ -549,13 +549,13 @@ void Update()
 
 #### 效果
 
-![Indirect Rendering](../images/unity-render-1/IndirectRendering.gif)
+![Indirect Rendering](./images/unity-render-1/IndirectRendering.gif)
 
 透過這種作法，可以看到我的 FPS 上升到 400 左右，畫面順到不行，不說我還以為我的 CPU 特別猛（GIF 看起來會比較卡，最後有附上影片）
 
 不過這種作法也有缺點，就是不能辨別碰撞、Culling 等等，因為**實際上物體並沒有移動，只有物體的頂點移動而已**，不過這也可以透過其他方式解決，只是原本 CPU 會幫你弄好，現在要自己寫比較麻煩而已，但是效能會好上許多。
 
-![Culling](../images/unity-render-1/Culling.gif)
+![Culling](./images/unity-render-1/Culling.gif)
 
 像上面這個例子，物體原本的位置沒有移動，只有頂點在移動，因此當原本的位置跑到鏡頭外面，會直接被 Culling 掉，只能自己寫判斷了。
 

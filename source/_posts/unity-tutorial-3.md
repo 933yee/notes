@@ -12,16 +12,16 @@ tags: Unity
 
 導入自己的物件非常簡單，可以在 Project View 空白處點擊右鍵，Import New Asset，然後選擇要導入的物件即可
 
-![Import New Asset](../images/unity-tutorial-3/ImportNewAsset.png)
+![Import New Asset](./images/unity-tutorial-3/ImportNewAsset.png)
 
 還有另一個方法，可以直接把那個東西拉進來就好（我都這樣，因為我很懶 XD
 
-![Import Demo](../images/unity-tutorial-3/ImportDemo.gif)
+![Import Demo](./images/unity-tutorial-3/ImportDemo.gif)
 
 ### 導入圖片
 
 值得一提的是，導入的圖片會自動變成 Texture，所以可以直接用在 3D 模型、UI 元素、粒子效果上面
-![Texture](../images/unity-tutorial-3/Texture.png)
+![Texture](./images/unity-tutorial-3/Texture.png)
 
 ## Unity Asset Store
 
@@ -33,33 +33,33 @@ tags: Unity
 
 我這邊隨便選擇一個 [Mars Landscape 3D](https://assetstore.unity.com/packages/3d/environments/landscapes/mars-landscape-3d-175814) 的 Package，確認右邊的 **Original Unity version** 符合當前版本後，點擊右邊的 **Add to My Assets**，它應該會叫你先登入帳號
 
-![Add New Asset](../images/unity-tutorial-3/AddNewAsset.png)
+![Add New Asset](./images/unity-tutorial-3/AddNewAsset.png)
 
 登入並 **Add to My Assets** 後，就成功加入了到你帳號的 Assets 裡面了
 
-![Add New Asset](../images/unity-tutorial-3/AddNewAsset2.png)
+![Add New Asset](./images/unity-tutorial-3/AddNewAsset2.png)
 
 接著點擊 **Open In Unity**，它會自動幫你打開 Unity 裡面的 Package Manager
 
-![Package Manager](../images/unity-tutorial-3/PackageManager.png)
+![Package Manager](./images/unity-tutorial-3/PackageManager.png)
 
 Package Manager 會有你所有的 Assets，之後你想要檢視 Package Manager 的話，也可以從上方的 Windows 裡面打開
 
-![Package Manager](../images/unity-tutorial-3/PackageManager2.png)
+![Package Manager](./images/unity-tutorial-3/PackageManager2.png)
 
 點擊右上方的 **Download**，下載完後再點 **Import**，然後繼續點 **Import**
 
-![Package Manager](../images/unity-tutorial-3/PackageManager3.png)
+![Package Manager](./images/unity-tutorial-3/PackageManager3.png)
 
 現在這個 Unity Asset Store 的 Package 就成功導入到你的專案中了！
 
-![Project View](../images/unity-tutorial-3/ProjectView.png)
+![Project View](./images/unity-tutorial-3/ProjectView.png)
 
-![Demo Scene](../images/unity-tutorial-3/DemoScene.png)
+![Demo Scene](./images/unity-tutorial-3/DemoScene.png)
 
 不喜歡這個場景中的天空？沒問題！這邊再導入另一個在 Unity Asset Store 上的 Package - [Skybox Series Free](https://assetstore.unity.com/packages/2d/textures-materials/sky/skybox-series-free-103633)，這 Package 提供許多精緻好看的 Skybox Material
 
-![Skybox Unity Asset Store](../images/unity-tutorial-3/SkyboxUnityAssetStore.png)
+![Skybox Unity Asset Store](./images/unity-tutorial-3/SkyboxUnityAssetStore.png)
 
 #### Skybox
 
@@ -69,12 +69,12 @@ Unity Skybox 是一種用於創建場景背景的特殊 Material，Unity 提供�
 
 我們可以在 Assets 中新增一個 Material
 
-![New Material](../images/unity-tutorial-3/NewMaterial.png)
+![New Material](./images/unity-tutorial-3/NewMaterial.png)
 
 在這個材質的 Inspector 中，把上方的 Shader 改成 6 Sided
 
-![Six Sided](../images/unity-tutorial-3/SixSided.png)
-![Material Inspector](../images/unity-tutorial-3/MaterialInspector.png)
+![Six Sided](./images/unity-tutorial-3/SixSided.png)
+![Material Inspector](./images/unity-tutorial-3/MaterialInspector.png)
 
 可以看到它要我們放六張 Texture 進去，分別對應到正方體的六個面，就可以做出一個 Skybox
 
@@ -84,25 +84,25 @@ Unity Skybox 是一種用於創建場景背景的特殊 Material，Unity 提供�
 
 ##### 全域改變
 
-![Lighting](../images/unity-tutorial-3/Lighting.png)
+![Lighting](./images/unity-tutorial-3/Lighting.png)
 
 在上方 Window 裡面的 Rendering 中可以找到 Lighting，點選後會跳出一個視窗
 
-![Lighting Inspector](../images/unity-tutorial-3/LightingInspector.png)
+![Lighting Inspector](./images/unity-tutorial-3/LightingInspector.png)
 
 在這個視窗上方的 Environment 中會找到一個 **Skybox Material**，可以直接把剛剛導入的 Package 中的 Material 拖曳進去，或是直接拖曳到場景中也可以，都是做全域的改變，會影響所有場景的 Camera 的 Skybox
 
-![Global Skybox](../images/unity-tutorial-3/GlobalSkybox.gif)
+![Global Skybox](./images/unity-tutorial-3/GlobalSkybox.gif)
 
 ##### 局部改變
 
 比較好的做法是在 Camera 裡面新增一個 Skybox Component
 
-![Camera Inspector](../images/unity-tutorial-3/CameraInspector.png)
+![Camera Inspector](./images/unity-tutorial-3/CameraInspector.png)
 
 一樣把想要的 Skybox Material 拖曳進去，這樣只會影響這個 Camera，且會 Override Lighting Tab 的設定
 
-![Local Skybox](../images/unity-tutorial-3/LocalSkybox.gif)
+![Local Skybox](./images/unity-tutorial-3/LocalSkybox.gif)
 
 #### 注意
 
@@ -118,31 +118,31 @@ Unity Skybox 是一種用於創建場景背景的特殊 Material，Unity 提供�
 
 這邊隨便選擇一個 Pop cat 的 3D 模型，右上角兩個符號代表這模型有動畫，且是可以下載的
 
-![Sketchfab Model](../images/unity-tutorial-3/SketchfabModel.png)
+![Sketchfab Model](./images/unity-tutorial-3/SketchfabModel.png)
 
-![Sketchfab Model](../images/unity-tutorial-3/SketchfabModel2.png)
+![Sketchfab Model](./images/unity-tutorial-3/SketchfabModel2.png)
 
-![Sketchfab Model](../images/unity-tutorial-3/SketchfabModel3.png)
+![Sketchfab Model](./images/unity-tutorial-3/SketchfabModel3.png)
 
 可以看到這邊沒有 Unity 支援的 .fbx、.dae (Collada)、.dxf 和 .obj. 等格式，不過有提供 .blend，所以我們可以自己開 blender 轉換成 .fbx
 
-![Blender](../images/unity-tutorial-3/Blender.png)
+![Blender](./images/unity-tutorial-3/Blender.png)
 
 導出成 .fbx 的時候，記得把右上角的 Path Mode 改成 Copy，並點擊右邊的 Embed Textures，之後導入進 Unity 中才能生成對應的 Texture
 
-![Blender](../images/unity-tutorial-3/Blender2.png)
+![Blender](./images/unity-tutorial-3/Blender2.png)
 
 按照先前說的方式導入模型進 Unity 後，你會發現它沒有 Texture
 
-![Cat Model](../images/unity-tutorial-3/CatModel.png)
+![Cat Model](./images/unity-tutorial-3/CatModel.png)
 
 這時候只要點選剛剛導入進 Assets 的模型，在右邊 Inspector 中的 Materials 裡面點擊 Extract Textures...，就可以順利加上 Texture 了
 
-![Cat Model](../images/unity-tutorial-3/CatInspector.png)
+![Cat Model](./images/unity-tutorial-3/CatInspector.png)
 
 這樣就模型就有 Texture 了！
 
-![Cat Model Texture](../images/unity-tutorial-3/CatModelTexture.png)
+![Cat Model Texture](./images/unity-tutorial-3/CatModelTexture.png)
 
 ## Prefab
 
@@ -150,13 +150,13 @@ Unity Skybox 是一種用於創建場景背景的特殊 Material，Unity 提供�
 
 你可能有注意到，當你從 Unity Asset Store 或 Sketchfab 導入模型後，在 Hierarchy View 中看到一些藍色的物件。這些藍色物件被稱為 Prefab（預製配件）。Prefab 是 Unity 中的一種特殊、可以重複使用的物件。
 
-![Prefab](../images/unity-tutorial-3/Prefab.png)
+![Prefab](./images/unity-tutorial-3/Prefab.png)
 
 舉個例子，假如你在場景中有大量一樣的石頭，這時候你就可以把石頭做成一個 Prefab，這就有點像是這顆石頭的 **藍圖**，你可以根據這個藍圖去建立一大堆石頭。當你想要一次修改時，就可以改這個藍圖就好，不用每一顆慢慢去修改。
 
-![Cat Army](../images/unity-tutorial-3/CatArmy.png)
+![Cat Army](./images/unity-tutorial-3/CatArmy.png)
 
-![Modify Prefab](../images/unity-tutorial-3/ModifyPrefab.gif)
+![Modify Prefab](./images/unity-tutorial-3/ModifyPrefab.gif)
 
 這邊我想要更改 Cat 模型的 Scale，只需要更改藍圖就好，這樣場景中所有根據這個 Prefab 建立的物件就會一起更新。
 
@@ -164,7 +164,7 @@ Unity Skybox 是一種用於創建場景背景的特殊 Material，Unity 提供�
 
 非常簡單，只要把你 Hierarchy View 中的物件拉進你的 Project View 裡面就好。像是我這邊建立一個 Cube 到場景中，把它拉進下方就成功囉～
 
-![Create Prefab](../images/unity-tutorial-3/CreatePrefab.gif)
+![Create Prefab](./images/unity-tutorial-3/CreatePrefab.gif)
 
 ---
 

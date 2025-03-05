@@ -28,7 +28,7 @@ tags: OS
   - user 呼叫 printf -> printf 呼叫 system call -> system call 呼叫 driver...
 - Device drivers 是 OS 的一部分
 
-![General-Purpose Operating Systems](../images/os-chapter1/GeneralPurposeOperatingSystems.png)
+![General-Purpose Operating Systems](./images/os-chapter1/GeneralPurposeOperatingSystems.png)
 
 ## OS 的定義
 
@@ -58,7 +58,7 @@ tags: OS
 
 - 由一個 Bus 連接 CPU、Memory、IO Device 等，作業系統就負責 **Control** 和 **Coordinate**
 
-![Computer-System Organization](../images/os-chapter1/ComputerSystemOrganization.png)
+![Computer-System Organization](./images/os-chapter1/ComputerSystemOrganization.png)
 
 ## Device Controller (Hardware)
 
@@ -68,7 +68,7 @@ tags: OS
 - CPU 下指令後，Device controller 就能夠去 access disk 資料到自己的 local buffer
 - Memory 是 CPU 在用的，所以 CPU 負責 移入/ 移出 memory 的資料到 Device Controller 上的 local buffer
 
-![Device Controller](../images/os-chapter1/DeviceController.png)
+![Device Controller](./images/os-chapter1/DeviceController.png)
 
 由於 Device Controller 上的 Buffer 空間是有限的，因此會需要用一些技巧來解決，像是 Busy/ wait、Interrupt
 
@@ -93,7 +93,7 @@ while (*current_char != '\0') {
 - 原本 CPU 在執行某程式碼，Interrupt 可以打斷這件事情，要求 CPU 先做其他事情，做完之後再回去執行原本的程式碼
 - 現在的作業系統都是這種形式
 
-![Interrupt-Driven I/O](../images/os-chapter1/InterruptDrivenIO.png)
+![Interrupt-Driven I/O](./images/os-chapter1/InterruptDrivenIO.png)
 
 又可以分成 Hardware 和 Software
 
@@ -108,7 +108,7 @@ while (*current_char != '\0') {
 - signal 都會有一個 singal number，根據這個 number 去找 vector 上的欄位
 - 每個 port 的 hardware 有燒死的 singal number， 裝 driver 的時候會 overwrite 那個欄位的 fucntion pointer 的位置，去執行你要處理的程式碼
 
-![Hardware interrupt](../images/os-chapter1/Hardwareinterrupt.png)
+![Hardware interrupt](./images/os-chapter1/Hardwareinterrupt.png)
 
 ### Softwarae Interrupt
 
@@ -122,7 +122,7 @@ while (*current_char != '\0') {
   - 主動，也就是去 call **System Call**
   - 被動像是出現 Error 的時候要處理
 
-![Software interrupt](../images/os-chapter1/Softwareinterrupt.png)
+![Software interrupt](./images/os-chapter1/Softwareinterrupt.png)
 
 不管是 Hardware Interrupt 或是 Software Interrupt，Interrupt 的時候必須記得被打斷的程式的 Instruction Address，才能再處理完 Interrupt 回去繼續執行。
 
@@ -130,7 +130,7 @@ while (*current_char != '\0') {
 
 # Storage-Device Hierarchy
 
-![Storage-Device Hierarchy](../images/os-chapter1/StorageDeviceHierarchy.png)
+![Storage-Device Hierarchy](./images/os-chapter1/StorageDeviceHierarchy.png)
 
 - 真正的大型的系統最後還是用 tapes，因為非常 reliable，不太容易壞，而且很便宜
 - 這是最傳統的架構，現在有很多其他的 storage device 會插在中間
@@ -168,14 +168,14 @@ Random Access 重要的地方是，你讀取任何位置的資料，時間都是
   - Positioning Time = Seek Time (Cylinder) + Rotational Latency (Sector)
 - 如果是連續資料的讀取，其實 Hard Drive 並不會輸 SSD
 
-![Performance Of Various Storage](../images/os-chapter1/PerformanceOfVariousStorage.png)
+![Performance Of Various Storage](./images/os-chapter1/PerformanceOfVariousStorage.png)
 
 ### Caching
 
 - 把速度比較慢的 Storage 複製到速度比較快的 Storage
 - 如果這層找不到資料，會一層一層往下檢查，直到找到，所以有時候會比沒有 Caching 還慢
 
-![Caching](../images/os-chapter1/Caching.png)
+![Caching](./images/os-chapter1/Caching.png)
 
 #### Coherency and Consistency Issue
 
@@ -220,8 +220,8 @@ Random Access 重要的地方是，你讀取任何位置的資料，時間都是
   - 超過這段空間就會有 **Segmentation Fault**
   - 修改 Base register 和 Limit register 都是 Priviledge Instructions
 
-![Use of Base and Limit Register](../images/os-chapter1/UseofBaseandLimitRegister.png)
-![Hardware Address Protection](../images/os-chapter1/HardwareAddressProtection.png)
+![Use of Base and Limit Register](./images/os-chapter1/UseofBaseandLimitRegister.png)
+![Hardware Address Protection](./images/os-chapter1/HardwareAddressProtection.png)
 
 ## CPU Protection
 

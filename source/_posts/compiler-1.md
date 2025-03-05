@@ -49,7 +49,7 @@ Compilation 可以分成兩個部分
 - Syntax Analysis
 - Semantic Analysis
 
-![Analysis Phases Example](../images/compiler-1/AnalysisPhasesExample.png)
+![Analysis Phases Example](./images/compiler-1/AnalysisPhasesExample.png)
 
 ### Intermediate Code Generation
 
@@ -62,21 +62,21 @@ Compilation 可以分成兩個部分
   - Three-address code
     - 每條指令最多有三個 operands
 
-![Intermediate Code Generation Example](../images/compiler-1/IntermediateCodeGenerationExample.png)
+![Intermediate Code Generation Example](./images/compiler-1/IntermediateCodeGenerationExample.png)
 
 ### Code Optimization
 
 - Attempts to improve the intermediate code
   - So the faster-running machine code will result
 
-![Code Optimization Example](../images/compiler-1/CodeOptimizationExample.png)
+![Code Optimization Example](./images/compiler-1/CodeOptimizationExample.png)
 
 ### Code Generation
 
 - Generates target code
   - Consisting of reocatable machine code or assembly code
 
-![Code Generation Example](../images/compiler-1/CodeGenerationExample.png)
+![Code Generation Example](./images/compiler-1/CodeGenerationExample.png)
 
 ### Counsins of the compiler
 

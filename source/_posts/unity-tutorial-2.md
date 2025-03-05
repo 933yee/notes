@@ -12,7 +12,7 @@ tags: Unity
 
 在 Unity Editor 中，開發者的介面分割得非常明確，大致可以將畫面分成幾個區塊，每個區塊都有特定的功能
 
-![Unity Editor](../images/unity-tutorial-2/UnityEditor.png)
+![Unity Editor](./images/unity-tutorial-2/UnityEditor.png)
 
 ### Hierarchy View
 
@@ -47,10 +47,10 @@ tags: Unity
 
 ### 新增物件
 
-![Add Game Object](../images/unity-tutorial-2/AddGameObject.png)
+![Add Game Object](./images/unity-tutorial-2/AddGameObject.png)
 在左邊的 Hierarchy View 中點擊滑鼠右鍵，選擇 **3D OBject** 可以看到許多選擇，像是正方體、球體、膠囊體(?、圓柱體等等，這邊先選擇正方體
 
-![Add Game Object](../images/unity-tutorial-2/AddGameObject2.png)
+![Add Game Object](./images/unity-tutorial-2/AddGameObject2.png)
 
 新增好後 Hierarchy View 就多了一個名為 Cube 的 Cube，Scene View 和 Game View 也可以看到這個正方體。點選這個正方體，右邊的 Inspector View 就會顯示這個正方體的詳細資訊。
 
@@ -60,49 +60,49 @@ tags: Unity
 #### 滑鼠滾輪
 
 放大和縮小當前的畫面
-![Mouse Scroll](../images/unity-tutorial-2/MouseScroll.gif)
+![Mouse Scroll](./images/unity-tutorial-2/MouseScroll.gif)
 
 #### ALT
 
 能夠改變當前的視角角度
-![ALT](../images/unity-tutorial-2/ALT.gif)
+![ALT](./images/unity-tutorial-2/ALT.gif)
 
 #### Q
 
 快速切換成 View Tool，可以在 Scene View 中自由移動
-![Q](../images/unity-tutorial-2/Q.gif)
+![Q](./images/unity-tutorial-2/Q.gif)
 
 #### W
 
 快速切換成 Move Tool，可以移動物體的位置
-![W](../images/unity-tutorial-2/W.gif)
+![W](./images/unity-tutorial-2/W.gif)
 
 #### E
 
 快速切換成 Rotate Tool，可以旋轉物體
-![E](../images/unity-tutorial-2/E.gif)
+![E](./images/unity-tutorial-2/E.gif)
 
 #### R
 
 快速切換成 Scale Tool，可以改變物體的大小
-![R](../images/unity-tutorial-2/R.gif)
+![R](./images/unity-tutorial-2/R.gif)
 
 事實上，上面提到的 QWER 也可以直接用滑鼠點 Scene View 左上角的 Tools 來使用，不過直接用快捷鍵會在日後方便許多，建議可以多熟悉使用快捷鍵來編輯。
 
 除此之外，在移動物體、旋轉物體和縮放物體的時候，可以看到右上角 Inspector 中的 Transform 也會隨之改變，前面有提到 Inspector View 可以檢視當前物體的屬性，且物體的位置、旋轉角度和大小都存在於 **Transform 屬性** 裡面，所以其實也可以直接在這邊輸入數字去做修改，和在 Scene View 去編輯是沒有差別的。
 
-![Inspector View](../images/unity-tutorial-2/InspectorView.gif)
+![Inspector View](./images/unity-tutorial-2/InspectorView.gif)
 
 #### 按住右鍵 + W/A/S/D/Q/E/滾輪
 
 按住右鍵加上 W (前進)、A (往左)、S (後退)、D (往右)、 Q (往下)、E (往上)、滾輪 (調整移動速度)，可以快速在 Scene View 裡面移動，就跟你正在以第一人稱在遊戲場景中移動一樣，非常方便
 
-![Combo](../images/unity-tutorial-2/Combo.gif)
+![Combo](./images/unity-tutorial-2/Combo.gif)
 
 #### F
 
 快速在場景中找到某物件。在 Hierarchy View 裡面找到目標物件，點擊 F 可以瞬間到它旁邊。當遊戲場景很大的時候，這個功能會變得很好用，不用在場景中慢慢自己找。用滑鼠點兩下也可以
-![R](../images/unity-tutorial-2/F.gif)
+![R](./images/unity-tutorial-2/F.gif)
 
 #### Ctrl + Z / Ctrl + Y
 
@@ -112,7 +112,7 @@ Undo 和 Redo，這應該不用多說什麼
 
 儲存檔案。請**務必**養成做完任何改動都點一下 Ctrl + S 的習慣，Unity 並不會自動幫你儲存。有時候做完大幅度的改動後 Unity 突然崩潰，所有努力直接化為泡影，當下真的欲哭無淚 QAQ
 
-![Unity Crash](../images/unity-tutorial-2/UnityCrash.png)
+![Unity Crash](./images/unity-tutorial-2/UnityCrash.png)
 每次看到這畫面心都會抖一下...
 
 ---

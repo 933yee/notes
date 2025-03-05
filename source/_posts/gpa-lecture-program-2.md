@@ -9,7 +9,7 @@ math: true
 # Grass
 
 ```cpp
-#include ".../.../Include/Common.h"
+#include "../../Include/Common.h"
 
 using namespace glm;
 
@@ -239,7 +239,7 @@ int main(int argc, char *argv[])
 # Instanced_Attributes
 
 ```cpp
-#include ".../.../Include/Common.h"
+#include "../../Include/Common.h"
 
 static const char * square_vs_source[] =
 {
@@ -407,7 +407,7 @@ int main(int argc, char *argv[])
 # Point Sprite
 
 ```cpp
-#include ".../.../Include/Common.h"
+#include "../../Include/Common.h"
 #define MENU_TIMER_START 1
 #define MENU_TIMER_STOP 2
 #define MENU_EXIT 3
@@ -574,7 +574,7 @@ void My_Init()
 	glActiveTexture( GL_TEXTURE0 );
 
 	glEnable(GL_POINT_SPRITE); //點精靈會根據視點自動調整其大小和方向，這樣在三維空間中，它們看起來更自然。
-	TextureData tdata = loadImg(".../.../Media/Textures/star.png");
+	TextureData tdata = loadImg("../../Media/Textures/star.png");
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_ONE, GL_ONE);
@@ -682,7 +682,7 @@ int main(int argc, char *argv[])
 # GrayScale_Cube
 
 ```cpp
-#include ".../.../Include/Common.h"
+#include "../../Include/Common.h"
 #define GLM_SWIZZLE
 
 #include <cstdio>
@@ -1060,7 +1060,7 @@ int main(int argc, char *argv[])
 # Image Processing
 
 ```cpp
-#include ".../.../Include/Common.h"
+#include "../../Include/Common.h"
 
 #define MENU_TIMER_START 1
 #define MENU_TIMER_STOP 2
@@ -1235,7 +1235,7 @@ void My_Init()
 	};
 	glBufferData(GL_ARRAY_BUFFER, sizeof(data), data, GL_STATIC_DRAW);
 
-	TextureData tdata = loadImg(".../.../Media/Textures/hawk.png");
+	TextureData tdata = loadImg("../../Media/Textures/hawk.png");
 
 	glGenTextures( 1, &hawk_texture );
 	glBindTexture( GL_TEXTURE_2D, hawk_texture);

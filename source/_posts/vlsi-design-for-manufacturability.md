@@ -14,7 +14,7 @@ math: true
 - Diffraction: 繞射
   會造成 Lithography 不準確，可以從目標圖案反推出 Mask 的設計，稱為 Computational Lithography
 
-![Lithography Development](../images/vlsi-design-for-manufacturability/LithographyDevelopment.png)
+![Lithography Development](./images/vlsi-design-for-manufacturability/LithographyDevelopment.png)
 
 - 193i 的 `i` 代表 Immersion Lithography
   用液體取代空氣，縮短光的波長，就好像換了一個 Light Source，減少繞射的影響，而且波長 193nm 的技術已經很成熟
@@ -34,11 +34,11 @@ math: true
 
 - OPC 會造成線寬變寬，所以要考慮 `Design Rule`，ex：兩條線之間要留多少空間
 
-![OPC](../images/vlsi-design-for-manufacturability/OPC.png)
+![OPC](./images/vlsi-design-for-manufacturability/OPC.png)
 
 #### End-to-End Seperation Rule
 
-![End-to-End Seperation Rule](../images/vlsi-design-for-manufacturability/EndToEndSeperationRule.png)
+![End-to-End Seperation Rule](./images/vlsi-design-for-manufacturability/EndToEndSeperationRule.png)
 
 - 如果一條 Wire 的端點的相鄰軌道上有另一條 Wire，那這條 Wire 的末端至少要留 **S2** 的空間
 - 其他情況只需要預留 **S1** 的空間
@@ -47,7 +47,7 @@ math: true
 
 每條線至少要有多長
 
-![Minimum Length Rule](../images/vlsi-design-for-manufacturability/MinimumLengthRule.png)
+![Minimum Length Rule](./images/vlsi-design-for-manufacturability/MinimumLengthRule.png)
 
 ### MANA (A Shortest Path MAze Algorithm under Separation and Minimum Length NAnometer Rules)
 
@@ -58,11 +58,11 @@ math: true
 - Post-Processing
   把找到的路徑再做一些調整，像是延伸 Wire，讓他們符合先前提到的 `Design Rule`，不過這方法沒那麼好，會花很多資源
 
-  ![Post-Processing](../images/vlsi-design-for-manufacturability/PostProcessing.png)
+  ![Post-Processing](./images/vlsi-design-for-manufacturability/PostProcessing.png)
 
 - 增強型 Maze Routing Algorithm
   在找路徑的時候就考慮 `Design Rule`，像是「每條 Wire 至少要有多長」
-  ![Enhanced Maze Routing Algorithm](../images/vlsi-design-for-manufacturability/EnhancedMazeRoutingAlgorithm.png)
+  ![Enhanced Maze Routing Algorithm](./images/vlsi-design-for-manufacturability/EnhancedMazeRoutingAlgorithm.png)
 
 ## Redundant Via Insertion
 
