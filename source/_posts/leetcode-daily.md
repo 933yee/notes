@@ -888,3 +888,28 @@ public:
     }
 };
 ```
+
+### 2025/03/05 [2579. Count Total Number of Colored Cells](https://leetcode.com/problems/count-total-number-of-colored-cells/description/?envType=daily-question&envId=2025-03-05)
+
+直接算兩個三角形去掉重疊的部分
+
+```cpp
+class Solution {
+public:
+    long long coloredCells(int n) {
+        return (long long)2*n*n-(2*n-1);
+    }
+};
+```
+
+也可以用遞迴
+
+```cpp
+class Solution {
+public:
+    long long coloredCells(int n) {
+        if(n == 1) return 1;
+        return (n-2) * 4 + 4 + coloredCells(n-1);
+    }
+};
+```

@@ -937,3 +937,187 @@ print(prof.key_averages().table(sort_by="self_cpu_memory_usage", row_limit=10))
 ---------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
 Self CPU time total: 52.275ms
 ```
+
+### TensorBoard
+
+TensorBoard 可以監控和分析機器學習模型的訓練過程，監測 CPU 和 GPU 的使用情況，看看 Bottleneck 在哪個地方
+
+下面程式碼是用 CIFAR-10 Dataset 進行 ResNet-18 訓練，用 torch.profiler 儲存 Profile 結果
+
+```python
+import torch.optim
+import torch.profiler
+import torch.utils.data
+import torchvision.datasets
+import torchvision.models
+import torchvision.transforms as T
+
+
+transform = T.Compose(
+    [T.Resize(224),
+     T.ToTensor(),
+     T.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
+train_set = torchvision.datasets.CIFAR10(root='./data', train=True, download=True, transform=transform)
+train_loader = torch.utils.data.DataLoader(train_set, batch_size=32, shuffle=True)
+
+device = torch.device("cpu")
+model = torchvision.models.resnet18(weights='IMAGENET1K_V1')
+criterion = torch.nn.CrossEntropyLoss()
+optimizer = torch.optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
+model.train()
+
+def train(data):
+    inputs, labels = data[0].to(device=device), data[1].to(device=device)
+    outputs = model(inputs)
+    loss = criterion(outputs, labels)
+    optimizer.zero_grad()
+    loss.backward()
+    optimizer.step()
+
+
+with torch.profiler.profile(
+        schedule=torch.profiler.schedule(wait=1, warmup=1, active=3, repeat=1),
+        on_trace_ready=torch.profiler.tensorboard_trace_handler('./log/resnet18'),
+        record_shapes=True,
+        profile_memory=True,
+        with_stack=True
+) as prof:
+    for step, batch_data in enumerate(train_loader):
+        prof.step()  # Need to call this at each step to notify profiler of steps' boundary.
+        if step >= 1 + 1 + 3:
+            break
+        train(batch_data)
+```
+
+接下來可以用以下指令啟動 TensorBoard，監測 Profile 的結果
+
+```shell
+tensorboard --logdir='~/projects/lab02/lab2-3/log/' --bind_all --port=10000 > tensorboard.stdout.log &> tensorboard.stderr.log & # Start TensorBoard
+kill $(ps -e | grep 'tensorboard' | awk '{print $1}') # Stop TensorBoard
+```
+
+![TensorBoard](./images/ai-computing-system/TensorBoard.png)
+
+### Python C++ Frontend
+
+#### TorchScript
+
+TorchScript 是 PyTorch 的一種 IR (Intermediate Representation)，可以在其他環境執行，像是 C++、嵌入式設備或伺服器，有兩種方法可以把 PyTorch Model 轉換成 TorchScript
+
+- Tracing
+  用 `torch.jit.trace`，把 Example Input 丟進去模型跑，將這個 Data 在模型的流向全部記錄起來，藉此捕捉模型的結構
+
+  ```python
+  import torch
+
+  class MyModel(torch.nn.Module):
+      def __init__(self):
+          super().__init__()
+          self.fc1 = torch.nn.Linear(3, 3)
+          self.fc2 = torch.nn.Linear(3, 2)
+
+      def forward(self, x):
+          x = self.fc1(x)
+          x = self.fc2(x)
+          return x
+
+  model = MyModel()
+
+  # Example Input
+  example_input = torch.randn(1, 3)
+
+  traced_model = torch.jit.trace(model, example_input)
+
+  traced_model.save("traced_model.pt")
+  ```
+
+- Scripting
+  用 `torch.jit.scrip` 直接解析 Python Code，轉換成 TorchScript
+
+  ```python
+  import torch
+
+  class MyModel(torch.nn.Module):
+      def __init__(self):
+          super().__init__()
+          self.fc1 = torch.nn.Linear(3, 3)
+          self.fc2 = torch.nn.Linear(3, 2)
+
+      def forward(self, x):
+          x = self.fc1(x)
+          x = self.fc2(x)
+          return x
+
+  scripted_model = torch.jit.script(MyModel())
+
+  scripted_model.save("scripted_model.pt")
+  ```
+
+#### LibTorch
+
+[LibTorch](https://pytorch.org/get-started/locally/) 可以用來在 C++ 環境中執行 TorchScript，可以用 CMake 來建置 C++ 程式，並且連結 LibTorch 的 Library 來執行 TorchScript
+
+```cpp
+#include <torch/script.h> // One-stop header.
+#include <torch/csrc/jit/api/module.h>
+#include <torch/csrc/jit/jit_log.h>
+#include <torch/csrc/jit/ir/ir.h>
+
+#include <iostream>
+#include <memory>
+
+using namespace torch::jit;
+
+int main(int argc, const char* argv[]) {
+  if (argc != 2) {
+    std::cerr << "usage: example-app <path-to-exported-script-module>\n";
+    return -1;
+  }
+
+  set_jit_logging_levels("GRAPH_DUMP");
+
+  torch::jit::script::Module module;
+  try {
+    // Deserialize the ScriptModule from a file using torch::jit::load().
+    module = torch::jit::load(argv[1]);
+  }
+  catch (const c10::Error& e) {
+    std::cerr << "error loading the model\n";
+    return -1;
+  }
+
+  std::cout << "load the torchscript model, " + std::string(argv[1]) + ", successfully \n";
+
+  // Create a vector of inputs.
+  std::vector<torch::jit::IValue> inputs;
+  inputs.push_back(torch::ones({1, 3, 224, 224}));
+
+  // Execute the model and turn its output into a tensor.
+  at::Tensor output = module.forward(inputs).toTensor();
+  std::cout << output.slice(/*dim=*/1, /*start=*/0, /*end=*/5) << '\n';
+
+  //dump the model information
+  // source code can be found in
+  // https://github.com/pytorch/pytorch/blob/main/torch/csrc/jit/api/module.cpp
+  std::cout << module.dump_to_str(true,false,false) << " (\n";
+}
+
+```
+
+- Build & Compile
+
+  ```shell
+  ## create config
+  $ cmake -DCMAKE_PREFIX_PATH=./libtorch ..
+
+  ## compile
+  $ cmake --build . --config Release -j ${nproc}
+  ```
+
+- Build 完後，可以跑 C++ 程式，並輸入剛剛轉出來的 TorchScript (.pt) 檔案
+
+  ```shell
+  ./analyzer ../../traced_resnet18.pt
+  ```
+
+可以參考 [PyTorch C++ API](https://pytorch.org/cppdocs/index.html) 了解更多 C++ API 的使用方式
