@@ -437,6 +437,86 @@ $$
 
 ### Simulated Annealing (SA) Algorithm
 
+感覺很像機器學習，目的是找到 Global Optimal Solution，但常常會卡在 Local Optimal Solution
+
+![Simulated Annealing](./images/vlsi-physical-design-automation/SimulatedAnnealing.png)
+
+#### Basics
+
+概念是讓 `up-hill move` 出現的機率不為 0，其機率會由 `up-hill` 的量和溫度 T 來決定
+
+$$
+\text{Prob}(S \rightarrow S^\prime) = \begin{cases}
+1 & \text{if } \Delta C \leq 0 \\
+e^{-\Delta C / T} & \text{if } \Delta C > 0
+\end{cases}
+$$
+
+- 其中
+  - $\Delta C$ 是 Cost 的變化量，$\text{Cost}(S^\prime) - \text{Cost}(S)$
+  - $T$ 是溫度，隨著時間遞減，讓 `up-hill move` 的機率越來越小，因此 $T_i = r^i \cdot T_0$，$r$ 是一個介於 0 和 1 之間的常數
+
+#### Generic SA Algorithm
+
+![Generic SA Algorithm](./images/vlsi-physical-design-automation/GenericSAAlgorithm.png)
+
+> 早期受限於記憶體大小，不會把曾經算過的最佳解存起來，這裡就是偏早期的作法
+
+可以看到 SA 構成的四大要素為
+
+- Solution Space: 所有可能的解
+- Neighborhood Structure: 定義了如何從一個解移動到另一個解
+- Cost Function: 用來評估一個解的好壞
+- Annealing Schedule: 決定了溫度如何隨時間變化
+
+#### Partitioning by SA
+
+在 Partitioning 的問題中
+
+- Solution Space: 所有可能的 Partition
+- Neighborhood Structure: 一次只搬一個 Cell 到另一邊
+- Cost Function: Cutset 的 Size + Balance 的 Cost
+- Annealing Schedule: 溫度隨時間遞減
+
+其中 Cost Function 的定義為
+
+$$
+f = C + \lambda B
+$$
+
+- $C$: Cutset 的 Size
+- $B$: 評估現在 Balance 的程度，又定義成 $B = (|S1| - |S2|)^2$
+- $\lambda$: 一個常數，用來決定 Balance 的重要程度
+
+Annealing Schedule 的定義為
+
+$$
+T_i = r^i \cdot T_0
+$$
+
+- $r$ 通常定成 0.9
+- 每當 **每個 Cell 平均成功移動 10 次** 或 **嘗試移動次數超過 100 \* 總 Cells 數量** 的情況發生，就把溫度調成 $r$ 倍
+- 如果 **連續 3 種溫度都沒有移動成功** 就結束，像是機器學習的 Early Stopping
+
+### Multi-Level Partitioning
+
+可以分成三個步驟
+
+1. Coarsening
+   把許多小 Cell 合併成大 Cell，也就是把 Graph 變成更小的 Graph，這樣可以減少計算量。通常會做很多次 Coarsening
+
+2. Initial Partitioning
+   在 Coarsest 的 Graph 上做 Partitioning (KL、FM、SA)
+
+3. Uncoarsening
+   把 Initial Partitioning 的結果做 Uncoarsening，把一些原本併在一起的 Cells 拆開，放大整個 Graph，可以想像原本在 A 集合的 Cells 做 Uncoarsening 後還是在 A 集合。
+
+   做了 Uncoarseing 後，相當於得到一個更好的 Initial Partitioning，再做一次 Partitioning，收斂的速度會很快，結果也會比較好
+
+   也會做很多次 Uncoarsening，變回最原始的 Graph
+
+![Multi-Level Partitioning](./images/vlsi-physical-design-automation/MultiLevelPartitioning.png)
+
 # Assignment
 
 ## HW1

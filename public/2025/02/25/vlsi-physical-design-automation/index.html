@@ -39,13 +39,16 @@
 <meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-physical-design-automation/CriticalNets.png">
 <meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-physical-design-automation/ComputingCellGainsExample.png">
 <meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-physical-design-automation/AlgorithmForUpdatingCellGains.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-physical-design-automation/SimulatedAnnealing.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-physical-design-automation/GenericSAAlgorithm.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-physical-design-automation/MultiLevelPartitioning.png">
 <meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-physical-design-automation/PowerRing.png">
 <meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-physical-design-automation/PowerStripes.png">
 <meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-physical-design-automation/Placement.png">
 <meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-physical-design-automation/ClockTreeSynthesis.png">
 <meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-physical-design-automation/Routing.png">
 <meta property="article:published_time" content="2025-02-25T05:17:03.000Z">
-<meta property="article:modified_time" content="2025-03-05T18:59:00.708Z">
+<meta property="article:modified_time" content="2025-03-06T02:59:39.339Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="vlsi">
 <meta property="article:tag" content="physical design">
@@ -244,7 +247,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.8k words
+          4.3k words
         
       </span>
     
@@ -255,7 +258,7 @@
         
         
         
-          32 mins
+          37 mins
         
       </span>
     
@@ -685,7 +688,62 @@
 <h4 id="Algorithm-for-Updating-Cell-Gains"><a href="#Algorithm-for-Updating-Cell-Gains" class="headerlink" title="Algorithm for Updating Cell Gains"></a>Algorithm for Updating Cell Gains</h4><p><img src="/notes/./images/vlsi-physical-design-automation/AlgorithmForUpdatingCellGains.png" srcset="/notes/info/loading.gif" lazyload alt="Algorithm for Updating Cell Gains"></p>
 <p>只要想成 <strong>目標是 Cut Size 越小越好</strong>，所以要找 <strong>Gain 最大的 Cell</strong>，<strong>我們越傾向於移過去某 Cell 後 Net 會變 Uncut 的情況</strong>，因此該 Net 對於該 Cell 的 Gain 就是 1，反之越不希望 Net 變 Cut，該 Net 對於該 Cell 的 Gain 就是 -1</p>
 <p>每次 Update 的時間複雜度是 $O(P)$</p>
-<h3 id="Simulated-Annealing-SA-Algorithm"><a href="#Simulated-Annealing-SA-Algorithm" class="headerlink" title="Simulated Annealing (SA) Algorithm"></a>Simulated Annealing (SA) Algorithm</h3><h1 id="Assignment"><a href="#Assignment" class="headerlink" title="Assignment"></a>Assignment</h1><h2 id="HW1"><a href="#HW1" class="headerlink" title="HW1"></a>HW1</h2><h3 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h3><ul>
+<h3 id="Simulated-Annealing-SA-Algorithm"><a href="#Simulated-Annealing-SA-Algorithm" class="headerlink" title="Simulated Annealing (SA) Algorithm"></a>Simulated Annealing (SA) Algorithm</h3><p>感覺很像機器學習，目的是找到 Global Optimal Solution，但常常會卡在 Local Optimal Solution</p>
+<p><img src="/notes/./images/vlsi-physical-design-automation/SimulatedAnnealing.png" srcset="/notes/info/loading.gif" lazyload alt="Simulated Annealing"></p>
+<h4 id="Basics"><a href="#Basics" class="headerlink" title="Basics"></a>Basics</h4><p>概念是讓 <code>up-hill move</code> 出現的機率不為 0，其機率會由 <code>up-hill</code> 的量和溫度 T 來決定</p>
+<p>$$<br>\text{Prob}(S \rightarrow S^\prime) &#x3D; \begin{cases}<br>1 &amp; \text{if } \Delta C \leq 0 \<br>e^{-\Delta C &#x2F; T} &amp; \text{if } \Delta C &gt; 0<br>\end{cases}<br>$$</p>
+<ul>
+<li>其中<ul>
+<li>$\Delta C$ 是 Cost 的變化量，$\text{Cost}(S^\prime) - \text{Cost}(S)$</li>
+<li>$T$ 是溫度，隨著時間遞減，讓 <code>up-hill move</code> 的機率越來越小，因此 $T_i &#x3D; r^i \cdot T_0$，$r$ 是一個介於 0 和 1 之間的常數</li>
+</ul>
+</li>
+</ul>
+<h4 id="Generic-SA-Algorithm"><a href="#Generic-SA-Algorithm" class="headerlink" title="Generic SA Algorithm"></a>Generic SA Algorithm</h4><p><img src="/notes/./images/vlsi-physical-design-automation/GenericSAAlgorithm.png" srcset="/notes/info/loading.gif" lazyload alt="Generic SA Algorithm"></p>
+<blockquote>
+<p>早期受限於記憶體大小，不會把曾經算過的最佳解存起來，這裡就是偏早期的作法</p>
+</blockquote>
+<p>可以看到 SA 構成的四大要素為</p>
+<ul>
+<li>Solution Space: 所有可能的解</li>
+<li>Neighborhood Structure: 定義了如何從一個解移動到另一個解</li>
+<li>Cost Function: 用來評估一個解的好壞</li>
+<li>Annealing Schedule: 決定了溫度如何隨時間變化</li>
+</ul>
+<h4 id="Partitioning-by-SA"><a href="#Partitioning-by-SA" class="headerlink" title="Partitioning by SA"></a>Partitioning by SA</h4><p>在 Partitioning 的問題中</p>
+<ul>
+<li>Solution Space: 所有可能的 Partition</li>
+<li>Neighborhood Structure: 一次只搬一個 Cell 到另一邊</li>
+<li>Cost Function: Cutset 的 Size + Balance 的 Cost</li>
+<li>Annealing Schedule: 溫度隨時間遞減</li>
+</ul>
+<p>其中 Cost Function 的定義為</p>
+<p>$$<br>f &#x3D; C + \lambda B<br>$$</p>
+<ul>
+<li>$C$: Cutset 的 Size</li>
+<li>$B$: 評估現在 Balance 的程度，又定義成 $B &#x3D; (|S1| - |S2|)^2$</li>
+<li>$\lambda$: 一個常數，用來決定 Balance 的重要程度</li>
+</ul>
+<p>Annealing Schedule 的定義為</p>
+<p>$$<br>T_i &#x3D; r^i \cdot T_0<br>$$</p>
+<ul>
+<li>$r$ 通常定成 0.9</li>
+<li>每當 <strong>每個 Cell 平均成功移動 10 次</strong> 或 <strong>嘗試移動次數超過 100 * 總 Cells 數量</strong> 的情況發生，就把溫度調成 $r$ 倍</li>
+<li>如果 <strong>連續 3 種溫度都沒有移動成功</strong> 就結束，像是機器學習的 Early Stopping</li>
+</ul>
+<h3 id="Multi-Level-Partitioning"><a href="#Multi-Level-Partitioning" class="headerlink" title="Multi-Level Partitioning"></a>Multi-Level Partitioning</h3><p>可以分成三個步驟</p>
+<ol>
+<li><p>Coarsening<br>把許多小 Cell 合併成大 Cell，也就是把 Graph 變成更小的 Graph，這樣可以減少計算量。通常會做很多次 Coarsening</p>
+</li>
+<li><p>Initial Partitioning<br>在 Coarsest 的 Graph 上做 Partitioning (KL、FM、SA)</p>
+</li>
+<li><p>Uncoarsening<br>把 Initial Partitioning 的結果做 Uncoarsening，把一些原本併在一起的 Cells 拆開，放大整個 Graph，可以想像原本在 A 集合的 Cells 做 Uncoarsening 後還是在 A 集合。</p>
+<p>做了 Uncoarseing 後，相當於得到一個更好的 Initial Partitioning，再做一次 Partitioning，收斂的速度會很快，結果也會比較好</p>
+<p>也會做很多次 Uncoarsening，變回最原始的 Graph</p>
+</li>
+</ol>
+<p><img src="/notes/./images/vlsi-physical-design-automation/MultiLevelPartitioning.png" srcset="/notes/info/loading.gif" lazyload alt="Multi-Level Partitioning"></p>
+<h1 id="Assignment"><a href="#Assignment" class="headerlink" title="Assignment"></a>Assignment</h1><h2 id="HW1"><a href="#HW1" class="headerlink" title="HW1"></a>HW1</h2><h3 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h3><ul>
 <li><p>Synopsys Design Constraints (.sdc) file<br>是一種用來描述 Timing Constraints 的檔案，可以用來告訴 Synthesis Tool 或 Place &amp; Route Tool 一些 Timing 的限制，例如：Clock Period、Setup Time、Hold Time、Clock Latency 等等</p>
 </li>
 <li><p>Library Exchange Format (.lef) file</p>
