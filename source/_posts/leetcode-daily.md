@@ -913,3 +913,26 @@ public:
     }
 };
 ```
+
+### 2025/03/06 [2965. Find Missing and Repeated Values](https://leetcode.com/problems/find-missing-and-repeated-values/description/?envType=daily-question&envId=2025-03-06)
+
+略
+
+```cpp
+class Solution {
+public:
+    vector<int> findMissingAndRepeatedValues(vector<vector<int>>& grid) {
+        int n = grid.size();
+        vector<int> rec(n * n + 1), ans(2);
+        for(auto& v:grid){
+            for(auto& i:v)
+                rec[i]++;
+        }
+        for(int i=1; i<=n*n; i++){
+            if(rec[i] == 0) ans[1] = i;
+            else if(rec[i] == 2) ans[0] = i;
+        }
+        return ans;
+    }
+};
+```
