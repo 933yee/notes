@@ -511,7 +511,7 @@ $$
 3. Uncoarsening
    把 Initial Partitioning 的結果做 Uncoarsening，把一些原本併在一起的 Cells 拆開，放大整個 Graph，可以想像原本在 A 集合的 Cells 做 Uncoarsening 後還是在 A 集合。
 
-   做了 Uncoarseing 後，相當於得到一個更好的 Initial Partitioning，再做一次 Partitioning，收斂的速度會很快，結果也會比較好
+   做了 Uncoarseing 後，相當於得到一個更好的 Initial Solution，再做一次 Partitioning，收斂的速度會很快，結果也會比較好
 
    也會做很多次 Uncoarsening，變回最原始的 Graph
 
