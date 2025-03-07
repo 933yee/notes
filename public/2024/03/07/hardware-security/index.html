@@ -16,26 +16,23 @@
   <meta name="author" content="Kevin Lee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="source code: https:&#x2F;&#x2F;github.com&#x2F;aceyan&#x2F;UE4_GPGPU_flocking&#x2F;tree&#x2F;ComputeShader GPU Instances這個專案使用 GPU Instancing，一次渲染大量 Static Mesh。為了讓每個 instance 有區別，它賦予每個 instance 一個 CustomData，作為分辨的 ID。 12345678910">
+    <meta name="description" content="Reliable IC Design and Fabrication withGlobal Electronics Supply Chain Hardware security issues arise from  硬體內部的漏洞 缺乏內建的安全機制來保護軟體與系統  用旁路攻擊或軟體利用硬體漏洞進行攻擊，導致密碼學被破解、記憶體可以任意 Access、竊取物理資訊等  Hardware Trus">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Unreal Engine 4 - GPGPU flocking 解析">
-<meta property="og:url" content="https://933yee.github.io/notes/2024/02/25/ue4-cs-aceyan/index.html">
+<meta property="og:title" content="Hardware Security">
+<meta property="og:url" content="https://933yee.github.io/notes/2024/03/07/hardware-security/index.html">
 <meta property="og:site_name" content="933yee&#39;s Notes">
-<meta property="og:description" content="source code: https:&#x2F;&#x2F;github.com&#x2F;aceyan&#x2F;UE4_GPGPU_flocking&#x2F;tree&#x2F;ComputeShader GPU Instances這個專案使用 GPU Instancing，一次渲染大量 Static Mesh。為了讓每個 instance 有區別，它賦予每個 instance 一個 CustomData，作為分辨的 ID。 12345678910">
+<meta property="og:description" content="Reliable IC Design and Fabrication withGlobal Electronics Supply Chain Hardware security issues arise from  硬體內部的漏洞 缺乏內建的安全機制來保護軟體與系統  用旁路攻擊或軟體利用硬體漏洞進行攻擊，導致密碼學被破解、記憶體可以任意 Access、竊取物理資訊等  Hardware Trus">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://933yee.github.io/notes/images/ue4-cs-aceyan/InstancedComponent.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/ue4-cs-aceyan/PositionRenderTarget.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/ue4-cs-aceyan/UpdateInstancePosition.png">
-<meta property="article:published_time" content="2024-02-25T09:04:59.000Z">
-<meta property="article:modified_time" content="2025-03-05T18:34:03.355Z">
+<meta property="article:published_time" content="2024-03-07T03:25:11.000Z">
+<meta property="article:modified_time" content="2025-03-07T04:55:46.138Z">
 <meta property="article:author" content="Kevin Lee">
-<meta property="article:tag" content="UE4, GPU">
+<meta property="article:tag" content="hardware">
+<meta property="article:tag" content="security">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://933yee.github.io/notes/images/ue4-cs-aceyan/InstancedComponent.png">
   
   
   
-  <title>Unreal Engine 4 - GPGPU flocking 解析 - 933yee&#39;s Notes</title>
+  <title>Hardware Security - 933yee&#39;s Notes</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -201,7 +198,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Unreal Engine 4 - GPGPU flocking 解析"></span>
+            <span id="subtitle" data-typed-text="Hardware Security"></span>
           
         </div>
 
@@ -212,8 +209,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-02-25 17:04" pubdate>
-          February 25, 2024 pm
+        <time datetime="2024-03-07 11:25" pubdate>
+          March 7, 2024 am
         </time>
       </span>
     
@@ -224,7 +221,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          306 words
+          179 words
         
       </span>
     
@@ -235,7 +232,7 @@
         
         
         
-          3 mins
+          2 mins
         
       </span>
     
@@ -272,24 +269,28 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Unreal Engine 4 - GPGPU flocking 解析</h1>
+            <h1 id="seo-header">Hardware Security</h1>
             
             
               <div class="markdown-body">
                 
-                <p>source code: <a target="_blank" rel="noopener" href="https://github.com/aceyan/UE4_GPGPU_flocking/tree/ComputeShader">https://github.com/aceyan/UE4_GPGPU_flocking/tree/ComputeShader</a></p>
-<h3 id="GPU-Instances"><a href="#GPU-Instances" class="headerlink" title="GPU Instances"></a>GPU Instances</h3><p>這個專案使用 GPU Instancing，一次渲染大量 Static Mesh。為了讓每個 instance 有區別，它賦予每個 instance 一個 CustomData，作為分辨的 ID。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-built_in">UPROPERTY</span>(EditAnywhere, BlueprintReadWrite, Category = <span class="hljs-string">&quot;Flocking&quot;</span>)<br>	<span class="hljs-keyword">class</span> <span class="hljs-title class_">UInstancedStaticMeshComponent</span>* InstancedComponent;<br><br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; instatnceNum; i++)<br>&#123;<br>	FTransform t = <span class="hljs-built_in">FTransform</span>();<br>	InstancedComponent-&gt;<span class="hljs-built_in">AddInstance</span>(t);<br>	InstancedComponent-&gt;<span class="hljs-built_in">SetCustomDataValue</span>(i, <span class="hljs-number">0</span>, i);<br>	<span class="hljs-built_in">UE_LOG</span>(LogTemp, Warning, <span class="hljs-built_in">TEXT</span>(<span class="hljs-string">&quot;AddInstance %d&quot;</span>), i);<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p><img src="/notes/./images/ue4-cs-aceyan/InstancedComponent.png" srcset="/notes/info/loading.gif" lazyload alt="Instanced Component"></p>
-<p>然後藉由 PerInstanceCustomData[0]，取得不同的 Instance ID，然後更新它們各自的 Material 的 World Position Offset (相對位置) ，來達到移動的效果。</p>
-<h3 id="GPGPU"><a href="#GPGPU" class="headerlink" title="GPGPU"></a>GPGPU</h3><p>由於運算量龐大，可以藉由 GPGPU (Compute Shader) 來計算。那要怎麼直接把 GPGPU 算出的結果傳給 World Position Offset？</p>
-<p>這裡使用 Render Target (RT) 去除存每個 Instance 的位置、速度，所以每個 Texel 的 RGB 儲存的是 World Position Offset 的 XYZ。因此，遊戲開始的時候，儲存 Position 的 Render Target 會長這樣，五彩繽紛的顏色就代表各種 World Position Offset。</p>
-<p><img src="/notes/./images/ue4-cs-aceyan/PositionRenderTarget.png" srcset="/notes/info/loading.gif" lazyload alt="Position Render Target"></p>
-<p>藉由這個方法，CPU 叫 GPU 算完可以直接渲染，不用再回傳到 CPU，所以整個邏輯是 GPGPU -&gt; RenderTarget -&gt; Material。</p>
-<p>最後，只要想辦法取出每個 Instance 對應到的 Texel 的顏色，傳到 World Position Offset 就好。</p>
-<p><img src="/notes/./images/ue4-cs-aceyan/UpdateInstancePosition.png" srcset="/notes/info/loading.gif" lazyload alt="Update Instance Position"></p>
-<p>看起來很複雜，實際上就是根據 ID 算出對應的 Texel 的座標，左上是 (0, 0)，右下是 (1, 1)，再 Sample 出 Texture Object 某 Texel 的顏色。</p>
+                <h2 id="Reliable-IC-Design-and-Fabrication-withGlobal-Electronics-Supply-Chain"><a href="#Reliable-IC-Design-and-Fabrication-withGlobal-Electronics-Supply-Chain" class="headerlink" title="Reliable IC Design and Fabrication withGlobal Electronics Supply Chain"></a>Reliable IC Design and Fabrication withGlobal Electronics Supply Chain</h2><ul>
+<li><p><strong>Hardware security issues</strong> arise from</p>
+<ul>
+<li>硬體內部的漏洞</li>
+<li>缺乏內建的安全機制來保護軟體與系統</li>
+</ul>
+<p>用旁路攻擊或軟體利用硬體漏洞進行攻擊，導致密碼學被破解、記憶體可以任意 Access、竊取物理資訊等</p>
+</li>
+<li><p><strong>Hardware Trust Issues</strong> arise from</p>
+<ul>
+<li>硬體開發過程涉及不可信任的第三方（IP 供應商、製造商、測試或銷售商）</li>
+<li></li>
+</ul>
+<p>在設計、製造、測試、銷售過程中，惡意植入後門或木馬電路，導致被 DoS 之類的問題，還可能減少 Performance、增加功耗等</p>
+</li>
+</ul>
+<p>兩個差別在：前者是 <strong>硬體本身的漏洞導致被攻擊</strong>，後者是 <strong>硬體開發與生產過程中不受信任的實體</strong></p>
 
                 
               </div>
@@ -308,7 +309,7 @@
     
       <span class="category-chain">
         
-  <a href="/notes/categories/UE4/" class="category-chain-item">UE4</a>
+  <a href="/notes/categories/hardware/" class="category-chain-item">hardware</a>
   
   
 
@@ -323,7 +324,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/notes/tags/UE4-GPU/" class="print-no-link">#UE4, GPU</a>
+        <a href="/notes/tags/hardware/" class="print-no-link">#hardware</a>
+      
+        <a href="/notes/tags/security/" class="print-no-link">#security</a>
       
     </div>
   
@@ -335,8 +338,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Unreal Engine 4 - GPGPU flocking 解析</div>
-      <div>https://933yee.github.io/notes/2024/02/25/ue4-cs-aceyan/</div>
+      <div>Hardware Security</div>
+      <div>https://933yee.github.io/notes/2024/03/07/hardware-security/</div>
     </div>
     <div class="license-meta">
       
@@ -348,7 +351,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>February 25, 2024</div>
+          <div>March 7, 2024</div>
         </div>
       
       
@@ -380,9 +383,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/notes/2024/03/07/hardware-security/" title="Hardware Security">
+                      <a href="/notes/2024/03/07/compiler-1/" title="Compiler 筆記 (1)">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Hardware Security</span>
+                        <span class="hidden-mobile">Compiler 筆記 (1)</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -390,8 +393,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/notes/2024/02/25/vlsi-design-for-manufacturability/" title="VLSI Design for Manufacturability 筆記">
-                        <span class="hidden-mobile">VLSI Design for Manufacturability 筆記</span>
+                      <a href="/notes/2024/02/25/ue4-cs-aceyan/" title="Unreal Engine 4 - GPGPU flocking 解析">
+                        <span class="hidden-mobile">Unreal Engine 4 - GPGPU flocking 解析</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
