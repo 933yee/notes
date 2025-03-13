@@ -517,6 +517,17 @@ $$
 
 ![Multi-Level Partitioning](./images/vlsi-physical-design-automation/MultiLevelPartitioning.png)
 
+#### Coarsening Algorithm
+
+- Edge coarsening
+  兩兩合併
+- Hyperedge coarsening
+  會選一組 hyperedges set，把每個 hyperedge 連接到的 Vertices 都合併成一個 Cluster
+- Modified hyperedge coarsening
+  先做 Hyperedge coarsening 後，再把剩下落單的 Vertex 合併成一個 Cluster
+
+![Coarsening Algorithm](./images/vlsi-physical-design-automation/CoarseningAlgorithm.png)
+
 # Assignment
 
 ## HW1

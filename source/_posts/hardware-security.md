@@ -22,3 +22,8 @@ category: hardware
   在設計、製造、測試、銷售過程中，惡意植入後門或木馬電路，導致被 DoS 之類的問題，還可能減少 Performance、增加功耗等
 
 兩個差別在：前者是 **硬體本身的漏洞導致被攻擊**，後者是 **硬體開發與生產過程中不受信任的實體**
+
+- Trojan
+  - 不能太常發生，不然 verification 會發現 (functional test)
+  - payload 不能太大，不然會被發現
+  - payload 也有分 combinational 和 sequential，sequential 可以延遲幾個 cycle 再發動攻擊
