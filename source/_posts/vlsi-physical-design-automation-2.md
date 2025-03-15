@@ -346,3 +346,131 @@ $$
    也會做很多次 Uncoarsening，變回最原始的 Graph
 
 ![Multi-Level Partitioning](./images/vlsi-physical-design-automation/MultiLevelPartitioning.png)
+
+#### Coarsening Algorithm
+
+- Edge coarsening
+  兩兩合併
+- Hyperedge coarsening
+  會選一組 hyperedges set，把每個 hyperedge 連接到的 Vertices 都合併成一個 Cluster
+- Modified hyperedge coarsening
+  先做 Hyperedge coarsening 後，再把剩下落單的 Vertex 合併成一個 Cluster
+
+![Coarsening Algorithm](./images/vlsi-physical-design-automation/CoarseningAlgorithm.png)
+
+# Assignment
+
+## HW1
+
+### Setup
+
+- Synopsys Design Constraints (.sdc) file
+  是一種用來描述 Timing Constraints 的檔案，可以用來告訴 Synthesis Tool 或 Place & Route Tool 一些 Timing 的限制，例如：Clock Period、Setup Time、Hold Time、Clock Latency 等等
+
+- Library Exchange Format (.lef) file
+
+  用在 PnR，描述 Standard Cell、Macro Cell 的 Physical Layout Information，包含 Standard Cell 的物理邊界、Macro 的位置與大小、金屬層的 Routing 規則、VDD/VSS 的連線資訊、Via 的位置等等
+
+  Import LEF 讓工具知道 Standard Cell 和 Macro 的物理尺寸，以及哪些 Metal Layer 可以用來做 Routing
+
+  ```lef
+  UNITS
+  DATABASE MICRONS 1000 ; // 1 LEF unit = 1 nm
+  END UNITS
+
+  // Metal Layer
+  LAYER M1
+    TYPE ROUTING ;
+    DIRECTION HORIZONTAL ;
+    PITCH 0.14 ;
+    WIDTH 0.07 ;
+  END M1
+
+  // Standard Cell
+  MACRO INVX1
+    CLASS CORE ;
+    SIZE 0.5 BY 1.2 ;
+    PIN A
+      DIRECTION INPUT ;
+      USE SIGNAL ;
+      PORT
+        LAYER M1 ;
+        RECT (0.1 0.2) (0.2 0.3) ;
+      END
+    END A
+  END INVX1
+  ```
+
+- MMMC (Multi-Mode Multi-Constraint) file
+  為了確保晶片能夠在所有情境下正常運行，像是：高電壓、低電壓、高溫、低溫甚至 Process Variation 等等，這些變因會影響 Timing 和 Power，因此要可以用 MMMC 來描述這些情境，考慮所有的組合，讓晶片在所有情境下都能正常運作
+
+- None-Negative Slack
+  Slack 是指某個 Timing Path 的 Delay 跟 Constraint 之間的差值，None-Negative Slack 代表這個 Path 是符合 Timing Constraint 的
+
+- `innovus setDesignMode -process 7 -node N7`
+  設定 Design Mode 為 7nm 的製程，並且設定製成技術為 N7
+
+- `setDesignMode -bottomRoutingLayer 2`
+  設定最底層的 Routing Layer 為 Metal 2，讓 PnR 工具知道 Global Routing 的從這一層開始
+
+### Pre-power planning and Floorplan
+
+確保所有 Standard Cells、Macro、Clock Tree 與電源網絡 Power Network 都能正確擺放，為之後 PnR 做準備。Pre-Power Planning 設定 Global Net，確保所有元件都能正確連接到 VDD 和 VSS
+
+- Core Size by Aspect Ratio (H/W = 1.0)
+  指定 Floorplan 的 Core Size，這裡是正方形
+
+- Core Utilization
+  指定 Core 的使用率，`0.4` 代表 Standard Cell 的面積佔整個 Core 的 40%，剩下的 60% 留給 Routing，太高會影響 Routing 或 Timing
+
+- Core to Die Boundary
+  Core 與 Die 的邊界之間的間距，通常會留一些空間給 I/O Pads、Power Pads、Bumps
+
+- Tool Command Language (.tcl) file
+  類似於 Shell Script，可以用來執行一連串的指令，例如：Synthesis、Place & Route、Simulation 等等
+
+- Well Tap Cell
+  避免 Latch-up，連接 P-Well 到 GND (NMOS)，N-Well 到 VDD (PMOS)
+
+  ```tcl
+  addWellTap -cell TAPCELL_ASAP7_75t_L -cellInterval 12.960 -inRowOffset 1.296
+  ```
+
+  - 在 Core 區域內，每隔 12.960 µm 插入 Well Tap Cell，並偏移 1.296 µm 來對齊。
+
+### Power Planning
+
+- Power Ring
+  在 Core 周圍建立一個封閉的電源環，讓所有元件都能夠穩定的接上 VDD 和 VSS
+
+  ![Power Ring](./images/vlsi-physical-design-automation/PowerRing.png)
+
+- Power Stripes
+  在 Core 內部建立一個電源線，連到 Power Ring，形成完整的 Power Network
+
+  ![Power Stripes](./images/vlsi-physical-design-automation/PowerStripes.png)
+
+### Placement (place_opt_design)
+
+- Placement
+  把所有 Standard Cells、Macro Cells 放到 Floorplan 的 Core 內
+
+- Placement Optimization
+  透過 Placement Optimization 來最佳化 Placement，達到 Power Optimization 或 Timing Optimization
+
+![Placement](./images/vlsi-physical-design-automation/Placement.png)
+
+### Clock Tree Synthesis
+
+CLK 控制晶片裡所有 Flip-Flop 的 Timing，要確保所有 Flip-Flop 都能在同一個 Clock Cycle 內正確的被觸發
+
+![Clock Tree Synthesis](./images/vlsi-physical-design-automation/ClockTreeSynthesis.png)
+
+圖中的紅色、綠色、黃色線就是 CLK 訊號
+
+### Routing
+
+- `routeDesign`
+  將所有標準單元、Macro 之間的連線轉換為實際金屬導線，並確保符合 Timing 和 DRC 規則，自動插入 Via 連接不同金屬層
+
+![Routing](./images/vlsi-physical-design-automation/Routing.png)

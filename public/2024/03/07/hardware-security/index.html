@@ -24,7 +24,7 @@
 <meta property="og:description" content="Reliable IC Design and Fabrication withGlobal Electronics Supply Chain Hardware security issues arise from  硬體內部的漏洞 缺乏內建的安全機制來保護軟體與系統  用旁路攻擊或軟體利用硬體漏洞進行攻擊，導致密碼學被破解、記憶體可以任意 Access、竊取物理資訊等  Hardware Trus">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-03-07T03:25:11.000Z">
-<meta property="article:modified_time" content="2025-03-07T04:55:46.138Z">
+<meta property="article:modified_time" content="2025-03-15T13:47:20.439Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="hardware">
 <meta property="article:tag" content="security">
@@ -221,7 +221,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          179 words
+          221 words
         
       </span>
     
@@ -291,6 +291,14 @@
 </li>
 </ul>
 <p>兩個差別在：前者是 <strong>硬體本身的漏洞導致被攻擊</strong>，後者是 <strong>硬體開發與生產過程中不受信任的實體</strong></p>
+<ul>
+<li>Trojan<ul>
+<li>不能太常發生，不然 verification 會發現 (functional test)</li>
+<li>payload 不能太大，不然會被發現</li>
+<li>payload 也有分 combinational 和 sequential，sequential 可以延遲幾個 cycle 再發動攻擊</li>
+</ul>
+</li>
+</ul>
 
                 
               </div>
