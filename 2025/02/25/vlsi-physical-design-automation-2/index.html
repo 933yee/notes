@@ -36,8 +36,14 @@
 <meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-physical-design-automation/SimulatedAnnealing.png">
 <meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-physical-design-automation/GenericSAAlgorithm.png">
 <meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-physical-design-automation/MultiLevelPartitioning.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-physical-design-automation/CoarseningAlgorithm.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-physical-design-automation/PowerRing.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-physical-design-automation/PowerStripes.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-physical-design-automation/Placement.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-physical-design-automation/ClockTreeSynthesis.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-physical-design-automation/Routing.png">
 <meta property="article:published_time" content="2025-02-25T05:17:03.000Z">
-<meta property="article:modified_time" content="2025-03-15T13:36:12.376Z">
+<meta property="article:modified_time" content="2025-03-15T13:49:40.915Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="vlsi">
 <meta property="article:tag" content="physical design">
@@ -236,7 +242,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.7k words
+          3.3k words
         
       </span>
     
@@ -247,7 +253,7 @@
         
         
         
-          23 mins
+          28 mins
         
       </span>
     
@@ -518,6 +524,69 @@
 </li>
 </ol>
 <p><img src="/notes/./images/vlsi-physical-design-automation/MultiLevelPartitioning.png" srcset="/notes/info/loading.gif" lazyload alt="Multi-Level Partitioning"></p>
+<h4 id="Coarsening-Algorithm"><a href="#Coarsening-Algorithm" class="headerlink" title="Coarsening Algorithm"></a>Coarsening Algorithm</h4><ul>
+<li>Edge coarsening<br>兩兩合併</li>
+<li>Hyperedge coarsening<br>會選一組 hyperedges set，把每個 hyperedge 連接到的 Vertices 都合併成一個 Cluster</li>
+<li>Modified hyperedge coarsening<br>先做 Hyperedge coarsening 後，再把剩下落單的 Vertex 合併成一個 Cluster</li>
+</ul>
+<p><img src="/notes/./images/vlsi-physical-design-automation/CoarseningAlgorithm.png" srcset="/notes/info/loading.gif" lazyload alt="Coarsening Algorithm"></p>
+<h1 id="Assignment"><a href="#Assignment" class="headerlink" title="Assignment"></a>Assignment</h1><h2 id="HW1"><a href="#HW1" class="headerlink" title="HW1"></a>HW1</h2><h3 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h3><ul>
+<li><p>Synopsys Design Constraints (.sdc) file<br>是一種用來描述 Timing Constraints 的檔案，可以用來告訴 Synthesis Tool 或 Place &amp; Route Tool 一些 Timing 的限制，例如：Clock Period、Setup Time、Hold Time、Clock Latency 等等</p>
+</li>
+<li><p>Library Exchange Format (.lef) file</p>
+<p>用在 PnR，描述 Standard Cell、Macro Cell 的 Physical Layout Information，包含 Standard Cell 的物理邊界、Macro 的位置與大小、金屬層的 Routing 規則、VDD&#x2F;VSS 的連線資訊、Via 的位置等等</p>
+<p>Import LEF 讓工具知道 Standard Cell 和 Macro 的物理尺寸，以及哪些 Metal Layer 可以用來做 Routing</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs lef">UNITS<br>DATABASE MICRONS 1000 ; // 1 LEF unit = 1 nm<br>END UNITS<br><br>// Metal Layer<br>LAYER M1<br>  TYPE ROUTING ;<br>  DIRECTION HORIZONTAL ;<br>  PITCH 0.14 ;<br>  WIDTH 0.07 ;<br>END M1<br><br>// Standard Cell<br>MACRO INVX1<br>  CLASS CORE ;<br>  SIZE 0.5 BY 1.2 ;<br>  PIN A<br>    DIRECTION INPUT ;<br>    USE SIGNAL ;<br>    PORT<br>      LAYER M1 ;<br>      RECT (0.1 0.2) (0.2 0.3) ;<br>    END<br>  END A<br>END INVX1<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>MMMC (Multi-Mode Multi-Constraint) file<br>為了確保晶片能夠在所有情境下正常運行，像是：高電壓、低電壓、高溫、低溫甚至 Process Variation 等等，這些變因會影響 Timing 和 Power，因此要可以用 MMMC 來描述這些情境，考慮所有的組合，讓晶片在所有情境下都能正常運作</p>
+</li>
+<li><p>None-Negative Slack<br>Slack 是指某個 Timing Path 的 Delay 跟 Constraint 之間的差值，None-Negative Slack 代表這個 Path 是符合 Timing Constraint 的</p>
+</li>
+<li><p><code>innovus setDesignMode -process 7 -node N7</code><br>設定 Design Mode 為 7nm 的製程，並且設定製成技術為 N7</p>
+</li>
+<li><p><code>setDesignMode -bottomRoutingLayer 2</code><br>設定最底層的 Routing Layer 為 Metal 2，讓 PnR 工具知道 Global Routing 的從這一層開始</p>
+</li>
+</ul>
+<h3 id="Pre-power-planning-and-Floorplan"><a href="#Pre-power-planning-and-Floorplan" class="headerlink" title="Pre-power planning and Floorplan"></a>Pre-power planning and Floorplan</h3><p>確保所有 Standard Cells、Macro、Clock Tree 與電源網絡 Power Network 都能正確擺放，為之後 PnR 做準備。Pre-Power Planning 設定 Global Net，確保所有元件都能正確連接到 VDD 和 VSS</p>
+<ul>
+<li><p>Core Size by Aspect Ratio (H&#x2F;W &#x3D; 1.0)<br>指定 Floorplan 的 Core Size，這裡是正方形</p>
+</li>
+<li><p>Core Utilization<br>指定 Core 的使用率，<code>0.4</code> 代表 Standard Cell 的面積佔整個 Core 的 40%，剩下的 60% 留給 Routing，太高會影響 Routing 或 Timing</p>
+</li>
+<li><p>Core to Die Boundary<br>Core 與 Die 的邊界之間的間距，通常會留一些空間給 I&#x2F;O Pads、Power Pads、Bumps</p>
+</li>
+<li><p>Tool Command Language (.tcl) file<br>類似於 Shell Script，可以用來執行一連串的指令，例如：Synthesis、Place &amp; Route、Simulation 等等</p>
+</li>
+<li><p>Well Tap Cell<br>避免 Latch-up，連接 P-Well 到 GND (NMOS)，N-Well 到 VDD (PMOS)</p>
+<figure class="highlight tcl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs tcl">addWellTap -cell TAPCELL_ASAP7_75t_L -cellInterval <span class="hljs-number">12.960</span> -inRowOffset <span class="hljs-number">1.296</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>在 Core 區域內，每隔 12.960 µm 插入 Well Tap Cell，並偏移 1.296 µm 來對齊。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Power-Planning"><a href="#Power-Planning" class="headerlink" title="Power Planning"></a>Power Planning</h3><ul>
+<li><p>Power Ring<br>在 Core 周圍建立一個封閉的電源環，讓所有元件都能夠穩定的接上 VDD 和 VSS</p>
+<p><img src="/notes/./images/vlsi-physical-design-automation/PowerRing.png" srcset="/notes/info/loading.gif" lazyload alt="Power Ring"></p>
+</li>
+<li><p>Power Stripes<br>在 Core 內部建立一個電源線，連到 Power Ring，形成完整的 Power Network</p>
+<p><img src="/notes/./images/vlsi-physical-design-automation/PowerStripes.png" srcset="/notes/info/loading.gif" lazyload alt="Power Stripes"></p>
+</li>
+</ul>
+<h3 id="Placement-place-opt-design"><a href="#Placement-place-opt-design" class="headerlink" title="Placement (place_opt_design)"></a>Placement (place_opt_design)</h3><ul>
+<li><p>Placement<br>把所有 Standard Cells、Macro Cells 放到 Floorplan 的 Core 內</p>
+</li>
+<li><p>Placement Optimization<br>透過 Placement Optimization 來最佳化 Placement，達到 Power Optimization 或 Timing Optimization</p>
+</li>
+</ul>
+<p><img src="/notes/./images/vlsi-physical-design-automation/Placement.png" srcset="/notes/info/loading.gif" lazyload alt="Placement"></p>
+<h3 id="Clock-Tree-Synthesis"><a href="#Clock-Tree-Synthesis" class="headerlink" title="Clock Tree Synthesis"></a>Clock Tree Synthesis</h3><p>CLK 控制晶片裡所有 Flip-Flop 的 Timing，要確保所有 Flip-Flop 都能在同一個 Clock Cycle 內正確的被觸發</p>
+<p><img src="/notes/./images/vlsi-physical-design-automation/ClockTreeSynthesis.png" srcset="/notes/info/loading.gif" lazyload alt="Clock Tree Synthesis"></p>
+<p>圖中的紅色、綠色、黃色線就是 CLK 訊號</p>
+<h3 id="Routing"><a href="#Routing" class="headerlink" title="Routing"></a>Routing</h3><ul>
+<li><code>routeDesign</code><br>將所有標準單元、Macro 之間的連線轉換為實際金屬導線，並確保符合 Timing 和 DRC 規則，自動插入 Via 連接不同金屬層</li>
+</ul>
+<p><img src="/notes/./images/vlsi-physical-design-automation/Routing.png" srcset="/notes/info/loading.gif" lazyload alt="Routing"></p>
 
                 
               </div>
