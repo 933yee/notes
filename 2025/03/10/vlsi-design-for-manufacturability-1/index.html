@@ -1,0 +1,747 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/notes/info/fluid.png">
+  <link rel="icon" href="/notes/info/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Kevin Lee">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="參考清大麥偉基老師課程講義  Lithography Lithography: 光刻框出電路圖案，然後進行蝕刻 Diffraction: 繞射會造成 Lithography 不準確，可以從目標圖案反推出 Mask 的設計，稱為 Computational Lithography    193i 的 i 代表 Immersion Lithography用液體取代空氣，縮短光的波長，就好像換了一個">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VLSI DFM - Maze Routing">
+<meta property="og:url" content="https://933yee.github.io/notes/2025/03/10/vlsi-design-for-manufacturability-1/index.html">
+<meta property="og:site_name" content="933yee&#39;s Notes">
+<meta property="og:description" content="參考清大麥偉基老師課程講義  Lithography Lithography: 光刻框出電路圖案，然後進行蝕刻 Diffraction: 繞射會造成 Lithography 不準確，可以從目標圖案反推出 Mask 的設計，稱為 Computational Lithography    193i 的 i 代表 Immersion Lithography用液體取代空氣，縮短光的波長，就好像換了一個">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/LithographyDevelopment.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/OPC.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/EndToEndSeperationRule.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/MinimumLengthRule.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/PostProcessing.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/EnhancedMazeRoutingAlgorithm.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/EndEndSeparationRuleHandling.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/MinimumLengthRuleHandling.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/FindAShortestPath.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/PolynomialTimeComplexityExample.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/PruningStrategy1.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/PruningStrategy2.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/AStarSearch.png">
+<meta property="article:published_time" content="2025-03-10T02:48:15.000Z">
+<meta property="article:modified_time" content="2025-03-15T13:27:36.768Z">
+<meta property="article:author" content="Kevin Lee">
+<meta property="article:tag" content="VLSI">
+<meta property="article:tag" content="DFM">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/LithographyDevelopment.png">
+  
+  
+  
+  <title>VLSI DFM - Maze Routing - 933yee&#39;s Notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/notes/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/notes/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/notes/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"933yee.github.io","root":"/notes/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/info/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/notes/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/notes/js/utils.js" ></script>
+  <script  src="/notes/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/notes/">
+      <strong>933yee&#39;s Notes</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/notes/info/default.gif') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.7)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="VLSI DFM - Maze Routing"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-03-10 10:48" pubdate>
+          March 10, 2025 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          707 words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          6 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">VLSI DFM - Maze Routing</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>參考清大麥偉基老師課程講義</p>
+</blockquote>
+<h2 id="Lithography"><a href="#Lithography" class="headerlink" title="Lithography"></a>Lithography</h2><ul>
+<li>Lithography: 光刻<br>框出電路圖案，然後進行蝕刻</li>
+<li>Diffraction: 繞射<br>會造成 Lithography 不準確，可以從目標圖案反推出 Mask 的設計，稱為 Computational Lithography</li>
+</ul>
+<p><img src="/notes/./images/vlsi-design-for-manufacturability/LithographyDevelopment.png" srcset="/notes/info/loading.gif" lazyload alt="Lithography Development"></p>
+<ul>
+<li>193i 的 <code>i</code> 代表 Immersion Lithography<br>用液體取代空氣，縮短光的波長，就好像換了一個 Light Source，減少繞射的影響，而且波長 193nm 的技術已經很成熟</li>
+<li>EUV 代表 Extreme Ultraviolet Lithography<br>波長更短，繞射更少，但是製程更難，因為要用真空，光源也很難做</li>
+<li>Multi-Patterning<br>把一個圖案分成多個小圖案，然後分別曝光，最後合併成一個圖案。在 EUV Lithography 之前很常用，現在因為 EUV 很貴，有些先進製程還是用 193i + Multi-Patterning</li>
+<li>隨著技術進步，單位面積上的 Transistor 數量越來越多，但是製程成本也越來越高，所以不是每個裝置都用最先進的製程</li>
+</ul>
+<h2 id="Routing-in-Advanced-Nodes"><a href="#Routing-in-Advanced-Nodes" class="headerlink" title="Routing in Advanced Nodes"></a>Routing in Advanced Nodes</h2><p>受限於 <code>Lithography printability</code>、<code>Process Variation</code> 等，即使你用一樣的方法，做出來的也不一定是你要的。所以要考慮 <code>Design for Manufacturability</code>。</p>
+<h3 id="Design-Rule-Handling"><a href="#Design-Rule-Handling" class="headerlink" title="Design Rule Handling"></a>Design Rule Handling</h3><p><strong>Optical Proximity Correction (OPC)</strong> 是一種 Computational Lithography 的技術，修改 mask 來補償繞射和光刻製程中的非理想效應，讓實際製造出的 Pattern 更接近設計的目標。</p>
+<ul>
+<li>OPC 會造成線寬變寬，所以要考慮 <code>Design Rule</code>，ex：兩條線之間要留多少空間</li>
+</ul>
+<p><img src="/notes/./images/vlsi-design-for-manufacturability/OPC.png" srcset="/notes/info/loading.gif" lazyload alt="OPC"></p>
+<h4 id="End-to-End-Seperation-Rule"><a href="#End-to-End-Seperation-Rule" class="headerlink" title="End-to-End Seperation Rule"></a>End-to-End Seperation Rule</h4><p><img src="/notes/./images/vlsi-design-for-manufacturability/EndToEndSeperationRule.png" srcset="/notes/info/loading.gif" lazyload alt="End-to-End Seperation Rule"></p>
+<ul>
+<li>如果一條 Wire 的端點的相鄰軌道上有另一條 Wire，那這條 Wire 的末端至少要留 <strong>S2</strong> 的空間</li>
+<li>其他情況只需要預留 <strong>S1</strong> 的空間</li>
+</ul>
+<h4 id="Minimum-Length-Rule"><a href="#Minimum-Length-Rule" class="headerlink" title="Minimum Length Rule"></a>Minimum Length Rule</h4><p>每條線至少要有多長</p>
+<p><img src="/notes/./images/vlsi-design-for-manufacturability/MinimumLengthRule.png" srcset="/notes/info/loading.gif" lazyload alt="Minimum Length Rule"></p>
+<h3 id="MANA-A-Shortest-Path-MAze-Algorithm-under-Separation-and-Minimum-Length-NAnometer-Rules"><a href="#MANA-A-Shortest-Path-MAze-Algorithm-under-Separation-and-Minimum-Length-NAnometer-Rules" class="headerlink" title="MANA (A Shortest Path MAze Algorithm under Separation and Minimum Length NAnometer Rules)"></a>MANA (A Shortest Path MAze Algorithm under Separation and Minimum Length NAnometer Rules)</h3><p>傳統的 Maze Routing Algorithm 是在 Grid 上找一條最短的路徑，可能用 BFS 或 Dijkstra 等等，但是在 VLSI 設計中，還要考慮一些 <code>Design Rule</code></p>
+<h4 id="考慮到-Design-Rule-的-Maze-Routing-Algorithm"><a href="#考慮到-Design-Rule-的-Maze-Routing-Algorithm" class="headerlink" title="考慮到 Design Rule 的 Maze Routing Algorithm"></a>考慮到 Design Rule 的 Maze Routing Algorithm</h4><ul>
+<li><p>Post-Processing<br>把找到的路徑再做一些調整，像是延伸 Wire，讓他們符合先前提到的 <code>Design Rule</code>，不過這方法沒那麼好，會花很多資源</p>
+<p><img src="/notes/./images/vlsi-design-for-manufacturability/PostProcessing.png" srcset="/notes/info/loading.gif" lazyload alt="Post-Processing"></p>
+</li>
+<li><p>增強型 Maze Routing Algorithm<br>在找路徑的時候就考慮 <code>Design Rule</code>，像是「每條 Wire 至少要有多長」<br><img src="/notes/./images/vlsi-design-for-manufacturability/EnhancedMazeRoutingAlgorithm.png" srcset="/notes/info/loading.gif" lazyload alt="Enhanced Maze Routing Algorithm"></p>
+<p>不能直接用個 L 型的 Wire，每一層要馬是水平，要馬是垂直</p>
+</li>
+</ul>
+<h5 id="End-end-separation-rule-handling"><a href="#End-end-separation-rule-handling" class="headerlink" title="End-end separation rule handling"></a>End-end separation rule handling</h5><p>檢查每個 grid point，如果這個 grid point 不能滿足 <code>End-end separation</code>，就把它濾掉</p>
+<p><img src="/notes/./images/vlsi-design-for-manufacturability/EndEndSeparationRuleHandling.png" srcset="/notes/info/loading.gif" lazyload alt="End-end separation rule handling"></p>
+<h5 id="Minimum-length-rule-handling"><a href="#Minimum-length-rule-handling" class="headerlink" title="Minimum length rule handling"></a>Minimum length rule handling</h5><p>在做 Maze Routing 的時候，要看這條 wire 有沒有足夠的空間做 extension</p>
+<p><img src="/notes/./images/vlsi-design-for-manufacturability/MinimumLengthRuleHandling.png" srcset="/notes/info/loading.gif" lazyload alt="Minimum length rule handling"></p>
+<h4 id="Find-a-Shortest-Path"><a href="#Find-a-Shortest-Path" class="headerlink" title="Find a Shortest Path"></a>Find a Shortest Path</h4><ul>
+<li>Min Length: 全部的 wire 長度加起來，不包含最後一段的 extension</li>
+<li>Max Length: 全部的 wire 長度加起來，包含最後一段的 extension</li>
+</ul>
+<p><img src="/notes/./images/vlsi-design-for-manufacturability/FindAShortestPath.png" srcset="/notes/info/loading.gif" lazyload alt="Find a Shortest Path"></p>
+<h4 id="Polynomial-time-complexity"><a href="#Polynomial-time-complexity" class="headerlink" title="Polynomial time complexity"></a>Polynomial time complexity</h4><p>對不需要的 partial path 做 pruning，可以達到 Polynomial time complexity</p>
+<p><img src="/notes/./images/vlsi-design-for-manufacturability/PolynomialTimeComplexityExample.png" srcset="/notes/info/loading.gif" lazyload alt="Polynomial time complexity Example"></p>
+<p>像是這邊可以只保留 $P^\prime$，捨棄 $P$</p>
+<h5 id="Pruning-Strategy"><a href="#Pruning-Strategy" class="headerlink" title="Pruning Strategy"></a>Pruning Strategy</h5><ul>
+<li><p>Stradgy 1</p>
+<p>如果 $\text{minlen}(P) \geq \text{maxlen}(P^\prime)$，就捨棄 $P$</p>
+</li>
+</ul>
+<p><img src="/notes/./images/vlsi-design-for-manufacturability/PruningStrategy1.png" srcset="/notes/info/loading.gif" lazyload alt="Pruning Strategy 1"></p>
+<ul>
+<li><p>Stradgy 2</p>
+<p>如果 $\text{maxlen}(P) &#x3D; \text{maxlen}(P^\prime)$ 且 $\text{minlen}(P) &#x3D; \text{minlen}(P^\prime)$，兩個一樣好，捨棄其中一個即可</p>
+</li>
+</ul>
+<p><img src="/notes/./images/vlsi-design-for-manufacturability/PruningStrategy2.png" srcset="/notes/info/loading.gif" lazyload alt="Pruning Strategy 2"></p>
+<h4 id="Best-Cost-First-Expansion"><a href="#Best-Cost-First-Expansion" class="headerlink" title="Best Cost-First Expansion"></a>Best Cost-First Expansion</h4><p>Maze Routing 的演算法本質上是還是 A*-Search，要考慮某個 grid point 和 destination 的 manhattan distance，才能夠有方向性，所以</p>
+<p>$$<br>\text{Cost}(P) &#x3D; \text{maxlen}(P) + \text{Manhattan dist.}<br>$$</p>
+<p><img src="/notes/./images/vlsi-design-for-manufacturability/AStarSearch.png" srcset="/notes/info/loading.gif" lazyload alt="A-Star Search"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/notes/tags/VLSI/" class="print-no-link">#VLSI</a>
+      
+        <a href="/notes/tags/DFM/" class="print-no-link">#DFM</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>VLSI DFM - Maze Routing</div>
+      <div>https://933yee.github.io/notes/2025/03/10/vlsi-design-for-manufacturability-1/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Kevin Lee</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>March 10, 2025</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/notes/2025/03/10/vlsi-design-for-manufacturability-2/" title="VLSI DFM - Redundant Via Insertion">
+                        <span class="hidden-mobile">VLSI DFM - Redundant Via Insertion</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/notes/js/events.js" ></script>
+<script  src="/notes/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/notes/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/notes/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/notes/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

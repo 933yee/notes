@@ -1,0 +1,774 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/notes/info/fluid.png">
+  <link rel="icon" href="/notes/info/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Kevin Lee">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="惡補 ML https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v&#x3D;Ye018rCVvOo&amp;list&#x3D;PLJV_el3uVTsMhtt7_Y6sgTHGHp1Vb2P2J   PyTorch 是一個開源的機器學習框架 可以做 Tensor Computation，像是 Numpy，但可以用 GPU 加速 可以幫你算 Gradient    Tensor Tensor: 高維度的矩">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Machine Learning - PyTorch">
+<meta property="og:url" content="https://933yee.github.io/notes/2025/03/06/machine-learning-5/index.html">
+<meta property="og:site_name" content="933yee&#39;s Notes">
+<meta property="og:description" content="惡補 ML https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v&#x3D;Ye018rCVvOo&amp;list&#x3D;PLJV_el3uVTsMhtt7_Y6sgTHGHp1Vb2P2J   PyTorch 是一個開源的機器學習框架 可以做 Tensor Computation，像是 Numpy，但可以用 GPU 加速 可以幫你算 Gradient    Tensor Tensor: 高維度的矩">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://933yee.github.io/notes/images/machine-learning/PytorchDNN.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/machine-learning/DatasetDataLoader.png">
+<meta property="article:published_time" content="2025-03-06T05:22:11.000Z">
+<meta property="article:modified_time" content="2025-03-15T13:45:11.682Z">
+<meta property="article:author" content="Kevin Lee">
+<meta property="article:tag" content="ml">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://933yee.github.io/notes/images/machine-learning/PytorchDNN.png">
+  
+  
+  
+  <title>Machine Learning - PyTorch - 933yee&#39;s Notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/notes/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/notes/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/notes/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"933yee.github.io","root":"/notes/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/info/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/notes/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/notes/js/utils.js" ></script>
+  <script  src="/notes/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/notes/">
+      <strong>933yee&#39;s Notes</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/notes/info/default.gif') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.7)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Machine Learning - PyTorch"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-03-06 13:22" pubdate>
+          March 6, 2025 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          797 words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          7 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Machine Learning - PyTorch</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>惡補 ML <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Ye018rCVvOo&list=PLJV_el3uVTsMhtt7_Y6sgTHGHp1Vb2P2J">https://www.youtube.com/watch?v=Ye018rCVvOo&amp;list=PLJV_el3uVTsMhtt7_Y6sgTHGHp1Vb2P2J</a></p>
+</blockquote>
+<ul>
+<li>PyTorch 是一個開源的機器學習框架<ul>
+<li>可以做 <code>Tensor Computation</code>，像是 <code>Numpy</code>，但可以用 <code>GPU</code> 加速</li>
+<li>可以幫你算 <code>Gradient</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="Tensor"><a href="#Tensor" class="headerlink" title="Tensor"></a>Tensor</h4><ul>
+<li>Tensor: 高維度的矩陣或陣列</li>
+<li>常用的 <code>Data Type</code> 有 <code>torch.float</code>、<code>torch.long</code>、<code>torch.FloatTensor</code>、<code>torch.LongTensor</code> 等</li>
+<li>PyTorch 的 <code>dim</code> 跟 <code>Numpy</code> 的 <code>axis</code> 一樣</li>
+</ul>
+<h5 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h5><ul>
+<li><p>Constructor</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.tensor([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>], dtype=torch.<span class="hljs-built_in">float</span>)<br><span class="hljs-comment"># tensor([1., 2., 3., 4.])</span><br><br>x = torch.from_numpy(np.array([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>]))<br><br>x = toch.zeros(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>)<br><span class="hljs-comment"># tensor([[0., 0., 0.],</span><br><span class="hljs-comment">#         [0., 0., 0.]])</span><br><br>x = torch.ones(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>)<br><span class="hljs-comment"># tensor([[1., 1., 1.],</span><br><span class="hljs-comment">#         [1., 1., 1.]])</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>Operators</p>
+<ul>
+<li><code>squeeze</code><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.zeros([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>])<br><span class="hljs-built_in">print</span>(x.shape)<br><span class="hljs-comment"># torch.Size([1, 2, 3])</span><br>x = x.squeeze(<span class="hljs-number">0</span>) <span class="hljs-comment"># 把第 0 維度的 1 拿掉</span><br><span class="hljs-built_in">print</span>(x.shape)<br><span class="hljs-comment"># torch.Size([2, 3])</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs fortran">- `unsqueeze`<br>  ```python<br>  x = torch.zeros([<span class="hljs-number">2</span>, <span class="hljs-number">3</span>])<br>  <span class="hljs-built_in">print</span>(x.<span class="hljs-built_in">shape</span>)<br>  # torch.<span class="hljs-built_in">Size</span>([<span class="hljs-number">2</span>, <span class="hljs-number">3</span>])<br>  x = x.unsqueeze(<span class="hljs-number">1</span>) # 在第 <span class="hljs-number">1</span> 維度插入 <span class="hljs-number">1</span><br>  <span class="hljs-built_in">print</span>(x.<span class="hljs-built_in">shape</span>)<br>  # torch.<span class="hljs-built_in">Size</span>([<span class="hljs-number">2</span>, <span class="hljs-number">1</span>, <span class="hljs-number">3</span>])<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>cat</code><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.zeros([<span class="hljs-number">2</span>, <span class="hljs-number">1</span>, <span class="hljs-number">3</span>])<br>y = torch.zeros([<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>])<br>z = torch.zeros([<span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>])<br>w = torch.cat([x, y, z], dim=<span class="hljs-number">1</span>) <span class="hljs-comment"># 合併第 1 維度</span><br><span class="hljs-built_in">print</span>(w.shape)<br><span class="hljs-comment"># torch.Size([2, 6, 3])</span><br></code></pre></td></tr></table></figure></li>
+<li><code>pow</code><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.tensor([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>], dtype=torch.<span class="hljs-built_in">float</span>)<br>x = x.<span class="hljs-built_in">pow</span>(<span class="hljs-number">2</span>)<br><span class="hljs-comment"># tensor([ 1.,  4.,  9., 16.])</span><br></code></pre></td></tr></table></figure></li>
+<li><code>sum</code><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.tensor([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>], dtype=torch.<span class="hljs-built_in">float</span>)<br>x = x.<span class="hljs-built_in">sum</span>()<br><span class="hljs-comment"># tensor(10.)</span><br></code></pre></td></tr></table></figure></li>
+<li><code>mean</code><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.tensor([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>], dtype=torch.<span class="hljs-built_in">float</span>)<br>x = x.mean()<br><span class="hljs-comment"># tensor(2.5000)</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h5 id="vs-Numpy"><a href="#vs-Numpy" class="headerlink" title="vs Numpy"></a>vs Numpy</h5><table>
+<thead>
+<tr>
+<th align="center">PyTorch</th>
+<th align="center">Numpy</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">x.shape</td>
+<td align="center">x.shape</td>
+</tr>
+<tr>
+<td align="center">x.dtype</td>
+<td align="center">x.dtype</td>
+</tr>
+<tr>
+<td align="center">x.reshape() &#x2F; x.view()</td>
+<td align="center">x.reshape()</td>
+</tr>
+<tr>
+<td align="center">x.squeeze()</td>
+<td align="center">x.squeeze()</td>
+</tr>
+<tr>
+<td align="center">x.unsqueeze(1)</td>
+<td align="center">np.expand_dims(x, 1)</td>
+</tr>
+</tbody></table>
+<h5 id="Device"><a href="#Device" class="headerlink" title="Device"></a>Device</h5><p>可以用 <code>toruch.cuda.is_available()</code> 檢查有沒有 <code>GPU</code>，然後用 <code>torch.cuda.device_count()</code> 來看有幾個 <code>GPU</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.tensor([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>], dtype=torch.<span class="hljs-built_in">float</span>)<br>x = x.to(<span class="hljs-string">&#x27;cuda&#x27;</span>) <span class="hljs-comment"># 把 tensor 放到 GPU 上計算</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="DNN-的架構"><a href="#DNN-的架構" class="headerlink" title="DNN 的架構"></a>DNN 的架構</h2><p><img src="/notes/./images/machine-learning/PytorchDNN.png" srcset="/notes/info/loading.gif" lazyload alt="PyTorch DNN"></p>
+<h3 id="Gradient"><a href="#Gradient" class="headerlink" title="Gradient"></a>Gradient</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.tensor([[<span class="hljs-number">1.</span>, <span class="hljs-number">0.</span>], [-<span class="hljs-number">1.</span>, <span class="hljs-number">1.</span>]], requires_grad=<span class="hljs-literal">True</span>) <span class="hljs-comment"># 設定 requires_grad=True 會記錄 Gradient</span><br>z = x.<span class="hljs-built_in">pow</span>(<span class="hljs-number">2</span>).<span class="hljs-built_in">sum</span>()<br>z.backward() <span class="hljs-comment"># 計算 Gradient</span><br><span class="hljs-built_in">print</span>(x.grad) <span class="hljs-comment"># tensor([[ 2.,  0.],</span><br>              <span class="hljs-comment">#         [-2.,  2.]])</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="Dataset-DataLoader"><a href="#Dataset-DataLoader" class="headerlink" title="Dataset &amp; DataLoader"></a>Dataset &amp; DataLoader</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> torch.utils.data <span class="hljs-keyword">import</span> Dataset, DataLoader<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyDataset</span>(<span class="hljs-title class_ inherited__">Dataset</span>):<br>    <span class="hljs-comment"># Read data and preprocess</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        self.data = ...<br><br>    <span class="hljs-comment"># Returns one sample at a time</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__getitem__</span>(<span class="hljs-params">self, idx</span>):<br>        <span class="hljs-keyword">return</span> self.data[idx]<br><br>    <span class="hljs-comment"># Returns the size of the dataset</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__len__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(self.data)<br><br>dataset = MyDataset()<br>dataloader = DataLoader(dataset, batch_size=<span class="hljs-number">4</span>, shuffle=<span class="hljs-literal">True</span>)<br></code></pre></td></tr></table></figure>
+
+<p><img src="/notes/./images/machine-learning/DatasetDataLoader.png" srcset="/notes/info/loading.gif" lazyload alt="Dataset &amp; DataLoader"></p>
+<h3 id="Neural-Network-Layers"><a href="#Neural-Network-Layers" class="headerlink" title="Neural Network Layers"></a>Neural Network Layers</h3><p>Linear Layer (Fully-connected Layer)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">layer = torch.nn.Linear(<span class="hljs-number">32</span>, <span class="hljs-number">64</span>) <span class="hljs-comment"># 32 -&gt; 64</span><br><span class="hljs-built_in">print</span>(layer.weight.shape)<br><span class="hljs-comment"># torch.Size([64, 32])</span><br><span class="hljs-built_in">print</span>(layer.bias.shape)<br><span class="hljs-comment"># torch.Size([64])</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="Activation-Function"><a href="#Activation-Function" class="headerlink" title="Activation Function"></a>Activation Function</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">nn.ReLU()<br>nn.Sigmoid()<br>nn.Tanh()<br>nn.Softmax()<br></code></pre></td></tr></table></figure>
+
+<h3 id="Loss-Function"><a href="#Loss-Function" class="headerlink" title="Loss Function"></a>Loss Function</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">nn.MSELoss()<br>nn.CrossEntropyLoss()<br></code></pre></td></tr></table></figure>
+
+<h3 id="Optimizer"><a href="#Optimizer" class="headerlink" title="Optimizer"></a>Optimizer</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">torch.optim.SGD(model.parameters(), lr, momentum) <span class="hljs-comment"># Stoachastic Gradient Descent</span><br>torch.optim.Adam(model.parameters(), lr) <span class="hljs-comment"># Adam</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="Build-Model"><a href="#Build-Model" class="headerlink" title="Build Model"></a>Build Model</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch.nn <span class="hljs-keyword">as</span> nn<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyModel</span>(nn.Module):<br>    <span class="hljs-comment"># Initialize the model &amp; define the layers</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">super</span>(MyModel, self).__init__()<br>        self.nn = nn.Sequential(<br>            nn.Linear(<span class="hljs-number">10</span>, <span class="hljs-number">32</span>),<br>            nn.Sigmoid(),<br>            nn.Linear(<span class="hljs-number">32</span>, <span class="hljs-number">1</span>),<br>        )<br><br>    <span class="hljs-comment"># Compute the output of NN</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, x</span>):<br>        <span class="hljs-keyword">return</span> self.nn(x)<br></code></pre></td></tr></table></figure>
+
+<h3 id="Training"><a href="#Training" class="headerlink" title="Training"></a>Training</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python">dataset = MyDataset(filename)<br>training_set = DataLoader(dataset, batch_size=<span class="hljs-number">16</span>, shuffle=<span class="hljs-literal">True</span>)<br>model = MyModel().to(<span class="hljs-string">&#x27;cuda&#x27;</span>)<br>critertion = nn.MSELoss()<br>optimizer = torch.optim.SGD(model.parameters(), lr=<span class="hljs-number">0.001</span>)<br><br><span class="hljs-keyword">for</span> epoch <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(num_epochs):<br>    model.train() <span class="hljs-comment"># Set the model to training mode</span><br>    <span class="hljs-keyword">for</span> x, y <span class="hljs-keyword">in</span> training_set:<br>        x, y = x.to(<span class="hljs-string">&#x27;cuda&#x27;</span>), y.to(<span class="hljs-string">&#x27;cuda&#x27;</span>) <span class="hljs-comment"># Move the data to GPU</span><br>        optimizer.zero_grad() <span class="hljs-comment"># Clear the gradient</span><br>        y_pred = model(x) <span class="hljs-comment"># Forward pass</span><br>        loss = criterion(y_pred, y) <span class="hljs-comment"># Compute the loss</span><br>        loss.backward() <span class="hljs-comment"># Compute the gradient</span><br>        optimizer.step() <span class="hljs-comment"># Update the parameters</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="Evaluation-Validation"><a href="#Evaluation-Validation" class="headerlink" title="Evaluation (Validation)"></a>Evaluation (Validation)</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python">model.<span class="hljs-built_in">eval</span>() <span class="hljs-comment"># Set the model to evaluation mode</span><br>total_loss = <span class="hljs-number">0</span><br><span class="hljs-keyword">for</span> x, y <span class="hljs-keyword">in</span> validation_set:<br>    x, y = x.to(<span class="hljs-string">&#x27;cuda&#x27;</span>), y.to(<span class="hljs-string">&#x27;cuda&#x27;</span>)<br>    <span class="hljs-keyword">with</span> torch.no_grad(): <span class="hljs-comment"># Disable gradient computation</span><br>        y_pred = model(x)<br>        loss = criterion(y_pred, y)<br><br>    total_loss += loss.cpu().item() * x.size(<span class="hljs-number">0</span>) <span class="hljs-comment"># Accumulate the loss</span><br>    avg_loss = total_loss / <span class="hljs-built_in">len</span>(validation_set.dataset) <span class="hljs-comment"># Compute the average loss</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="Evaluation-Testing"><a href="#Evaluation-Testing" class="headerlink" title="Evaluation (Testing)"></a>Evaluation (Testing)</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">model.<span class="hljs-built_in">eval</span>() <span class="hljs-comment"># Set the model to evaluation mode</span><br>predictions = []<br><span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> test_set:<br>    x = x.to(<span class="hljs-string">&#x27;cuda&#x27;</span>)<br>    <span class="hljs-keyword">with</span> torch.no_grad(): <span class="hljs-comment"># Disable gradient computation</span><br>        y_pred = model(x)<br>        predictions.append(y_pred.cpu())<br></code></pre></td></tr></table></figure>
+
+<h3 id="Save-Load-Model"><a href="#Save-Load-Model" class="headerlink" title="Save &amp; Load Model"></a>Save &amp; Load Model</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">torch.save(model.state_dict(), path) <span class="hljs-comment"># Save the model</span><br><br>checkpoint = torch.load(path) <span class="hljs-comment"># Load the model</span><br>model.load_state_dict(checkpoint)<br></code></pre></td></tr></table></figure>
+
+<h2 id="可重現性-Reproducibility"><a href="#可重現性-Reproducibility" class="headerlink" title="可重現性 (Reproducibility)"></a>可重現性 (Reproducibility)</h2><p>為了讓每次執行的結果都保持一樣，不然很難確定效果改進是因為調整 <code>hyperparameter</code>，還是來自隨機性的變異。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">myseed = <span class="hljs-number">42069</span><br>torch.backends.cudnn.deterministic = <span class="hljs-literal">True</span><br>torch.backends.cudnn.benchmark = <span class="hljs-literal">False</span><br>np.random.seed(myseed)<br>torch.manual_seed(myseed)<br><span class="hljs-keyword">if</span> torch.cuda.is_available():<br>    torch.cuda.manual_seed_all(myseed)<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>myseed = 42069</code>: 設定固定的 <code>seed</code></li>
+<li><code>torch.backends.cudnn.deterministic = True</code>: <code>cuDNN</code> 為了加速計算，會默認選擇最快的方法，可能導致 non-deterministic 的行為發生，改成 <code>True</code> 可以確保每次結果都一樣</li>
+<li><code>torch.backends.cudnn.benchmark = False</code>: 禁止 <code>cuDNN</code> 自己選擇最佳的計算方法，使用固定的方法來保證每次計算方式相同</li>
+</ul>
+<p>如果為了 Performance 而不在乎 Reproducibility，可以把上面設成相反的</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/notes/tags/ml/" class="print-no-link">#ml</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Machine Learning - PyTorch</div>
+      <div>https://933yee.github.io/notes/2025/03/06/machine-learning-5/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Kevin Lee</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>March 6, 2025</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/notes/2025/03/06/machine-learning-3/" title="Machine Learning - CNN">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Machine Learning - CNN</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/notes/2025/03/03/ai-computing-system-1/" title="AIAS - Basic">
+                        <span class="hidden-mobile">AIAS - Basic</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/notes/js/events.js" ></script>
+<script  src="/notes/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/notes/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/notes/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/notes/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
