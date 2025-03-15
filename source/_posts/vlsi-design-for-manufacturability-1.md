@@ -1,7 +1,7 @@
 ---
-title: VLSI Design for Manufacturability 筆記
-date: 2024-02-25 10:48:15
-tags:
+title: VLSI DFM - Maze Routing
+date: 2025-03-10 10:48:15
+tags: [VLSI, DFM]
 math: true
 ---
 
@@ -64,16 +64,55 @@ math: true
   在找路徑的時候就考慮 `Design Rule`，像是「每條 Wire 至少要有多長」
   ![Enhanced Maze Routing Algorithm](./images/vlsi-design-for-manufacturability/EnhancedMazeRoutingAlgorithm.png)
 
-## Redundant Via Insertion
+  不能直接用個 L 型的 Wire，每一層要馬是水平，要馬是垂直
 
-一個 IC 有幾十億個 `via`，任何一個掛掉，整個 IC 也會掛掉
+##### End-end separation rule handling
 
-### Double Via Insertion
+檢查每個 grid point，如果這個 grid point 不能滿足 `End-end separation`，就把它濾掉
 
-可以讓上下兩層 `metal` 凸出來一個，多塞一個 `via` 進去，這樣就算其中一個 `via` 掛掉，還有另一個 `via` 可以通電，增加 `Reliabllity`。多出來的 `metal` 可以不用符合 `Design Rule` (L 型 metal)
+![End-end separation rule handling](./images/vlsi-design-for-manufacturability/EndEndSeparationRuleHandling.png)
 
-相鄰的 `via` 不能在同個位置，稱之為 `via conflict`，還要考慮 `via enclosure`，每個 `via` 要有一個最小的空間
+##### Minimum length rule handling
 
-<!-- 這可以看成是 `Maximum Independent Set` 的問題，找到最大的 `Independent Set`，然後把其他的 `via` 都拔掉，是 `NP-Hard` 問題 (Polynomial Time 完成不了)
+在做 Maze Routing 的時候，要看這條 wire 有沒有足夠的空間做 extension
 
-因此我們著重於 `Maximal Independent Set` (Polynomial Time)，從最小 `degree` 的 `vertex` (via) 開始，因為它所連接的 `vertex` 最少，最不會影響別人。 -->
+![Minimum length rule handling](./images/vlsi-design-for-manufacturability/MinimumLengthRuleHandling.png)
+
+#### Find a Shortest Path
+
+- Min Length: 全部的 wire 長度加起來，不包含最後一段的 extension
+- Max Length: 全部的 wire 長度加起來，包含最後一段的 extension
+
+![Find a Shortest Path](./images/vlsi-design-for-manufacturability/FindAShortestPath.png)
+
+#### Polynomial time complexity
+
+對不需要的 partial path 做 pruning，可以達到 Polynomial time complexity
+
+![Polynomial time complexity Example](./images/vlsi-design-for-manufacturability/PolynomialTimeComplexityExample.png)
+
+像是這邊可以只保留 $P^\prime$，捨棄 $P$
+
+##### Pruning Strategy
+
+- Stradgy 1
+
+  如果 $\text{minlen}(P) \geq \text{maxlen}(P^\prime)$，就捨棄 $P$
+
+![Pruning Strategy 1](./images/vlsi-design-for-manufacturability/PruningStrategy1.png)
+
+- Stradgy 2
+
+  如果 $\text{maxlen}(P) = \text{maxlen}(P^\prime)$ 且 $\text{minlen}(P) = \text{minlen}(P^\prime)$，兩個一樣好，捨棄其中一個即可
+
+![Pruning Strategy 2](./images/vlsi-design-for-manufacturability/PruningStrategy2.png)
+
+#### Best Cost-First Expansion
+
+Maze Routing 的演算法本質上是還是 A\*-Search，要考慮某個 grid point 和 destination 的 manhattan distance，才能夠有方向性，所以
+
+$$
+\text{Cost}(P) = \text{maxlen}(P) + \text{Manhattan dist.}
+$$
+
+![A-Star Search](./images/vlsi-design-for-manufacturability/AStarSearch.png)

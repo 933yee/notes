@@ -1,0 +1,946 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/notes/info/fluid.png">
+  <link rel="icon" href="/notes/info/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Kevin Lee">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="LectureAlexNet VGG-16 ResNet-50 MobileNetV2 EfficientML.ai Lecture 02: Basics of Neural Networks Model Analysis Latency: 一個任務完成所需的時間 Throughput: 一個時間內完成的任務數量Latency 跟 Throughput 沒有絕對的關聯，優化 Latency 會更難">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AIAS - AI Models">
+<meta property="og:url" content="https://933yee.github.io/notes/2025/03/03/ai-computing-system-2/index.html">
+<meta property="og:site_name" content="933yee&#39;s Notes">
+<meta property="og:description" content="LectureAlexNet VGG-16 ResNet-50 MobileNetV2 EfficientML.ai Lecture 02: Basics of Neural Networks Model Analysis Latency: 一個任務完成所需的時間 Throughput: 一個時間內完成的任務數量Latency 跟 Throughput 沒有絕對的關聯，優化 Latency 會更難">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://933yee.github.io/notes/images/machine-learning/AlexNet.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/machine-learning/VGG-16.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/machine-learning/ResNet-50.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/machine-learning/MobileNetV2.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/ai-computing-system/LeNet.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/ai-computing-system/TensorBoard.png">
+<meta property="article:published_time" content="2025-03-03T09:56:23.000Z">
+<meta property="article:modified_time" content="2025-03-15T13:39:43.197Z">
+<meta property="article:author" content="Kevin Lee">
+<meta property="article:tag" content="AI">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://933yee.github.io/notes/images/machine-learning/AlexNet.png">
+  
+  
+  
+  <title>AIAS - AI Models - 933yee&#39;s Notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/notes/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/notes/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/notes/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"933yee.github.io","root":"/notes/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/info/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/notes/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/notes/js/utils.js" ></script>
+  <script  src="/notes/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/notes/">
+      <strong>933yee&#39;s Notes</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/notes/info/default.gif') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.7)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="AIAS - AI Models"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-03-03 17:56" pubdate>
+          March 3, 2025 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.6k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          30 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">AIAS - AI Models</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="Lecture"><a href="#Lecture" class="headerlink" title="Lecture"></a>Lecture</h2><h3 id="AlexNet"><a href="#AlexNet" class="headerlink" title="AlexNet"></a>AlexNet</h3><p><img src="/notes/./images/machine-learning/AlexNet.png" srcset="/notes/info/loading.gif" lazyload alt="AlexNet"></p>
+<h3 id="VGG-16"><a href="#VGG-16" class="headerlink" title="VGG-16"></a>VGG-16</h3><p><img src="/notes/./images/machine-learning/VGG-16.png" srcset="/notes/info/loading.gif" lazyload alt="VGG-16"></p>
+<h3 id="ResNet-50"><a href="#ResNet-50" class="headerlink" title="ResNet-50"></a>ResNet-50</h3><p><img src="/notes/./images/machine-learning/ResNet-50.png" srcset="/notes/info/loading.gif" lazyload alt="ResNet-50"></p>
+<h3 id="MobileNetV2"><a href="#MobileNetV2" class="headerlink" title="MobileNetV2"></a>MobileNetV2</h3><p><img src="/notes/./images/machine-learning/MobileNetV2.png" srcset="/notes/info/loading.gif" lazyload alt="MobileNetV2"></p>
+<p><a target="_blank" rel="noopener" href="https://www.dropbox.com/scl/fi/2qx0cfz7vim0fdhrmy986/lec02.pdf?rlkey=wdjw92hwohp4bhyos8wf5iinb&e=2&dl=0">EfficientML.ai Lecture 02: Basics of Neural Networks</a></p>
+<h4 id="Model-Analysis"><a href="#Model-Analysis" class="headerlink" title="Model Analysis"></a>Model Analysis</h4><ul>
+<li>Latency: 一個任務完成所需的時間</li>
+<li>Throughput: 一個時間內完成的任務數量<br><code>Latency</code> 跟 <code>Throughput</code> 沒有絕對的關聯，優化 <code>Latency</code> 會更難一些</li>
+<li>Power Consumption<br>不同 Building Block 的 Power Consumption 也不同，像是 floating point operation 會比 integer operation 耗電量高、DRAM (off-chip) 耗電量也比 SRAM 高</li>
+<li>Number of Parameters</li>
+<li>Model Size<br><code>Model Size</code> &#x3D; <code>Number of Parameters</code> * <code>Bit Width</code></li>
+<li>Total&#x2F;Peak Number of Activations<ul>
+<li><code>Peak Number of Activations</code> 成為一個系統能不能跑起來的關鍵 (Inference)</li>
+<li>Early Layer 的 <code>Activations</code> 會比較多，後面的 <code>Activations</code> 會比較少，<code>Weight</code> 會比較大</li>
+</ul>
+</li>
+<li>MACs (Multiply-Accumulate Operations)，一次乘法和一次加法</li>
+<li>FLOPs (Floating Point Operations)<ul>
+<li><code>FLOPs</code> &#x3D; <code>MACs</code> * <code>2</code> (一個 <code>MAC</code> 會有兩次 <code>FLOPs</code>)</li>
+<li><code>FLOPS</code> &#x3D; <code>FLOPs</code> &#x2F; <code>second</code></li>
+</ul>
+</li>
+<li>Roofline Model</li>
+</ul>
+<h2 id="Lab"><a href="#Lab" class="headerlink" title="Lab"></a>Lab</h2><p><code>ONNX</code>(Open Neural Network Exchange)，可以讓不同的深度學習框架之間進行模型的轉換，例如 <code>PyTorch</code>、<code>TensorFlow</code>、<code>Caffe2</code>、<code>MXNet</code> 等。</p>
+<h3 id="Pytorch"><a href="#Pytorch" class="headerlink" title="Pytorch"></a>Pytorch</h3><h4 id="PyTorch-Model-轉換成-ONNX"><a href="#PyTorch-Model-轉換成-ONNX" class="headerlink" title="PyTorch Model 轉換成 ONNX"></a>PyTorch Model 轉換成 ONNX</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch<br><span class="hljs-keyword">import</span> torchvision.models <span class="hljs-keyword">as</span> models<br><br><span class="hljs-comment"># 下載並載入預訓練的 AlexNet 模型</span><br>model = models.alexnet(pretrained=<span class="hljs-literal">True</span>)<br><br><span class="hljs-comment"># 創建一個隨機的輸入張量（Dummy Input），形狀為 (10, 3, 224, 224)</span><br><span class="hljs-comment"># 代表 10 張 RGB 影像，每張大小為 224x224</span><br>dummy_input = torch.randn(<span class="hljs-number">10</span>, <span class="hljs-number">3</span>, <span class="hljs-number">224</span>, <span class="hljs-number">224</span>)<br><br><span class="hljs-comment"># 定義 ONNX 模型的輸入名稱</span><br><span class="hljs-comment"># 第一個輸入名稱為 &quot;actual_input_1&quot;（實際的輸入）</span><br><span class="hljs-comment"># 後面 16 個 &quot;learned_X&quot; 其實是多餘的，通常用於標記權重或內部變數（但這裡不需要）</span><br>input_names = [<span class="hljs-string">&quot;actual_input_1&quot;</span>] + [<span class="hljs-string">&quot;learned_%d&quot;</span> % i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">16</span>)]<br><br><span class="hljs-comment"># 定義 ONNX 模型的輸出名稱</span><br><span class="hljs-comment"># 這裡只設定一個輸出名稱 &quot;output1&quot;，代表分類結果（1000 個類別的機率分佈）</span><br>output_names = [<span class="hljs-string">&quot;output1&quot;</span>]<br><br><span class="hljs-comment"># 將 PyTorch 的 AlexNet 模型轉換為 ONNX 格式，並儲存為 &quot;models/alexnet.onnx&quot;</span><br>torch.onnx.export(<br>    model,            <span class="hljs-comment"># PyTorch 模型</span><br>    dummy_input,      <span class="hljs-comment"># 範例輸入，用來確保模型的輸入形狀正確</span><br>    <span class="hljs-string">&quot;models/alexnet.onnx&quot;</span>,  <span class="hljs-comment"># 轉換後的 ONNX 模型儲存路徑</span><br>    verbose=<span class="hljs-literal">True</span>,     <span class="hljs-comment"># 顯示轉換過程的詳細資訊</span><br>    input_names=input_names,  <span class="hljs-comment"># 設定 ONNX 模型的輸入名稱</span><br>    output_names=output_names  <span class="hljs-comment"># 設定 ONNX 模型的輸出名稱</span><br>)<br></code></pre></td></tr></table></figure>
+
+<h4 id="Model-Analysis-1"><a href="#Model-Analysis-1" class="headerlink" title="Model Analysis"></a>Model Analysis</h4><ul>
+<li><p>取得 Parameter Size</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">total_params = <span class="hljs-built_in">sum</span>(p.numel() <span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> model.parameters())<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Total number of parameters: &quot;</span>, total_params)<br></code></pre></td></tr></table></figure>
+
+<p>印出這個 Model 總共的參數數量，其中 <code>p.numel()</code> 會回傳某個 Tensor 裡面總共有多少個元素</p>
+</li>
+<li><p>算出總共需要多少 Memory</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">param_size = <span class="hljs-built_in">sum</span>(p.numel() * p.element_size() <span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> model.parameters())<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Total memory for parameters: &quot;</span>, param_size)<br></code></pre></td></tr></table></figure>
+
+<p><code>p.element_size()</code> 會回傳某個 Tensor 裡面的 Data Type 佔用多少 Bytes</p>
+</li>
+<li><p>Summary</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> torchvision <span class="hljs-keyword">import</span> models<br><span class="hljs-keyword">from</span> torchsummary <span class="hljs-keyword">import</span> summary<br><br>model = models.alexnet(pretrained=<span class="hljs-literal">True</span>)<br>summary(model, (<span class="hljs-number">3</span>, <span class="hljs-number">224</span>, <span class="hljs-number">224</span>))<br></code></pre></td></tr></table></figure>
+
+<p>這樣可以印出這個 Model 的 Summary，包含模型的結構、每層輸出的大小、參數數量、總參數數量等等</p>
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs subunit">----------------------------------------------------------------<br>          Layer (type)               Output Shape         Param #<br>  ================================================================<br>              Conv2d<span class="hljs-string">-1</span>           [<span class="hljs-string">-1</span>, 64, 55, 55]          23,296<br>                ReLU<span class="hljs-string">-2</span>           [<span class="hljs-string">-1</span>, 64, 55, 55]               0<br>          MaxPool2d<span class="hljs-string">-3</span>           [<span class="hljs-string">-1</span>, 64, 27, 27]               0<br>              Conv2d<span class="hljs-string">-4</span>          [<span class="hljs-string">-1</span>, 192, 27, 27]         307,392<br>                ReLU<span class="hljs-string">-5</span>          [<span class="hljs-string">-1</span>, 192, 27, 27]               0<br>          MaxPool2d<span class="hljs-string">-6</span>          [<span class="hljs-string">-1</span>, 192, 13, 13]               0<br>              Conv2d<span class="hljs-string">-7</span>          [<span class="hljs-string">-1</span>, 384, 13, 13]         663,936<br>                ReLU<span class="hljs-string">-8</span>          [<span class="hljs-string">-1</span>, 384, 13, 13]               0<br>              Conv2d<span class="hljs-string">-9</span>          [<span class="hljs-string">-1</span>, 256, 13, 13]         884,992<br>              ReLU<span class="hljs-string">-10</span>          [<span class="hljs-string">-1</span>, 256, 13, 13]               0<br>            Conv2d<span class="hljs-string">-11</span>          [<span class="hljs-string">-1</span>, 256, 13, 13]         590,080<br>              ReLU<span class="hljs-string">-12</span>          [<span class="hljs-string">-1</span>, 256, 13, 13]               0<br>          MaxPool2d<span class="hljs-string">-13</span>            [<span class="hljs-string">-1</span>, 256, 6, 6]               0<br>  AdaptiveAvgPool2d<span class="hljs-string">-14</span>            [<span class="hljs-string">-1</span>, 256, 6, 6]               0<br>            Dropout<span class="hljs-string">-15</span>                 [<span class="hljs-string">-1</span>, 9216]               0<br>            Linear<span class="hljs-string">-16</span>                 [<span class="hljs-string">-1</span>, 4096]      37,752,832<br>              ReLU<span class="hljs-string">-17</span>                 [<span class="hljs-string">-1</span>, 4096]               0<br>            Dropout<span class="hljs-string">-18</span>                 [<span class="hljs-string">-1</span>, 4096]               0<br>            Linear<span class="hljs-string">-19</span>                 [<span class="hljs-string">-1</span>, 4096]      16,781,312<br>              ReLU<span class="hljs-string">-20</span>                 [<span class="hljs-string">-1</span>, 4096]               0<br>            Linear<span class="hljs-string">-21</span>                 [<span class="hljs-string">-1</span>, 1000]       4,097,000<br>  ================================================================<br>  Total params: 61,100,840<br>  Trainable params: 61,100,840<br>  Non-trainable params: 0<br>  ----------------------------------------------------------------<br>  Input size (MB): 0.57<br>  Forward/backward pass size (MB): 8.38<br>  Params size (MB): 233.08<br>  Estimated Total Size (MB): 242.03<br>  ----------------------------------------------------------------<br></code></pre></td></tr></table></figure>
+
+<p>如果單純用 <code>print(model)</code> 只會印出這個 Model 的結構，但是不會有其他資訊</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs routeros">AlexNet(<br>(features): Sequential(<br>  (0): Conv2d(3, 64, kernel_size=(11, 11), stride=(4, 4), padding=(2, 2))<br>  (1): ReLU(<span class="hljs-attribute">inplace</span>=<span class="hljs-literal">True</span>)<br>  (2): MaxPool2d(<span class="hljs-attribute">kernel_size</span>=3, <span class="hljs-attribute">stride</span>=2, <span class="hljs-attribute">padding</span>=0, <span class="hljs-attribute">dilation</span>=1, <span class="hljs-attribute">ceil_mode</span>=<span class="hljs-literal">False</span>)<br>  (3): Conv2d(64, 192, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2))<br>  (4): ReLU(<span class="hljs-attribute">inplace</span>=<span class="hljs-literal">True</span>)<br>  (5): MaxPool2d(<span class="hljs-attribute">kernel_size</span>=3, <span class="hljs-attribute">stride</span>=2, <span class="hljs-attribute">padding</span>=0, <span class="hljs-attribute">dilation</span>=1, <span class="hljs-attribute">ceil_mode</span>=<span class="hljs-literal">False</span>)<br>  (6): Conv2d(192, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))<br>  (7): ReLU(<span class="hljs-attribute">inplace</span>=<span class="hljs-literal">True</span>)<br>  (8): Conv2d(384, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))<br>  (9): ReLU(<span class="hljs-attribute">inplace</span>=<span class="hljs-literal">True</span>)<br>  (10): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))<br>  (11): ReLU(<span class="hljs-attribute">inplace</span>=<span class="hljs-literal">True</span>)<br>  (12): MaxPool2d(<span class="hljs-attribute">kernel_size</span>=3, <span class="hljs-attribute">stride</span>=2, <span class="hljs-attribute">padding</span>=0, <span class="hljs-attribute">dilation</span>=1, <span class="hljs-attribute">ceil_mode</span>=<span class="hljs-literal">False</span>)<br>)<br>(avgpool): AdaptiveAvgPool2d(output_size=(6, 6))<br>(classifier): Sequential(<br>  (0): Dropout(<span class="hljs-attribute">p</span>=0.5, <span class="hljs-attribute">inplace</span>=<span class="hljs-literal">False</span>)<br>  (1): Linear(<span class="hljs-attribute">in_features</span>=9216, <span class="hljs-attribute">out_features</span>=4096, <span class="hljs-attribute">bias</span>=<span class="hljs-literal">True</span>)<br>  (2): ReLU(<span class="hljs-attribute">inplace</span>=<span class="hljs-literal">True</span>)<br>  (3): Dropout(<span class="hljs-attribute">p</span>=0.5, <span class="hljs-attribute">inplace</span>=<span class="hljs-literal">False</span>)<br>  (4): Linear(<span class="hljs-attribute">in_features</span>=4096, <span class="hljs-attribute">out_features</span>=4096, <span class="hljs-attribute">bias</span>=<span class="hljs-literal">True</span>)<br>  (5): ReLU(<span class="hljs-attribute">inplace</span>=<span class="hljs-literal">True</span>)<br>  (6): Linear(<span class="hljs-attribute">in_features</span>=4096, <span class="hljs-attribute">out_features</span>=1000, <span class="hljs-attribute">bias</span>=<span class="hljs-literal">True</span>)<br>)<br>)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>torchinfo<br>如果需要更更更詳細的模型資訊，可以使用 <code>torchinfo</code>，控制格式和詳細程度 (col_names、verbose)</p>
+<ul>
+<li><p>col_names:</p>
+<table>
+<thead>
+<tr>
+<th align="center">選項</th>
+<th align="center">說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">input_size</td>
+<td align="center">輸入大小</td>
+</tr>
+<tr>
+<td align="center">output_size</td>
+<td align="center">輸出大小</td>
+</tr>
+<tr>
+<td align="center">num_params</td>
+<td align="center">參數數量</td>
+</tr>
+<tr>
+<td align="center">kernel_size</td>
+<td align="center">Kernel 大小</td>
+</tr>
+<tr>
+<td align="center">mult_adds</td>
+<td align="center">Multiply-Adds 數量</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>verbose:</p>
+<table>
+<thead>
+<tr>
+<th align="center">選項</th>
+<th align="center">說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">0</td>
+<td align="center">僅顯示總參數數量</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">顯示模型層數和參數資訊</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">顯示所有層的輸入&#x2F;輸出張量形狀</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">顯示每個層的完整資訊，包括所有內部運算</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torchinfo<br>torchinfo.summary(model, (<span class="hljs-number">3</span>, <span class="hljs-number">224</span>, <span class="hljs-number">224</span>), batch_dim=<span class="hljs-number">0</span>, col_names=(<span class="hljs-string">&quot;input_size&quot;</span>, <span class="hljs-string">&quot;output_size&quot;</span>, <span class="hljs-string">&quot;num_params&quot;</span>, <span class="hljs-string">&quot;kernel_size&quot;</span>, <span class="hljs-string">&quot;mult_adds&quot;</span>), verbose=<span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="TensorFlow"><a href="#TensorFlow" class="headerlink" title="TensorFlow"></a>TensorFlow</h3><p>TensorFlow 有很多儲存 Model 的格式，這些都可以用 Tensorflow-onnx 工具轉換成 ONNX 格式</p>
+<ul>
+<li><p>Checkpoint (.ckpt)<br>TensorFlow 會用 <code>checkpoint</code> 儲存 Model 訓練的權重，但是不包含 Computation Graph，之後可以繼續訓練</p>
+</li>
+<li><p>Frozen Graph (.pb)<br>把 Graph 和權重都儲存起來，可以直接用來做 Inference，但是權重是 <code>Frozen Weight</code>，不能再繼續訓練 (TensorFlow 2.x 不推薦這種方式)</p>
+</li>
+<li><p>SavedModel (包含 saved_model.pb、variables、assets)<br>是 TensorFlow 推薦的完整儲存格式，封裝了 Model 架構、Graph、權重和 Inference 的方式，不用額外指定輸入輸出，更容易導入 ONNX</p>
+</li>
+<li><p>TFLite (.tflite)<br>TensorFlow Lite 是為了在行動裝置或嵌入式上做 Inference 而設計的，可以將 SavedModel 轉換成 TFLite，並且可以做 Quantization 來減少 Model 的大小</p>
+</li>
+</ul>
+<h4 id="把-TensorFlow-Model-轉換成-ONNX"><a href="#把-TensorFlow-Model-轉換成-ONNX" class="headerlink" title="把 TensorFlow Model 轉換成 ONNX"></a>把 TensorFlow Model 轉換成 ONNX</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> tensorflow <span class="hljs-keyword">as</span> tf<br><span class="hljs-keyword">from</span> tensorflow.keras.layers <span class="hljs-keyword">import</span> Conv2D, MaxPooling2D, Flatten, Dense<br><span class="hljs-keyword">import</span> os<br><br><span class="hljs-comment"># 定義一個簡單的 CNN 模型</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">create_simple_cnn_model</span>(<span class="hljs-params">input_shape=(<span class="hljs-params"><span class="hljs-number">224</span>, <span class="hljs-number">224</span>, <span class="hljs-number">3</span></span>), num_classes=<span class="hljs-number">10</span></span>):<br>    model = tf.keras.Sequential([  <span class="hljs-comment"># 使用 Keras Sequential 模型</span><br>        Conv2D(<span class="hljs-number">32</span>, (<span class="hljs-number">3</span>, <span class="hljs-number">3</span>), activation=<span class="hljs-string">&#x27;relu&#x27;</span>, input_shape=input_shape),  <span class="hljs-comment"># 第一層 Convolution Layer，32 個 3x3 Filter</span><br>        MaxPooling2D((<span class="hljs-number">2</span>, <span class="hljs-number">2</span>)),<br>        Flatten(),<br>        Dense(<span class="hljs-number">128</span>, activation=<span class="hljs-string">&#x27;relu&#x27;</span>),  <span class="hljs-comment"># Fully Connected Layer，128 個 Neurons</span><br>        Dense(num_classes, activation=<span class="hljs-string">&#x27;softmax&#x27;</span>)  <span class="hljs-comment"># 輸出層，10 個 Neurons（10 個類別）</span><br>    ])<br>    <span class="hljs-keyword">return</span> model<br><br>directory = <span class="hljs-string">&quot;models/tf_cnn_models&quot;</span><br><span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> os.path.exists(directory):<br>    os.makedirs(directory)<br><br>simple_cnn_model = create_simple_cnn_model()<br><br><span class="hljs-comment"># 儲存模型為 TensorFlow 的 SavedModel 格式</span><br>tf.saved_model.save(simple_cnn_model, directory)<br></code></pre></td></tr></table></figure>
+
+<p>最後可以用以下指令把 SavedModel 轉換成 ONNX</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">!python3 -m tf2onnx.convert --saved-model models/tf_cnn_models --output models/tf2onnx_cnn_model.onnx<br></code></pre></td></tr></table></figure>
+
+<p>可以用 <code>--opset</code> (Operator Set Version) 來指定使用的 ONNX Operator 版本，越新的支援越多，預設是 <code>9</code></p>
+<table>
+<thead>
+<tr>
+<th align="center">opset</th>
+<th align="center">ONNX Version</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">9</td>
+<td align="center">1.4</td>
+<td align="center">Default version, includes basic operators</td>
+</tr>
+<tr>
+<td align="center">10</td>
+<td align="center">1.5</td>
+<td align="center">Supports <code>Slice</code> improvements, new <code>QuantizeLinear</code> operator</td>
+</tr>
+<tr>
+<td align="center">11</td>
+<td align="center">1.6</td>
+<td align="center">Supports <code>Loop</code> and <code>Range</code>, optimized for dynamic length</td>
+</tr>
+<tr>
+<td align="center">12</td>
+<td align="center">1.7</td>
+<td align="center">Adds <code>GatherND</code>, improved <code>Reshape</code> operator</td>
+</tr>
+<tr>
+<td align="center">13</td>
+<td align="center">1.8</td>
+<td align="center"><code>Softmax</code>, <code>ReduceMean</code>, etc. support more flexible dimensions</td>
+</tr>
+<tr>
+<td align="center">14</td>
+<td align="center">1.9</td>
+<td align="center">Improved <code>ConvTranspose</code>, supports more data formats</td>
+</tr>
+<tr>
+<td align="center">15+</td>
+<td align="center">1.10+</td>
+<td align="center">Adds more new features (e.g., <code>Reshape</code> with variable dimensions)</td>
+</tr>
+</tbody></table>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">python -m tf2onnx.convert --saved-model &lt;tensorflow_model_name&gt; --opset 13 --output &lt;onnx_model_name&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="ONNX"><a href="#ONNX" class="headerlink" title="ONNX"></a>ONNX</h3><h4 id="Inferencing"><a href="#Inferencing" class="headerlink" title="Inferencing"></a>Inferencing</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> onnxruntime <span class="hljs-keyword">as</span> ort<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-comment"># 載入 ONNX 模型</span><br>onnx_session = ort.InferenceSession(<span class="hljs-string">&quot;models/tf2onnx_cnn_model.onnx&quot;</span>)<br><br><span class="hljs-comment"># Test data</span><br>test_input = np.random.rand(<span class="hljs-number">1</span>, <span class="hljs-number">224</span>, <span class="hljs-number">224</span>, <span class="hljs-number">3</span>).astype(np.float32)<br><br><span class="hljs-comment"># Inference</span><br>onnx_input_name = onnx_session.get_inputs()[<span class="hljs-number">0</span>].name<br>onnx_output = onnx_session.run(<span class="hljs-literal">None</span>, &#123;onnx_input_name: test_input&#125;)<br></code></pre></td></tr></table></figure>
+
+<h3 id="Netron"><a href="#Netron" class="headerlink" title="Netron"></a>Netron</h3><p>Netron 是一個功能強大的機器學習模型的 <strong>可視化</strong> 工具，支援各種模型格式，包括 ONNX、TensorFlow、PyTorch、Keras 等等，可以用來看模型每一層的結構、輸入輸出、權重等等。可以用指令或 <a target="_blank" rel="noopener" href="https://netron.app/">官方網站</a> 來開啟模型</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">netron models/lenet.onnx<br></code></pre></td></tr></table></figure>
+
+<p><img src="/notes/./images/ai-computing-system/LeNet.png" srcset="/notes/info/loading.gif" lazyload alt="LetNet Architecture"></p>
+<h3 id="Protobuf"><a href="#Protobuf" class="headerlink" title="Protobuf"></a>Protobuf</h3><p>ONNX 格式將模型儲存為 Protobuf（Protocol Buffers）的結構，其中 Protobuf 是一種 Google 開發的 <strong>Data Serialization Format</strong>，可以將 ONNX 模型的 Graph、Layer 結構、權重等資訊儲存在裡面</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> onnx<br><br>onnx_model = onnx.load(<span class="hljs-string">&#x27;./models/lenet.onnx&#x27;</span>)<br><br><span class="hljs-comment"># The model is represented as a protobuf structure and it can be accessed</span><br><span class="hljs-comment"># using the standard python-for-protobuf methods</span><br><br><span class="hljs-comment">## list all the operator types in the model</span><br>node_list = []<br>count = []<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> onnx_model.graph.node:<br>    <span class="hljs-keyword">if</span> (i.op_type <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> node_list):<br>        node_list.append(i.op_type)<br>        count.append(<span class="hljs-number">1</span>)<br>    <span class="hljs-keyword">else</span>:<br>        idx = node_list.index(i.op_type)<br>        count[idx] = count[idx]+<span class="hljs-number">1</span><br><span class="hljs-built_in">print</span>(node_list)<br><span class="hljs-built_in">print</span>(count)<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs scheme">[<span class="hljs-symbol">&#x27;Reshape</span>&#x27;, <span class="hljs-symbol">&#x27;Conv</span>&#x27;, <span class="hljs-symbol">&#x27;Add</span>&#x27;, <span class="hljs-symbol">&#x27;Relu</span>&#x27;, <span class="hljs-symbol">&#x27;MaxPool</span>&#x27;, <span class="hljs-symbol">&#x27;Identity</span>&#x27;]<br>[<span class="hljs-name">4</span>, <span class="hljs-number">4</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>]<br></code></pre></td></tr></table></figure>
+
+<p>這樣可以看到這個 ONNX Model 有哪些 Operator Type，以及每個 Operator Type 的數量。</p>
+<p>可以參考 <a target="_blank" rel="noopener" href="https://github.com/onnx/onnx/blob/main/onnx/onnx.proto">onnx.proto</a> 和 <a target="_blank" rel="noopener" href="https://protobuf.dev/programming-guides/proto3/">Protocol Buffers Documentation</a>，能看到 ONNX 最外層的結構是 ModelProto，裡面包含 GraphProto，其由 NodeProto 組成，包含 Graph 的許多資訊</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># find the IR version</span><br><span class="hljs-built_in">print</span>(onnx_model.ir_version)<br><span class="hljs-comment">## find the computation graph</span><br><span class="hljs-built_in">print</span>(onnx_model.graph)<br><span class="hljs-comment">## find the number of inputs</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">len</span>(onnx_model.graph.<span class="hljs-built_in">input</span>))<br><span class="hljs-comment">## find the number of nodes in the graph</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">len</span>(onnx_model.graph.node))<br></code></pre></td></tr></table></figure>
+
+<p>以下方式可以印出這個 ONNX Model 的 Convolution Layer 輸入輸出的 Size，其中</p>
+<ul>
+<li>input_nlist: 模型所有的輸入，包含 Placeholder 和 Initializer</li>
+<li>initializer_nlist: 模型所有的權重，是 input_nlist 的子集</li>
+<li>value_info_nlist: 模型中間的計算結果</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">## parse_model.py</span><br><span class="hljs-keyword">import</span> onnx<br><br>onnx_model = onnx.load(<span class="hljs-string">&#x27;./models/lenet.onnx&#x27;</span>)<br><br><span class="hljs-comment">## need to run shape inference in order to get a full value_info list</span><br>onnx_model = onnx.shape_inference.infer_shapes(onnx_model)<br><br><span class="hljs-comment">## List all tensor names in the graph</span><br>input_nlist = [k.name <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> onnx_model.graph.<span class="hljs-built_in">input</span>]<br>initializer_nlist = [k.name <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> onnx_model.graph.initializer]<br>value_info_nlist = [k.name <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> onnx_model.graph.value_info]<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;\ninput list: &#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(input_nlist))<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;\ninitializer list: &#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(initializer_nlist))<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;\nvalue_info list: &#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(value_info_nlist))<br><br><span class="hljs-comment">## a simple function to calculate the tensor size and extract dimension information</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_size</span>(<span class="hljs-params">shape</span>):<br>    dims = []<br>    ndim = <span class="hljs-built_in">len</span>(shape.dim)<br>    size = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(ndim):<br>        size = size * shape.dim[i].dim_value<br>        dims.append(shape.dim[i].dim_value)<br>    <span class="hljs-keyword">return</span> dims, size<br><br><span class="hljs-comment">## find all `Conv` operators and print its input information</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> onnx_model.graph.node:<br>    <span class="hljs-keyword">if</span> (i.op_type == <span class="hljs-string">&#x27;Conv&#x27;</span>):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;\n-- Conv &quot;&#123;&#125;&quot; --&#x27;</span>.<span class="hljs-built_in">format</span>(i.name))<br>        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> i.<span class="hljs-built_in">input</span>:<br>            <span class="hljs-keyword">if</span> j <span class="hljs-keyword">in</span> input_nlist:<br>                idx = input_nlist.index(j)<br>                (dims, size) = get_size(onnx_model.graph.<span class="hljs-built_in">input</span>[idx].<span class="hljs-built_in">type</span>.tensor_type.shape)<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;input &#123;&#125; has &#123;&#125; elements dims = &#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(j, size, dims  ))<br>            <span class="hljs-keyword">elif</span> j <span class="hljs-keyword">in</span> initializer_nlist:<br>                idx = initializer_nlist.index(j)<br>                (dims, size) = get_size(onnx_model.graph.initializer[idx].<span class="hljs-built_in">type</span>.tensor_type.shape)<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;input &#123;&#125; has &#123;&#125; elements dims = &#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(j, size, dims))<br>            <span class="hljs-keyword">elif</span> j <span class="hljs-keyword">in</span> value_info_nlist:<br>                idx = value_info_nlist.index(j)<br>                (dims, size) = get_size(onnx_model.graph.value_info[idx].<span class="hljs-built_in">type</span>.tensor_type.shape)<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;input &#123;&#125; has &#123;&#125; elements dims = &#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(j, size, dims))<br></code></pre></td></tr></table></figure>
+
+<p>這樣可以除了可以印出 input、initializer、value_info 的名稱，還可以印出所有 Convolution Layer 需要的輸入輸出大小</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs txt">-- Conv &quot;import/conv1first/Conv2D&quot; --<br>input import/Placeholder:0 has 784 elements dims = [1, 1, 28, 28]<br>input import/conv1first/Variable:0 has 800 elements dims = [32, 1, 5, 5]<br><br>-- Conv &quot;import/conv2/Conv2D&quot; --<br>input import/pool1/MaxPool:0 has 6272 elements dims = [1, 32, 14, 14]<br>input import/conv2/Variable:0 has 51200 elements dims = [64, 32, 5, 5]<br><br>-- Conv &quot;import/conv3/Conv2D&quot; --<br>input import/pool2/MaxPool:0 has 3136 elements dims = [1, 64, 7, 7]<br>input import/conv3/Variable:0 has 3211264 elements dims = [1024, 64, 7, 7]<br><br>-- Conv &quot;import/conv4last/Conv2D&quot; --<br>input import/conv3/Relu:0 has 1024 elements dims = [1, 1024, 1, 1]<br>input import/conv4last/Variable:0 has 10240 elements dims = [10, 1024, 1, 1]<br></code></pre></td></tr></table></figure>
+
+<h3 id="Hooks"><a href="#Hooks" class="headerlink" title="Hooks"></a>Hooks</h3><p>Hooks 是 PyTorch 中的一個功能，可以註冊在 Forward Pass 或 Backward Pass 中，用來觀察模型的中間過程，例如輸入、輸出、權重、梯度等等，用來檢視每一層算完後到底發生什麼事</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torchvision.models <span class="hljs-keyword">as</span> models<br><span class="hljs-keyword">import</span> torch<br>activation = &#123;&#125;<br><br><span class="hljs-comment"># Define a hook function</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_activation</span>(<span class="hljs-params">name</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">hook</span>(<span class="hljs-params">model, <span class="hljs-built_in">input</span>, output</span>):<br>        activation[name] = output.detach()<br>    <span class="hljs-keyword">return</span> hook<br><br>model = models.alexnet(pretrained=<span class="hljs-literal">True</span>)<br>model.<span class="hljs-built_in">eval</span>()<br><br><span class="hljs-comment"># Register hook to each linear layer</span><br><span class="hljs-keyword">for</span> layer_name, layer <span class="hljs-keyword">in</span> model.named_modules():<br>    <span class="hljs-keyword">if</span> <span class="hljs-built_in">isinstance</span>(layer, torch.nn.Linear):<br>        <span class="hljs-comment"># Register forward hook</span><br>        layer.register_forward_hook(get_activation(layer_name))<br><br><span class="hljs-comment"># Run model inference</span><br>data = torch.randn(<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">224</span>, <span class="hljs-number">224</span>)<br>output = model(data)<br><br><span class="hljs-comment"># Access the saved activations</span><br><span class="hljs-keyword">for</span> layer <span class="hljs-keyword">in</span> activation:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Activation from layer <span class="hljs-subst">&#123;layer&#125;</span>: <span class="hljs-subst">&#123;activation[layer].shape&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>這樣可以印出每個 Fully-connected Layer 的 Activation Shape，在 inference 的過程每一層的 Activation 都會被存起來，用來觀察每一層的輸出</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs txt">Activation from layer classifier.1: torch.Size([1, 4096])<br>Activation from layer classifier.4: torch.Size([1, 4096])<br>Activation from layer classifier.6: torch.Size([1, 1000])<br></code></pre></td></tr></table></figure>
+
+<p>輸出的大小分別是 <code>[1, 4096]</code>、<code>[1, 4096]</code>、<code>[1, 1000]</code>。</p>
+<h3 id="MACs-and-FLOPs"><a href="#MACs-and-FLOPs" class="headerlink" title="MACs and FLOPs"></a>MACs and FLOPs</h3><p>這是計算 AlexNet MACs 的例子，計算裡面的 Convolutions 和 Fully-connected Layers 總共的 MACs 數量</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch<br><span class="hljs-keyword">import</span> torchvision.models <span class="hljs-keyword">as</span> models<br><span class="hljs-keyword">import</span> torch.nn <span class="hljs-keyword">as</span> nn<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">calculate_output_shape</span>(<span class="hljs-params">input_shape, layer</span>):<br>    <span class="hljs-comment"># Calculate the output shape for Conv2d, MaxPool2d, and Linear layers</span><br>    <span class="hljs-keyword">if</span> <span class="hljs-built_in">isinstance</span>(layer, (nn.Conv2d, nn.MaxPool2d)):<br>        kernel_size = (<br>            layer.kernel_size<br>            <span class="hljs-keyword">if</span> <span class="hljs-built_in">isinstance</span>(layer.kernel_size, <span class="hljs-built_in">tuple</span>)<br>            <span class="hljs-keyword">else</span> (layer.kernel_size, layer.kernel_size)<br>        )<br>        stride = (<br>            layer.stride<br>            <span class="hljs-keyword">if</span> <span class="hljs-built_in">isinstance</span>(layer.stride, <span class="hljs-built_in">tuple</span>)<br>            <span class="hljs-keyword">else</span> (layer.stride, layer.stride)<br>        )<br>        padding = (<br>            layer.padding<br>            <span class="hljs-keyword">if</span> <span class="hljs-built_in">isinstance</span>(layer.padding, <span class="hljs-built_in">tuple</span>)<br>            <span class="hljs-keyword">else</span> (layer.padding, layer.padding)<br>        )<br>        dilation = (<br>            layer.dilation<br>            <span class="hljs-keyword">if</span> <span class="hljs-built_in">isinstance</span>(layer.dilation, <span class="hljs-built_in">tuple</span>)<br>            <span class="hljs-keyword">else</span> (layer.dilation, layer.dilation)<br>        )<br><br>        output_height = (<br>            input_shape[<span class="hljs-number">1</span>] + <span class="hljs-number">2</span> * padding[<span class="hljs-number">0</span>] - dilation[<span class="hljs-number">0</span>] * (kernel_size[<span class="hljs-number">0</span>] - <span class="hljs-number">1</span>) - <span class="hljs-number">1</span><br>        ) // stride[<span class="hljs-number">0</span>] + <span class="hljs-number">1</span><br>        output_width = (<br>            input_shape[<span class="hljs-number">2</span>] + <span class="hljs-number">2</span> * padding[<span class="hljs-number">1</span>] - dilation[<span class="hljs-number">1</span>] * (kernel_size[<span class="hljs-number">1</span>] - <span class="hljs-number">1</span>) - <span class="hljs-number">1</span><br>        ) // stride[<span class="hljs-number">1</span>] + <span class="hljs-number">1</span><br>        <span class="hljs-keyword">return</span> (<br>            layer.out_channels <span class="hljs-keyword">if</span> <span class="hljs-built_in">hasattr</span>(layer, <span class="hljs-string">&quot;out_channels&quot;</span>) <span class="hljs-keyword">else</span> input_shape[<span class="hljs-number">0</span>],<br>            output_height,<br>            output_width,<br>        )<br>    <span class="hljs-keyword">elif</span> <span class="hljs-built_in">isinstance</span>(layer, nn.Linear):<br>        <span class="hljs-comment"># For Linear layers, the output shape is simply the layer&#x27;s output features</span><br>        <span class="hljs-keyword">return</span> (layer.out_features,)<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">return</span> input_shape<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">calculate_macs</span>(<span class="hljs-params">layer, input_shape, output_shape</span>):<br>    <span class="hljs-comment"># Calculate MACs for Conv2d and Linear layers</span><br>    <span class="hljs-keyword">if</span> <span class="hljs-built_in">isinstance</span>(layer, nn.Conv2d):<br>        kernel_ops = (<br>            layer.kernel_size[<span class="hljs-number">0</span>]<br>            * layer.kernel_size[<span class="hljs-number">1</span>]<br>            * (layer.in_channels / layer.groups)<br>        )<br>        output_elements = output_shape[<span class="hljs-number">1</span>] * output_shape[<span class="hljs-number">2</span>]<br>        macs = <span class="hljs-built_in">int</span>(kernel_ops * output_elements * layer.out_channels)<br>        <span class="hljs-keyword">return</span> macs<br>    <span class="hljs-keyword">elif</span> <span class="hljs-built_in">isinstance</span>(layer, nn.Linear):<br>        <span class="hljs-comment"># For Linear layers, MACs are the product of input features and output features</span><br>        macs = <span class="hljs-built_in">int</span>(layer.in_features * layer.out_features)<br>        <span class="hljs-keyword">return</span> macs<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br><br>model = models.alexnet(pretrained=<span class="hljs-literal">True</span>)<br><br><span class="hljs-comment"># Initial input shape</span><br>input_shape = (<span class="hljs-number">3</span>, <span class="hljs-number">224</span>, <span class="hljs-number">224</span>)<br>total_macs = <span class="hljs-number">0</span><br><br><span class="hljs-comment"># Iterate through the layers of the model</span><br><span class="hljs-keyword">for</span> name, layer <span class="hljs-keyword">in</span> model.named_modules():<br>    <span class="hljs-keyword">if</span> <span class="hljs-built_in">isinstance</span>(layer, (nn.Conv2d, nn.MaxPool2d, nn.ReLU, nn.Linear)):<br>        output_shape = calculate_output_shape(input_shape, layer)<br>        macs = calculate_macs(layer, input_shape, output_shape)<br>        total_macs += macs<br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">isinstance</span>(layer, (nn.Conv2d, nn.Linear)):<br>            <span class="hljs-built_in">print</span>(<br>                <span class="hljs-string">f&quot;Layer: <span class="hljs-subst">&#123;name&#125;</span>, Type: <span class="hljs-subst">&#123;<span class="hljs-built_in">type</span>(layer).__name__&#125;</span>, Input Shape: <span class="hljs-subst">&#123;input_shape&#125;</span>, Output Shape: <span class="hljs-subst">&#123;output_shape&#125;</span>, MACs: <span class="hljs-subst">&#123;macs&#125;</span>&quot;</span><br>            )<br>        <span class="hljs-keyword">elif</span> <span class="hljs-built_in">isinstance</span>(layer, nn.MaxPool2d):<br>            <span class="hljs-comment"># Also print shape transformation for MaxPool2d layers (no MACs calculated)</span><br>            <span class="hljs-built_in">print</span>(<br>                <span class="hljs-string">f&quot;Layer: <span class="hljs-subst">&#123;name&#125;</span>, Type: <span class="hljs-subst">&#123;<span class="hljs-built_in">type</span>(layer).__name__&#125;</span>, Input Shape: <span class="hljs-subst">&#123;input_shape&#125;</span>, Output Shape: <span class="hljs-subst">&#123;output_shape&#125;</span>, MACs: N/A&quot;</span><br>            )<br>        input_shape = output_shape  <span class="hljs-comment"># Update the input shape for the next layer</span><br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Total MACs: <span class="hljs-subst">&#123;total_macs&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>輸出如下</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs txt">Layer: features.0, Type: Conv2d, Input Shape: (3, 224, 224), Output Shape: (64, 55, 55), MACs: 70276800<br>Layer: features.2, Type: MaxPool2d, Input Shape: (64, 55, 55), Output Shape: (64, 27, 27), MACs: N/A<br>Layer: features.3, Type: Conv2d, Input Shape: (64, 27, 27), Output Shape: (192, 27, 27), MACs: 223948800<br>Layer: features.5, Type: MaxPool2d, Input Shape: (192, 27, 27), Output Shape: (192, 13, 13), MACs: N/A<br>Layer: features.6, Type: Conv2d, Input Shape: (192, 13, 13), Output Shape: (384, 13, 13), MACs: 112140288<br>Layer: features.8, Type: Conv2d, Input Shape: (384, 13, 13), Output Shape: (256, 13, 13), MACs: 149520384<br>Layer: features.10, Type: Conv2d, Input Shape: (256, 13, 13), Output Shape: (256, 13, 13), MACs: 99680256<br>Layer: features.12, Type: MaxPool2d, Input Shape: (256, 13, 13), Output Shape: (256, 6, 6), MACs: N/A<br>Layer: classifier.1, Type: Linear, Input Shape: (256, 6, 6), Output Shape: (4096,), MACs: 37748736<br>Layer: classifier.4, Type: Linear, Input Shape: (4096,), Output Shape: (4096,), MACs: 16777216<br>Layer: classifier.6, Type: Linear, Input Shape: (4096,), Output Shape: (1000,), MACs: 4096000<br>Total MACs: 714188480<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Some layers in GoogleNet enable ceil_mode, which will affect the calculation formula for output_shape.</p>
+</blockquote>
+<h3 id="Profiling"><a href="#Profiling" class="headerlink" title="Profiling"></a>Profiling</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch<br><span class="hljs-keyword">import</span> torchvision.models <span class="hljs-keyword">as</span> models<br><span class="hljs-keyword">from</span> torch.profiler <span class="hljs-keyword">import</span> profile, record_function, ProfilerActivity<br><br>model = models.alexnet(pretrained=<span class="hljs-literal">True</span>)<br>model.<span class="hljs-built_in">eval</span>()  <span class="hljs-comment"># Set the model to evaluation mode</span><br>inputs = torch.randn(<span class="hljs-number">5</span>, <span class="hljs-number">3</span>, <span class="hljs-number">224</span>, <span class="hljs-number">224</span>)<br><br><span class="hljs-keyword">with</span> profile(activities=[ProfilerActivity.CPU], profile_memory=<span class="hljs-literal">True</span>, record_shapes=<span class="hljs-literal">True</span>) <span class="hljs-keyword">as</span> prof:<br>    model(inputs)<br><br><span class="hljs-built_in">print</span>(prof.key_averages().table(sort_by=<span class="hljs-string">&quot;self_cpu_memory_usage&quot;</span>, row_limit=<span class="hljs-number">10</span>))<br><br></code></pre></td></tr></table></figure>
+
+<p>這樣可以印出這個 Model 的 Profiling 結果，包含每一個 Operator 的 CPU Time、Memory Usage、Input Shape、Output Shape 等等</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs txt">---------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------<br>                             Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg       CPU Mem  Self CPU Mem    # of Calls<br>---------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------<br>                      aten::empty         0.11%      60.000us         0.11%      60.000us       5.455us       9.25 Mb       9.25 Mb            11<br>    aten::max_pool2d_with_indices         3.52%       1.838ms         3.52%       1.838ms     612.667us       5.05 Mb       5.05 Mb             3<br>                    aten::resize_         0.01%       6.000us         0.01%       6.000us       1.000us     180.00 Kb     180.00 Kb             6<br>                      aten::addmm        36.23%      18.939ms        36.32%      18.984ms       6.328ms     179.53 Kb     179.53 Kb             3<br>                     aten::conv2d         0.07%      36.000us        58.54%      30.601ms       6.120ms       9.25 Mb           0 b             5<br>                aten::convolution         0.21%     111.000us        58.47%      30.565ms       6.113ms       9.25 Mb           0 b             5<br>               aten::_convolution         0.10%      54.000us        58.26%      30.454ms       6.091ms       9.25 Mb           0 b             5<br>         aten::mkldnn_convolution        57.99%      30.313ms        58.15%      30.400ms       6.080ms       9.25 Mb           0 b             5<br>                aten::as_strided_         0.05%      24.000us         0.05%      24.000us       4.800us           0 b           0 b             5<br>                      aten::relu_         0.34%     178.000us         0.86%     447.000us      63.857us           0 b           0 b             7<br>---------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------<br>Self CPU time total: 52.275ms<br></code></pre></td></tr></table></figure>
+
+<h3 id="TensorBoard"><a href="#TensorBoard" class="headerlink" title="TensorBoard"></a>TensorBoard</h3><p>TensorBoard 可以監控和分析機器學習模型的訓練過程，監測 CPU 和 GPU 的使用情況，看看 Bottleneck 在哪個地方</p>
+<p>下面程式碼是用 CIFAR-10 Dataset 進行 ResNet-18 訓練，用 torch.profiler 儲存 Profile 結果</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch.optim<br><span class="hljs-keyword">import</span> torch.profiler<br><span class="hljs-keyword">import</span> torch.utils.data<br><span class="hljs-keyword">import</span> torchvision.datasets<br><span class="hljs-keyword">import</span> torchvision.models<br><span class="hljs-keyword">import</span> torchvision.transforms <span class="hljs-keyword">as</span> T<br><br><br>transform = T.Compose(<br>    [T.Resize(<span class="hljs-number">224</span>),<br>     T.ToTensor(),<br>     T.Normalize((<span class="hljs-number">0.5</span>, <span class="hljs-number">0.5</span>, <span class="hljs-number">0.5</span>), (<span class="hljs-number">0.5</span>, <span class="hljs-number">0.5</span>, <span class="hljs-number">0.5</span>))])<br>train_set = torchvision.datasets.CIFAR10(root=<span class="hljs-string">&#x27;./data&#x27;</span>, train=<span class="hljs-literal">True</span>, download=<span class="hljs-literal">True</span>, transform=transform)<br>train_loader = torch.utils.data.DataLoader(train_set, batch_size=<span class="hljs-number">32</span>, shuffle=<span class="hljs-literal">True</span>)<br><br>device = torch.device(<span class="hljs-string">&quot;cpu&quot;</span>)<br>model = torchvision.models.resnet18(weights=<span class="hljs-string">&#x27;IMAGENET1K_V1&#x27;</span>)<br>criterion = torch.nn.CrossEntropyLoss()<br>optimizer = torch.optim.SGD(model.parameters(), lr=<span class="hljs-number">0.001</span>, momentum=<span class="hljs-number">0.9</span>)<br>model.train()<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">train</span>(<span class="hljs-params">data</span>):<br>    inputs, labels = data[<span class="hljs-number">0</span>].to(device=device), data[<span class="hljs-number">1</span>].to(device=device)<br>    outputs = model(inputs)<br>    loss = criterion(outputs, labels)<br>    optimizer.zero_grad()<br>    loss.backward()<br>    optimizer.step()<br><br><br><span class="hljs-keyword">with</span> torch.profiler.profile(<br>        schedule=torch.profiler.schedule(wait=<span class="hljs-number">1</span>, warmup=<span class="hljs-number">1</span>, active=<span class="hljs-number">3</span>, repeat=<span class="hljs-number">1</span>),<br>        on_trace_ready=torch.profiler.tensorboard_trace_handler(<span class="hljs-string">&#x27;./log/resnet18&#x27;</span>),<br>        record_shapes=<span class="hljs-literal">True</span>,<br>        profile_memory=<span class="hljs-literal">True</span>,<br>        with_stack=<span class="hljs-literal">True</span><br>) <span class="hljs-keyword">as</span> prof:<br>    <span class="hljs-keyword">for</span> step, batch_data <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(train_loader):<br>        prof.step()  <span class="hljs-comment"># Need to call this at each step to notify profiler of steps&#x27; boundary.</span><br>        <span class="hljs-keyword">if</span> step &gt;= <span class="hljs-number">1</span> + <span class="hljs-number">1</span> + <span class="hljs-number">3</span>:<br>            <span class="hljs-keyword">break</span><br>        train(batch_data)<br></code></pre></td></tr></table></figure>
+
+<p>接下來可以用以下指令啟動 TensorBoard，監測 Profile 的結果</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">tensorboard --logdir=&#x27;~/projects/lab02/lab2-3/log/&#x27; --bind_all --port=10000 &gt; tensorboard.stdout.log &amp;&gt; tensorboard.stderr.log &amp; # Start TensorBoard<br>kill $(ps -e | grep &#x27;tensorboard&#x27; | awk &#x27;&#123;print $1&#125;&#x27;) # Stop TensorBoard<br></code></pre></td></tr></table></figure>
+
+<p><img src="/notes/./images/ai-computing-system/TensorBoard.png" srcset="/notes/info/loading.gif" lazyload alt="TensorBoard"></p>
+<h3 id="Python-C-Frontend"><a href="#Python-C-Frontend" class="headerlink" title="Python C++ Frontend"></a>Python C++ Frontend</h3><h4 id="TorchScript"><a href="#TorchScript" class="headerlink" title="TorchScript"></a>TorchScript</h4><p>TorchScript 是 PyTorch 的一種 IR (Intermediate Representation)，可以在其他環境執行，像是 C++、嵌入式設備或伺服器，有兩種方法可以把 PyTorch Model 轉換成 TorchScript</p>
+<ul>
+<li><p>Tracing<br>用 <code>torch.jit.trace</code>，把 Example Input 丟進去模型跑，將這個 Data 在模型的流向全部記錄起來，藉此捕捉模型的結構</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyModel</span>(torch.nn.Module):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">super</span>().__init__()<br>        self.fc1 = torch.nn.Linear(<span class="hljs-number">3</span>, <span class="hljs-number">3</span>)<br>        self.fc2 = torch.nn.Linear(<span class="hljs-number">3</span>, <span class="hljs-number">2</span>)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, x</span>):<br>        x = self.fc1(x)<br>        x = self.fc2(x)<br>        <span class="hljs-keyword">return</span> x<br><br>model = MyModel()<br><br><span class="hljs-comment"># Example Input</span><br>example_input = torch.randn(<span class="hljs-number">1</span>, <span class="hljs-number">3</span>)<br><br>traced_model = torch.jit.trace(model, example_input)<br><br>traced_model.save(<span class="hljs-string">&quot;traced_model.pt&quot;</span>)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>Scripting<br>用 <code>torch.jit.scrip</code> 直接解析 Python Code，轉換成 TorchScript</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyModel</span>(torch.nn.Module):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">super</span>().__init__()<br>        self.fc1 = torch.nn.Linear(<span class="hljs-number">3</span>, <span class="hljs-number">3</span>)<br>        self.fc2 = torch.nn.Linear(<span class="hljs-number">3</span>, <span class="hljs-number">2</span>)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, x</span>):<br>        x = self.fc1(x)<br>        x = self.fc2(x)<br>        <span class="hljs-keyword">return</span> x<br><br>scripted_model = torch.jit.script(MyModel())<br><br>scripted_model.save(<span class="hljs-string">&quot;scripted_model.pt&quot;</span>)<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="LibTorch"><a href="#LibTorch" class="headerlink" title="LibTorch"></a>LibTorch</h4><p><a target="_blank" rel="noopener" href="https://pytorch.org/get-started/locally/">LibTorch</a> 可以用來在 C++ 環境中執行 TorchScript，可以用 CMake 來建置 C++ 程式，並且連結 LibTorch 的 Library 來執行 TorchScript</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;torch/script.h&gt;</span> <span class="hljs-comment">// One-stop header.</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;torch/csrc/jit/api/module.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;torch/csrc/jit/jit_log.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;torch/csrc/jit/ir/ir.h&gt;</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;memory&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> torch::jit;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">const</span> <span class="hljs-type">char</span>* argv[])</span> </span>&#123;<br>  <span class="hljs-keyword">if</span> (argc != <span class="hljs-number">2</span>) &#123;<br>    std::cerr &lt;&lt; <span class="hljs-string">&quot;usage: example-app &lt;path-to-exported-script-module&gt;\n&quot;</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>  &#125;<br><br>  <span class="hljs-built_in">set_jit_logging_levels</span>(<span class="hljs-string">&quot;GRAPH_DUMP&quot;</span>);<br><br>  torch::jit::script::Module <span class="hljs-keyword">module</span>;<br>  <span class="hljs-keyword">try</span> &#123;<br>    <span class="hljs-comment">// Deserialize the ScriptModule from a file using torch::jit::load().</span><br>    <span class="hljs-keyword">module</span> = torch::jit::<span class="hljs-built_in">load</span>(argv[<span class="hljs-number">1</span>]);<br>  &#125;<br>  <span class="hljs-built_in">catch</span> (<span class="hljs-type">const</span> c10::Error&amp; e) &#123;<br>    std::cerr &lt;&lt; <span class="hljs-string">&quot;error loading the model\n&quot;</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>  &#125;<br><br>  std::cout &lt;&lt; <span class="hljs-string">&quot;load the torchscript model, &quot;</span> + std::<span class="hljs-built_in">string</span>(argv[<span class="hljs-number">1</span>]) + <span class="hljs-string">&quot;, successfully \n&quot;</span>;<br><br>  <span class="hljs-comment">// Create a vector of inputs.</span><br>  std::vector&lt;torch::jit::IValue&gt; inputs;<br>  inputs.<span class="hljs-built_in">push_back</span>(torch::<span class="hljs-built_in">ones</span>(&#123;<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">224</span>, <span class="hljs-number">224</span>&#125;));<br><br>  <span class="hljs-comment">// Execute the model and turn its output into a tensor.</span><br>  at::Tensor output = <span class="hljs-keyword">module</span>.forward(inputs).<span class="hljs-built_in">toTensor</span>();<br>  std::cout &lt;&lt; output.<span class="hljs-built_in">slice</span>(<span class="hljs-comment">/*dim=*/</span><span class="hljs-number">1</span>, <span class="hljs-comment">/*start=*/</span><span class="hljs-number">0</span>, <span class="hljs-comment">/*end=*/</span><span class="hljs-number">5</span>) &lt;&lt; <span class="hljs-string">&#x27;\n&#x27;</span>;<br><br>  <span class="hljs-comment">//dump the model information</span><br>  <span class="hljs-comment">// source code can be found in</span><br>  <span class="hljs-comment">// https://github.com/pytorch/pytorch/blob/main/torch/csrc/jit/api/module.cpp</span><br>  std::cout &lt;&lt; <span class="hljs-keyword">module</span>.<span class="hljs-built_in">dump_to_str</span>(<span class="hljs-literal">true</span>,<span class="hljs-literal">false</span>,<span class="hljs-literal">false</span>) &lt;&lt; <span class="hljs-string">&quot; (\n&quot;</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>Build &amp; Compile</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># create config</span></span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash">cmake -DCMAKE_PREFIX_PATH=./libtorch ..</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># compile</span></span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash">cmake --build . --config Release -j <span class="hljs-variable">$&#123;nproc&#125;</span></span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>Build 完後，可以跑 C++ 程式，並輸入剛剛轉出來的 TorchScript (.pt) 檔案</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">./analyzer ../../traced_resnet18.pt<br></code></pre></td></tr></table></figure></li>
+</ul>
+<p>可以參考 <a target="_blank" rel="noopener" href="https://pytorch.org/cppdocs/index.html">PyTorch C++ API</a> 了解更多 C++ API 的使用方式</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/notes/categories/AI/" class="category-chain-item">AI</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/notes/tags/AI/" class="print-no-link">#AI</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>AIAS - AI Models</div>
+      <div>https://933yee.github.io/notes/2025/03/03/ai-computing-system-2/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Kevin Lee</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>March 3, 2025</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/notes/2025/03/03/ai-computing-system-1/" title="AIAS - Basic">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">AIAS - Basic</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/notes/2025/02/25/vlsi-physical-design-automation-1/" title="VLSI PDA - Physical Design Introduction">
+                        <span class="hidden-mobile">VLSI PDA - Physical Design Introduction</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/notes/js/events.js" ></script>
+<script  src="/notes/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/notes/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/notes/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/notes/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
