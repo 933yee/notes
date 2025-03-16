@@ -16,37 +16,25 @@
   <meta name="author" content="Kevin Lee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="參考清大麥偉基老師課程講義  Lithography Lithography: 光刻框出電路圖案，然後進行蝕刻 Diffraction: 繞射會造成 Lithography 不準確，可以從目標圖案反推出 Mask 的設計，稱為 Computational Lithography    193i 的 i 代表 Immersion Lithography用液體取代空氣，縮短光的波長，就好像換了一個">
+    <meta name="description" content="Reliable IC Design and Fabrication withGlobal Electronics Supply Chain Hardware security issues arise from  硬體內部的漏洞，不管是 Gate Layer、Transistor Layer 或是 Voltage 和 Current 缺乏內建的安全機制來保護軟體與系統  用旁路攻擊或軟體利用硬體">
 <meta property="og:type" content="article">
-<meta property="og:title" content="VLSI DFM - Maze Routing">
-<meta property="og:url" content="https://933yee.github.io/notes/2025/03/10/vlsi-design-for-manufacturability-1/index.html">
+<meta property="og:title" content="Hardware Security">
+<meta property="og:url" content="https://933yee.github.io/notes/2024/03/15/hardware-security/index.html">
 <meta property="og:site_name" content="933yee&#39;s Notes">
-<meta property="og:description" content="參考清大麥偉基老師課程講義  Lithography Lithography: 光刻框出電路圖案，然後進行蝕刻 Diffraction: 繞射會造成 Lithography 不準確，可以從目標圖案反推出 Mask 的設計，稱為 Computational Lithography    193i 的 i 代表 Immersion Lithography用液體取代空氣，縮短光的波長，就好像換了一個">
+<meta property="og:description" content="Reliable IC Design and Fabrication withGlobal Electronics Supply Chain Hardware security issues arise from  硬體內部的漏洞，不管是 Gate Layer、Transistor Layer 或是 Voltage 和 Current 缺乏內建的安全機制來保護軟體與系統  用旁路攻擊或軟體利用硬體">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/LithographyDevelopment.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/OPC.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/EndToEndSeperationRule.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/MinimumLengthRule.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/PostProcessing.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/EnhancedMazeRoutingAlgorithm.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/EndEndSeparationRuleHandling.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/MinimumLengthRuleHandling.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/FindAShortestPath.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/PolynomialTimeComplexityExample.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/PruningStrategy1.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/PruningStrategy2.png">
-<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/AStarSearch.png">
-<meta property="article:published_time" content="2025-03-10T02:48:15.000Z">
-<meta property="article:modified_time" content="2025-03-15T13:27:36.768Z">
+<meta property="og:image" content="https://933yee.github.io/notes/images/hardware-security/untrusted-entities.png">
+<meta property="article:published_time" content="2024-03-15T03:25:11.000Z">
+<meta property="article:modified_time" content="2025-03-15T20:53:40.447Z">
 <meta property="article:author" content="Kevin Lee">
-<meta property="article:tag" content="VLSI">
-<meta property="article:tag" content="DFM">
+<meta property="article:tag" content="hardware">
+<meta property="article:tag" content="security">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/LithographyDevelopment.png">
+<meta name="twitter:image" content="https://933yee.github.io/notes/images/hardware-security/untrusted-entities.png">
   
   
   
-  <title>VLSI DFM - Maze Routing - 933yee&#39;s Notes</title>
+  <title>Hardware Security - 933yee&#39;s Notes</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -212,7 +200,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="VLSI DFM - Maze Routing"></span>
+            <span id="subtitle" data-typed-text="Hardware Security"></span>
           
         </div>
 
@@ -223,8 +211,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-03-10 10:48" pubdate>
-          March 10, 2025 am
+        <time datetime="2024-03-15 11:25" pubdate>
+          March 15, 2024 am
         </time>
       </span>
     
@@ -235,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          707 words
+          586 words
         
       </span>
     
@@ -246,7 +234,7 @@
         
         
         
-          6 mins
+          5 mins
         
       </span>
     
@@ -283,74 +271,69 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">VLSI DFM - Maze Routing</h1>
+            <h1 id="seo-header">Hardware Security</h1>
             
             
               <div class="markdown-body">
                 
-                <blockquote>
-<p>參考清大麥偉基老師課程講義</p>
-</blockquote>
-<h2 id="Lithography"><a href="#Lithography" class="headerlink" title="Lithography"></a>Lithography</h2><ul>
-<li>Lithography: 光刻<br>框出電路圖案，然後進行蝕刻</li>
-<li>Diffraction: 繞射<br>會造成 Lithography 不準確，可以從目標圖案反推出 Mask 的設計，稱為 Computational Lithography</li>
-</ul>
-<p><img src="/notes/./images/vlsi-design-for-manufacturability/LithographyDevelopment.png" srcset="/notes/info/loading.gif" lazyload alt="Lithography Development"></p>
+                <h2 id="Reliable-IC-Design-and-Fabrication-withGlobal-Electronics-Supply-Chain"><a href="#Reliable-IC-Design-and-Fabrication-withGlobal-Electronics-Supply-Chain" class="headerlink" title="Reliable IC Design and Fabrication withGlobal Electronics Supply Chain"></a>Reliable IC Design and Fabrication withGlobal Electronics Supply Chain</h2><ul>
+<li><p><strong>Hardware security issues</strong> arise from</p>
 <ul>
-<li>193i 的 <code>i</code> 代表 Immersion Lithography<br>用液體取代空氣，縮短光的波長，就好像換了一個 Light Source，減少繞射的影響，而且波長 193nm 的技術已經很成熟</li>
-<li>EUV 代表 Extreme Ultraviolet Lithography<br>波長更短，繞射更少，但是製程更難，因為要用真空，光源也很難做</li>
-<li>Multi-Patterning<br>把一個圖案分成多個小圖案，然後分別曝光，最後合併成一個圖案。在 EUV Lithography 之前很常用，現在因為 EUV 很貴，有些先進製程還是用 193i + Multi-Patterning</li>
-<li>隨著技術進步，單位面積上的 Transistor 數量越來越多，但是製程成本也越來越高，所以不是每個裝置都用最先進的製程</li>
+<li>硬體內部的漏洞，不管是 Gate Layer、Transistor Layer 或是 Voltage 和 Current</li>
+<li>缺乏內建的安全機制來保護軟體與系統</li>
 </ul>
-<h2 id="Routing-in-Advanced-Nodes"><a href="#Routing-in-Advanced-Nodes" class="headerlink" title="Routing in Advanced Nodes"></a>Routing in Advanced Nodes</h2><p>受限於 <code>Lithography printability</code>、<code>Process Variation</code> 等，即使你用一樣的方法，做出來的也不一定是你要的。所以要考慮 <code>Design for Manufacturability</code>。</p>
-<h3 id="Design-Rule-Handling"><a href="#Design-Rule-Handling" class="headerlink" title="Design Rule Handling"></a>Design Rule Handling</h3><p><strong>Optical Proximity Correction (OPC)</strong> 是一種 Computational Lithography 的技術，修改 mask 來補償繞射和光刻製程中的非理想效應，讓實際製造出的 Pattern 更接近設計的目標。</p>
-<ul>
-<li>OPC 會造成線寬變寬，所以要考慮 <code>Design Rule</code>，ex：兩條線之間要留多少空間</li>
-</ul>
-<p><img src="/notes/./images/vlsi-design-for-manufacturability/OPC.png" srcset="/notes/info/loading.gif" lazyload alt="OPC"></p>
-<h4 id="End-to-End-Seperation-Rule"><a href="#End-to-End-Seperation-Rule" class="headerlink" title="End-to-End Seperation Rule"></a>End-to-End Seperation Rule</h4><p><img src="/notes/./images/vlsi-design-for-manufacturability/EndToEndSeperationRule.png" srcset="/notes/info/loading.gif" lazyload alt="End-to-End Seperation Rule"></p>
-<ul>
-<li>如果一條 Wire 的端點的相鄰軌道上有另一條 Wire，那這條 Wire 的末端至少要留 <strong>S2</strong> 的空間</li>
-<li>其他情況只需要預留 <strong>S1</strong> 的空間</li>
-</ul>
-<h4 id="Minimum-Length-Rule"><a href="#Minimum-Length-Rule" class="headerlink" title="Minimum Length Rule"></a>Minimum Length Rule</h4><p>每條線至少要有多長</p>
-<p><img src="/notes/./images/vlsi-design-for-manufacturability/MinimumLengthRule.png" srcset="/notes/info/loading.gif" lazyload alt="Minimum Length Rule"></p>
-<h3 id="MANA-A-Shortest-Path-MAze-Algorithm-under-Separation-and-Minimum-Length-NAnometer-Rules"><a href="#MANA-A-Shortest-Path-MAze-Algorithm-under-Separation-and-Minimum-Length-NAnometer-Rules" class="headerlink" title="MANA (A Shortest Path MAze Algorithm under Separation and Minimum Length NAnometer Rules)"></a>MANA (A Shortest Path MAze Algorithm under Separation and Minimum Length NAnometer Rules)</h3><p>傳統的 Maze Routing Algorithm 是在 Grid 上找一條最短的路徑，可能用 BFS 或 Dijkstra 等等，但是在 VLSI 設計中，還要考慮一些 <code>Design Rule</code></p>
-<h4 id="考慮到-Design-Rule-的-Maze-Routing-Algorithm"><a href="#考慮到-Design-Rule-的-Maze-Routing-Algorithm" class="headerlink" title="考慮到 Design Rule 的 Maze Routing Algorithm"></a>考慮到 Design Rule 的 Maze Routing Algorithm</h4><ul>
-<li><p>Post-Processing<br>把找到的路徑再做一些調整，像是延伸 Wire，讓他們符合先前提到的 <code>Design Rule</code>，不過這方法沒那麼好，會花很多資源</p>
-<p><img src="/notes/./images/vlsi-design-for-manufacturability/PostProcessing.png" srcset="/notes/info/loading.gif" lazyload alt="Post-Processing"></p>
+<p>用旁路攻擊或軟體利用硬體漏洞進行攻擊，導致密碼學被破解、記憶體可以任意 Access、竊取物理資訊等</p>
 </li>
-<li><p>增強型 Maze Routing Algorithm<br>在找路徑的時候就考慮 <code>Design Rule</code>，像是「每條 Wire 至少要有多長」<br><img src="/notes/./images/vlsi-design-for-manufacturability/EnhancedMazeRoutingAlgorithm.png" srcset="/notes/info/loading.gif" lazyload alt="Enhanced Maze Routing Algorithm"></p>
-<p>不能直接用個 L 型的 Wire，每一層要馬是水平，要馬是垂直</p>
+<li><p><strong>Hardware Trust Issues</strong> arise from</p>
+<ul>
+<li>硬體開發過程涉及不可信任的第三方（IP 供應商、EDA 工具、製造商、測試或銷售商）</li>
+</ul>
+<p>在 IC Design Flow 中，IC Design、Fab、Test、Assembly、Package &amp; Testing、PCB &amp; Synthesis 都有風險，導致被 DoS 之類的問題，還可能減少 Performance、增加功耗</p>
 </li>
 </ul>
-<h5 id="End-end-separation-rule-handling"><a href="#End-end-separation-rule-handling" class="headerlink" title="End-end separation rule handling"></a>End-end separation rule handling</h5><p>檢查每個 grid point，如果這個 grid point 不能滿足 <code>End-end separation</code>，就把它濾掉</p>
-<p><img src="/notes/./images/vlsi-design-for-manufacturability/EndEndSeparationRuleHandling.png" srcset="/notes/info/loading.gif" lazyload alt="End-end separation rule handling"></p>
-<h5 id="Minimum-length-rule-handling"><a href="#Minimum-length-rule-handling" class="headerlink" title="Minimum length rule handling"></a>Minimum length rule handling</h5><p>在做 Maze Routing 的時候，要看這條 wire 有沒有足夠的空間做 extension</p>
-<p><img src="/notes/./images/vlsi-design-for-manufacturability/MinimumLengthRuleHandling.png" srcset="/notes/info/loading.gif" lazyload alt="Minimum length rule handling"></p>
-<h4 id="Find-a-Shortest-Path"><a href="#Find-a-Shortest-Path" class="headerlink" title="Find a Shortest Path"></a>Find a Shortest Path</h4><ul>
-<li>Min Length: 全部的 wire 長度加起來，不包含最後一段的 extension</li>
-<li>Max Length: 全部的 wire 長度加起來，包含最後一段的 extension</li>
-</ul>
-<p><img src="/notes/./images/vlsi-design-for-manufacturability/FindAShortestPath.png" srcset="/notes/info/loading.gif" lazyload alt="Find a Shortest Path"></p>
-<h4 id="Polynomial-time-complexity"><a href="#Polynomial-time-complexity" class="headerlink" title="Polynomial time complexity"></a>Polynomial time complexity</h4><p>對不需要的 partial path 做 pruning，可以達到 Polynomial time complexity</p>
-<p><img src="/notes/./images/vlsi-design-for-manufacturability/PolynomialTimeComplexityExample.png" srcset="/notes/info/loading.gif" lazyload alt="Polynomial time complexity Example"></p>
-<p>像是這邊可以只保留 $P^\prime$，捨棄 $P$</p>
-<h5 id="Pruning-Strategy"><a href="#Pruning-Strategy" class="headerlink" title="Pruning Strategy"></a>Pruning Strategy</h5><ul>
-<li><p>Stradgy 1</p>
-<p>如果 $\text{minlen}(P) \geq \text{maxlen}(P^\prime)$，就捨棄 $P$</p>
-</li>
-</ul>
-<p><img src="/notes/./images/vlsi-design-for-manufacturability/PruningStrategy1.png" srcset="/notes/info/loading.gif" lazyload alt="Pruning Strategy 1"></p>
+<p>兩個差別在：前者是 <strong>硬體本身的漏洞導致被攻擊</strong>，後者是 <strong>硬體開發與生產過程中不受信任的實體</strong></p>
+<h4 id="IP"><a href="#IP" class="headerlink" title="IP"></a>IP</h4><p><strong>IP</strong> 是一個 Predeifined、Designed、Verified、Resuable 的 Building Block，可以直接放在 SoC 裡面<br>可能是一段 Verilog Code、做好的 Gate Level Netlist 或是做好的 Layout</p>
 <ul>
-<li><p>Stradgy 2</p>
-<p>如果 $\text{maxlen}(P) &#x3D; \text{maxlen}(P^\prime)$ 且 $\text{minlen}(P) &#x3D; \text{minlen}(P^\prime)$，兩個一樣好，捨棄其中一個即可</p>
+<li><strong>Soft IP</strong> 後續可以做調整</li>
+<li><strong>Hard IP</strong> 一個黑盒子，不可以做調整</li>
+</ul>
+<p>根據層級小到大可以分成</p>
+<ul>
+<li>Foundation IP：基本的元件，像是 Cell Library、Gate Array</li>
+<li>Standard IP：有特定的功能，像是 JPEG、USB、PCI</li>
+<li>Star IP：複雜的元件，可以做很多功能，像是 ARM、MIPS</li>
+</ul>
+<p>但是因為 IP 來自各種不同的地方，要考慮到 IP 的可信度</p>
+<h3 id="Hardware-Threats-on-IC-Supply-Chain"><a href="#Hardware-Threats-on-IC-Supply-Chain" class="headerlink" title="Hardware Threats on IC Supply Chain"></a>Hardware Threats on IC Supply Chain</h3><ul>
+<li><p>Piracy: 剽竊裡面的設計</p>
+</li>
+<li><p>IP Overuse: 使用超過授權的次數</p>
+</li>
+<li><p>Reverse Engineering: 逆向工程，找出裡面的設計</p>
+</li>
+<li><p>Malicious Modification: Trojan</p>
+</li>
+<li><p>Trojan</p>
+<ul>
+<li>不能太常發生，不然 verification 會發現 (functional test)</li>
+<li>payload 不能太大，不然會被發現</li>
+<li>payload 也有分 combinational 和 sequential，sequential 可以延遲幾個 cycle 再發動攻擊</li>
+</ul>
 </li>
 </ul>
-<p><img src="/notes/./images/vlsi-design-for-manufacturability/PruningStrategy2.png" srcset="/notes/info/loading.gif" lazyload alt="Pruning Strategy 2"></p>
-<h4 id="Best-Cost-First-Expansion"><a href="#Best-Cost-First-Expansion" class="headerlink" title="Best Cost-First Expansion"></a>Best Cost-First Expansion</h4><p>Maze Routing 的演算法本質上是還是 A*-Search，要考慮某個 grid point 和 destination 的 manhattan distance，才能夠有方向性，所以</p>
-<p>$$<br>\text{Cost}(P) &#x3D; \text{maxlen}(P) + \text{Manhattan dist.}<br>$$</p>
-<p><img src="/notes/./images/vlsi-design-for-manufacturability/AStarSearch.png" srcset="/notes/info/loading.gif" lazyload alt="A-Star Search"></p>
+<p><img src="/notes/./images/hardware-security/untrusted-entities.png" srcset="/notes/info/loading.gif" lazyload alt="Untrusted Entities"></p>
+<ul>
+<li>Side Channel Attack: 透過量測 Voltage、Thermal 來猜測裡面的資訊</li>
+<li>Scan Based Attack: 透過 Scan Chain 來改變裡面的資訊<ul>
+<li>Scan Chain: 在 Design for Testability 中，每個 FF 後面接一個 MUX，可以藉由控制 MUX 來監測 FF 的值。像如果某個 Combinational Circuit 是加密的計算，可以透過 Scan Chain 來看裡面的值</li>
+</ul>
+</li>
+<li>IC Counterfeit: 我知道這個 IC 的功能在幹嘛，仿造一個一模一樣的 IC，但裡面參雜一些惡意的電路 (案例比較少</li>
+<li>Watermarking: 在 IC 裡面放一些特定的電路 (個人訊息)，可以用來證明這個 IC 是我的設計</li>
+<li>Hardware Obfuscation: 多花一些額外的 Cost，把電路設計變得很複雜，讓別人不容易看懂</li>
+<li>Side Channel Resistant Design: 加入 Noise、Random Delay、Randomize Power Consumption，讓別人不容易透過 Side Channel Attack 來猜測裡面的資訊</li>
+<li>Secure Scan Chain: 避免在 Operation Mode 的時候被使用 Scan Chain，只有在 Test Mode 的時候才能被使用</li>
+</ul>
 
                 
               </div>
@@ -359,13 +342,34 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/notes/categories/hardware/" class="category-chain-item">hardware</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
   
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/notes/tags/VLSI/" class="print-no-link">#VLSI</a>
+        <a href="/notes/tags/hardware/" class="print-no-link">#hardware</a>
       
-        <a href="/notes/tags/DFM/" class="print-no-link">#DFM</a>
+        <a href="/notes/tags/security/" class="print-no-link">#security</a>
       
     </div>
   
@@ -377,8 +381,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>VLSI DFM - Maze Routing</div>
-      <div>https://933yee.github.io/notes/2025/03/10/vlsi-design-for-manufacturability-1/</div>
+      <div>Hardware Security</div>
+      <div>https://933yee.github.io/notes/2024/03/15/hardware-security/</div>
     </div>
     <div class="license-meta">
       
@@ -390,7 +394,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>March 10, 2025</div>
+          <div>March 15, 2024</div>
         </div>
       
       
@@ -422,9 +426,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/notes/2025/03/17/ai-computing-system-3/" title="AIAS - Digital Design">
+                      <a href="/notes/2024/03/26/compiler-2/" title="Compiler 筆記 (2)">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">AIAS - Digital Design</span>
+                        <span class="hidden-mobile">Compiler 筆記 (2)</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -432,8 +436,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/notes/2025/03/10/vlsi-design-for-manufacturability-2/" title="VLSI DFM - Redundant Via Insertion">
-                        <span class="hidden-mobile">VLSI DFM - Redundant Via Insertion</span>
+                      <a href="/notes/2024/03/07/compiler-1/" title="Compiler 筆記 (1)">
+                        <span class="hidden-mobile">Compiler 筆記 (1)</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -490,12 +494,6 @@
 
 
   
-
-
-  
-  
-
-
 
 
 
@@ -689,49 +687,6 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              load: ['ui/lazy']
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-
-        Fluid.events.registerRefreshCallback(function() {
-          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
-            MathJax.startup.document.state(0);
-            MathJax.texReset();
-            MathJax.typeset();
-            MathJax.typesetPromise();
-          }
-        });
-      </script>
-    
-
-  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/notes/js/local-search.js" ></script>
 
