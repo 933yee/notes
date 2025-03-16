@@ -16,23 +16,22 @@
   <meta name="author" content="Kevin Lee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Reliable IC Design and Fabrication withGlobal Electronics Supply Chain Hardware security issues arise from  硬體內部的漏洞 缺乏內建的安全機制來保護軟體與系統  用旁路攻擊或軟體利用硬體漏洞進行攻擊，導致密碼學被破解、記憶體可以任意 Access、竊取物理資訊等  Hardware Trus">
+    <meta name="description" content="Lecture Moore’s Law is slowing down製成技術的瓶頸 Dennard Scaling is dead two decades ago雖然 Transistor 數量增加，但是 Power Consumption 也增加，晶片的運作沒辦法滿載，因此 Power 是現今重要的議題。 Specialized &amp; Customization 現今逐漸趨向 Speci">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hardware Security">
-<meta property="og:url" content="https://933yee.github.io/notes/2024/03/07/hardware-security/index.html">
+<meta property="og:title" content="AIAS - Digital Design">
+<meta property="og:url" content="https://933yee.github.io/notes/2025/03/17/ai-computing-system-3/index.html">
 <meta property="og:site_name" content="933yee&#39;s Notes">
-<meta property="og:description" content="Reliable IC Design and Fabrication withGlobal Electronics Supply Chain Hardware security issues arise from  硬體內部的漏洞 缺乏內建的安全機制來保護軟體與系統  用旁路攻擊或軟體利用硬體漏洞進行攻擊，導致密碼學被破解、記憶體可以任意 Access、竊取物理資訊等  Hardware Trus">
+<meta property="og:description" content="Lecture Moore’s Law is slowing down製成技術的瓶頸 Dennard Scaling is dead two decades ago雖然 Transistor 數量增加，但是 Power Consumption 也增加，晶片的運作沒辦法滿載，因此 Power 是現今重要的議題。 Specialized &amp; Customization 現今逐漸趨向 Speci">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2024-03-07T03:25:11.000Z">
-<meta property="article:modified_time" content="2025-03-15T13:47:20.439Z">
+<meta property="article:published_time" content="2025-03-16T21:29:23.000Z">
+<meta property="article:modified_time" content="2025-03-16T22:06:00.021Z">
 <meta property="article:author" content="Kevin Lee">
-<meta property="article:tag" content="hardware">
-<meta property="article:tag" content="security">
+<meta property="article:tag" content="AI">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>Hardware Security - 933yee&#39;s Notes</title>
+  <title>AIAS - Digital Design - 933yee&#39;s Notes</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -198,7 +197,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Hardware Security"></span>
+            <span id="subtitle" data-typed-text="AIAS - Digital Design"></span>
           
         </div>
 
@@ -209,8 +208,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-03-07 11:25" pubdate>
-          March 7, 2024 am
+        <time datetime="2025-03-17 05:29" pubdate>
+          March 17, 2025 am
         </time>
       </span>
     
@@ -221,7 +220,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          221 words
+          381 words
         
       </span>
     
@@ -232,7 +231,7 @@
         
         
         
-          2 mins
+          4 mins
         
       </span>
     
@@ -269,34 +268,35 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Hardware Security</h1>
+            <h1 id="seo-header">AIAS - Digital Design</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="Reliable-IC-Design-and-Fabrication-withGlobal-Electronics-Supply-Chain"><a href="#Reliable-IC-Design-and-Fabrication-withGlobal-Electronics-Supply-Chain" class="headerlink" title="Reliable IC Design and Fabrication withGlobal Electronics Supply Chain"></a>Reliable IC Design and Fabrication withGlobal Electronics Supply Chain</h2><ul>
-<li><p><strong>Hardware security issues</strong> arise from</p>
-<ul>
-<li>硬體內部的漏洞</li>
-<li>缺乏內建的安全機制來保護軟體與系統</li>
+                <h2 id="Lecture"><a href="#Lecture" class="headerlink" title="Lecture"></a>Lecture</h2><ul>
+<li>Moore’s Law is slowing down<br>製成技術的瓶頸</li>
+<li>Dennard Scaling is dead two decades ago<br>雖然 Transistor 數量增加，但是 Power Consumption 也增加，晶片的運作沒辦法滿載，因此 Power 是現今重要的議題。</li>
+<li>Specialized &amp; Customization<ul>
+<li>現今逐漸趨向 Specialized Hardware，像是專門 for AI training、inference 的晶片，比較少用 General Purpose 的晶片來做，這樣 Power Consumption 和 Performance 會比較好</li>
 </ul>
-<p>用旁路攻擊或軟體利用硬體漏洞進行攻擊，導致密碼學被破解、記憶體可以任意 Access、竊取物理資訊等</p>
 </li>
-<li><p><strong>Hardware Trust Issues</strong> arise from</p>
-<ul>
-<li>硬體開發過程涉及不可信任的第三方（IP 供應商、製造商、測試或銷售商）</li>
-<li></li>
+<li>設計成本高</li>
 </ul>
-<p>在設計、製造、測試、銷售過程中，惡意植入後門或木馬電路，導致被 DoS 之類的問題，還可能減少 Performance、增加功耗等</p>
+<h3 id="Design-Flow-and-Abstraction"><a href="#Design-Flow-and-Abstraction" class="headerlink" title="Design Flow and Abstraction"></a>Design Flow and Abstraction</h3><p>以 RISC-V Design Process 為例</p>
+<ul>
+<li><p>Specification (in plain text)<br>如果要設計 RISC-V 相容的 CPU，要去官方網站下載 Spec。RISC-V 是一個 Modulized 的 Spec，除了 Basic Instruction Set 之外，還有很多 Extension，像是矩陣乘法、浮點數運算等等。不同公司會為了不同的需求，選擇不同的 Extension。</p>
+<p>Spec 是軟體與硬體共同 Follow 的標準，只要你硬體是符合 Spec 的，其他跟這個 Spec 相容的軟體都可以跑在這個硬體上。</p>
 </li>
-</ul>
-<p>兩個差別在：前者是 <strong>硬體本身的漏洞導致被攻擊</strong>，後者是 <strong>硬體開發與生產過程中不受信任的實體</strong></p>
-<ul>
-<li>Trojan<ul>
-<li>不能太常發生，不然 verification 會發現 (functional test)</li>
-<li>payload 不能太大，不然會被發現</li>
-<li>payload 也有分 combinational 和 sequential，sequential 可以延遲幾個 cycle 再發動攻擊</li>
-</ul>
+<li><p>Model (in C&#x2F;C++&#x2F;SystemVerilog)<br>用 High Level Language 把重要的 Parameter、Feature Model 出來，去衡量做出的晶片能否符合需求。不過 ASIC 不太會做 Model，因為它行為固定，很容易預測。但像是 CPU、GPU 這種複雜的晶片，就會做 Model。像是 Performance Modeling，幫助去了解要設計的硬體長什麼樣子，衡量 Design Trade-off。</p>
+<p>另一個原因是軟體和硬體是同時開發的，去 Model 執行硬體的 Behavior，可以幫助軟體早期開發。</p>
+</li>
+<li><p>Architecture (in-order&#x2F;out-of-order)<br>這個階段會決定 CPU 的架構，像是 In-Order、Out-of-Order，這個架構會影響到 CPU 的 PPA。Modeling 是幫助 Architecture 去選擇最適合的架構。</p>
+</li>
+<li><p>RTL Logic Design (in Verilog&#x2F;SystemVerilog)<br>在 RISC-V 的 CPU 世界，Chisel 比較常見</p>
+</li>
+<li><p>Physical Design</p>
+</li>
+<li><p>Manufacture part</p>
 </li>
 </ul>
 
@@ -317,7 +317,7 @@
     
       <span class="category-chain">
         
-  <a href="/notes/categories/hardware/" class="category-chain-item">hardware</a>
+  <a href="/notes/categories/AI/" class="category-chain-item">AI</a>
   
   
 
@@ -332,9 +332,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/notes/tags/hardware/" class="print-no-link">#hardware</a>
-      
-        <a href="/notes/tags/security/" class="print-no-link">#security</a>
+        <a href="/notes/tags/AI/" class="print-no-link">#AI</a>
       
     </div>
   
@@ -346,8 +344,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Hardware Security</div>
-      <div>https://933yee.github.io/notes/2024/03/07/hardware-security/</div>
+      <div>AIAS - Digital Design</div>
+      <div>https://933yee.github.io/notes/2025/03/17/ai-computing-system-3/</div>
     </div>
     <div class="license-meta">
       
@@ -359,7 +357,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>March 7, 2024</div>
+          <div>March 17, 2025</div>
         </div>
       
       
@@ -391,18 +389,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/notes/2024/03/07/compiler-1/" title="Compiler 筆記 (1)">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Compiler 筆記 (1)</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/notes/2024/02/25/ue4-cs-aceyan/" title="Unreal Engine 4 - GPGPU flocking 解析">
-                        <span class="hidden-mobile">Unreal Engine 4 - GPGPU flocking 解析</span>
+                      <a href="/notes/2025/03/10/vlsi-design-for-manufacturability-1/" title="VLSI DFM - Maze Routing">
+                        <span class="hidden-mobile">VLSI DFM - Maze Routing</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -459,6 +451,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -652,6 +650,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/notes/js/local-search.js" ></script>
 
