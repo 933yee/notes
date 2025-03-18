@@ -19,15 +19,25 @@
     <meta name="description" content="參考清大麥偉基老師課程講義  Redundant Via Insertion一個 IC 有幾十億個 via，任何一個掛掉，整個 IC 也會掛掉 Redundant Via可以讓上下兩層 metal 凸出來一個，多塞一個 via 進去，這樣就算其中一個 via 掛掉，還有另一個 via 可以通電，增加 Reliabllity。多出來的 metal 也要考慮 Design Rule。  Post-R">
 <meta property="og:type" content="article">
 <meta property="og:title" content="VLSI DFM - Redundant Via Insertion">
-<meta property="og:url" content="https://933yee.github.io/notes/2025/03/10/vlsi-design-for-manufacturability-2/index.html">
+<meta property="og:url" content="https://933yee.github.io/notes/2025/03/18/vlsi-design-for-manufacturability-2/index.html">
 <meta property="og:site_name" content="933yee&#39;s Notes">
 <meta property="og:description" content="參考清大麥偉基老師課程講義  Redundant Via Insertion一個 IC 有幾十億個 via，任何一個掛掉，整個 IC 也會掛掉 Redundant Via可以讓上下兩層 metal 凸出來一個，多塞一個 via 進去，這樣就算其中一個 via 掛掉，還有另一個 via 可以通電，增加 Reliabllity。多出來的 metal 也要考慮 Design Rule。  Post-R">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/RedundantVia.png">
 <meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/PostRoutingDoubleViaInsertion.png">
 <meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/ConflictGraphConstruction.png">
-<meta property="article:published_time" content="2025-03-10T02:48:15.000Z">
-<meta property="article:modified_time" content="2025-03-15T13:27:52.583Z">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/ExampleDesign.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/ExampleConflictGraph.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/ExampleSubgraph.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/ExampleUpdatedConflictGraph.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/01ILPApproachToDVI.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/PreSelection.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/ReductionInConstraints.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/ViaDensityConstraint.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/PreSelectionWithViaDensityConstraint.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/ConnectedComponentsWithViaDensityConstraint.png">
+<meta property="article:published_time" content="2025-03-18T14:48:15.000Z">
+<meta property="article:modified_time" content="2025-03-18T14:45:08.330Z">
 <meta property="article:author" content="Kevin Lee">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://933yee.github.io/notes/images/vlsi-design-for-manufacturability/RedundantVia.png">
@@ -211,8 +221,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-03-10 10:48" pubdate>
-          March 10, 2025 am
+        <time datetime="2025-03-18 22:48" pubdate>
+          March 18, 2025 pm
         </time>
       </span>
     
@@ -223,7 +233,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          200 words
+          654 words
         
       </span>
     
@@ -234,7 +244,7 @@
         
         
         
-          2 mins
+          6 mins
         
       </span>
     
@@ -280,18 +290,53 @@
 <p>參考清大麥偉基老師課程講義</p>
 </blockquote>
 <h2 id="Redundant-Via-Insertion"><a href="#Redundant-Via-Insertion" class="headerlink" title="Redundant Via Insertion"></a>Redundant Via Insertion</h2><p>一個 IC 有幾十億個 <code>via</code>，任何一個掛掉，整個 IC 也會掛掉</p>
-<h3 id="Redundant-Via"><a href="#Redundant-Via" class="headerlink" title="Redundant Via"></a>Redundant Via</h3><p>可以讓上下兩層 <code>metal</code> 凸出來一個，多塞一個 <code>via</code> 進去，這樣就算其中一個 <code>via</code> 掛掉，還有另一個 <code>via</code> 可以通電，增加 <code>Reliabllity</code>。多出來的 <code>metal</code> 也要考慮 <code>Design Rule</code>。</p>
+<h2 id="Redundant-Via"><a href="#Redundant-Via" class="headerlink" title="Redundant Via"></a>Redundant Via</h2><p>可以讓上下兩層 <code>metal</code> 凸出來一個，多塞一個 <code>via</code> 進去，這樣就算其中一個 <code>via</code> 掛掉，還有另一個 <code>via</code> 可以通電，增加 <code>Reliabllity</code>。多出來的 <code>metal</code> 也要考慮 <code>Design Rule</code>。</p>
 <p><img src="/notes/./images/vlsi-design-for-manufacturability/RedundantVia.png" srcset="/notes/info/loading.gif" lazyload alt="Redundant Via"></p>
-<h3 id="Post-Routing-Double-Via-Insertion-DVI"><a href="#Post-Routing-Double-Via-Insertion-DVI" class="headerlink" title="Post-Routing Double Via Insertion (DVI)"></a>Post-Routing Double Via Insertion (DVI)</h3><p>輸入一個已經繞線好、 <code>via</code> 也打好的設計，目標是取代原本單一的 <code>via</code>，插入兩個 <code>via</code>，取代越多越好</p>
+<h2 id="Post-Routing-Double-Via-Insertion-DVI"><a href="#Post-Routing-Double-Via-Insertion-DVI" class="headerlink" title="Post-Routing Double Via Insertion (DVI)"></a>Post-Routing Double Via Insertion (DVI)</h2><p>輸入一個已經繞線好、 <code>via</code> 也打好的設計，目標是取代原本單一的 <code>via</code>，插入兩個 <code>via</code>，越多越好</p>
+<h3 id="Maximum-Independent-Set-MIS-based-approach-to-DVI"><a href="#Maximum-Independent-Set-MIS-based-approach-to-DVI" class="headerlink" title="Maximum Independent Set (MIS)-based approach to DVI"></a>Maximum Independent Set (MIS)-based approach to DVI</h3><p>把 DVI 問題轉換成 MIS 問題，找出最大的獨立集合，然後把這些 <code>via</code> 插入進去</p>
 <p><img src="/notes/./images/vlsi-design-for-manufacturability/PostRoutingDoubleViaInsertion.png" srcset="/notes/info/loading.gif" lazyload alt="Post-Routing Double Via Insertion"></p>
 <h4 id="Conflict-Graph-Construction"><a href="#Conflict-Graph-Construction" class="headerlink" title="Conflict Graph Construction"></a>Conflict Graph Construction</h4><p><img src="/notes/./images/vlsi-design-for-manufacturability/ConflictGraphConstruction.png" srcset="/notes/info/loading.gif" lazyload alt="Conflict Graph Construction"></p>
 <p>Feasible Candidate Via 會變成 Graph 裡面的 Node，如果兩個 <code>via</code> 有 <code>via conflict</code>，就會有一條 Edge</p>
-<h4 id="Heuristic-for-solving-the-MIS-Problem-–-H2K"><a href="#Heuristic-for-solving-the-MIS-Problem-–-H2K" class="headerlink" title="Heuristic for solving the MIS Problem – H2K"></a>Heuristic for solving the MIS Problem – H2K</h4><p>H2K 會迭代很多次，每次都找 size 為 k 的 subgraph，找出 Maximal Independent Set，並且更新 Conflict Graph。</p>
-<p>某個 Vertex 擁有越小的 feasible number and degree，他的 priority 越高</p>
 <ul>
-<li>Feasible Number of a vertex: 源自於同個 single via 的 feasible double vias 的數量 - 1</li>
+<li>如果原本有的兩個 Single Via，他們長出的 Double Via 有衝突，就會有一條 <strong>External Edge</strong> (上圖綠線)</li>
+<li>源自同個 Single Via 的 Double Via 之間，會有一條 <strong>Internal Edge</strong> (上圖黑線)</li>
 </ul>
-<p>via density 會影響 CMP 的平坦程度</p>
+<h4 id="Heuristic-for-solving-the-MIS-Problem-–-H2K"><a href="#Heuristic-for-solving-the-MIS-Problem-–-H2K" class="headerlink" title="Heuristic for solving the MIS Problem – H2K"></a>Heuristic for solving the MIS Problem – H2K</h4><p>H2K 會迭代很多次，每次都從 <code>Priority Queue</code> 裡面選出前 <code>k</code> 個 <code>via</code> 組成的 subgraph，然後這個算出 subgraph 的 Maximal Independent Set。選好之後更新 <code>Conflict Graph</code>，把 <strong>這些 via 和他們的鄰居 via 通通刪掉</strong>，這樣就完成一次 iteration。</p>
+<p>其中，<code>Priority Queue</code> 的 <code>Priority</code> 是由兩個數值決定的</p>
+<ul>
+<li><strong>Feasible Number</strong>: 這個 <code>Double Via</code> 源自的 <code>Single Via</code> 有多少個 <code>Feasible Candidate Via</code> - 1 (去掉自己)</li>
+<li><strong>Degree</strong>: 這個 <code>Double Via</code> 有多少條 Edge</li>
+</ul>
+<p><strong>Feasible Number</strong> 和 <strong>Degree</strong> 越小，<code>Priority</code> 越高，因為去掉它比較不會影響其他 <code>via</code> 的選擇，有機會選到更多的 <code>Double Via</code>。</p>
+<h5 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h5><p>我有一個這樣的設計</p>
+<p><img src="/notes/./images/vlsi-design-for-manufacturability/ExampleDesign.png" srcset="/notes/info/loading.gif" lazyload alt="Example Design"></p>
+<p>可以建構出這樣的 <code>Conflict Graph</code></p>
+<p><img src="/notes/./images/vlsi-design-for-manufacturability/ExampleConflictGraph.png" srcset="/notes/info/loading.gif" lazyload alt="Example Conflict Graph"></p>
+<p>其中 Vertex 上的數字代表 (Degree, Feasible Number)，藉由這組數字來決定 <code>Priority</code></p>
+<p>這邊假設 <code>k</code> &#x3D; 4，取出前 4 個 <code>via</code> (f, g, l, n) 組成 subgraph，然後算出 MIS。</p>
+<p><img src="/notes/./images/vlsi-design-for-manufacturability/ExampleSubgraph.png" srcset="/notes/info/loading.gif" lazyload alt="Example Subgraph"></p>
+<p>算出 MIS (f, l) 後，更新 <code>Conflict Graph</code></p>
+<p><img src="/notes/./images/vlsi-design-for-manufacturability/ExampleUpdatedConflictGraph.png" srcset="/notes/info/loading.gif" lazyload alt="Example Updated Conflict Graph"></p>
+<p>這樣就完成一次 iteration。持續迭代直到 <code>Conflict Graph</code> 為空。</p>
+<ul>
+<li>Reference: <a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/document/1594699">Post-routing redundant via insertion for yield&#x2F;reliability improvement</a></li>
+</ul>
+<h3 id="0-1-ILP-approach-to-DVI-Integer-Linear-Programming"><a href="#0-1-ILP-approach-to-DVI-Integer-Linear-Programming" class="headerlink" title="0-1 ILP approach to DVI (Integer Linear Programming)"></a>0-1 ILP approach to DVI (Integer Linear Programming)</h3><p>把 DVI 問題轉換成受很多限制條件的 ILP 問題</p>
+<p><img src="/notes/./images/vlsi-design-for-manufacturability/01ILPApproachToDVI.png" srcset="/notes/info/loading.gif" lazyload alt="0-1 ILP approach to DVI"></p>
+<p>直接硬解問題太難，所以要先用其他方式簡化問題</p>
+<h4 id="Pre-selection"><a href="#Pre-selection" class="headerlink" title="Pre-selection"></a>Pre-selection</h4><p>盡量不要選碰到 <code>External Edge</code> 的 <code>via</code>，因為這樣會影響其他 <code>via</code> 的選擇</p>
+<p><img src="/notes/./images/vlsi-design-for-manufacturability/PreSelection.png" srcset="/notes/info/loading.gif" lazyload alt="Pre-selection"></p>
+<h4 id="Connected-Components"><a href="#Connected-Components" class="headerlink" title="Connected Components"></a>Connected Components</h4><p>做完 Pre-selection 之後，可以想像會有很多獨立的 Subgraph，使用 <code>DFS</code> 把這些 <code>Connected Components</code> 找出來，每個 <code>Connected Component</code> 都是一個更小的 ILP 問題</p>
+<h4 id="Reduction-in-Constraints"><a href="#Reduction-in-Constraints" class="headerlink" title="Reduction in Constraints"></a>Reduction in Constraints</h4><p>合併一些限制條件，讓 ILP 問題變得更簡單</p>
+<p><img src="/notes/./images/vlsi-design-for-manufacturability/ReductionInConstraints.png" srcset="/notes/info/loading.gif" lazyload alt="Reduction in Constraints"></p>
+<h4 id="Via-Density-Constraint"><a href="#Via-Density-Constraint" class="headerlink" title="Via Density Constraint"></a>Via Density Constraint</h4><p>在現實層面，因為 CMP (Chemical Mechanical Planarization) 的關係，每個區域內的 <code>via</code> 數量是有限制的，所以要多考慮 Via Density。</p>
+<p>以剛剛的 0-1 ILP 問題為例，加上 Via Density Constraint 之後：</p>
+<p>多了一個限制條件，讓每個區域內的 <code>via</code> 數量不能超過一定的數量</p>
+<p><img src="/notes/./images/vlsi-design-for-manufacturability/ViaDensityConstraint.png" srcset="/notes/info/loading.gif" lazyload alt="Via Density Constraint"></p>
+<p>Pre-selection 時除了避免選到 <code>External Edge</code> 的 <code>via</code>，還要避免選到 <code>Potential violating region</code> 的 <code>via</code></p>
+<p><img src="/notes/./images/vlsi-design-for-manufacturability/PreSelectionWithViaDensityConstraint.png" srcset="/notes/info/loading.gif" lazyload alt="Pre-selection with Via Density Constraint"></p>
+<p>分割 <code>Connected Components</code> 時，不能把 <code>Potential violating region</code> 分開</p>
+<p><img src="/notes/./images/vlsi-design-for-manufacturability/ConnectedComponentsWithViaDensityConstraint.png" srcset="/notes/info/loading.gif" lazyload alt="Connected Components with Via Density Constraint"></p>
 
                 
               </div>
@@ -310,7 +355,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>VLSI DFM - Redundant Via Insertion</div>
-      <div>https://933yee.github.io/notes/2025/03/10/vlsi-design-for-manufacturability-2/</div>
+      <div>https://933yee.github.io/notes/2025/03/18/vlsi-design-for-manufacturability-2/</div>
     </div>
     <div class="license-meta">
       
@@ -322,7 +367,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>March 10, 2025</div>
+          <div>March 18, 2025</div>
         </div>
       
       
@@ -354,18 +399,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/notes/2025/03/10/vlsi-design-for-manufacturability-1/" title="VLSI DFM - Maze Routing">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">VLSI DFM - Maze Routing</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/notes/2025/03/06/machine-learning-1/" title="Machine Learning - Basic Concepts">
-                        <span class="hidden-mobile">Machine Learning - Basic Concepts</span>
+                      <a href="/notes/2025/03/17/ai-computing-system-3/" title="AIAS - Digital Design">
+                        <span class="hidden-mobile">AIAS - Digital Design</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
