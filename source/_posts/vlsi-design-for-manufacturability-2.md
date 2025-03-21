@@ -77,7 +77,7 @@ H2K 會迭代很多次，每次都從 `Priority Queue` 裡面選出前 `k` 個 `
 
 ![0-1 ILP approach to DVI](./images/vlsi-design-for-manufacturability/01ILPApproachToDVI.png)
 
-直接硬解問題太難，所以要先用其他方式簡化問題
+直接硬解問題太難 (ILP 是 NP-Hard)，所以要先用其他方式簡化問題
 
 #### Pre-selection
 
