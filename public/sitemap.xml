@@ -567,6 +567,13 @@
   </url>
   
   <url>
+    <loc>https://933yee.github.io/notes/tags/compiler/</loc>
+    <lastmod>2025-03-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://933yee.github.io/notes/tags/hardware/</loc>
     <lastmod>2025-03-22</lastmod>
     <changefreq>weekly</changefreq>
@@ -581,13 +588,6 @@
   </url>
   
   <url>
-    <loc>https://933yee.github.io/notes/tags/compiler/</loc>
-    <lastmod>2025-03-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://933yee.github.io/notes/tags/Compilier/</loc>
     <lastmod>2025-03-22</lastmod>
     <changefreq>weekly</changefreq>
@@ -596,20 +596,6 @@
   
   <url>
     <loc>https://933yee.github.io/notes/tags/CG/</loc>
-    <lastmod>2025-03-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://933yee.github.io/notes/tags/docker/</loc>
-    <lastmod>2025-03-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://933yee.github.io/notes/tags/web/</loc>
     <lastmod>2025-03-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -638,6 +624,20 @@
   
   <url>
     <loc>https://933yee.github.io/notes/tags/gpu/</loc>
+    <lastmod>2025-03-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://933yee.github.io/notes/tags/docker/</loc>
+    <lastmod>2025-03-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://933yee.github.io/notes/tags/web/</loc>
     <lastmod>2025-03-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -693,14 +693,14 @@
   </url>
   
   <url>
-    <loc>https://933yee.github.io/notes/tags/Others/</loc>
+    <loc>https://933yee.github.io/notes/tags/OS/</loc>
     <lastmod>2025-03-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://933yee.github.io/notes/tags/OS/</loc>
+    <loc>https://933yee.github.io/notes/tags/Others/</loc>
     <lastmod>2025-03-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
