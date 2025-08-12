@@ -1,0 +1,871 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/notes/info/fluid.png">
+  <link rel="icon" href="/notes/info/avatar.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Kevin Lee">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Quantized Side Tuning: Fast and Memory-Efficient Tuning of Quantized Large Language Models摘要本文提出一種名為 Quantized Side Tuning (QST) 的訓練框架，旨在快速且記憶體效率高地微調大型語言模型（LLMs）。該方法透過兩階段處理：  將模型權重量化為 4-bit，減少儲存所需的記憶體">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Paper">
+<meta property="og:url" content="https://933yee.github.io/notes/2025/05/11/paper/index.html">
+<meta property="og:site_name" content="933yee&#39;s Notes">
+<meta property="og:description" content="Quantized Side Tuning: Fast and Memory-Efficient Tuning of Quantized Large Language Models摘要本文提出一種名為 Quantized Side Tuning (QST) 的訓練框架，旨在快速且記憶體效率高地微調大型語言模型（LLMs）。該方法透過兩階段處理：  將模型權重量化為 4-bit，減少儲存所需的記憶體">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-05-11T11:04:37.000Z">
+<meta property="article:modified_time" content="2025-05-11T19:31:36.156Z">
+<meta property="article:author" content="Kevin Lee">
+<meta property="article:tag" content="research">
+<meta property="article:tag" content="paper">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Paper - 933yee&#39;s Notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/notes/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/notes/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/notes/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"933yee.github.io","root":"/notes/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/info/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/notes/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/notes/js/utils.js" ></script>
+  <script  src="/notes/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/notes/">
+      <strong>933yee&#39;s Notes</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/notes/info/default.gif') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.7)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Paper"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-05-11 19:04" pubdate>
+          May 11, 2025 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.5k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          30 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Paper</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Quantized-Side-Tuning-Fast-and-Memory-Efficient-Tuning-of-Quantized-Large-Language-Models"><a href="#Quantized-Side-Tuning-Fast-and-Memory-Efficient-Tuning-of-Quantized-Large-Language-Models" class="headerlink" title="Quantized Side Tuning: Fast and Memory-Efficient Tuning of Quantized Large Language Models"></a>Quantized Side Tuning: Fast and Memory-Efficient Tuning of Quantized Large Language Models</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>本文提出一種名為 Quantized Side Tuning (QST) 的訓練框架，旨在快速且記憶體效率高地微調大型語言模型（LLMs）。該方法透過兩階段處理：</p>
+<ol>
+<li>將模型權重量化為 4-bit，減少儲存所需的記憶體。</li>
+<li>設計一個與主模型分離的「側邊網路（side network）」，該網路僅根據主模型的隱藏層輸出進行任務預測，從而避免在主模型上進行反向傳播，進一步減少中介激活值的記憶體消耗。</li>
+</ol>
+<p>此外，QST 運用低秩適配器（如 LoRA、Adapter）與無梯度下取樣模組來降低可訓練參數數量。實驗顯示，QST 能夠將總記憶體占用降低至最多 1&#x2F;7，訓練速度提升 3 倍，並在準確率上保持與現有最先進方法相當的水準。</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>隨著大型語言模型（LLMs）不斷增大（達數百億參數），其在微調過程中所需的記憶體與計算資源急遽上升。現有的 PEFT（參數高效率微調）雖能部分減少訓練參數，但仍需保留大量中介激活值，因此無法從根本上解決記憶體瓶頸。本文提出 QST，目的在於同時解決模型權重、優化器狀態與中介激活值三大記憶體來源問題。</p>
+<h2 id="研究目的本研究主要目的為："><a href="#研究目的本研究主要目的為：" class="headerlink" title="研究目的本研究主要目的為："></a>研究目的本研究主要目的為：</h2><ul>
+<li>設計一個針對量化 LLMs 的記憶體節省且快速微調方法。</li>
+<li>減少三個主要記憶體負擔來源：模型權重、優化器狀態與中介激活值。</li>
+<li>維持微調後模型的高效性能，並提升在多種下游任務上的表現。</li>
+</ul>
+<h2 id="文獻探討"><a href="#文獻探討" class="headerlink" title="文獻探討"></a>文獻探討</h2><ul>
+<li><p>2.1 Parameter-Efficient Finetuning：<br>回顧 PEFT 方法如 LoRA、Adapters、Prompt Tuning 等，其特點在於僅微調少量參數；但這些方法仍需保留大部分中介激活值，導致記憶體需求仍偏高。</p>
+</li>
+<li><p>2.2 Memory-Efficient Training and Finetuning：<br>探討如 Gradient Checkpointing、可逆網路、網路剪枝與蒸餾等降低記憶體需求技術，指出這些技術或需額外運算、或不適用於大模型；因此提出 QST 為一種可針對全模型大小皆適用的解法。</p>
+</li>
+</ul>
+<h2 id="研究方法"><a href="#研究方法" class="headerlink" title="研究方法"></a>研究方法</h2><ul>
+<li><p>研究設計：<br>提出 QST 架構，包含 4-bit 量化與 side tuning 雙階段設計。</p>
+</li>
+<li><p>研究對象：<br>使用多種主流 LLM 架構（如 OPT、LLaMA-2）進行實驗，涵蓋模型參數從 1.3B 至 70B。</p>
+</li>
+<li><p>研究工具：<br>實作於 PyTorch 與 HuggingFace 平台，使用 NF4 為 4-bit 資料型態、bfloat16 為計算型態。</p>
+</li>
+<li><p>資料處理與分析：<br>評估模型在 GLUE、MMLU 等標準資料集上的準確率與記憶體消耗，並以 FLOPS&#x2F;token 量測訓練速度。</p>
+</li>
+</ul>
+<h2 id="研究結果"><a href="#研究結果" class="headerlink" title="研究結果"></a>研究結果</h2><ul>
+<li>記憶體消耗： QST 可比 QLoRA 降低記憶體使用量高達 2.3 倍。</li>
+<li>訓練速度： 相較 QLoRA 提升 3 倍以上。</li>
+<li>準確率： 在 GLUE 與 MMLU 數據集上與 QLoRA 等方法表現相當，誤差小於 1%。</li>
+<li>模型擴展性： 可有效應用於 70B 參數的 LLaMA-2 模型。</li>
+<li>下取樣模組比較： Adapter 為最佳方案，在效能與記憶體效率間取得平衡。</li>
+<li>應用測試： 在 MT-Bench 聊天測試中，QST 甚至超越原始 LLaMA-2-70B 模型。</li>
+</ul>
+<h2 id="結論與建議"><a href="#結論與建議" class="headerlink" title="結論與建議"></a>結論與建議</h2><ul>
+<li>結論：<ul>
+<li>QST 為一項具突破性的微調方法，能在不犧牲效能的情況下，顯著降低訓練資源消耗，特別適合應用於記憶體受限的現實場景。</li>
+</ul>
+</li>
+<li>建議：<ul>
+<li>未來可擴展 QST 至多模態模型。</li>
+<li>探索更多無參數下取樣方法，以進一步降低資源需求。</li>
+<li>深入研究 QST 於推論時的優化策略。</li>
+</ul>
+</li>
+</ul>
+<h3 id="需要查的"><a href="#需要查的" class="headerlink" title="需要查的"></a>需要查的</h3><ul>
+<li>gradient checkpointing</li>
+<li>PEFT</li>
+<li>quantization</li>
+<li>QLoRA</li>
+<li>finetuning</li>
+<li>side network</li>
+<li>LLM head</li>
+</ul>
+<h1 id="DISP-LLM-Dimension-Independent-Structural-Pruning-for-Large-Language-Models"><a href="#DISP-LLM-Dimension-Independent-Structural-Pruning-for-Large-Language-Models" class="headerlink" title="DISP-LLM: Dimension-Independent Structural Pruning for Large Language Models"></a>DISP-LLM: Dimension-Independent Structural Pruning for Large Language Models</h1><h2 id="摘要-1"><a href="#摘要-1" class="headerlink" title="摘要"></a>摘要</h2><p>本研究提出一種新穎的維度無關結構剪枝方法，DISP-LLM，針對大型語言模型（LLMs）進行壓縮。相較於既有的結構剪枝方法（如 LLM-Pruner 和 SliceGPT）在彈性或額外參數負擔上的侷限，本方法打破了剪枝過程中嵌入維度的結構依賴性，允許每個轉換層使用不同的特徵子集。本法具備以下優勢：每層可使用不同輸入&#x2F;輸出寬度，提升剪枝彈性且不引入額外參數。實驗驗證指出，本方法於 OPT、LLaMA、LLaMA-2、Phi-1.5 與 Phi-2 等模型上優於現有技術，首次證明結構剪枝可達與半結構剪枝相當的準確性。</p>
+<h2 id="前言-1"><a href="#前言-1" class="headerlink" title="前言"></a>前言</h2><p>大型語言模型在自然語言處理任務上表現卓越，但其龐大的參數量與高昂的運算成本限制了其在資源受限設備上的應用。過往解法如稀疏化、量化與剪枝方法已獲關注，尤其是結構剪枝能在不改變模型權重的情況下減少成本。然現有方法如 LLM-Pruner 受限於結構依賴性，SliceGPT 則需額外投影參數，影響效能與結構簡潔性。故本研究旨在提供一種不引入額外參數且具高彈性的結構剪枝策略。</p>
+<h2 id="研究目的"><a href="#研究目的" class="headerlink" title="研究目的"></a>研究目的</h2><ul>
+<li>目標：設計一種維度無關（dimension-independent）結構剪枝方法，避免層與層間的特徵依賴，達成靈活剪枝與高效推論。</li>
+<li>問題：如何在不引入額外參數的前提下，讓每層自由選擇輸入&#x2F;輸出特徵子集，並同時維持模型效能？</li>
+</ul>
+<h2 id="文獻探討-1"><a href="#文獻探討-1" class="headerlink" title="文獻探討"></a>文獻探討</h2><ul>
+<li>Magnitude-based Pruning： 透過 L1&#x2F;L2 範數移除小權重，但對 LLMs 效能傷害大（Han et al., 2015）；</li>
+<li>Optimal Brain Damage &#x2F; Surgeon： 依據 Hessian 資訊進行剪枝，計算成本高（LeCun et al., 1990；Hassibi &amp; Stork, 1993）；</li>
+<li>LLM-Pruner： 遵循結構依賴進行剪枝，彈性不足（Ma et al., 2023）；</li>
+<li>SliceGPT： 使用主成分分析進行空間投影，具彈性但需新增轉換參數（Ashkboos et al., 2024）；</li>
+<li>SparseGPT&#x2F;Wanda： 使用 Hessian 近似進行半結構剪枝，難以達成實際加速（Frantar et al., 2023；Sun et al., 2024）；</li>
+</ul>
+<h2 id="研究方法-1"><a href="#研究方法-1" class="headerlink" title="研究方法"></a>研究方法</h2><ul>
+<li>研究設計： 提出 DISP-LLM 方法，透過<strong>索引選擇與索引加總（Index Select &amp; Add）</strong>打破層間特徵依賴；</li>
+<li>研究對象： 多種 LLMs 模型（OPT、LLaMA、Phi 系列）；</li>
+<li>研究工具： 使用 Pytorch 與 Hugging Face 進行訓練與剪枝，搭配 GRU 型超網路（Hypernetwork）與 ReinMax 方法決定每層剪枝寬度；</li>
+<li>資料處理與分析： 透過語言建模損失與正規化條項進行結構優化，並使用 WikiText-2、Alpaca 等資料進行訓練與評估。</li>
+</ul>
+<h2 id="研究結果-1"><a href="#研究結果-1" class="headerlink" title="研究結果"></a>研究結果</h2><ul>
+<li>DISP-LLM 在各剪枝率（10%~50%）下均優於 LLM-Pruner、SliceGPT 與 LLM Surgeon；</li>
+<li>相對於 SliceGPT，效能更佳且無新增參數負擔；</li>
+<li>在多種任務如 WinoGrande、HellaSwag、ARC 等零樣本評估中具備領先表現；</li>
+<li>可靈活決定每層寬度，各層剪枝比率不一，有助於效率與效能的雙重提升。</li>
+</ul>
+<h2 id="結論與建議-1"><a href="#結論與建議-1" class="headerlink" title="結論與建議"></a>結論與建議</h2><ul>
+<li>結論： DISP-LLM 透過打破結構依賴、使用超網路與指標操作成功提升剪枝彈性，為大型語言模型剪枝提供新路徑；</li>
+<li>建議：<ul>
+<li>後續可探討不同任務導向下的子網路學習；</li>
+<li>評估結合 LoRA 等方法進行微調與壓縮的混合應用；</li>
+<li>延伸至多模態模型壓縮場景。</li>
+</ul>
+</li>
+</ul>
+<h1 id="Hot-or-Cold-Adaptive-Temperature-Sampling-for-Code-Generation-with-Large-Language-Models"><a href="#Hot-or-Cold-Adaptive-Temperature-Sampling-for-Code-Generation-with-Large-Language-Models" class="headerlink" title="Hot or Cold? Adaptive Temperature Sampling for Code Generation with Large Language Models"></a>Hot or Cold? Adaptive Temperature Sampling for Code Generation with Large Language Models</h1><h2 id="摘要-2"><a href="#摘要-2" class="headerlink" title="摘要"></a>摘要</h2><p>該研究指出現有大型語言模型（LLMs）使用的解碼策略多為自然語言生成所設計，忽略了自然語言與程式語言間的差異。本文首度系統性探討專為程式碼生成設計的解碼策略，分析發現程式碼中存在「困難標記（challenging tokens）」與「穩定標記（confident tokens）」，且困難標記通常出現在程式碼區塊的開頭。基於此，作者提出「自適應溫度採樣法（Adaptive Temperature Sampling, AdapT）」，針對不同類型的標記動態調整溫度參數，結果顯示此法顯著優於現有狀態最佳解碼方法。</p>
+<h2 id="前言-2"><a href="#前言-2" class="headerlink" title="前言"></a>前言</h2><ul>
+<li>背景：大型語言模型（LLMs）在自動程式碼生成方面展現強大潛力，例如 AlphaCode、Codex 等模型。</li>
+<li>動機：現有解碼策略未專為程式碼設計，沿用自然語言生成的方法，如溫度採樣（temperature sampling）在語法嚴格的程式碼生成中成效有限，需開發新策略提升準確性與多樣性。</li>
+</ul>
+<h2 id="研究目的-1"><a href="#研究目的-1" class="headerlink" title="研究目的"></a>研究目的</h2><ul>
+<li>分析程式碼生成中損失函數（loss distribution）的特性，找出難預測與易預測的標記類型。</li>
+<li>根據上述分析，設計自適應溫度採樣法（AdapT）。</li>
+<li>評估該方法於不同大型語言模型與資料集上的實際效能。</li>
+</ul>
+<h2 id="文獻探討-2"><a href="#文獻探討-2" class="headerlink" title="文獻探討"></a>文獻探討</h2><ul>
+<li>解碼策略分類：搜尋式（如 Greedy、Beam Search）與採樣式（如 Temperature、Top-k、Top-p Sampling）。</li>
+<li>限制：搜尋式缺乏多樣性，採樣式易受尾部亂數影響，對語法嚴格的程式碼生成成效有限。</li>
+<li>現有方法如 Codex 雖使用溫度調節技術，但其本質設計仍偏向自然語言處理。</li>
+</ul>
+<h2 id="研究方法-2"><a href="#研究方法-2" class="headerlink" title="研究方法"></a>研究方法</h2><ul>
+<li>研究設計：<ul>
+<li>比較自然語言與程式碼的損失分布特性。</li>
+<li>定義「挑戰性標記」與「穩定標記」並量化其預測困難度。</li>
+</ul>
+</li>
+<li>研究對象：<ul>
+<li>開源 LLM 模型：CodeGen-2B、InCoder-6B、CodeGeeX-13B。</li>
+<li>資料集：HumanEval（164 題）、MBPP（500 題）、APPS（訓練集 5000 題）。</li>
+</ul>
+</li>
+<li>研究工具與實驗設置：<ul>
+<li>使用 PyTorch 與 GPU (NVIDIA V100) 執行模型。</li>
+<li>評估指標：Pass@k（k&#x3D;1,5,10,15）。</li>
+</ul>
+</li>
+<li>資料分析：<ul>
+<li>分析預測困難度（Prediction Difficulty, PD）。</li>
+<li>將溫度係數動態設定為兩值：a（困難標記）、b（穩定標記），依條件分配。</li>
+</ul>
+</li>
+</ul>
+<h2 id="研究結果-2"><a href="#研究結果-2" class="headerlink" title="研究結果"></a>研究結果</h2><ul>
+<li>挑戰性標記集中出現在程式區塊起始位置。</li>
+<li>AdapT 採樣法顯著提升程式碼正確率：<ul>
+<li>CodeGeeX 在 HumanEval 中 Pass@15 提升 13.6%（36.0% → 40.9%）。</li>
+</ul>
+</li>
+<li>AdapT 提高生成程式碼品質：<ul>
+<li>降低 NameError、SyntaxError、TypeError 等錯誤發生率。</li>
+<li>比 SP（標準溫度採樣）產出更多通過測試的程式碼片段。</li>
+</ul>
+</li>
+</ul>
+<h2 id="結論與建議-2"><a href="#結論與建議-2" class="headerlink" title="結論與建議"></a>結論與建議</h2><ul>
+<li>結論：<ul>
+<li>LLM 在程式碼生成中面臨的挑戰與自然語言不同。</li>
+<li>自適應溫度採樣有效區分挑戰性與穩定標記，提升準確率與可讀性。</li>
+<li>AdapT 展現高魯棒性與跨模型、跨資料集適應性。</li>
+</ul>
+</li>
+<li>建議：<ul>
+<li>可採學習型方法動態決定溫度。</li>
+<li>將領域知識納入解碼過程，以應對真實開發需求。</li>
+<li>建立多階段解碼策略（如先產出自然語言規劃，再生成程式碼）。</li>
+</ul>
+</li>
+</ul>
+<h1 id="Memory-Efficient-Vision-Transformers-An-Activation-Aware-Mixed-Rank-Compression-Strategy"><a href="#Memory-Efficient-Vision-Transformers-An-Activation-Aware-Mixed-Rank-Compression-Strategy" class="headerlink" title="Memory-Efficient Vision Transformers: An Activation-Aware Mixed-Rank Compression Strategy"></a>Memory-Efficient Vision Transformers: An Activation-Aware Mixed-Rank Compression Strategy</h1><h2 id="摘要-3"><a href="#摘要-3" class="headerlink" title="摘要"></a>摘要</h2><p>本研究針對 Vision Transformers (ViTs) 模型推論時所面臨的高記憶體需求問題，提出一種基於輸入啟動（activation-aware）的混合秩（mixed-rank）壓縮策略，藉由對各層權重張量進行低秩分解，並搭配層別誤差補償方法，以達成大幅減少模型參數量而不明顯損失預測準確度的目標。方法上，將原始權重張量拆解為兩個參數高效的子張量之和，並透過啟動輸入與誤差梯度導向的最小化策略進行細緻優化。實驗顯示，該方法能將 DeiT-B 模型參數減少 60%，準確率僅下降不到 1%，並可壓縮大型 ViT 至與較小模型同級的參數量，同時提升預測精度，證明其為記憶體受限環境中可行之解決方案。</p>
+<h2 id="前言-3"><a href="#前言-3" class="headerlink" title="前言"></a>前言</h2><p>Vision Transformers 自提出後在多項視覺任務中展現卓越性能，包括圖像分類、物件偵測與語意分割。然而，其高參數與記憶體使用成本限制了其在實務中之部署潛力。傳統壓縮方法如剪枝、量化、知識蒸餾、token pruning 雖有效，但在 transformer 架構中效果有限，尤其是直接應用低秩分解時會導致性能大幅下降。本研究即在此背景下，探索能兼顧效能與記憶體需求的新式壓縮方法。</p>
+<h2 id="研究目的-2"><a href="#研究目的-2" class="headerlink" title="研究目的"></a>研究目的</h2><p>本研究旨在提出一種新型「啟動感知混合秩壓縮方法（Activation-Aware Mixed-Rank Compression）」，目標包括：</p>
+<ol>
+<li>利用啟動輸入資訊導引權重張量之低秩分解。</li>
+<li>對 ViT 各層進行差異化秩配置（mixed-rank）。</li>
+<li>發展層級誤差補償機制（layer-wise error compensation）。</li>
+<li>在大幅壓縮參數量的同時維持高準確率，避免過去低秩方法常見之性能損失。</li>
+</ol>
+<h2 id="文獻探討-3"><a href="#文獻探討-3" class="headerlink" title="文獻探討"></a>文獻探討</h2><ul>
+<li>Eckart &amp; Young (1936)：理論基礎，證明 SVD 在固定秩下為最小誤差解。</li>
+<li>Jaderberg et al. (2014)、Hsu et al. (2022)：探討低秩在 CNN&#x2F;Transformer 壓縮中之應用與挑戰。</li>
+<li>Yu &amp; Wu (2023)：證明輸出特徵比權重更適合低秩近似，並導入激活感知策略。</li>
+<li>Li et al. (2023)：採用低秩與稀疏矩陣聯合表示，但仍會因能量流失導致準確率下降。</li>
+<li>Kumar (2022)：提出 attention block 採低秩，feed-forward 採剪枝的混合法。</li>
+</ul>
+<h2 id="研究方法-3"><a href="#研究方法-3" class="headerlink" title="研究方法"></a>研究方法</h2><ul>
+<li>研究設計：<ul>
+<li>分三階段：Activation-Aware SVD、Mixed-Rank Optimization、Layer-Wise Error Compensation</li>
+</ul>
+</li>
+<li>研究對象：<ul>
+<li>多個 ViT 架構（包括 DeiT、ViT-B、Swin）</li>
+</ul>
+</li>
+<li>研究工具與技術：<ul>
+<li>Singular Value Decomposition (SVD)</li>
+<li>啟動輸入加權的張量分解</li>
+<li>啟發式逐層秩指派（greedy local search）</li>
+<li>層別梯度導向補償（gradient-based optimization）</li>
+</ul>
+</li>
+<li>資料處理與分析：<ul>
+<li>以 proxy dataset 模擬啟動輸入</li>
+<li>使用 Frobenius norm 評估重建誤差</li>
+<li>進行 ImageNet 準確率與參數壓縮比分析</li>
+</ul>
+</li>
+</ul>
+<h2 id="研究結果-3"><a href="#研究結果-3" class="headerlink" title="研究結果"></a>研究結果</h2><ul>
+<li>壓縮率與精度：<ul>
+<li>DeiT-B 壓縮 60% 僅下降 0.7%（81.80% → 81.10%）</li>
+<li>DeiT-S 壓縮後比原模型準確度更高（79.80% → 80.30%）</li>
+</ul>
+</li>
+<li>相較其他方法：<ul>
+<li>優於 SPViT、S2ViTE、WDPruning 等現有壓縮技術</li>
+</ul>
+</li>
+<li>極端壓縮案例：<ul>
+<li>ViT-L 壓縮為 ViT-B 尺寸後仍優於原 ViT-B 模型</li>
+</ul>
+</li>
+<li>與量化兼容性強：<ul>
+<li>搭配 8-bit quantization 仍可維持準確率</li>
+</ul>
+</li>
+</ul>
+<h2 id="結論與建議-3"><a href="#結論與建議-3" class="headerlink" title="結論與建議"></a>結論與建議</h2><ul>
+<li>結論：<ul>
+<li>本研究提出的啟動感知混合秩壓縮方法，能有效降低 ViT 模型參數量，並在保留原始準確率的同時，顯著減少記憶體需求。所提出的三階段流程具有高度可擴展性與實作效能，亦兼容後訓量化策略。</li>
+</ul>
+</li>
+<li>建議：<ul>
+<li>此法未來可延伸應用至語言模型（如 LLMs）。</li>
+<li>建議探討動態秩指派與多任務情境下之壓縮策略。</li>
+</ul>
+</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/notes/categories/paper/" class="category-chain-item">paper</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/notes/tags/research/" class="print-no-link">#research</a>
+      
+        <a href="/notes/tags/paper/" class="print-no-link">#paper</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Paper</div>
+      <div>https://933yee.github.io/notes/2025/05/11/paper/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Kevin Lee</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>May 11, 2025</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/notes/2025/05/11/llm/" title="LLM">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">LLM</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/notes/2025/03/28/japanese-2/" title="日語筆記 - 單字">
+                        <span class="hidden-mobile">日語筆記 - 單字</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/notes/js/events.js" ></script>
+<script  src="/notes/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/notes/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/notes/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/notes/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
