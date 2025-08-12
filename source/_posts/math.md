@@ -1,12 +1,83 @@
 ---
 title: 數學筆記
-date: 2025-02-23 18:37:12
+date: 2025-08-12 19:37:12
 tags:
 category:
 math: true
 ---
 
 > 我的數學好爛，忘光光，小補一下
+
+## Entropy
+
+$$
+H(P) = -\sum_{i} P(i) \log P(i)
+$$
+
+對於真實分布 $P$，設計最佳的編碼表，平均需要多少 bits。
+
+bits 代表了資訊量，$H(P)$ 越小，代表分佈本身資訊量小
+
+### Cross Entropy
+
+$$
+H(P, Q) = -\sum_{i} P(i) \log Q(i)
+$$
+
+對於真實分布 $P$，用 $Q$ 來設計編碼表，平均需要多少 bits。
+
+$Q$ 越小，錯誤的懲罰越大。 Cross Entropy 越接近 $H(P)$，代表編碼表越好。
+
+### KL Divergence
+
+$$
+D_{KL}(P || Q) = \sum_{i} P(i) \log \frac{P(i)}{Q(i)}
+$$
+
+當你用 $Q$ 來近似 $P$ 時，會多付出多少額外資訊成本。
+
+#### 與 Cross Entropy 的關係
+
+$$
+\begin{aligned}
+D_{KL}(P || Q)
+&= \sum_{i} P(i) \log \frac{P(i)}{Q(i)} \\
+&= \sum_{i} P(i) \log P(i) - \sum_{i} P(i) \log Q(i) \\
+&= - H(P) + H(P, Q)
+\end{aligned}
+$$
+
+得到
+
+$$
+H(P, Q) = H(P) + D_{KL}(P || Q)
+$$
+
+也就是 Entropy = 真實分布的 Entropy + 額外的資訊浪費
+
+#### 壞處
+
+1. 不對稱
+
+   - $D_{KL}(P || Q) \neq D_{KL}(Q || P)$
+   - $D_{KL}(P || Q)$ 衡量的是用 $Q$ 來近似 $P$ 的效果，反之則不然。
+
+2. 可能無窮大
+   - 當 $Q(i) = 0$ 而 $P(i) > 0$ 時，$D_{KL}(P || Q)$ 會無窮大。
+
+### JS Divergence
+
+$$
+D_{JS}(P || Q) = \frac{1}{2} D_{KL}(P || M) + \frac{1}{2} D_{KL}(Q || M)
+$$
+
+其中
+
+$$
+M = \frac{1}{2}(P + Q)
+$$
+
+是 $P$ 和 $Q$ 的平均分布。
 
 ## 泰勒展開式
 
