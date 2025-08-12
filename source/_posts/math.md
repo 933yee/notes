@@ -41,8 +41,8 @@ $$
 $$
 \begin{aligned}
 D_{KL}(P || Q)
-&= \sum_{i} P(i) \log \frac{P(i)}{Q(i)} \\
-&= \sum_{i} P(i) \log P(i) - \sum_{i} P(i) \log Q(i) \\
+&= \sum_{i} P(i) \log \frac{P(i)}{Q(i)} \newline
+&= \sum_{i} P(i) \log P(i) - \sum_{i} P(i) \log Q(i) \newline
 &= - H(P) + H(P, Q)
 \end{aligned}
 $$
