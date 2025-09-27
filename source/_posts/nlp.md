@@ -61,4 +61,26 @@ math: true
   - 要定義 `Positive Sample` 和 `Negative Sample`，且兩者比例要適當
 - Contextualized Embeddings: 根據上下文動態生成詞嵌入，想是 BERT、GPT
   - 同一個詞彙在不同上下文中會有不同的表示，像是 `bank` 在 `river bank` 和 `financial bank` 中會有不同的向量
-- Name Entity Recognition (NER): 識別文本中的專有名詞，如人名、地名、組織名等 s
+- Name Entity Recognition (NER): 識別文本中的專有名詞，如人名、地名、組織名等
+
+## RNN
+
+- RNNs for NER
+- RNNs for Sequence Classification
+- Stacked RNNs
+- Bidirectional RNNs
+  - 結合前向和後向的 RNN，捕捉上下文資訊
+- Bidirectional RNNs for Sequence Classification
+
+## Sequence to Sequence Models
+
+- 機器翻譯
+- 文件摘要
+- 對話生成
+
+- RNN for Sequence Generation
+- RNN for Machine Translation
+  - context vector
+  - RNN 需要 End to End 的訓練，做摘要和做翻譯訓練出來的 Decoder 不一樣
+
+## Long Short-Term Memory (LSTM)
