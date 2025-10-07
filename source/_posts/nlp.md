@@ -84,3 +84,26 @@ math: true
   - RNN 需要 End to End 的訓練，做摘要和做翻譯訓練出來的 Decoder 不一樣
 
 ## Long Short-Term Memory (LSTM)
+
+大量的訓練參數，為了捨棄不重要的資訊，只保留重要的資訊。能稍為解決 Vanishing/ Exploding Gradient 的問題，但還是會有。
+
+最大的問題是依然不能平行化
+
+- Forget Gate
+- Input Gate
+- Candidate MEmory
+- Output Gate
+
+## Attention Mechanism
+
+讓模型能夠專注於輸入序列的特定部分，而不是像傳統 RNN 那樣一次處理整個 Sequence。
+
+### Attention with RNNs
+
+一開始是把 Attention 接上 RNN ，把每個時間點的 Hidden State 都拿來算 Attention。但是這樣還是有 RNN 的缺點，無法平行化。
+
+### Attention without RNNs
+
+Transformer 就是完全用 Attention 機制來取代 RNN，讓模型能夠平行化處理序列資料。
+
+##
