@@ -74,3 +74,10 @@ $$
 $$
 
 - 通常 $P(x_i | \Theta)$ 不依賴於模型參數 $\Theta$，可以把他想像成常數，最小化時不會影響結果，所以可以忽略
+
+- decision
+- xgboost
+- lightgbm
+- rnn
+- lstm
+  https://blog.nbswords.com/2020/12/xgboostlightgbmcatboost.html
