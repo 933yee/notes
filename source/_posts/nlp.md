@@ -106,4 +106,75 @@ math: true
 
 Transformer 就是完全用 Attention 機制來取代 RNN，讓模型能夠平行化處理序列資料。
 
-##
+## Sub-word Tokenization
+
+- ![OpenAI Tokenizer](https://platform.openai.com/tokenizer)
+
+### Common Methods
+
+- Delimiter-based Segmentation: 以空格或標點符號作為分隔符來切詞
+  - 像英文這種拼音型的語言可以用空格切詞，但像中文、日文就沒辦法。
+  - 對於翻譯任務來說，不一定是 1 to 1 的對應關係。
+
+基於上述問題，後來發展出一些統計上的方法：
+
+#### Byte Pair Encoding (BPE)
+
+基於頻率的子詞切分方法，將最常見的字元對合併成子詞單位
+
+$$
+\begin{aligned}
+    \text{Final Vocabulary Size} &= \text{Initial Vocabulary Size} + \text{Number of Merges}
+\end{aligned}
+$$
+
+- BPE 是基於 Greedy Algorithm，最高頻率的不一定是最好的選擇，像是 `Hello World` 會被切成 `Hell` + `o` + `World`，因為 `Hell` 本身也是一個詞彙。
+- 不過其實也不會影響太大，BPE 已經很夠用，GPT 系列也是用這個。
+
+#### Unigram Language Model
+
+每個 subword 都有一個機率，演算法會選出能最大化整句機率的分割方式。
+
+## ELMo, BERT, GPT, and T5 (BERT and its Family)
+
+Pretrained Word Embeddings 是靜態的，無法根據上下文改變詞彙的表示，像是 `I record a record`，兩個 `record` 的意思不一樣，但 Embedding 是一樣的，因此應該要能夠根據上下文改變詞彙的表示。
+
+### ELMo (Embeddings from Language Models)
+
+- Bidirectional Language Model (biLM)
+  - 使用雙向 LSTM 來捕捉詞彙的語義資訊，能根據上下文動態生成 word embeddings
+- 生不逢時，ELMo 發表的時候，Transformer 已經出來了，且效果更好
+
+### Encoder-based Models: BERT
+
+#### Bidirectional Encoder Representations from Transformers (BERT)
+
+- 使用 Transformer 的 Encoder 結構，捕捉遠距離的依賴關係
+- Masked Language Model (MLM): 隨機遮蔽輸入序列中的部分詞彙，讓模型預測被遮蔽的詞彙 (克漏字)
+- Next Sentence Prediction (NSP): 預測兩個句子是否連續出現
+  - 後來發現這個任務沒什麼幫助，反而刪掉效果更好
+- 直接訓練會太呆版，所以會加入一些隨機性
+  - 對於 Training Set 的 15% 的 Token 做 Mask
+    - 80% 的機率換成 `[MASK]`
+    - 10% 的機率換成隨機的 Token
+    - 10% 的機率不變
+- 訓練好的 BERT 可以用來做下游任務的 Fine-tuning
+- BERT 的輸入格式
+  - `[CLS]`：句子開始標記
+  - `[SEP]`：句子分隔標記
+- 不同任務會有不同的輸出方式
+  - 分類任務：使用 `[CLS]` 的輸出向量 (情感分析)
+  - 序列標註任務：使用每個 Token 的輸出向量 (NER, POS)
+
+#### Limitations of Encoders
+
+- 無法做生成相關的任務 (如：QA、對話生成)
+
+### Encoder-Decoder Models: T5
+
+#### Text-to-Text Transfer Transformer (T5)
+
+- 使用 Transformer 的 Encoder-Decoder 結構
+- 將所有 NLP 任務都轉換為文本到文本的格式
+  - 例如：情感分析任務，輸入為 "classify sentiment: I love this movie!"，輸出為 "positive"
+- 靠著大量的資料讓模型硬學會各種任務
