@@ -2,6 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://933yee.github.io/notes/2025/10/11/deep-learning-lab/</loc>
+    
+    <lastmod>2025-10-11</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://933yee.github.io/notes/2025/09/24/nlp/</loc>
+    
+    <lastmod>2025-10-11</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://933yee.github.io/notes/2025/10/07/deep-learning/</loc>
+    
+    <lastmod>2025-10-11</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://933yee.github.io/notes/2025/09/29/toeic/</loc>
+    
+    <lastmod>2025-10-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://933yee.github.io/notes/2025/08/12/math/</loc>
     
     <lastmod>2025-08-12</lastmod>
@@ -571,7 +607,7 @@
 
   <url>
     <loc>https://933yee.github.io/notes</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -579,315 +615,364 @@
   
   <url>
     <loc>https://933yee.github.io/notes/tags/AI/</loc>
-    <lastmod>2025-08-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://933yee.github.io/notes/tags/hardware/</loc>
-    <lastmod>2025-08-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://933yee.github.io/notes/tags/chisel/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/compiler/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/Compilier/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://933yee.github.io/notes/tags/hardware/</loc>
+    <lastmod>2025-10-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://933yee.github.io/notes/tags/chisel/</loc>
+    <lastmod>2025-10-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://933yee.github.io/notes/tags/deep-learning/</loc>
+    <lastmod>2025-10-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://933yee.github.io/notes/tags/ai/</loc>
+    <lastmod>2025-10-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://933yee.github.io/notes/tags/machine-learning/</loc>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/CG/</loc>
-    <lastmod>2025-08-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://933yee.github.io/notes/tags/docker/</loc>
-    <lastmod>2025-08-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://933yee.github.io/notes/tags/web/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/Flutter/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/App/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/ECHO/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://933yee.github.io/notes/tags/docker/</loc>
+    <lastmod>2025-10-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://933yee.github.io/notes/tags/web/</loc>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/gpu/</loc>
-    <lastmod>2025-08-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://933yee.github.io/notes/tags/security/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/frontend/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://933yee.github.io/notes/tags/security/</loc>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/japanese/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/javascript/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/leetcode/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/linux/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/llm/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/research/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/ml/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://933yee.github.io/notes/tags/nlp/</loc>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/Others/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/OS/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/paper/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/react/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/DOM/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/website/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/React/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/Gtihub/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/Recursion/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/Algorithm/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/Side-Projects/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/Discord/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/Bot/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/Backend/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/Time-Complexity/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/UE4-GPU/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/UE5/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/Unity/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://933yee.github.io/notes/tags/vite/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <loc>https://933yee.github.io/notes/tags/toeic/</loc>
+    <lastmod>2025-10-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://933yee.github.io/notes/tags/english/</loc>
+    <lastmod>2025-10-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://933yee.github.io/notes/tags/test/</loc>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/VLSI/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/DFM/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://933yee.github.io/notes/tags/vite/</loc>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/vlsi/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/physical-design/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/tags/automation/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -896,133 +981,140 @@
   
   <url>
     <loc>https://933yee.github.io/notes/categories/AI/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/categories/hardware/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/categories/Flutter/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/categories/GPU/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/categories/Javascript/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/categories/Linux/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/categories/llm/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/categories/Others/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/categories/paper/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/categories/React/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/categories/Algorithm/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/categories/Side-projects/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/categories/UE4/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/categories/Algorithm/Recursion/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/categories/UE5/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/categories/Side-projects/Discord-Bot/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/categories/Algorithm/Time-Complexity/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://933yee.github.io/notes/categories/VLSI/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <loc>https://933yee.github.io/notes/categories/toeic/</loc>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://933yee.github.io/notes/categories/UE5/Render/</loc>
-    <lastmod>2025-08-12</lastmod>
+    <lastmod>2025-10-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://933yee.github.io/notes/categories/VLSI/</loc>
+    <lastmod>2025-10-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
