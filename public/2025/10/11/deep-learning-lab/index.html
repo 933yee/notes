@@ -1,0 +1,726 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/notes/info/fluid.png">
+  <link rel="icon" href="/notes/info/avatar.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Kevin Lee">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Lab 10: Word2Vec &amp; Noise Contrastive Estimation using Subclassing1234567891011121314151617181920import osos.environ[&#x27;TF_CPP_MIN_LOG_LEVEL&#x27;] &#x3D; &#x27;2&#x27; # disable warning and info mes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deep Learning Lab">
+<meta property="og:url" content="https://933yee.github.io/notes/2025/10/11/deep-learning-lab/index.html">
+<meta property="og:site_name" content="933yee&#39;s Notes">
+<meta property="og:description" content="Lab 10: Word2Vec &amp; Noise Contrastive Estimation using Subclassing1234567891011121314151617181920import osos.environ[&#x27;TF_CPP_MIN_LOG_LEVEL&#x27;] &#x3D; &#x27;2&#x27; # disable warning and info mes">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-10-11T05:41:03.000Z">
+<meta property="article:modified_time" content="2025-10-11T06:44:52.608Z">
+<meta property="article:author" content="Kevin Lee">
+<meta property="article:tag" content="deep learning">
+<meta property="article:tag" content="ai">
+<meta property="article:tag" content="machine learning">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Deep Learning Lab - 933yee&#39;s Notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/notes/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/notes/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/notes/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"933yee.github.io","root":"/notes/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/info/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/notes/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/notes/js/utils.js" ></script>
+  <script  src="/notes/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/notes/">
+      <strong>933yee&#39;s Notes</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/notes/info/default.gif') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.7)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Deep Learning Lab"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-10-11 13:41" pubdate>
+          October 11, 2025 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.3k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          11 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Deep Learning Lab</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="Lab-10-Word2Vec-Noise-Contrastive-Estimation-using-Subclassing"><a href="#Lab-10-Word2Vec-Noise-Contrastive-Estimation-using-Subclassing" class="headerlink" title="Lab 10: Word2Vec &amp; Noise Contrastive Estimation using Subclassing"></a>Lab 10: Word2Vec &amp; Noise Contrastive Estimation using Subclassing</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br>os.environ[<span class="hljs-string">&#x27;TF_CPP_MIN_LOG_LEVEL&#x27;</span>] = <span class="hljs-string">&#x27;2&#x27;</span> <span class="hljs-comment"># disable warning and info message</span><br><span class="hljs-keyword">import</span> tensorflow <span class="hljs-keyword">as</span> tf<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> random<br><br>gpus = tf.config.experimental.list_physical_devices(<span class="hljs-string">&#x27;GPU&#x27;</span>)<br><span class="hljs-keyword">if</span> gpus:<br>    <span class="hljs-keyword">try</span>:<br>        <span class="hljs-comment"># Restrict TensorFlow to only use the first GPU</span><br>        tf.config.experimental.set_visible_devices(gpus[<span class="hljs-number">0</span>], <span class="hljs-string">&#x27;GPU&#x27;</span>)<br><br>        <span class="hljs-comment"># Currently, memory growth needs to be the same across GPUs</span><br>        <span class="hljs-keyword">for</span> gpu <span class="hljs-keyword">in</span> gpus:<br>            tf.config.experimental.set_memory_growth(gpu, <span class="hljs-literal">True</span>)<br>        logical_gpus = tf.config.experimental.list_logical_devices(<span class="hljs-string">&#x27;GPU&#x27;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-built_in">len</span>(gpus), <span class="hljs-string">&quot;Physical GPUs,&quot;</span>, <span class="hljs-built_in">len</span>(logical_gpus), <span class="hljs-string">&quot;Logical GPUs&quot;</span>)<br>    <span class="hljs-keyword">except</span> RuntimeError <span class="hljs-keyword">as</span> e:<br>        <span class="hljs-comment"># Memory growth must be set before GPUs have been initialized</span><br>        <span class="hljs-built_in">print</span>(e)<br></code></pre></td></tr></table></figure>
+
+<p>Successfully downloaded the file data&#x2F;text8.zip</p>
+<h3 id="下載並讀取資料集"><a href="#下載並讀取資料集" class="headerlink" title="下載並讀取資料集"></a>下載並讀取資料集</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> urllib<br><br><span class="hljs-comment"># Download the data.</span><br>DOWNLOAD_URL = <span class="hljs-string">&#x27;http://mattmahoney.net/dc/&#x27;</span><br>DATA_FOLDER = <span class="hljs-string">&quot;data&quot;</span><br>FILE_NAME = <span class="hljs-string">&quot;text8.zip&quot;</span><br>EXPECTED_BYTES = <span class="hljs-number">31344016</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">make_dir</span>(<span class="hljs-params">path</span>):<br>    <span class="hljs-string">&quot;&quot;&quot; Create a directory if there isn&#x27;t one already. &quot;&quot;&quot;</span><br>    <span class="hljs-keyword">try</span>:<br>        os.mkdir(path)<br>    <span class="hljs-keyword">except</span> OSError:<br>        <span class="hljs-keyword">pass</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">download</span>(<span class="hljs-params">file_name, expected_bytes</span>):<br>    <span class="hljs-string">&quot;&quot;&quot; Download the dataset text8 if it&#x27;s not already downloaded &quot;&quot;&quot;</span><br>    local_file_path = os.path.join(DATA_FOLDER, file_name)<br>    <span class="hljs-keyword">if</span> os.path.exists(local_file_path):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Dataset ready&quot;</span>)<br>        <span class="hljs-keyword">return</span> local_file_path<br>    file_name, _ = urllib.request.urlretrieve(os.path.join(DOWNLOAD_URL, file_name), local_file_path)<br>    file_stat = os.stat(local_file_path)<br>    <span class="hljs-keyword">if</span> file_stat.st_size == expected_bytes:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Successfully downloaded the file&#x27;</span>, file_name)<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">raise</span> Exception(<br>              <span class="hljs-string">&#x27;File &#x27;</span> + file_name +<br>              <span class="hljs-string">&#x27; might be corrupted. You should try downloading it with a browser.&#x27;</span>)<br>    <span class="hljs-keyword">return</span> local_file_path<br><br>make_dir(DATA_FOLDER)<br>file_path = download(FILE_NAME, EXPECTED_BYTES)<br><br><span class="hljs-keyword">import</span> zipfile<br><br><span class="hljs-comment"># Read the data into a list of strings.</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">read_data</span>(<span class="hljs-params">file_path</span>):<br>    <span class="hljs-string">&quot;&quot;&quot; Read data into a list of tokens &quot;&quot;&quot;</span><br>    <span class="hljs-keyword">with</span> zipfile.ZipFile(file_path) <span class="hljs-keyword">as</span> f:<br>        <span class="hljs-comment"># tf.compat.as_str() converts the input into string</span><br>        data = tf.compat.as_str(f.read(f.namelist()[<span class="hljs-number">0</span>])).split()<br>    <span class="hljs-keyword">return</span> data<br><br>vocabulary = read_data(file_path)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Data size&#x27;</span>, <span class="hljs-built_in">len</span>(vocabulary))<br>vocabulary[:<span class="hljs-number">5</span>]<br></code></pre></td></tr></table></figure>
+
+<p>Data size 17005207<br>[‘anarchism’, ‘originated’, ‘as’, ‘a’, ‘term’]</p>
+<h3 id="建立字典"><a href="#建立字典" class="headerlink" title="建立字典"></a>建立字典</h3><ul>
+<li>常見詞彙會被編號為較小的 ID</li>
+<li>不常見的詞彙會被標記為 <code>UNK</code>，並被編號為 0</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> collections<br><span class="hljs-comment"># Build the dictionary and replace rare words with UNK token.</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">build_dataset</span>(<span class="hljs-params">words, n_words</span>):<br>    <span class="hljs-string">&quot;&quot;&quot; Create two dictionaries and count of occuring words</span><br><span class="hljs-string">        - word_to_id: map of words to their codes</span><br><span class="hljs-string">        - id_to_word: maps codes to words (inverse word_to_id)</span><br><span class="hljs-string">        - count: map of words to count of occurrences</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-comment"># map unknown words to -1</span><br>    count = [[<span class="hljs-string">&#x27;UNK&#x27;</span>, -<span class="hljs-number">1</span>]]<br>    <span class="hljs-comment"># count of occurences for words in vocabulary</span><br>    count.extend(collections.Counter(words).most_common(n_words - <span class="hljs-number">1</span>))<br>    word_to_id = <span class="hljs-built_in">dict</span>() <span class="hljs-comment"># (word, id)</span><br>    <span class="hljs-comment"># record word id</span><br>    <span class="hljs-keyword">for</span> word, _ <span class="hljs-keyword">in</span> count:<br>        word_to_id[word] = <span class="hljs-built_in">len</span>(word_to_id)<br>    id_to_word = <span class="hljs-built_in">dict</span>(<span class="hljs-built_in">zip</span>(word_to_id.values(), word_to_id.keys())) <span class="hljs-comment"># (id, word)</span><br>    <span class="hljs-keyword">return</span> word_to_id, id_to_word, count<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">convert_words_to_id</span>(<span class="hljs-params">words, dictionary, count</span>):<br>    <span class="hljs-string">&quot;&quot;&quot; Replace each word in the dataset with its index in the dictionary &quot;&quot;&quot;</span><br>    data_w2id = []<br>    unk_count = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">for</span> word <span class="hljs-keyword">in</span> words:<br>        <span class="hljs-comment"># return 0 if word is not in dictionary</span><br>        index = dictionary.get(word, <span class="hljs-number">0</span>) <span class="hljs-comment"># 找不到就回傳 0 (UNK)</span><br>        <span class="hljs-keyword">if</span> index == <span class="hljs-number">0</span>:<br>            unk_count += <span class="hljs-number">1</span><br>        data_w2id.append(index)<br>    count[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>] = unk_count<br>    <span class="hljs-keyword">return</span> data_w2id, count<br>    ```<br><br><span class="hljs-string">&quot;&quot;&quot;Filling 4 global variables:</span><br><span class="hljs-string"># data_w2id - list of codes (integers from 0 to vocabulary_size-1).</span><br><span class="hljs-string">              This is the original text but words are replaced by their codes</span><br><span class="hljs-string"># count - map of words(strings) to count of occurrences</span><br><span class="hljs-string"># word_to_id - map of words(strings) to their codes(integers)</span><br><span class="hljs-string"># id_to_word - maps codes(integers) to words(strings)</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><br>vocabulary_size = <span class="hljs-number">50000</span><br>word_to_id, id_to_word, count = build_dataset(vocabulary, vocabulary_size)<br>data_w2id, count = convert_words_to_id(vocabulary, word_to_id, count)<br><span class="hljs-keyword">del</span> vocabulary  <span class="hljs-comment"># reduce memory.</span><br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Most common words (+UNK)&#x27;</span>, count[:<span class="hljs-number">5</span>])<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Sample data: &#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(data_w2id[:<span class="hljs-number">10</span>]))<br><span class="hljs-built_in">print</span>([id_to_word[i] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> data_w2id[:<span class="hljs-number">10</span>]])<br></code></pre></td></tr></table></figure>
+
+<p>Most common words (+UNK) [[‘UNK’, 418391], (‘the’, 1061396), (‘of’, 593677), (‘and’, 416629), (‘one’, 411764)]<br>Sample data: [5234, 3081, 12, 6, 195, 2, 3134, 46, 59, 156]<br>[‘anarchism’, ‘originated’, ‘as’, ‘a’, ‘term’, ‘of’, ‘abuse’, ‘first’, ‘used’, ‘against’]</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># utility function</span><br><span class="hljs-comment"># 給一串文字（已轉成 ID）和一個「視窗大小」，輸出許多 (中心詞, 上下文詞) 的配對。</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">generate_sample</span>(<span class="hljs-params">center_words, context_window_size</span>):<br>    <span class="hljs-string">&quot;&quot;&quot; Form training pairs according to the skip-gram model. &quot;&quot;&quot;</span><br>    <span class="hljs-keyword">for</span> idx, center <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(center_words):<br>        context = random.randint(<span class="hljs-number">1</span>, context_window_size)<br>        <span class="hljs-comment"># get a random target before the center word</span><br>        <span class="hljs-comment"># 取出中心詞左邊最多 context 個字</span><br>        <span class="hljs-keyword">for</span> target <span class="hljs-keyword">in</span> center_words[<span class="hljs-built_in">max</span>(<span class="hljs-number">0</span>, idx - context) : idx]:<br>            <span class="hljs-keyword">yield</span> center, target<br>        <span class="hljs-comment"># get a random target after the center word</span><br>        <span class="hljs-comment"># 取出中心詞右邊最多 context 個字</span><br>        <span class="hljs-keyword">for</span> target <span class="hljs-keyword">in</span> center_words[idx + <span class="hljs-number">1</span> : idx + context + <span class="hljs-number">1</span>]:<br>            <span class="hljs-keyword">yield</span> center, target<br><br><span class="hljs-comment"># 把上面那個樣本產生器包成「批次」(batch)，每次吐出兩個 NumPy 陣列：center_batch 和 target_batch。</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">batch_generator</span>(<span class="hljs-params">data, skip_window, batch_size</span>):<br>    <span class="hljs-string">&quot;&quot;&quot; Group a numeric stream into batches and yield them as Numpy arrays. &quot;&quot;&quot;</span><br>    single_gen = generate_sample(data, skip_window)<br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        center_batch = np.zeros(batch_size, dtype=np.int32)<br>        target_batch = np.zeros([batch_size, <span class="hljs-number">1</span>], dtype=np.int32)<br>        <span class="hljs-keyword">for</span> idx <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(batch_size):<br>            center_batch[idx], target_batch[idx] = <span class="hljs-built_in">next</span>(single_gen)<br>        <span class="hljs-keyword">yield</span> center_batch, target_batch<br></code></pre></td></tr></table></figure>
+
+<h3 id="設定訓練參數，建立模型"><a href="#設定訓練參數，建立模型" class="headerlink" title="設定訓練參數，建立模型"></a>設定訓練參數，建立模型</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">## some training settings</span><br>training_steps = <span class="hljs-number">80000</span><br>skip_step = <span class="hljs-number">2000</span><br><br><span class="hljs-comment">## some hyperparameters</span><br>batch_size = <span class="hljs-number">512</span><br>embed_size = <span class="hljs-number">512</span><br>num_sampled = <span class="hljs-number">256</span><br>learning_rate = <span class="hljs-number">1.0</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># from tensorflow.keras.layers import Layer</span><br><span class="hljs-comment"># 所有 TensorFlow 自訂層都要繼承它，並覆寫兩個方法：</span><br><span class="hljs-comment"># __init__(): 定義要訓練的權重</span><br><span class="hljs-comment"># call(): 前向傳播的計算邏輯</span><br><span class="hljs-keyword">from</span> tensorflow.python.keras.layers <span class="hljs-keyword">import</span> Layer<br><br><span class="hljs-comment"># embedding matrix - hidden layer</span><br><span class="hljs-comment"># 這一層用來把「字的 ID」轉成對應的向量 (embedding)</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">embedding_lookup</span>(<span class="hljs-title class_ inherited__">Layer</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">super</span>(embedding_lookup, self).__init__()<br>        <span class="hljs-comment"># 設定初始值的方法（Glorot/Xavier 初始化），讓權重不會太大或太小</span><br>        embedding_init = tf.keras.initializers.GlorotUniform()<br>        <span class="hljs-comment"># 建立一個可訓練矩陣</span><br>        self.embedding_matrix = self.add_weight(name=<span class="hljs-string">&quot;embedding_matrix&quot;</span>,<br>                                                trainable=<span class="hljs-literal">True</span>,<br>                                                shape=[vocabulary_size, embed_size],<br>                                                initializer=embedding_init)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">call</span>(<span class="hljs-params">self, inputs</span>):<br>        center_words = inputs<br>        <span class="hljs-comment"># tf.nn.embedding_lookup(matrix, ids) 會幫你做查表，從 embedding_matrix 取出指定 ID 的那幾行。</span><br>        embedding = tf.nn.embedding_lookup(self.embedding_matrix,<br>                                           center_words,<br>                                           name=<span class="hljs-string">&#x27;embedding&#x27;</span>)<br>        <span class="hljs-keyword">return</span> embedding<br><br><span class="hljs-comment"># context matrix - prediction layer</span><br><span class="hljs-comment"># 用來學習「正樣本」比「隨機噪聲詞」更相關</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">nce_loss</span>(<span class="hljs-title class_ inherited__">Layer</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">super</span>(nce_loss, self).__init__()<br>        <span class="hljs-comment"># 截斷正態分佈，每個權重初始值會介於一個小範圍內</span><br>        nce_w_init = tf.keras.initializers.TruncatedNormal(stddev=<span class="hljs-number">1.0</span>/(embed_size ** <span class="hljs-number">0.5</span>))<br>        self.nce_weight = self.add_weight(name=<span class="hljs-string">&#x27;nce_weight&#x27;</span>,<br>                                          trainable=<span class="hljs-literal">True</span>,<br>                                          shape=[vocabulary_size, embed_size],<br>                                          initializer=nce_w_init)<br><br>        self.nce_bias = self.add_weight(name=<span class="hljs-string">&#x27;nce_bias&#x27;</span>,<br>                                        trainable=<span class="hljs-literal">True</span>,<br>                                        shape=[vocabulary_size],<br>                                        initializer=tf.keras.initializers.Zeros)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">call</span>(<span class="hljs-params">self, inputs</span>):<br>        <span class="hljs-comment"># （中心詞向量, 目標詞 ID）</span><br>        embedding, target_words = inputs[<span class="hljs-number">0</span>], inputs[<span class="hljs-number">1</span>]<br>        loss = tf.reduce_mean(tf.nn.nce_loss(weights=self.nce_weight,<br>                                             biases=self.nce_bias,<br>                                             labels=target_words,<br>                                             inputs=embedding,<br>                                             num_sampled=num_sampled,<br>                                             num_classes=vocabulary_size),<br>                                             name=<span class="hljs-string">&#x27;loss&#x27;</span>)<br>        <span class="hljs-keyword">return</span> loss<br></code></pre></td></tr></table></figure>
+
+<h3 id="建立整個-Word2Vec-模型"><a href="#建立整個-Word2Vec-模型" class="headerlink" title="建立整個 Word2Vec 模型"></a>建立整個 Word2Vec 模型</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># from tensorflow.keras import Model, Input</span><br><span class="hljs-keyword">from</span> tensorflow.python.keras <span class="hljs-keyword">import</span> Model, Input<br><br>center_words = Input(shape=(), name=<span class="hljs-string">&#x27;center_words&#x27;</span>, dtype=<span class="hljs-string">&#x27;int32&#x27;</span>)<br>target_words = Input(shape=(<span class="hljs-number">1</span>), name=<span class="hljs-string">&#x27;target_words&#x27;</span>, dtype=<span class="hljs-string">&#x27;int32&#x27;</span>)<br><br>embedding = embedding_lookup()(center_words)<br>loss = nce_loss()((embedding, target_words))<br><br>word2vec = Model(name=<span class="hljs-string">&#x27;word2vec&#x27;</span>,<br>                 inputs=[center_words, target_words],<br>                 outputs=[loss])<br><br>word2vec.summary()<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs markdown">Model: &quot;word2vec&quot;<br><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span>__<br><span class="hljs-section">Layer (type)                    Output Shape         Param #     Connected to</span><br><span class="hljs-section">==================================================================================================</span><br>center<span class="hljs-emphasis">_words (InputLayer)       [(None,)]            0</span><br><span class="hljs-emphasis"><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span>_</span>_<br>embedding<span class="hljs-emphasis">_lookup (embedding_</span>loo (None, 512)          25600000    center<span class="hljs-emphasis">_words[<span class="hljs-string">0</span>][<span class="hljs-symbol">0</span>]</span><br><span class="hljs-emphasis"><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span>_</span>_<br>target<span class="hljs-emphasis">_words (InputLayer)       [(None, 1)]          0</span><br><span class="hljs-emphasis"><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span>_</span>_<br>nce<span class="hljs-emphasis">_loss (nce_</span>loss)             ()                   25650000    embedding<span class="hljs-emphasis">_lookup[<span class="hljs-string">0</span>][<span class="hljs-symbol">0</span>]</span><br><span class="hljs-emphasis">                                                                 target_</span>words[<span class="hljs-string">0</span>][<span class="hljs-symbol">0</span>]<br>==================================================================================================<br>Total params: 51,250,000<br>Trainable params: 51,250,000<br>Non-trainable params: 0<br><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">__</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="生成資料集-中心詞-上下文詞-batch"><a href="#生成資料集-中心詞-上下文詞-batch" class="headerlink" title="生成資料集 (中心詞, 上下文詞) batch"></a>生成資料集 (中心詞, 上下文詞) batch</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">## generator for `tf.data.Dataset`</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">gen</span>():<br>    <span class="hljs-string">&quot;&quot;&quot; Return a python generator that generates batches. &quot;&quot;&quot;</span><br>    <span class="hljs-keyword">yield</span> <span class="hljs-keyword">from</span> batch_generator(data_w2id, <span class="hljs-number">2</span>, batch_size)<br><br><br><br>dataset = tf.data.Dataset.from_generator(<br>  gen,                                 <span class="hljs-comment"># 資料來源：Python generator</span><br>  (tf.int32, tf.int32),                <span class="hljs-comment"># 每次 yield 的兩個輸出類型</span><br>  (tf.TensorShape([batch_size]),       <span class="hljs-comment"># 第 1 個輸出形狀</span><br>    tf.TensorShape([batch_size, <span class="hljs-number">1</span>])),  <span class="hljs-comment"># 第 2 個輸出形狀</span><br>).repeat()<br></code></pre></td></tr></table></figure>
+
+<h3 id="定義優化器和訓練指標"><a href="#定義優化器和訓練指標" class="headerlink" title="定義優化器和訓練指標"></a>定義優化器和訓練指標</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">train_loss = tf.keras.metrics.Mean(name=<span class="hljs-string">&#x27;train_loss&#x27;</span>)<br>optimizer = tf.keras.optimizers.SGD(learning_rate=learning_rate, momentum=<span class="hljs-number">0.1</span>,nesterov=<span class="hljs-literal">True</span>)<br></code></pre></td></tr></table></figure>
+
+<h3 id="訓練模型"><a href="#訓練模型" class="headerlink" title="訓練模型"></a>訓練模型</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@tf.function</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">train_step</span>(<span class="hljs-params">center_words, target_words</span>):<br>    <span class="hljs-comment"># tf.GradientTape() 是 TensorFlow 的「自動微分引擎 (autodiff engine)」。</span><br>    <span class="hljs-comment"># 所有在這個 with 區塊裡發生的計算，</span><br>    <span class="hljs-comment"># 都會被記錄在 tape 物件裡。</span><br>    <span class="hljs-keyword">with</span> tf.GradientTape() <span class="hljs-keyword">as</span> tape:<br>        <span class="hljs-comment"># forward pass</span><br>        loss = word2vec([center_words, target_words])<br><br>    <span class="hljs-comment"># backward pass</span><br>    gradients = tape.gradient(loss, word2vec.trainable_variables)<br>    <span class="hljs-comment"># update weights</span><br>    optimizer.apply_gradients(<span class="hljs-built_in">zip</span>(gradients, word2vec.trainable_variables))<br>    <span class="hljs-comment"># 印出平均 loss</span><br>    train_loss(loss)<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python">x = []<br>y = []<br><span class="hljs-keyword">for</span> step, (center_words, target_words) <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(dataset):<br>    <span class="hljs-keyword">if</span> step == training_steps:<br>        <span class="hljs-keyword">break</span><br>    train_step(center_words, target_words)<br><br>    <span class="hljs-keyword">if</span> ((step+<span class="hljs-number">1</span>) % skip_step) == <span class="hljs-number">0</span>:<br>        template = <span class="hljs-string">&#x27;Step &#123;:0&#125;, Loss: &#123;:.2f&#125;&#x27;</span><br>        x.append(step+<span class="hljs-number">1</span>)<br>        y.append(train_loss.result())<br>        <span class="hljs-built_in">print</span>(template.<span class="hljs-built_in">format</span>(step+<span class="hljs-number">1</span>, train_loss.result()))<br>        train_loss.reset_state()<br></code></pre></td></tr></table></figure>
+
+<p>Step 2000, Loss: 97.47<br>Step 4000, Loss: 20.06<br>Step 6000, Loss: 13.44<br>Step 8000, Loss: 10.15<br>Step 10000, Loss: 9.45<br>Step 12000, Loss: 8.64<br>Step 14000, Loss: 8.10<br>Step 16000, Loss: 7.40<br>Step 18000, Loss: 7.18<br>Step 20000, Loss: 6.91<br>Step 22000, Loss: 6.88<br>Step 24000, Loss: 6.70<br>Step 26000, Loss: 6.56<br>Step 28000, Loss: 6.40<br>Step 30000, Loss: 6.42<br>Step 32000, Loss: 6.38<br>Step 34000, Loss: 6.27<br>Step 36000, Loss: 6.26<br>Step 38000, Loss: 6.15<br>Step 40000, Loss: 6.13<br>Step 42000, Loss: 6.10<br>Step 44000, Loss: 5.95<br>Step 46000, Loss: 5.94<br>Step 48000, Loss: 5.96<br>Step 50000, Loss: 5.90<br>…<br>Step 74000, Loss: 5.77<br>Step 76000, Loss: 5.45<br>Step 78000, Loss: 5.59<br>Step 80000, Loss: 5.71</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/notes/categories/AI/" class="category-chain-item">AI</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/notes/tags/deep-learning/" class="print-no-link">#deep learning</a>
+      
+        <a href="/notes/tags/ai/" class="print-no-link">#ai</a>
+      
+        <a href="/notes/tags/machine-learning/" class="print-no-link">#machine learning</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Deep Learning Lab</div>
+      <div>https://933yee.github.io/notes/2025/10/11/deep-learning-lab/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Kevin Lee</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 11, 2025</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/notes/2025/10/07/deep-learning/" title="Deep Learning">
+                        <span class="hidden-mobile">Deep Learning</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/notes/js/events.js" ></script>
+<script  src="/notes/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/notes/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/notes/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/notes/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
