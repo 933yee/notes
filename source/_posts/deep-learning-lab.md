@@ -380,3 +380,200 @@ Step 74000, Loss: 5.77
 Step 76000, Loss: 5.45
 Step 78000, Loss: 5.59
 Step 80000, Loss: 5.71
+
+## Lab 11: CNN
+
+```py
+# construct a new dataset with time informantion
+class TimeMeasuredDataset(tf.data.Dataset):
+    # OUTPUT: (steps, timings, counters, img, label)
+    # 這個 Dataset 每次「產出」的資料結構長什麼樣子 (輸出規格)
+    OUTPUT_SIGNATURE=(
+        tf.TensorSpec(shape=(2, 1), dtype=tf.string), # steps: [("Open",), ("Read",)]
+
+        # open_enter -> 開始開檔時的時間點
+        # open_elapsed -> 開檔這個動作花了多久時間（開完後再扣回開始）
+        # read_enter -> 開始讀檔時的時間點
+        # read_elapsed -> 讀檔這個動作花了多久時間（讀完後再扣回開始）
+        tf.TensorSpec(shape=(2, 2), dtype=tf.float32), # timings: [(open_enter, open_elapsed), (read_enter, read_elapsed)]
+
+        # instance_idx -> 第幾個 TimeMeasuredDataset 實例
+        # epoch_idx -> 目前是第幾輪（每跑一次 dataset +1）
+        # 第三個數字（-1）-> 特殊標記：這筆是 "Open" 階段，不屬於任何單一圖片
+        # example_idx -> 這個 epoch 裡的第幾張 sample
+        tf.TensorSpec(shape=(2, 3), dtype=tf.int32), # counters: [(instance_idx, epoch_idx, -1), (instance_idx, epoch_idx, example_idx)]
+        tf.TensorSpec(shape=(3072), dtype=tf.float32), # img: 32*32*3
+        tf.TensorSpec(shape=(), dtype=tf.int32) # label
+    )
+
+    # example
+    # 對 image0：
+    # [
+    # ("Open",),  ("Read",),
+    # [(12.0, 0.002), (12.002, 0.001)],       # 時間資訊
+    # [(0, 2, -1),    (0, 2, 0)],             # 計數器資訊
+    # imgs[0], labels[0]
+    # ]
+
+    # # 對 image1：
+    # [
+    # ("Open",),  ("Read",),
+    # [(-1., -1.), (12.003, 0.0011)],         # Open 已設為 -1 表示跳過
+    # [(0, 2, -1), (0, 2, 1)],                # 第 1 張圖片
+    # imgs[1], labels[1]
+    # ]
+
+    # 第幾個 dataset 實例的編號
+    _INSTANCES_COUNTER = itertools.count()
+
+    # 為每個資料集（用 instance_idx 區分）維護一個「epoch 次數計數器」，每次跑新的 epoch 時會自動 +1。
+    _EPOCHS_COUNTER = defaultdict(itertools.count)
+
+    # 一張一張圖片逐個 yield 出來
+    def _generator(instance_idx, filename, open_file, read_file):
+        epoch_idx = next(TimeMeasuredDataset._EPOCHS_COUNTER[instance_idx])
+
+        # Opening the file
+        open_enter = time.perf_counter()
+        filenames = open_file(filename)
+        open_elapsed = time.perf_counter() - open_enter
+        # ----------------
+
+        # Reading the file
+        read_enter = time.perf_counter()
+        imgs, label = [], []
+        for filename in filenames:
+            tmp_imgs, tmp_label = read_file(filename)
+            imgs.append(tmp_imgs)
+            label.append(tmp_label)
+        imgs = tf.concat(imgs, axis=0)
+        label = tf.concat(label, axis=0)
+        read_elapsed = (time.perf_counter() - read_enter) / imgs.shape[0]
+
+        for sample_idx in range(imgs.shape[0]):
+            read_enter = read_enter if sample_idx == 0 else time.perf_counter()
+
+            yield (
+                [("Open",), ("Read",)],
+                [(open_enter, open_elapsed), (read_enter, read_elapsed)],
+                [(instance_idx, epoch_idx, -1), (instance_idx, epoch_idx, sample_idx)],
+                imgs[sample_idx],
+                label[sample_idx]
+            )
+            open_enter, open_elapsed = -1., -1.  # Negative values will be filtered
+
+
+    def __new__(cls, filename, open_file, read_file):
+        def generator_func(instance_idx, filename):
+            return cls._generator(instance_idx, filename, open_file, read_file)
+
+        return tf.data.Dataset.from_generator(
+            generator_func,
+            output_signature=cls.OUTPUT_SIGNATURE,
+            args=(next(cls._INSTANCES_COUNTER), filename)
+        )
+```
+
+```python
+# 讀一個 CSV 檔，裡面有多個小檔案名稱
+def open_file(filename):
+    rows = pd.read_csv(filename.decode("utf-8"))
+    filenames = rows['filenames']
+    return filenames
+
+# 讀一個 CIFAR-10 檔案
+def read_file(filename):
+    with open(filename, 'rb') as fo:
+        raw_data = pickle.load(fo, encoding='bytes')
+    return raw_data[b'data'], raw_data[b'labels']
+
+def dataset_generator_fun_train(*args):
+    return TimeMeasuredDataset('cifar10_train.csv', open_file, read_file)
+
+def dataset_generator_fun_test(*args):
+    return TimeMeasuredDataset('cifar10_test.csv', open_file, read_file)
+
+for i in tf.data.Dataset.range(1).flat_map(dataset_generator_fun_train).take(2):
+    print(i)
+    print("now time", time.perf_counter())
+    print("-------------------------------------------------------------------------------")
+```
+
+```python
+IMAGE_SIZE_CROPPED = 24
+IMAGE_HEIGHT = 32
+IMAGE_WIDTH = 32
+IMAGE_DEPTH = 3
+# 原圖是 32×32×3，經過裁切後會變成 24×24×3。
+
+def map_decorator(func):
+    def wrapper(steps, times, values, image, label):
+        # Use a tf.py_function to prevent auto-graph from compiling the method
+        return tf.py_function(
+            func,
+            inp=(steps, times, values, image, label),
+            Tout=(steps.dtype, times.dtype, values.dtype, image.dtype, tf.float32)
+        )
+    return wrapper
+
+@map_decorator
+def map_fun_with_time(steps, times, values, image, label):
+    # sleep to avoid concurrency issue
+    time.sleep(0.05)
+
+    # record the enter time into map_fun()
+    map_enter = time.perf_counter()
+
+    # CIFAR-10 的資料原本是 [3072] = [3, 32, 32] 排列的。
+    # 所以要先 reshape 成 (3,32,32)，
+    # 再轉置成 (32,32,3) 才是標準 RGB 格式，
+    # 然後轉成浮點數並除以 255 → 範圍變成 [0,1]
+    image = tf.reshape(image,[IMAGE_DEPTH, IMAGE_HEIGHT, IMAGE_WIDTH])
+    image = tf.divide(tf.cast(tf.transpose(image,[1, 2, 0]),tf.float32),255.0)
+
+    label = tf.one_hot(label, 10)
+
+    # 隨機裁切成 24×24×3
+    # 隨機左右翻轉
+    # 隨機改亮度與對比度
+    # 標準化成零均值單位方差
+    distorted_image = tf.image.random_crop(image, [IMAGE_SIZE_CROPPED,IMAGE_SIZE_CROPPED,IMAGE_DEPTH])
+    # distorted_image = tf.image.resize(image, [IMAGE_SIZE_CROPPED,IMAGE_SIZE_CROPPED])
+    distorted_image = tf.image.random_flip_left_right(distorted_image)
+    distorted_image = tf.image.random_brightness(distorted_image, max_delta=63)
+    distorted_image = tf.image.random_contrast(distorted_image, lower=0.2, upper=1.8)
+    distorted_image = tf.image.per_image_standardization(distorted_image)
+
+    map_elapsed = time.perf_counter() - map_enter
+    # ----------------
+
+    return tf.concat((steps, [["Map"]]), axis=0),\
+           tf.concat((times, [[map_enter, map_elapsed]]), axis=0),\
+           tf.concat((values, [values[-1]]), axis=0),\
+           distorted_image,\
+           label
+
+# 類似，但不用 augmentation
+@map_decorator
+def map_fun_test_with_time(steps, times, values, image, label):
+    # sleep to avoid concurrency issue
+    time.sleep(0.05)
+
+    # record the enter time into map_fun_test()
+    map_enter = time.perf_counter()
+
+    image = tf.reshape(image,[IMAGE_DEPTH,IMAGE_HEIGHT,IMAGE_WIDTH])
+    image = tf.divide(tf.cast(tf.transpose(image,[1,2,0]),tf.float32),255.0)
+    label = tf.one_hot(label,10)
+    distorted_image = tf.image.resize(image, [IMAGE_SIZE_CROPPED,IMAGE_SIZE_CROPPED])
+    distorted_image = tf.image.per_image_standardization(distorted_image)
+
+    map_elapsed = time.perf_counter() - map_enter
+    # ----------------
+
+    return tf.concat((steps, [["Map"]]), axis=0),\
+           tf.concat((times, [[map_enter, map_elapsed]]), axis=0),\
+           tf.concat((values, [values[-1]]), axis=0),\
+           distorted_image,\
+           label
+```
