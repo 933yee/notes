@@ -178,3 +178,32 @@ Pretrained Word Embeddings 是靜態的，無法根據上下文改變詞彙的�
 - 將所有 NLP 任務都轉換為文本到文本的格式
   - 例如：情感分析任務，輸入為 "classify sentiment: I love this movie!"，輸出為 "positive"
 - 靠著大量的資料讓模型硬學會各種任務
+
+#### Extensions of T5: BART
+
+- Bidirectional and Auto-Regressive Transformers (BART)
+- Token Masking, Token Deletion, Text Infilling, Sentence Permutation, Document Rotation
+
+### Decoder-based Models: GPT
+
+- 2018 年 OpenAI 發表 GPT，使用 Transformer 的 Decoder 結構，作者是 Alec Radford
+- 一開始效果沒有很好，後來 GPT-2、GPT-3、GPT-4 效果越來越好
+- 使用自回歸語言模型 (Auto-Regressive Language Model, ARLM)
+  - 根據前面的詞彙預測下一個詞彙
+
+#### GPT-3
+
+- 有 1750 億個參數
+- 發現大型模型有 Emergent Abilities
+  - 隨著模型規模增大，會出現一些小模型沒有的能力
+
+#### In-context Learning
+
+- 不需要微調模型，只要在輸入中提供一些範例，模型就能學會任務
+- 分為 Few-shot Learning、One-shot Learning、Zero-shot Learning
+- 沒有實際跟新模型的參數
+
+#### Scaling Laws
+
+- 模型的性能與參數數量、訓練資料量和計算資源之間存在一定的關係
+  ![Scaling Laws](./images/nlp/scaling_laws.png)
