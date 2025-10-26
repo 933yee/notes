@@ -207,3 +207,133 @@ Pretrained Word Embeddings 是靜態的，無法根據上下文改變詞彙的�
 
 - 模型的性能與參數數量、訓練資料量和計算資源之間存在一定的關係
   ![Scaling Laws](./images/nlp/scaling_laws.png)
+
+## Decoding Strategies and Evaluation for Natural Language Generation
+
+### Natural Language Generation (NLG)
+
+- 生成 text 的過程就叫做 NLG
+  - Machine Translation
+  - Abstractive Summarization
+  - Dialogue Generation (e.g., ChatGPT)
+  - Story Generation
+  - Image Captioning
+
+### How to Train a Conditional Language Model
+
+- 如果是翻譯任務，會需要平行語料庫 (source, target)
+- Teacher Forcing: 在訓練過程中，使用真實的前一個詞彙作為輸入，而不是模型預測的詞彙
+  - 可以加速收斂，但會導致 Exposure Bias
+  - 不用的話通常結果很爛
+
+### Greedy Decoding
+
+- 每次都選擇機率最高的詞彙作為輸出
+  - 優點：簡單且快速
+  - 缺點：容易陷入局部最優解，生成的文本可能缺乏多樣性
+- Top-K Sampling
+  - 在生成過程中，先選擇前 K 個機率最高的詞彙，然後從中進行隨機抽樣
+  - 有可能選到機率很低的詞彙，導致生成的文本不連貫
+- Nucleus Sampling (Top-p Sampling)
+  - 選擇累積機率達到 p 的詞彙集合，然後從中進行隨機抽樣
+- Beam Search
+
+  - 同時維護多個候選序列，選擇最有可能的序列作為最終輸出
+
+    ![Beam Search](https://towardsdatascience.com/wp-content/uploads/2021/04/1tEjhWqUgjX37VnT7gJN-4g.png)
+
+  - 但是越長的句子會被懲罰，機率會越來越小，所以需要做 Normalization
+
+### How to Evaluate NLG Models
+
+#### BLEU (Bilingual Evaluation Understudy)
+
+- 計算 n-gram 的 precision
+
+  - Unigrams -> BLEU-1
+  - Bigrams -> BLEU-2
+  - Trigrams -> BLEU-3
+  - 4-grams -> BLEU-4
+
+- Precision: 你猜的答案中有多少是對的
+
+  - $Precision = \frac{|\text{Relevant and Retrieved instances}|}{|\text{All Retrieved instances}|}$
+
+- Recall: 正確答案中有多少被你猜出來
+
+  - $Recall = \frac{|\text{Relevant and Retrieved instances}|}{|\text{All Relevant instances}|}$
+
+- Example:
+  - Chinese: 我想要讀那本書
+  - Reference1: I want to read that book
+  - Reference2: I want to read the book
+  - Model Output: the the the the the the
+  - Precision = 6/6 = 1
+- Brevity Penalty (BP): 懲罰過短的句子
+  因為分母是生成句子的長度，分子是參考句子的長度，如果生成的句子太短，precision 通常會比較高，但這樣不合理，所以要加上 BP 來懲罰過短的句子
+
+  $$
+  BP =
+  \begin{cases}
+      1 & \text{if } c > r \newline
+      e^{(1 - r/c)} & \text{if } c \leq r
+
+  \end{cases}
+  $$
+
+  - $c$: candidate translation length
+  - $r$: reference translation length
+
+- 最終 BLEU 分數計算：
+
+  $$
+  BLEU = BP \cdot \exp\left( \sum_{n=1}^{N} w_n \log p_n \right)
+  $$
+
+  - $p_n$: n-gram precision
+  - $w_n$: n-gram 的權重，通常均等分配
+  - $N$: 最大 n-gram 長度
+
+#### ROUGE (Recall-Oriented Understudy for Gisting Evaluation)
+
+- ROUGE-N: 計算 n-gram 的 recall
+
+  $$
+  ROUGE-N = \frac{\sum_{S \in \text{Reference Summaries}} \sum_{\text{gram}_n \in S} \text{Count}_{\text{match}}(\text{gram}_n)}{\sum_{S \in \text{Reference Summaries}} \sum_{\text{gram}_n \in S} \text{Count}(\text{gram}_n)}
+  $$
+
+- ROUGE-L: 計算兩個序列的 Longest Common Subsequence (LCS)
+
+### NLP Benchmarks
+
+#### GLUE (General Language Understanding Evaluation)
+
+- 總共有 9 個任務
+- 任務可以分成三類
+  - Single-Sentence Tasks
+    - 模型只需要理解單一句子的語義
+    - CoLA (Corpus of Linguistic Acceptability): 判斷句子是否符合語法規則
+    - SST-2 (Stanford Sentiment Treebank): 判斷句子的情感傾向（正面或負面）
+  - Sentence Pair Tasks
+    - 模型需要理解兩個句子之間的關係
+    - MNLI (Multi-Genre Natural Language Inference): 判斷兩個句子之間的邏輯關係（蕴涵、中立、矛盾）
+    - RTE (Recognizing Textual Entailment): 判斷兩個句子是否存在蕴涵關係 (簡化版 MNLI)
+    - QQP (Quora Question Pairs): 判斷兩個問題是否具有相同的語義
+    - MRPC (Microsoft Research Paraphrase Corpus): 判斷兩個句子是否為同義句
+    - QNLI (Question Natural Language Inference): 判斷問題和句子之間的蕴涵關係
+  - Semantic Similarity Tasks
+    - STS-B (Semantic Textual Similarity Benchmark): 評估兩個句子之間的語義相似度，分數範圍為 0 到 5
+- 最後分數會綜合各個任務的結果，不過有時候會只看部分任務的結果
+
+#### SQuAD (Stanford Question Answering Dataset)
+
+- 由 Stanford 大學釋出的閱讀理解資料集
+- SQuAD 1.1: 包含 100,000 個問題，答案都是文章中的一段文字
+- SQuAD 2.0: 在 SQuAD 1.1 的基礎上增加了無答案的問題，模型需要判斷問題是否有答案
+
+#### MMLU (Massive Multitask Language Understanding)
+
+- 包含 57 個不同領域的多選題
+- 測試模型在各種專業知識領域的理解能力
+- 涵蓋範圍廣泛，包括 STEM、Humanities、Social Sciences 等等
+- 模型需要在沒有額外訓練的情況下，直接回答這些問題
