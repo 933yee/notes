@@ -337,3 +337,70 @@ Pretrained Word Embeddings 是靜態的，無法根據上下文改變詞彙的�
 - 測試模型在各種專業知識領域的理解能力
 - 涵蓋範圍廣泛，包括 STEM、Humanities、Social Sciences 等等
 - 模型需要在沒有額外訓練的情況下，直接回答這些問題
+
+#### MTEB (Massive Text Embedding Benchmark)
+
+- 評估文本嵌入 (Text Embedding) 模型在多種任務上的表現
+- 包含文本分類、文本生成、文本相似度等多個任務
+
+### Watermark for text
+
+## GPT-3, InstructGPT, and RLHF
+
+### GPT-1
+
+- Decoder-only Transformer
+- 12 層，117M 個參數
+
+![GPT-1](./images/nlp/gpt1.png)
+
+### GPT-2
+
+- Layer Normalization 放在每個 sub-block 的前面
+- 最後的 self-attention layer 後面多加一個 Layer Normalization
+- GPT-2-medium: 24 層，345M 個參數
+- GPT-2-large: 36 層，762M 個參數
+- GPT-2-xl: 48 層，1.5B 個參數
+
+![GPT-2](./images/nlp/gpt2.png)
+
+### GPT-3
+
+- Sparse Transformer
+  - 與其讓每個 token 都看所有 token，不如讓它只看「部分有意義的 token」。
+  - 大幅減少計算量，且效果不會差太多
+
+### Instruct Tuning
+
+- 一種微調方法，讓模型能夠更好地理解和執行人類的指令
+- 讓模型更理解人類語氣與意圖，提升泛化與實用性，可以回答沒有看過的問題。
+
+### InstructGPT (GPT-3.5)
+
+InstructGPT 是在 GPT-3 的基礎上，透過 **人類標註與反饋** 進行再訓練
+
+訓練過程是，**先學人類怎麼說，再學人類喜歡怎麼說**。
+
+#### 監督式微調 (Supervised Fine-tuning, SFT)
+
+讓模型學會如何「遵循指令」
+
+收集一個由人類標註者撰寫的高品質「指令-回應」資料集。使用這個資料集來微調 (fine-tuning) 一個預訓練好的基礎模型 (如 GPT-3)。
+
+產生 SFT 模型。這個模型能理解並執行指令，但回答的品質可能還不夠穩定或不符合人類偏好。
+
+#### 訓練獎勵模型 (Reward Model, RM)
+
+訓練一個模型來 **「評估回應的品質」**，使其學會人類的偏好。
+
+使用上一步的 SFT 模型，針對一個指令（prompt）產生多個不同的回應。人類標註者排序 (ranking) 這些回應（例如：從最好到最差）。使用這些「排序資料」來訓練一個新的模型，即獎勵模型 (RM)。
+
+產生 RM。這個模型會為任何「指令-回應」組合打一個分數 (reward)，分數越高代表越符合人類偏好。
+
+#### 使用強化學習 (Reinforcement Learning)
+
+利用 RM 作為「評審」，進一步優化 SFT 模型，使其產生的回應能獲得最高的「獎勵分數」。
+
+將 SFT 模型（在 RL 術語中稱為「策略 Policy」）複製一份。讓 Policy 針對新的指令產生回應。讓獎勵模型 (RM) 為這個「指令-回應」組合打分 (reward)。使用這個 reward 分數，透過 RL 演算法 (PPO, Proximal Policy Optimization) 來更新 Policy 模型的參數。
+
+產生最終的 InstructGPT 模型。這個模型被訓練成傾向於產生那些「RM 會給高分」的回應，而 RM 的評分標準又來自於人類的偏好。

@@ -118,3 +118,66 @@ public:
 ```
 
 可以使用一個虛擬節點 `dummy` 指向 head，讓 `fast` 先走 n+1 步，然後 `slow` 和 `fast` 一起走，當 `fast` 到尾時，`slow` 就在倒數第 n 個節點的前一個節點，將其刪除即可。
+
+## Binary Search Tree 二元搜尋樹
+
+二元搜尋樹 (BST) 是一種特殊的二元樹，對於每個節點：
+
+- 左子樹的所有節點值都小於該節點值。
+- 右子樹的所有節點值都大於該節點值。
+- 每個子樹也是一棵二元搜尋樹。
+
+### Validate Binary Search Tree
+
+[Leetcode 98. Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/)
+
+```c++
+class Solution {
+public:
+    bool inorder(TreeNode* root, long& prev) {
+        if(!root) return true;
+        if(!inorder(root->left, prev))
+            return false;
+        if(root->val <= prev) return false;
+        else prev = root->val;
+        if(!inorder(root->right, prev))
+            return false;
+        return true;
+    }
+
+    bool isValidBST(TreeNode* root) {
+        if(!root) return true;
+        long prev = LONG_MIN;
+        return inorder(root, prev);
+    }
+};
+```
+
+對於 BST 來說，中序遍歷 (Inorder) 會得到一個嚴格遞增的序列，可以利用這個特性來驗證這棵二元樹是否為合法的 BST。
+
+### Kth Smallest Element in a BST
+
+[Leetcode 230. Kth Smallest Element in a BST](https://leetcode.com/problems/kth-smallest-element-in-a-bst/)
+
+```c++
+class Solution {
+public:
+    bool inorder(TreeNode* root, int k, int& cur, int& step){
+        if(!root) return false;
+        if(inorder(root->left, k, cur, step))
+            return true;
+        cur = root->val;
+        if(++step == k) return true;
+        if(inorder(root->right, k, cur, step))
+            return true;
+        return false;
+    }
+    int kthSmallest(TreeNode* root, int k) {
+        int cur = 0, step = 0;
+        inorder(root, k, cur, step);
+        return cur;
+    }
+};
+```
+
+一樣利用中序遍歷嚴格遞增的特性，當遍歷到第 k 個節點時，即為第 k 小的元素。
