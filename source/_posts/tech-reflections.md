@@ -1,7 +1,7 @@
 ---
 title: Tech Reflections
 date: 2025-11-01 20:14:32
-tags: [CS]
+tags: [tech]
 math: true
 ---
 
