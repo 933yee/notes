@@ -72,6 +72,39 @@ $$
 
   - 也代表 $Q^{-1} = Q^T$
 
+### Eigendecomposition
+
+Decomposition 可以幫助我們快速了解矩陣的性質
+
+#### Eigen vectors & Eigen values
+
+- 給定一個方陣 $A$，如果存在一個非零向量 $v$ 和一個純量 $\lambda$，使得
+
+  $$
+   Av = \lambda v
+  $$
+
+  則稱 $v$ 為 $A$ 的 **eigen vector**，$\lambda$ 為對應的 **eigen value**
+
+  可以想像成，某個 function A 遇到 eigen vector 時，只會對其進行伸縮 (scaling)，不會改變方向
+
+- 如果 $v$ 是一個 eigen vector，則 $cv$ (c 為非零常數) 也是 eigen vector，對應的 eigen value 不變，所以一般只會討論 unit eigen vectors
+
+#### Eigendecomposition
+
+- 任何 **real symmetric matrix** $A \in \mathbb{R}^{n \times n}$ 都可以被分解成
+
+  $$
+  A = Q \text{diag}(\lambda) Q^T
+  $$
+
+  - $\lambda \in \mathbb{R}^n$: eigen values of $A$，通常會由大到小排序
+  - $Q = [v_1, v_2, \ldots, v_n]$: 由 $A$ 的 eigen vectors 組成的 orthogonal matrix
+
+- Eigendecomposition 不是唯一的
+
+![eigendecomposition](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9qejWx2-LxS3zRwd4QcDk7cob7ZWCQJhRoxOjFTb5kmmPzmFDrMYrEEkpc5OwNYNJhPY&usqp=CAU)
+
 ### Maximum Likelihood Estimation (MLE)
 
 - 假設資料是獨立同分佈 (i.i.d)
