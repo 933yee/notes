@@ -6,6 +6,51 @@ category: AI
 math: true
 ---
 
+## Linear Algebra
+
+### Span & Linear Dependence
+
+在 Machine Learning 裡面，不管原本的 function 是不是 Linear，我們都會試著用 Linear function 來 Approximate 它。
+
+- $\text{span}(A_{:,1}, A_{:,2}, \ldots, A_{:,n})$ 被稱為 column space of A，記作 $\text{Col}(A)$
+- $\text{rank}(A)$ 是 $\text{Col}(A)$ 的維度 (dimension)
+- 給定 $A$ 和 $y$，解方程式 $Ax = y$，其中 $A$ 是 $m \times n$ 矩陣，$x$ 是 $n \times 1$ 向量，$y$ 是 $m \times 1$ 向量
+
+  - **一定至少有一個解**
+
+    因為 $Ax = \Sigma_{i} x_i A_{:,i}$，所以 $Ax$ 只不過是 $A$ 的 column vectors 的 linear combination，只要 $y$ 能寫成 $A$ 的 column vectors 的 linear combination，就一定有解
+
+    因此，$\text{span}(A_{:,1}, A_{:,2}, \ldots, A_{:,n}) \ni \mathbb{R}^m$，也代表 $n \geq m$
+
+  - **唯一解**
+
+    $A$ 最多只能有 $m$ 個 Column，也代表 $n = m$，且 $A$ 的 column vectors 必須是線性獨立 linearly independent 的
+
+    在這種情況下，$A$ 是 full rank 的，且為 invertible，因此 $x = A^{-1}y$ 是唯一解
+
+### Norms
+
+norm 是一個 function ($\|\cdot\|$)，能夠把 vector 映射到非負實數 (non-negative real number)
+
+- $L^p$ norm:
+
+  $$
+   \|x\|_p = \left( \sum_{i} |x_i|^p \right)^{1/p}
+  $$
+
+  - $p=1$: Manhattan norm
+  - $p=2$: Euclidean norm
+
+    $$
+     \|x\|_2 = (x^Tx)^{1/2} = \sqrt{\sum_i x_i^2}
+    $$
+
+  - $p \to \infty$: Maximum norm
+
+    $$
+     \|x\|_{\infty} = \max_i |x_i|
+    $$
+
 ### Maximum Likelihood Estimation (MLE)
 
 - 假設資料是獨立同分佈 (i.i.d)
