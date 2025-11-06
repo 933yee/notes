@@ -16,15 +16,15 @@
   <meta name="author" content="Kevin Lee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Maximum Likelihood Estimation (MLE) 假設資料是獨立同分佈 (i.i.d) 給定資料集 $D &#x3D; {x_1, x_2, \ldots, x_N}$，假設資料來自某個參數化的分佈 $p(x|\theta)$ 目標是找到參數 $\theta$，使得在該參數下，資料出現的機率最大 定義似然函數 (Likelihood Function) 為資料在參數 $\th">
+    <meta name="description" content="Linear AlgebraSpan &amp; Linear Dependence在 Machine Learning 裡面，不管原本的 function 是不是 Linear，我們都會試著用 Linear function 來 Approximate 它。  $\text{span}(A_{:,1}, A_{:,2}, \ldots, A_{:,n})$ 被稱為 column space of">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Deep Learning">
 <meta property="og:url" content="https://933yee.github.io/notes/2025/10/07/deep-learning/index.html">
 <meta property="og:site_name" content="933yee&#39;s Notes">
-<meta property="og:description" content="Maximum Likelihood Estimation (MLE) 假設資料是獨立同分佈 (i.i.d) 給定資料集 $D &#x3D; {x_1, x_2, \ldots, x_N}$，假設資料來自某個參數化的分佈 $p(x|\theta)$ 目標是找到參數 $\theta$，使得在該參數下，資料出現的機率最大 定義似然函數 (Likelihood Function) 為資料在參數 $\th">
+<meta property="og:description" content="Linear AlgebraSpan &amp; Linear Dependence在 Machine Learning 裡面，不管原本的 function 是不是 Linear，我們都會試著用 Linear function 來 Approximate 它。  $\text{span}(A_{:,1}, A_{:,2}, \ldots, A_{:,n})$ 被稱為 column space of">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-10-07T04:09:09.000Z">
-<meta property="article:modified_time" content="2025-10-11T05:41:26.083Z">
+<meta property="article:modified_time" content="2025-11-06T09:06:54.863Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="deep learning">
 <meta property="article:tag" content="ai">
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          452 words
+          717 words
         
       </span>
     
@@ -233,7 +233,7 @@
         
         
         
-          4 mins
+          6 mins
         
       </span>
     
@@ -275,7 +275,42 @@
             
               <div class="markdown-body">
                 
-                <h3 id="Maximum-Likelihood-Estimation-MLE"><a href="#Maximum-Likelihood-Estimation-MLE" class="headerlink" title="Maximum Likelihood Estimation (MLE)"></a>Maximum Likelihood Estimation (MLE)</h3><ul>
+                <h2 id="Linear-Algebra"><a href="#Linear-Algebra" class="headerlink" title="Linear Algebra"></a>Linear Algebra</h2><h3 id="Span-Linear-Dependence"><a href="#Span-Linear-Dependence" class="headerlink" title="Span &amp; Linear Dependence"></a>Span &amp; Linear Dependence</h3><p>在 Machine Learning 裡面，不管原本的 function 是不是 Linear，我們都會試著用 Linear function 來 Approximate 它。</p>
+<ul>
+<li><p>$\text{span}(A_{:,1}, A_{:,2}, \ldots, A_{:,n})$ 被稱為 column space of A，記作 $\text{Col}(A)$</p>
+</li>
+<li><p>$\text{rank}(A)$ 是 $\text{Col}(A)$ 的維度 (dimension)</p>
+</li>
+<li><p>給定 $A$ 和 $y$，解方程式 $Ax &#x3D; y$，其中 $A$ 是 $m \times n$ 矩陣，$x$ 是 $n \times 1$ 向量，$y$ 是 $m \times 1$ 向量</p>
+<ul>
+<li><p><strong>一定至少有一個解</strong></p>
+<p>因為 $Ax &#x3D; \Sigma_{i} x_i A_{:,i}$，所以 $Ax$ 只不過是 $A$ 的 column vectors 的 linear combination，只要 $y$ 能寫成 $A$ 的 column vectors 的 linear combination，就一定有解</p>
+<p>因此，$\text{span}(A_{:,1}, A_{:,2}, \ldots, A_{:,n}) \ni \mathbb{R}^m$，也代表 $n \geq m$</p>
+</li>
+<li><p><strong>唯一解</strong></p>
+<p>$A$ 最多只能有 $m$ 個 Column，也代表 $n &#x3D; m$，且 $A$ 的 column vectors 必須是線性獨立 linearly independent 的</p>
+<p>在這種情況下，$A$ 是 full rank 的，且為 invertible，因此 $x &#x3D; A^{-1}y$ 是唯一解</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Norms"><a href="#Norms" class="headerlink" title="Norms"></a>Norms</h3><p>norm 是一個 function ($|\cdot|$)，能夠把 vector 映射到非負實數 (non-negative real number)</p>
+<ul>
+<li><p>$L^p$ norm:</p>
+<p>$$<br> |x|<em>p &#x3D; \left( \sum</em>{i} |x_i|^p \right)^{1&#x2F;p}<br>$$</p>
+<ul>
+<li><p>$p&#x3D;1$: Manhattan norm</p>
+</li>
+<li><p>$p&#x3D;2$: Euclidean norm</p>
+<p>$$<br> |x|_2 &#x3D; (x^Tx)^{1&#x2F;2} &#x3D; \sqrt{\sum_i x_i^2}<br>$$</p>
+</li>
+<li><p>$p \to \infty$: Maximum norm</p>
+<p>$$<br> |x|_{\infty} &#x3D; \max_i |x_i|<br>$$</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Maximum-Likelihood-Estimation-MLE"><a href="#Maximum-Likelihood-Estimation-MLE" class="headerlink" title="Maximum Likelihood Estimation (MLE)"></a>Maximum Likelihood Estimation (MLE)</h3><ul>
 <li>假設資料是獨立同分佈 (i.i.d)</li>
 <li>給定資料集 $D &#x3D; {x_1, x_2, \ldots, x_N}$，假設資料來自某個參數化的分佈 $p(x|\theta)$</li>
 <li>目標是找到參數 $\theta$，使得在該參數下，資料出現的機率最大</li>

@@ -24,8 +24,12 @@
 <meta property="og:description" content="以前一定要從語言學去分析，才能處理比較好。現在都用統計的方式做，雖然人看不懂，但效果更好。 Information Retrieval (IR): 資訊檢索 Stemming: 詞幹還原 Lemmatization: 詞形還原 Stop Words: 常見但無意義的詞彙（如 “the”, “is”, “in”） Term Frequency (TF): 詞彙在文件中出現的頻率 $TF(t, d)">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://platform.openai.com/tokenizer">
+<meta property="og:image" content="https://933yee.github.io/notes/images/nlp/scaling_laws.png">
+<meta property="og:image" content="https://towardsdatascience.com/wp-content/uploads/2021/04/1tEjhWqUgjX37VnT7gJN-4g.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/nlp/gpt1.png">
+<meta property="og:image" content="https://933yee.github.io/notes/images/nlp/gpt2.png">
 <meta property="article:published_time" content="2025-09-24T02:03:22.000Z">
-<meta property="article:modified_time" content="2025-10-11T05:41:26.084Z">
+<meta property="article:modified_time" content="2025-10-27T10:42:52.273Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="ai">
 <meta property="article:tag" content="machine learning">
@@ -224,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.6k words
+          3.3k words
         
       </span>
     
@@ -235,7 +239,7 @@
         
         
         
-          13 mins
+          28 mins
         
       </span>
     
@@ -458,6 +462,206 @@
 </li>
 <li>靠著大量的資料讓模型硬學會各種任務</li>
 </ul>
+<h4 id="Extensions-of-T5-BART"><a href="#Extensions-of-T5-BART" class="headerlink" title="Extensions of T5: BART"></a>Extensions of T5: BART</h4><ul>
+<li>Bidirectional and Auto-Regressive Transformers (BART)</li>
+<li>Token Masking, Token Deletion, Text Infilling, Sentence Permutation, Document Rotation</li>
+</ul>
+<h3 id="Decoder-based-Models-GPT"><a href="#Decoder-based-Models-GPT" class="headerlink" title="Decoder-based Models: GPT"></a>Decoder-based Models: GPT</h3><ul>
+<li>2018 年 OpenAI 發表 GPT，使用 Transformer 的 Decoder 結構，作者是 Alec Radford</li>
+<li>一開始效果沒有很好，後來 GPT-2、GPT-3、GPT-4 效果越來越好</li>
+<li>使用自回歸語言模型 (Auto-Regressive Language Model, ARLM)<ul>
+<li>根據前面的詞彙預測下一個詞彙</li>
+</ul>
+</li>
+</ul>
+<h4 id="GPT-3"><a href="#GPT-3" class="headerlink" title="GPT-3"></a>GPT-3</h4><ul>
+<li>有 1750 億個參數</li>
+<li>發現大型模型有 Emergent Abilities<ul>
+<li>隨著模型規模增大，會出現一些小模型沒有的能力</li>
+</ul>
+</li>
+</ul>
+<h4 id="In-context-Learning"><a href="#In-context-Learning" class="headerlink" title="In-context Learning"></a>In-context Learning</h4><ul>
+<li>不需要微調模型，只要在輸入中提供一些範例，模型就能學會任務</li>
+<li>分為 Few-shot Learning、One-shot Learning、Zero-shot Learning</li>
+<li>沒有實際跟新模型的參數</li>
+</ul>
+<h4 id="Scaling-Laws"><a href="#Scaling-Laws" class="headerlink" title="Scaling Laws"></a>Scaling Laws</h4><ul>
+<li>模型的性能與參數數量、訓練資料量和計算資源之間存在一定的關係<br><img src="/notes/./images/nlp/scaling_laws.png" srcset="/notes/info/loading.gif" lazyload alt="Scaling Laws"></li>
+</ul>
+<h2 id="Decoding-Strategies-and-Evaluation-for-Natural-Language-Generation"><a href="#Decoding-Strategies-and-Evaluation-for-Natural-Language-Generation" class="headerlink" title="Decoding Strategies and Evaluation for Natural Language Generation"></a>Decoding Strategies and Evaluation for Natural Language Generation</h2><h3 id="Natural-Language-Generation-NLG"><a href="#Natural-Language-Generation-NLG" class="headerlink" title="Natural Language Generation (NLG)"></a>Natural Language Generation (NLG)</h3><ul>
+<li>生成 text 的過程就叫做 NLG<ul>
+<li>Machine Translation</li>
+<li>Abstractive Summarization</li>
+<li>Dialogue Generation (e.g., ChatGPT)</li>
+<li>Story Generation</li>
+<li>Image Captioning</li>
+</ul>
+</li>
+</ul>
+<h3 id="How-to-Train-a-Conditional-Language-Model"><a href="#How-to-Train-a-Conditional-Language-Model" class="headerlink" title="How to Train a Conditional Language Model"></a>How to Train a Conditional Language Model</h3><ul>
+<li>如果是翻譯任務，會需要平行語料庫 (source, target)</li>
+<li>Teacher Forcing: 在訓練過程中，使用真實的前一個詞彙作為輸入，而不是模型預測的詞彙<ul>
+<li>可以加速收斂，但會導致 Exposure Bias</li>
+<li>不用的話通常結果很爛</li>
+</ul>
+</li>
+</ul>
+<h3 id="Greedy-Decoding"><a href="#Greedy-Decoding" class="headerlink" title="Greedy Decoding"></a>Greedy Decoding</h3><ul>
+<li><p>每次都選擇機率最高的詞彙作為輸出</p>
+<ul>
+<li>優點：簡單且快速</li>
+<li>缺點：容易陷入局部最優解，生成的文本可能缺乏多樣性</li>
+</ul>
+</li>
+<li><p>Top-K Sampling</p>
+<ul>
+<li>在生成過程中，先選擇前 K 個機率最高的詞彙，然後從中進行隨機抽樣</li>
+<li>有可能選到機率很低的詞彙，導致生成的文本不連貫</li>
+</ul>
+</li>
+<li><p>Nucleus Sampling (Top-p Sampling)</p>
+<ul>
+<li>選擇累積機率達到 p 的詞彙集合，然後從中進行隨機抽樣</li>
+</ul>
+</li>
+<li><p>Beam Search</p>
+<ul>
+<li><p>同時維護多個候選序列，選擇最有可能的序列作為最終輸出</p>
+<p><img src="https://towardsdatascience.com/wp-content/uploads/2021/04/1tEjhWqUgjX37VnT7gJN-4g.png" srcset="/notes/info/loading.gif" lazyload alt="Beam Search"></p>
+</li>
+<li><p>但是越長的句子會被懲罰，機率會越來越小，所以需要做 Normalization</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="How-to-Evaluate-NLG-Models"><a href="#How-to-Evaluate-NLG-Models" class="headerlink" title="How to Evaluate NLG Models"></a>How to Evaluate NLG Models</h3><h4 id="BLEU-Bilingual-Evaluation-Understudy"><a href="#BLEU-Bilingual-Evaluation-Understudy" class="headerlink" title="BLEU (Bilingual Evaluation Understudy)"></a>BLEU (Bilingual Evaluation Understudy)</h4><ul>
+<li><p>計算 n-gram 的 precision</p>
+<ul>
+<li>Unigrams -&gt; BLEU-1</li>
+<li>Bigrams -&gt; BLEU-2</li>
+<li>Trigrams -&gt; BLEU-3</li>
+<li>4-grams -&gt; BLEU-4</li>
+</ul>
+</li>
+<li><p>Precision: 你猜的答案中有多少是對的</p>
+<ul>
+<li>$Precision &#x3D; \frac{|\text{Relevant and Retrieved instances}|}{|\text{All Retrieved instances}|}$</li>
+</ul>
+</li>
+<li><p>Recall: 正確答案中有多少被你猜出來</p>
+<ul>
+<li>$Recall &#x3D; \frac{|\text{Relevant and Retrieved instances}|}{|\text{All Relevant instances}|}$</li>
+</ul>
+</li>
+<li><p>Example:</p>
+<ul>
+<li>Chinese: 我想要讀那本書</li>
+<li>Reference1: I want to read that book</li>
+<li>Reference2: I want to read the book</li>
+<li>Model Output: the the the the the the</li>
+<li>Precision &#x3D; 6&#x2F;6 &#x3D; 1</li>
+</ul>
+</li>
+<li><p>Brevity Penalty (BP): 懲罰過短的句子<br>因為分母是生成句子的長度，分子是參考句子的長度，如果生成的句子太短，precision 通常會比較高，但這樣不合理，所以要加上 BP 來懲罰過短的句子</p>
+<p>$$<br>BP &#x3D;<br>\begin{cases}<br>1 &amp; \text{if } c &gt; r \newline<br>e^{(1 - r&#x2F;c)} &amp; \text{if } c \leq r<br>\end{cases}<br>$$</p>
+<ul>
+<li>$c$: candidate translation length</li>
+<li>$r$: reference translation length</li>
+</ul>
+</li>
+<li><p>最終 BLEU 分數計算：</p>
+<p>$$<br>BLEU &#x3D; BP \cdot \exp\left( \sum_{n&#x3D;1}^{N} w_n \log p_n \right)<br>$$</p>
+<ul>
+<li>$p_n$: n-gram precision</li>
+<li>$w_n$: n-gram 的權重，通常均等分配</li>
+<li>$N$: 最大 n-gram 長度</li>
+</ul>
+</li>
+</ul>
+<h4 id="ROUGE-Recall-Oriented-Understudy-for-Gisting-Evaluation"><a href="#ROUGE-Recall-Oriented-Understudy-for-Gisting-Evaluation" class="headerlink" title="ROUGE (Recall-Oriented Understudy for Gisting Evaluation)"></a>ROUGE (Recall-Oriented Understudy for Gisting Evaluation)</h4><ul>
+<li><p>ROUGE-N: 計算 n-gram 的 recall</p>
+<p>$$<br>ROUGE-N &#x3D; \frac{\sum_{S \in \text{Reference Summaries}} \sum_{\text{gram}<em>n \in S} \text{Count}</em>{\text{match}}(\text{gram}<em>n)}{\sum</em>{S \in \text{Reference Summaries}} \sum_{\text{gram}_n \in S} \text{Count}(\text{gram}_n)}<br>$$</p>
+</li>
+<li><p>ROUGE-L: 計算兩個序列的 Longest Common Subsequence (LCS)</p>
+</li>
+</ul>
+<h3 id="NLP-Benchmarks"><a href="#NLP-Benchmarks" class="headerlink" title="NLP Benchmarks"></a>NLP Benchmarks</h3><h4 id="GLUE-General-Language-Understanding-Evaluation"><a href="#GLUE-General-Language-Understanding-Evaluation" class="headerlink" title="GLUE (General Language Understanding Evaluation)"></a>GLUE (General Language Understanding Evaluation)</h4><ul>
+<li>總共有 9 個任務</li>
+<li>任務可以分成三類<ul>
+<li>Single-Sentence Tasks<ul>
+<li>模型只需要理解單一句子的語義</li>
+<li>CoLA (Corpus of Linguistic Acceptability): 判斷句子是否符合語法規則</li>
+<li>SST-2 (Stanford Sentiment Treebank): 判斷句子的情感傾向（正面或負面）</li>
+</ul>
+</li>
+<li>Sentence Pair Tasks<ul>
+<li>模型需要理解兩個句子之間的關係</li>
+<li>MNLI (Multi-Genre Natural Language Inference): 判斷兩個句子之間的邏輯關係（蕴涵、中立、矛盾）</li>
+<li>RTE (Recognizing Textual Entailment): 判斷兩個句子是否存在蕴涵關係 (簡化版 MNLI)</li>
+<li>QQP (Quora Question Pairs): 判斷兩個問題是否具有相同的語義</li>
+<li>MRPC (Microsoft Research Paraphrase Corpus): 判斷兩個句子是否為同義句</li>
+<li>QNLI (Question Natural Language Inference): 判斷問題和句子之間的蕴涵關係</li>
+</ul>
+</li>
+<li>Semantic Similarity Tasks<ul>
+<li>STS-B (Semantic Textual Similarity Benchmark): 評估兩個句子之間的語義相似度，分數範圍為 0 到 5</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>最後分數會綜合各個任務的結果，不過有時候會只看部分任務的結果</li>
+</ul>
+<h4 id="SQuAD-Stanford-Question-Answering-Dataset"><a href="#SQuAD-Stanford-Question-Answering-Dataset" class="headerlink" title="SQuAD (Stanford Question Answering Dataset)"></a>SQuAD (Stanford Question Answering Dataset)</h4><ul>
+<li>由 Stanford 大學釋出的閱讀理解資料集</li>
+<li>SQuAD 1.1: 包含 100,000 個問題，答案都是文章中的一段文字</li>
+<li>SQuAD 2.0: 在 SQuAD 1.1 的基礎上增加了無答案的問題，模型需要判斷問題是否有答案</li>
+</ul>
+<h4 id="MMLU-Massive-Multitask-Language-Understanding"><a href="#MMLU-Massive-Multitask-Language-Understanding" class="headerlink" title="MMLU (Massive Multitask Language Understanding)"></a>MMLU (Massive Multitask Language Understanding)</h4><ul>
+<li>包含 57 個不同領域的多選題</li>
+<li>測試模型在各種專業知識領域的理解能力</li>
+<li>涵蓋範圍廣泛，包括 STEM、Humanities、Social Sciences 等等</li>
+<li>模型需要在沒有額外訓練的情況下，直接回答這些問題</li>
+</ul>
+<h4 id="MTEB-Massive-Text-Embedding-Benchmark"><a href="#MTEB-Massive-Text-Embedding-Benchmark" class="headerlink" title="MTEB (Massive Text Embedding Benchmark)"></a>MTEB (Massive Text Embedding Benchmark)</h4><ul>
+<li>評估文本嵌入 (Text Embedding) 模型在多種任務上的表現</li>
+<li>包含文本分類、文本生成、文本相似度等多個任務</li>
+</ul>
+<h3 id="Watermark-for-text"><a href="#Watermark-for-text" class="headerlink" title="Watermark for text"></a>Watermark for text</h3><h2 id="GPT-3-InstructGPT-and-RLHF"><a href="#GPT-3-InstructGPT-and-RLHF" class="headerlink" title="GPT-3, InstructGPT, and RLHF"></a>GPT-3, InstructGPT, and RLHF</h2><h3 id="GPT-1"><a href="#GPT-1" class="headerlink" title="GPT-1"></a>GPT-1</h3><ul>
+<li>Decoder-only Transformer</li>
+<li>12 層，117M 個參數</li>
+</ul>
+<p><img src="/notes/./images/nlp/gpt1.png" srcset="/notes/info/loading.gif" lazyload alt="GPT-1"></p>
+<h3 id="GPT-2"><a href="#GPT-2" class="headerlink" title="GPT-2"></a>GPT-2</h3><ul>
+<li>Layer Normalization 放在每個 sub-block 的前面</li>
+<li>最後的 self-attention layer 後面多加一個 Layer Normalization</li>
+<li>GPT-2-medium: 24 層，345M 個參數</li>
+<li>GPT-2-large: 36 層，762M 個參數</li>
+<li>GPT-2-xl: 48 層，1.5B 個參數</li>
+</ul>
+<p><img src="/notes/./images/nlp/gpt2.png" srcset="/notes/info/loading.gif" lazyload alt="GPT-2"></p>
+<h3 id="GPT-3-1"><a href="#GPT-3-1" class="headerlink" title="GPT-3"></a>GPT-3</h3><ul>
+<li>Sparse Transformer<ul>
+<li>與其讓每個 token 都看所有 token，不如讓它只看「部分有意義的 token」。</li>
+<li>大幅減少計算量，且效果不會差太多</li>
+</ul>
+</li>
+</ul>
+<h3 id="Instruct-Tuning"><a href="#Instruct-Tuning" class="headerlink" title="Instruct Tuning"></a>Instruct Tuning</h3><ul>
+<li>一種微調方法，讓模型能夠更好地理解和執行人類的指令</li>
+<li>讓模型更理解人類語氣與意圖，提升泛化與實用性，可以回答沒有看過的問題。</li>
+</ul>
+<h3 id="InstructGPT-GPT-3-5"><a href="#InstructGPT-GPT-3-5" class="headerlink" title="InstructGPT (GPT-3.5)"></a>InstructGPT (GPT-3.5)</h3><p>InstructGPT 是在 GPT-3 的基礎上，透過 <strong>人類標註與反饋</strong> 進行再訓練</p>
+<p>訓練過程是，<strong>先學人類怎麼說，再學人類喜歡怎麼說</strong>。</p>
+<h4 id="監督式微調-Supervised-Fine-tuning-SFT"><a href="#監督式微調-Supervised-Fine-tuning-SFT" class="headerlink" title="監督式微調 (Supervised Fine-tuning, SFT)"></a>監督式微調 (Supervised Fine-tuning, SFT)</h4><p>讓模型學會如何「遵循指令」</p>
+<p>收集一個由人類標註者撰寫的高品質「指令-回應」資料集。使用這個資料集來微調 (fine-tuning) 一個預訓練好的基礎模型 (如 GPT-3)。</p>
+<p>產生 SFT 模型。這個模型能理解並執行指令，但回答的品質可能還不夠穩定或不符合人類偏好。</p>
+<h4 id="訓練獎勵模型-Reward-Model-RM"><a href="#訓練獎勵模型-Reward-Model-RM" class="headerlink" title="訓練獎勵模型 (Reward Model, RM)"></a>訓練獎勵模型 (Reward Model, RM)</h4><p>訓練一個模型來 <strong>「評估回應的品質」</strong>，使其學會人類的偏好。</p>
+<p>使用上一步的 SFT 模型，針對一個指令（prompt）產生多個不同的回應。人類標註者排序 (ranking) 這些回應（例如：從最好到最差）。使用這些「排序資料」來訓練一個新的模型，即獎勵模型 (RM)。</p>
+<p>產生 RM。這個模型會為任何「指令-回應」組合打一個分數 (reward)，分數越高代表越符合人類偏好。</p>
+<h4 id="使用強化學習-Reinforcement-Learning"><a href="#使用強化學習-Reinforcement-Learning" class="headerlink" title="使用強化學習 (Reinforcement Learning)"></a>使用強化學習 (Reinforcement Learning)</h4><p>利用 RM 作為「評審」，進一步優化 SFT 模型，使其產生的回應能獲得最高的「獎勵分數」。</p>
+<p>將 SFT 模型（在 RL 術語中稱為「策略 Policy」）複製一份。讓 Policy 針對新的指令產生回應。讓獎勵模型 (RM) 為這個「指令-回應」組合打分 (reward)。使用這個 reward 分數，透過 RL 演算法 (PPO, Proximal Policy Optimization) 來更新 Policy 模型的參數。</p>
+<p>產生最終的 InstructGPT 模型。這個模型被訓練成傾向於產生那些「RM 會給高分」的回應，而 RM 的評分標準又來自於人類的偏好。</p>
 
                 
               </div>
