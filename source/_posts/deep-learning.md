@@ -32,24 +32,27 @@ math: true
 
 norm 是一個 function ($\|\cdot\|$)，能夠把 vector 映射到非負實數 (non-negative real number)
 
-- $L^p$ norm:
+#### $L^p$ norm:
+
+$$
+\|x\|_p = \left( \sum_{i} |x_i|^p \right)^{1/p}
+$$
+
+- $p=1$: Manhattan norm
+- $p=2$: Euclidean norm (通常直接寫成 $\|x\|$)
 
   $$
-   \|x\|_p = \left( \sum_{i} |x_i|^p \right)^{1/p}
+   \|x\| = (x^Tx)^{1/2} = \sqrt{\sum_i x_i^2}
   $$
 
-  - $p=1$: Manhattan norm
-  - $p=2$: Euclidean norm
+- $p \to \infty$: Maximum norm
 
-    $$
-     \|x\|_2 = (x^Tx)^{1/2} = \sqrt{\sum_i x_i^2}
-    $$
+  $$
+   \|x\|_{\infty} = \max_i |x_i|
+  $$
 
-  - $p \to \infty$: Maximum norm
-
-    $$
-     \|x\|_{\infty} = \max_i |x_i|
-    $$
+- $x^Ty = \|x\| \|y\| \cos \theta$，其中 $\theta$ 是 $x$ 和 $y$ 之間的夾角
+  - 當 $x \perp y$ 時，$x^Ty = 0$，稱為 orthogonal。且如果 $\|x\| = \|y\| = 1$ (unit vectors)，則 $x$ 和 $y$ 是 orthonormal 的
 
 ### Maximum Likelihood Estimation (MLE)
 
