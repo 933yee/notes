@@ -25,7 +25,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9qejWx2-LxS3zRwd4QcDk7cob7ZWCQJhRoxOjFTb5kmmPzmFDrMYrEEkpc5OwNYNJhPY&usqp=CAU">
 <meta property="article:published_time" content="2025-11-06T04:09:09.000Z">
-<meta property="article:modified_time" content="2025-11-06T10:31:43.884Z">
+<meta property="article:modified_time" content="2025-11-06T11:29:20.377Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="deep learning">
 <meta property="article:tag" content="ai">
@@ -224,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.7k words
+          2.6k words
         
       </span>
     
@@ -235,7 +235,7 @@
         
         
         
-          15 mins
+          22 mins
         
       </span>
     
@@ -315,7 +315,7 @@
 </ul>
 <h4 id="Matrix-Norms"><a href="#Matrix-Norms" class="headerlink" title="Matrix Norms"></a>Matrix Norms</h4><ul>
 <li><p>Frobenius norm:</p>
-<p>$$<br> |A|<em>F &#x3D; \sqrt{\sum</em>{i,j} A_{i,j}^2} &#x3D; \sqrt{\text{trace}(A^TA)}<br>$$</p>
+<p>$$<br>|A|<em>F &#x3D; \sqrt{\sum</em>{i,j} A_{i,j}^2} &#x3D; \sqrt{\operatorname{tr}(A^\top A)}<br>$$</p>
 </li>
 <li><p>Orthogonal matrix:</p>
 <p>每個 column vector 都是 unit vector，且彼此 orthogonal，通常不會特別去區分 orthogonal matrix 和 orthonormal matrix，都稱為 orthogonal matrix</p>
@@ -438,7 +438,114 @@
 <p>實際上計算時，可以直接用 SVD 來計算，先把 $A$ 分解成 $A &#x3D; U \Sigma V^T$，則</p>
 <p>$$<br>A^+ &#x3D; V \Sigma^+ U^T<br>$$</p>
 <p>其中 $\Sigma^+$ 是把 $\Sigma$ 的非零奇異值取倒數後，再轉置得到的矩陣</p>
-<h3 id="Maximum-Likelihood-Estimation-MLE"><a href="#Maximum-Likelihood-Estimation-MLE" class="headerlink" title="Maximum Likelihood Estimation (MLE)"></a>Maximum Likelihood Estimation (MLE)</h3><ul>
+<h3 id="Traces"><a href="#Traces" class="headerlink" title="Traces"></a>Traces</h3><ul>
+<li><p>trace 的定義是矩陣對角線元素的和</p>
+<p>$$<br> \text{trace}(A) &#x3D; \sum_{i} A_{i,i}<br>$$</p>
+</li>
+<li><p>$|A|^2_F &#x3D; \text{trace}(A^TA)$</p>
+</li>
+<li><p>$\text{trace}(ABC) &#x3D; \text{trace}(BCA) &#x3D; \text{trace}(CAB)$ (cyclic property)</p>
+</li>
+</ul>
+<h3 id="Determinant"><a href="#Determinant" class="headerlink" title="Determinant"></a>Determinant</h3><p>$$<br>\text{det}(A) &#x3D; \sum_i (-1)^{i+1} A_{1,i} \text{det}(A_{-1,-i})<br>$$</p>
+<p>其中 $A_{-1,-i}$: 去掉第 1 列和第 i 行後的子矩陣 (submatrix)</p>
+<ul>
+<li>$\text{det}(A^T) &#x3D; \text{det}(A)$</li>
+<li>$\text{det}(AB) &#x3D; \text{det}(A) \text{det}(B)$</li>
+<li>$\text{det}(A^{-1}) &#x3D; \frac{1}{\text{det}(A)}$</li>
+<li>$\text{det}(A) &#x3D; \prod_i \lambda_i$，其中 $\lambda_i$ 是 $A$ 的 eigen values</li>
+</ul>
+<p>Determinant 可以被解釋為線性轉換後，空間體積的伸縮比例，也就是 Image of Unit Square (or Cube) 的體積。</p>
+<ul>
+<li><p>$\text{det}(A) &#x3D; 0$，代表它在某一個維度被壓縮成 0，整個空間就會被壓縮成一個低維度的子空間 (subspace)</p>
+</li>
+<li><p>$\text{det}(A) &#x3D; 1$，代表形狀可能會被改變，但體積不變</p>
+</li>
+</ul>
+<h2 id="Probability-Information-Theory"><a href="#Probability-Information-Theory" class="headerlink" title="Probability &amp; Information Theory"></a>Probability &amp; Information Theory</h2><h3 id="Random-Variables"><a href="#Random-Variables" class="headerlink" title="Random Variables"></a>Random Variables</h3><ul>
+<li><p>Discrete Random Variable: 只能取有限或可數無限個值的隨機變數</p>
+</li>
+<li><p>Continuous Random Variable: 可以取無限多個值的隨機變數，通常是區間上的所有值</p>
+</li>
+<li><p>必須有一個對應的 Probability Measure 來描述 Random Variable 的分佈情況</p>
+<ul>
+<li>Probability Mass Function (PMF)</li>
+<li>Probability Density Function (PDF)</li>
+</ul>
+</li>
+</ul>
+<h3 id="Probability-Mass-and-Density-Functions"><a href="#Probability-Mass-and-Density-Functions" class="headerlink" title="Probability Mass and Density Functions"></a>Probability Mass and Density Functions</h3><ul>
+<li><p>PMF: 定義在離散隨機變數上，描述每個可能取值的機率</p>
+<p>$$<br> P(X &#x3D; x_i) &#x3D; p_i<br>$$</p>
+<ul>
+<li>$\sum_i p_i &#x3D; 1$</li>
+</ul>
+</li>
+<li><p>PDF: 定義在連續隨機變數上，描述在某個區間內取值的機率密度</p>
+<p>$$<br> P(a &lt; X &lt; b) &#x3D; \int_{a}^{b} p(x) dx<br>$$</p>
+<ul>
+<li>$\int_{-\infty}^{\infty} p(x) dx &#x3D; 1$</li>
+<li>$p(x) \geq 0$，但 $p(x)$ 本身不代表機率</li>
+<li>$p(x) &gt; 1$ 是可能的，只要積分結果不超過 1 即可<ul>
+<li>例如，$p(x) &#x3D; 2$ 在區間 $[0, 0.5]$ 上是合法的 PDF，因為 $\int_{0}^{0.5} 2 dx &#x3D; 1$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Marginal-Probability"><a href="#Marginal-Probability" class="headerlink" title="Marginal Probability"></a>Marginal Probability</h3><p>$$<br>P(X &#x3D; x) &#x3D; \sum_y P(X &#x3D; x, Y &#x3D; y)<br>$$</p>
+<p>or</p>
+<p>$$<br>P(X &#x3D; x) &#x3D; \int p(X &#x3D; x, Y &#x3D; y) dy<br>$$</p>
+<h3 id="Conditional-Probability"><a href="#Conditional-Probability" class="headerlink" title="Conditional Probability"></a>Conditional Probability</h3><p>$$<br>P(X &#x3D; x | Y &#x3D; y) &#x3D; \frac{P(X &#x3D; x, Y &#x3D; y)}{P(Y &#x3D; y)}<br>$$</p>
+<h3 id="Indenpendence-Conditional-Independence"><a href="#Indenpendence-Conditional-Independence" class="headerlink" title="Indenpendence &amp; Conditional Independence"></a>Indenpendence &amp; Conditional Independence</h3><ul>
+<li><p>Indenpendence:</p>
+<p>$X$ 和 $Y$ 是獨立的，當且僅當</p>
+<p>$$<br> P(X &#x3D; x, Y &#x3D; y) &#x3D; P(X &#x3D; x) P(Y &#x3D; y)<br>$$</p>
+<p>$$<br> P(X &#x3D; x | Y &#x3D; y) &#x3D; P(X &#x3D; x)<br>$$</p>
+</li>
+<li><p>Conditional Independence:</p>
+<p>$X$ 和 $Y$ 在給定 $Z$ 的條件下是獨立的，當且僅當</p>
+<p>$$<br> P(X &#x3D; x, Y &#x3D; y | Z &#x3D; z) &#x3D; P(X &#x3D; x | Z &#x3D; z) P(Y &#x3D; y | Z &#x3D; z)<br>$$</p>
+<p>$$<br> P(X &#x3D; x | Y &#x3D; y, Z &#x3D; z) &#x3D; P(X &#x3D; x | Z &#x3D; z)<br>$$</p>
+</li>
+</ul>
+<h3 id="Expectation"><a href="#Expectation" class="headerlink" title="Expectation"></a>Expectation</h3><ul>
+<li><p>Discrete Random Variable:</p>
+<p>$$<br> \mathbb{E}[X] &#x3D; \sum_i x_i P(X &#x3D; x_i)<br>$$</p>
+</li>
+<li><p>Continuous Random Variable:</p>
+<p>$$<br> \mathbb{E}[X] &#x3D; \int_{-\infty}^{\infty} x p(x) dx<br>$$</p>
+</li>
+<li><p>線性性質:</p>
+</li>
+</ul>
+<p>$$<br>\mathbb{E}[aX + bY] &#x3D; a \mathbb{E}[X] + b \mathbb{E}[Y]<br>$$</p>
+<p>$$<br>\mathbb{E}[\mathbb{E}[f(x)]] &#x3D; \mathbb{E}[f(x)]<br>$$</p>
+<p>$$<br>\mathbb{E}[f(x) g(y)] &#x3D; \mathbb{E}[f(x)] \mathbb{E}[g(y)] \quad \text{if } x \perp y<br>$$</p>
+<h3 id="Variance"><a href="#Variance" class="headerlink" title="Variance"></a>Variance</h3><ul>
+<li><p>定義: 隨機變數 $X$ 的方差是其期望值的平方差的期望值</p>
+<p>$$<br> \text{Var}(X) &#x3D; \mathbb{E}[(X - \mathbb{E}[X])^2] &#x3D; \mathbb{E}[X^2] - (\mathbb{E}[X])^2<br>$$</p>
+</li>
+<li><p>性質:</p>
+</li>
+</ul>
+<p>$$<br>\text{Var}(aX + b) &#x3D; a^2 \text{Var}(X)<br>$$</p>
+<h3 id="Covariance"><a href="#Covariance" class="headerlink" title="Covariance"></a>Covariance</h3><ul>
+<li><p>定義: 隨機變數 $X$ 和 $Y$ 的協方差是它們偏離各自期望值的乘積的期望值</p>
+<p>$$<br> \text{Cov}(X, Y) &#x3D; \mathbb{E}[(X - \mathbb{E}[X])(Y - \mathbb{E}[Y])] &#x3D; \mathbb{E}[XY] - \mathbb{E}[X] \mathbb{E}[Y]<br>$$</p>
+</li>
+</ul>
+<p>可以用來衡量兩個隨機變數之間的線性關係，如果 $\text{Cov}(X, Y) &gt; 0$，表示 $X$ 和 $Y$ 傾向於同時增加或減少；如果 $\text{Cov}(X, Y) &lt; 0$，表示當 $X$ 增加時，$Y$ 傾向於減少，反之亦然</p>
+<ul>
+<li><p>如果 $X$ 和 $Y$ 是獨立的，則 $\text{Cov}(X, Y) &#x3D; 0$，但反之不一定成立</p>
+</li>
+<li><p>性質:</p>
+</li>
+</ul>
+<p>$$<br>\text{Var}(aX + bY) &#x3D; a^2 \text{Var}(X) + b^2 \text{Var}(Y) + 2ab \text{Cov}(X, Y)<br>$$</p>
+<p>$$<br>\text{Cov}(aX + b, cY + d) &#x3D; ac \text{Cov}(X, Y)<br>$$</p>
+<p>$$<br>\text{Cov}(aX + bZ, cY + dW) &#x3D; ac \text{Cov}(X, Y) + ad \text{Cov}(X, W) + bc \text{Cov}(Z, Y) + bd \text{Cov}(Z, W)<br>$$</p>
+<h2 id="Maximum-Likelihood-Estimation-MLE"><a href="#Maximum-Likelihood-Estimation-MLE" class="headerlink" title="Maximum Likelihood Estimation (MLE)"></a>Maximum Likelihood Estimation (MLE)</h2><ul>
 <li>假設資料是獨立同分佈 (i.i.d)</li>
 <li>給定資料集 $D &#x3D; {x_1, x_2, \ldots, x_N}$，假設資料來自某個參數化的分佈 $p(x|\theta)$</li>
 <li>目標是找到參數 $\theta$，使得在該參數下，資料出現的機率最大</li>
