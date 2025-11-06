@@ -25,7 +25,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9qejWx2-LxS3zRwd4QcDk7cob7ZWCQJhRoxOjFTb5kmmPzmFDrMYrEEkpc5OwNYNJhPY&usqp=CAU">
 <meta property="article:published_time" content="2025-11-06T04:09:09.000Z">
-<meta property="article:modified_time" content="2025-11-06T09:40:47.234Z">
+<meta property="article:modified_time" content="2025-11-06T10:02:13.013Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="deep learning">
 <meta property="article:tag" content="ai">
@@ -224,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1k words
+          1.3k words
         
       </span>
     
@@ -235,7 +235,7 @@
         
         
         
-          9 mins
+          11 mins
         
       </span>
     
@@ -347,6 +347,61 @@
 </li>
 </ul>
 <p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9qejWx2-LxS3zRwd4QcDk7cob7ZWCQJhRoxOjFTb5kmmPzmFDrMYrEEkpc5OwNYNJhPY&usqp=CAU" srcset="/notes/info/loading.gif" lazyload alt="eigendecomposition"></p>
+<p>可以想成把矩陣 A 當作一個線性轉換 (linear transformation)，先把空間旋轉到 eigen vector 的方向 (由 Q 決定)，再沿著各個 eigen vector 方向進行伸縮 (由 $\lambda$ 決定)，最後再把空間旋轉回來 (由 $Q^T$ 決定)</p>
+<h4 id="Rayleigh’s-Quotient"><a href="#Rayleigh’s-Quotient" class="headerlink" title="Rayleigh’s Quotient"></a>Rayleigh’s Quotient</h4><p>給定一個 real symmetric matrix $A \in \mathbb{R}^{n \times n}$，對任意非零向量 $x \in \mathbb{R}^n$，定義 Rayleigh’s Quotient 為</p>
+<p>$$<br>R(x) &#x3D; \frac{x^T A x}{x^T x}<br>$$</p>
+<p>且</p>
+<p>$$<br>\lambda_{\min} \leq R(x) \leq \lambda_{\max}<br>$$</p>
+<ul>
+<li>$\lambda_{\min}$: $A$ 的最小 eigen value</li>
+<li>$\lambda_{\max}$: $A$ 的最大 eigen value</li>
+<li>當且僅當 $x$ 是對應於 $\lambda_{\min}$ 或 $\lambda_{\max}$ 的 eigen vector 時，等號成立</li>
+</ul>
+<h4 id="Singularity"><a href="#Singularity" class="headerlink" title="Singularity"></a>Singularity</h4><p>若 $A &#x3D; Q \text{diag}(\lambda) Q^T$，則 $A^{-1} &#x3D; Q \text{diag}(\lambda)^{-1} Q^T$</p>
+<p>因為 Diagonal matrix 的反矩陣是把對角線元素取倒數，所以當 $\lambda_i &#x3D; 0$ 時，$A$ 就沒有反矩陣，稱為 singular matrix</p>
+<h4 id="Positive-Definiteness"><a href="#Positive-Definiteness" class="headerlink" title="Positive Definiteness"></a>Positive Definiteness</h4><ul>
+<li><p>Positive Definite:</p>
+<p>對所有非零向量 $x$，都有 $x^T A x &gt; 0$，等價於所有的 eigen values 都是正的</p>
+</li>
+<li><p>Positive Semi-Definite:</p>
+<p>對所有非零向量 $x$，都有 $x^T A x \geq 0$，等價於所有的 eigen values 都是非負的</p>
+</li>
+</ul>
+<p>對於一個 Quadratic Function $f(x) &#x3D; \frac{1}{2} x^T A x - b^T x + c$，可以藉由檢查 $A$ 是否為 <code>Positive Definite</code>、<code>Positive Semi-Definite</code>、<code>Negative Definite</code>、<code>Negative Semi-Definite</code> 來判斷其凸性 (convexity)：</p>
+<table>
+<thead>
+<tr>
+<th>Definiteness</th>
+<th>Convexity</th>
+<th>Condition on Eigenvalues</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Positive Definite</td>
+<td>Strictly Convex</td>
+<td>All eigenvalues &gt; 0</td>
+</tr>
+<tr>
+<td>Positive Semi-Definite</td>
+<td>Convex</td>
+<td>All eigenvalues ≥ 0</td>
+</tr>
+<tr>
+<td>Negative Definite</td>
+<td>Strictly Concave</td>
+<td>All eigenvalues &lt; 0</td>
+</tr>
+<tr>
+<td>Negative Semi-Definite</td>
+<td>Concave</td>
+<td>All eigenvalues ≤ 0</td>
+</tr>
+<tr>
+<td>Indefinite</td>
+<td>Neither</td>
+<td>Eigenvalues of mixed signs</td>
+</tr>
+</tbody></table>
 <h3 id="Maximum-Likelihood-Estimation-MLE"><a href="#Maximum-Likelihood-Estimation-MLE" class="headerlink" title="Maximum Likelihood Estimation (MLE)"></a>Maximum Likelihood Estimation (MLE)</h3><ul>
 <li>假設資料是獨立同分佈 (i.i.d)</li>
 <li>給定資料集 $D &#x3D; {x_1, x_2, \ldots, x_N}$，假設資料來自某個參數化的分佈 $p(x|\theta)$</li>

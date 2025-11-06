@@ -105,6 +105,52 @@ Decomposition 可以幫助我們快速了解矩陣的性質
 
 ![eigendecomposition](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9qejWx2-LxS3zRwd4QcDk7cob7ZWCQJhRoxOjFTb5kmmPzmFDrMYrEEkpc5OwNYNJhPY&usqp=CAU)
 
+可以想成把矩陣 A 當作一個線性轉換 (linear transformation)，先把空間旋轉到 eigen vector 的方向 (由 Q 決定)，再沿著各個 eigen vector 方向進行伸縮 (由 $\lambda$ 決定)，最後再把空間旋轉回來 (由 $Q^T$ 決定)
+
+#### Rayleigh's Quotient
+
+給定一個 real symmetric matrix $A \in \mathbb{R}^{n \times n}$，對任意非零向量 $x \in \mathbb{R}^n$，定義 Rayleigh's Quotient 為
+
+$$
+R(x) = \frac{x^T A x}{x^T x}
+$$
+
+且
+
+$$
+\lambda_{\min} \leq R(x) \leq \lambda_{\max}
+$$
+
+- $\lambda_{\min}$: $A$ 的最小 eigen value
+- $\lambda_{\max}$: $A$ 的最大 eigen value
+- 當且僅當 $x$ 是對應於 $\lambda_{\min}$ 或 $\lambda_{\max}$ 的 eigen vector 時，等號成立
+
+#### Singularity
+
+若 $A = Q \text{diag}(\lambda) Q^T$，則 $A^{-1} = Q \text{diag}(\lambda)^{-1} Q^T$
+
+因為 Diagonal matrix 的反矩陣是把對角線元素取倒數，所以當 $\lambda_i = 0$ 時，$A$ 就沒有反矩陣，稱為 singular matrix
+
+#### Positive Definiteness
+
+- Positive Definite:
+
+  對所有非零向量 $x$，都有 $x^T A x > 0$，等價於所有的 eigen values 都是正的
+
+- Positive Semi-Definite:
+
+  對所有非零向量 $x$，都有 $x^T A x \geq 0$，等價於所有的 eigen values 都是非負的
+
+對於一個 Quadratic Function $f(x) = \frac{1}{2} x^T A x - b^T x + c$，可以藉由檢查 $A$ 是否為 `Positive Definite`、`Positive Semi-Definite`、`Negative Definite`、`Negative Semi-Definite` 來判斷其凸性 (convexity)：
+
+| Definiteness           | Convexity        | Condition on Eigenvalues   |
+| ---------------------- | ---------------- | -------------------------- |
+| Positive Definite      | Strictly Convex  | All eigenvalues > 0        |
+| Positive Semi-Definite | Convex           | All eigenvalues ≥ 0        |
+| Negative Definite      | Strictly Concave | All eigenvalues < 0        |
+| Negative Semi-Definite | Concave          | All eigenvalues ≤ 0        |
+| Indefinite             | Neither          | Eigenvalues of mixed signs |
+
 ### Maximum Likelihood Estimation (MLE)
 
 - 假設資料是獨立同分佈 (i.i.d)
