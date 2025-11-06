@@ -1,6 +1,6 @@
 ---
 title: Deep Learning
-date: 2025-10-07 12:09:09
+date: 2025-11-06 12:09:09
 tags: [deep learning, ai, machine learning]
 category: AI
 math: true
