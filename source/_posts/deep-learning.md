@@ -35,7 +35,7 @@ norm 是一個 function ($\|\cdot\|$)，能夠把 vector 映射到非負實數 (
 #### $L^p$ norm:
 
 $$
-\|x\|_p = \left( \sum_{i} |x_i|^p \right)^{1/p}
+\|x\|_p = \left( \sum_i |x_i|^p \right)^{1/p}
 $$
 
 - $p=1$: Manhattan norm
@@ -53,6 +53,24 @@ $$
 
 - $x^Ty = \|x\| \|y\| \cos \theta$，其中 $\theta$ 是 $x$ 和 $y$ 之間的夾角
   - 當 $x \perp y$ 時，$x^Ty = 0$，稱為 orthogonal。且如果 $\|x\| = \|y\| = 1$ (unit vectors)，則 $x$ 和 $y$ 是 orthonormal 的
+
+#### Matrix Norms
+
+- Frobenius norm:
+
+  $$
+   \|A\|_F = \sqrt{\sum_{i,j} A_{i,j}^2} = \sqrt{\text{trace}(A^TA)}
+  $$
+
+- Orthogonal matrix:
+
+  每個 column vector 都是 unit vector，且彼此 orthogonal，通常不會特別去區分 orthogonal matrix 和 orthonormal matrix，都稱為 orthogonal matrix
+
+  $$
+   Q^TQ = QQ^T = I
+  $$
+
+  - 也代表 $Q^{-1} = Q^T$
 
 ### Maximum Likelihood Estimation (MLE)
 
