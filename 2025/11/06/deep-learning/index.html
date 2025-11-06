@@ -23,13 +23,15 @@
 <meta property="og:site_name" content="933yee&#39;s Notes">
 <meta property="og:description" content="Linear AlgebraSpan &amp; Linear Dependence在 Machine Learning 裡面，不管原本的 function 是不是 Linear，我們都會試著用 Linear function 來 Approximate 它。  $\text{span}(A_{:,1}, A_{:,2}, \ldots, A_{:,n})$ 被稱為 column space of">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9qejWx2-LxS3zRwd4QcDk7cob7ZWCQJhRoxOjFTb5kmmPzmFDrMYrEEkpc5OwNYNJhPY&usqp=CAU">
 <meta property="article:published_time" content="2025-11-06T04:09:09.000Z">
-<meta property="article:modified_time" content="2025-11-06T09:19:38.104Z">
+<meta property="article:modified_time" content="2025-11-06T09:40:47.234Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="deep learning">
 <meta property="article:tag" content="ai">
 <meta property="article:tag" content="machine learning">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9qejWx2-LxS3zRwd4QcDk7cob7ZWCQJhRoxOjFTb5kmmPzmFDrMYrEEkpc5OwNYNJhPY&usqp=CAU">
   
   
   
@@ -222,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          825 words
+          1k words
         
       </span>
     
@@ -233,7 +235,7 @@
         
         
         
-          7 mins
+          9 mins
         
       </span>
     
@@ -323,6 +325,28 @@
 </ul>
 </li>
 </ul>
+<h3 id="Eigendecomposition"><a href="#Eigendecomposition" class="headerlink" title="Eigendecomposition"></a>Eigendecomposition</h3><p>Decomposition 可以幫助我們快速了解矩陣的性質</p>
+<h4 id="Eigen-vectors-Eigen-values"><a href="#Eigen-vectors-Eigen-values" class="headerlink" title="Eigen vectors &amp; Eigen values"></a>Eigen vectors &amp; Eigen values</h4><ul>
+<li><p>給定一個方陣 $A$，如果存在一個非零向量 $v$ 和一個純量 $\lambda$，使得</p>
+<p>$$<br> Av &#x3D; \lambda v<br>$$</p>
+<p>則稱 $v$ 為 $A$ 的 <strong>eigen vector</strong>，$\lambda$ 為對應的 <strong>eigen value</strong></p>
+<p>可以想像成，某個 function A 遇到 eigen vector 時，只會對其進行伸縮 (scaling)，不會改變方向</p>
+</li>
+<li><p>如果 $v$ 是一個 eigen vector，則 $cv$ (c 為非零常數) 也是 eigen vector，對應的 eigen value 不變，所以一般只會討論 unit eigen vectors</p>
+</li>
+</ul>
+<h4 id="Eigendecomposition-1"><a href="#Eigendecomposition-1" class="headerlink" title="Eigendecomposition"></a>Eigendecomposition</h4><ul>
+<li><p>任何 <strong>real symmetric matrix</strong> $A \in \mathbb{R}^{n \times n}$ 都可以被分解成</p>
+<p>$$<br>A &#x3D; Q \text{diag}(\lambda) Q^T<br>$$</p>
+<ul>
+<li>$\lambda \in \mathbb{R}^n$: eigen values of $A$，通常會由大到小排序</li>
+<li>$Q &#x3D; [v_1, v_2, \ldots, v_n]$: 由 $A$ 的 eigen vectors 組成的 orthogonal matrix</li>
+</ul>
+</li>
+<li><p>Eigendecomposition 不是唯一的</p>
+</li>
+</ul>
+<p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9qejWx2-LxS3zRwd4QcDk7cob7ZWCQJhRoxOjFTb5kmmPzmFDrMYrEEkpc5OwNYNJhPY&usqp=CAU" srcset="/notes/info/loading.gif" lazyload alt="eigendecomposition"></p>
 <h3 id="Maximum-Likelihood-Estimation-MLE"><a href="#Maximum-Likelihood-Estimation-MLE" class="headerlink" title="Maximum Likelihood Estimation (MLE)"></a>Maximum Likelihood Estimation (MLE)</h3><ul>
 <li>假設資料是獨立同分佈 (i.i.d)</li>
 <li>給定資料集 $D &#x3D; {x_1, x_2, \ldots, x_N}$，假設資料來自某個參數化的分佈 $p(x|\theta)$</li>
