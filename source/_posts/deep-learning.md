@@ -59,7 +59,7 @@ $$
 - Frobenius norm:
 
   $$
-   \|A\|_F = \sqrt{\sum_{i,j} A_{i,j}^2} = \sqrt{\text{trace}(A^TA)}
+  \|A\|_F = \sqrt{\sum_{i,j} A_{i,j}^2} = \sqrt{\operatorname{tr}(A^\top A)}
   $$
 
 - Orthogonal matrix:
@@ -202,7 +202,181 @@ $$
 
 其中 $\Sigma^+$ 是把 $\Sigma$ 的非零奇異值取倒數後，再轉置得到的矩陣
 
-### Maximum Likelihood Estimation (MLE)
+### Traces
+
+- trace 的定義是矩陣對角線元素的和
+
+  $$
+   \text{trace}(A) = \sum_{i} A_{i,i}
+  $$
+
+- $\|A\|^2_F = \text{trace}(A^TA)$
+- $\text{trace}(ABC) = \text{trace}(BCA) = \text{trace}(CAB)$ (cyclic property)
+
+### Determinant
+
+$$
+\text{det}(A) = \sum_i (-1)^{i+1} A_{1,i} \text{det}(A_{-1,-i})
+$$
+
+其中 $A_{-1,-i}$: 去掉第 1 列和第 i 行後的子矩陣 (submatrix)
+
+- $\text{det}(A^T) = \text{det}(A)$
+- $\text{det}(AB) = \text{det}(A) \text{det}(B)$
+- $\text{det}(A^{-1}) = \frac{1}{\text{det}(A)}$
+- $\text{det}(A) = \prod_i \lambda_i$，其中 $\lambda_i$ 是 $A$ 的 eigen values
+
+Determinant 可以被解釋為線性轉換後，空間體積的伸縮比例，也就是 Image of Unit Square (or Cube) 的體積。
+
+- $\text{det}(A) = 0$，代表它在某一個維度被壓縮成 0，整個空間就會被壓縮成一個低維度的子空間 (subspace)
+
+- $\text{det}(A) = 1$，代表形狀可能會被改變，但體積不變
+
+## Probability & Information Theory
+
+### Random Variables
+
+- Discrete Random Variable: 只能取有限或可數無限個值的隨機變數
+- Continuous Random Variable: 可以取無限多個值的隨機變數，通常是區間上的所有值
+
+- 必須有一個對應的 Probability Measure 來描述 Random Variable 的分佈情況
+  - Probability Mass Function (PMF)
+  - Probability Density Function (PDF)
+
+### Probability Mass and Density Functions
+
+- PMF: 定義在離散隨機變數上，描述每個可能取值的機率
+
+  $$
+   P(X = x_i) = p_i
+  $$
+
+  - $\sum_i p_i = 1$
+
+- PDF: 定義在連續隨機變數上，描述在某個區間內取值的機率密度
+
+  $$
+   P(a < X < b) = \int_{a}^{b} p(x) dx
+  $$
+
+  - $\int_{-\infty}^{\infty} p(x) dx = 1$
+  - $p(x) \geq 0$，但 $p(x)$ 本身不代表機率
+  - $p(x) > 1$ 是可能的，只要積分結果不超過 1 即可
+    - 例如，$p(x) = 2$ 在區間 $[0, 0.5]$ 上是合法的 PDF，因為 $\int_{0}^{0.5} 2 dx = 1$
+
+### Marginal Probability
+
+$$
+P(X = x) = \sum_y P(X = x, Y = y)
+$$
+
+or
+
+$$
+P(X = x) = \int p(X = x, Y = y) dy
+$$
+
+### Conditional Probability
+
+$$
+P(X = x | Y = y) = \frac{P(X = x, Y = y)}{P(Y = y)}
+$$
+
+### Indenpendence & Conditional Independence
+
+- Indenpendence:
+
+  $X$ 和 $Y$ 是獨立的，當且僅當
+
+  $$
+   P(X = x, Y = y) = P(X = x) P(Y = y)
+  $$
+
+  $$
+   P(X = x | Y = y) = P(X = x)
+  $$
+
+- Conditional Independence:
+
+  $X$ 和 $Y$ 在給定 $Z$ 的條件下是獨立的，當且僅當
+
+  $$
+   P(X = x, Y = y | Z = z) = P(X = x | Z = z) P(Y = y | Z = z)
+  $$
+
+  $$
+   P(X = x | Y = y, Z = z) = P(X = x | Z = z)
+  $$
+
+### Expectation
+
+- Discrete Random Variable:
+
+  $$
+   \mathbb{E}[X] = \sum_i x_i P(X = x_i)
+  $$
+
+- Continuous Random Variable:
+
+  $$
+   \mathbb{E}[X] = \int_{-\infty}^{\infty} x p(x) dx
+  $$
+
+- 線性性質:
+
+$$
+\mathbb{E}[aX + bY] = a \mathbb{E}[X] + b \mathbb{E}[Y]
+$$
+
+$$
+\mathbb{E}[\mathbb{E}[f(x)]] = \mathbb{E}[f(x)]
+$$
+
+$$
+\mathbb{E}[f(x) g(y)] = \mathbb{E}[f(x)] \mathbb{E}[g(y)] \quad \text{if } x \perp y
+$$
+
+### Variance
+
+- 定義: 隨機變數 $X$ 的方差是其期望值的平方差的期望值
+
+  $$
+   \text{Var}(X) = \mathbb{E}[(X - \mathbb{E}[X])^2] = \mathbb{E}[X^2] - (\mathbb{E}[X])^2
+  $$
+
+- 性質:
+
+$$
+\text{Var}(aX + b) = a^2 \text{Var}(X)
+$$
+
+### Covariance
+
+- 定義: 隨機變數 $X$ 和 $Y$ 的協方差是它們偏離各自期望值的乘積的期望值
+
+  $$
+   \text{Cov}(X, Y) = \mathbb{E}[(X - \mathbb{E}[X])(Y - \mathbb{E}[Y])] = \mathbb{E}[XY] - \mathbb{E}[X] \mathbb{E}[Y]
+  $$
+
+可以用來衡量兩個隨機變數之間的線性關係，如果 $\text{Cov}(X, Y) > 0$，表示 $X$ 和 $Y$ 傾向於同時增加或減少；如果 $\text{Cov}(X, Y) < 0$，表示當 $X$ 增加時，$Y$ 傾向於減少，反之亦然
+
+- 如果 $X$ 和 $Y$ 是獨立的，則 $\text{Cov}(X, Y) = 0$，但反之不一定成立
+
+- 性質:
+
+$$
+\text{Var}(aX + bY) = a^2 \text{Var}(X) + b^2 \text{Var}(Y) + 2ab \text{Cov}(X, Y)
+$$
+
+$$
+\text{Cov}(aX + b, cY + d) = ac \text{Cov}(X, Y)
+$$
+
+$$
+\text{Cov}(aX + bZ, cY + dW) = ac \text{Cov}(X, Y) + ad \text{Cov}(X, W) + bc \text{Cov}(Z, Y) + bd \text{Cov}(Z, W)
+$$
+
+## Maximum Likelihood Estimation (MLE)
 
 - 假設資料是獨立同分佈 (i.i.d)
 - 給定資料集 $D = {x_1, x_2, \ldots, x_N}$，假設資料來自某個參數化的分佈 $p(x|\theta)$
