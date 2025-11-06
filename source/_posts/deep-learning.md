@@ -151,6 +151,57 @@ $$
 | Negative Semi-Definite | Concave          | All eigenvalues ≤ 0        |
 | Indefinite             | Neither          | Eigenvalues of mixed signs |
 
+### Singular Value Decomposition (SVD)
+
+Eigendecomposition 要求矩陣是方陣 (square matrix) 且為 symmetric matrix，但 SVD 不需要這些限制
+
+任何一個矩陣 $A \in \mathbb{R}^{m \times n}$ 都可以被分解成
+
+$$
+A = U \Sigma V^T
+$$
+
+- $U \in \mathbb{R}^{m \times m}$: 左奇異向量 (left singular vectors)，為 $AA^T$ 的 eigen vectors 組成的 orthogonal matrix
+- $\Sigma \in \mathbb{R}^{m \times n}$: 對角矩陣 (diagonal matrix)，對角線上的元素為 $AA^T$ 或 $A^TA$ 的 eigen values 的平方根，稱為 singular values，且通常會由大到小排序
+- $V \in \mathbb{R}^{n \times n}$: 右奇異向量 (right singular vectors)，為 $A^TA$ 的 eigen vectors 組成的 orthogonal matrix
+
+### Moore-Penrose Pseudoinverse
+
+對於一般情況，一個非方陣 $A \in \mathbb{R}^{m \times n}$，我們無法計算其反矩陣 $A^{-1}$，但我們可以用另一個矩陣 $B \in \mathbb{R}^{n \times m}$ ，用來解出 $Ax = y$，即 $x = By$
+
+Moore-Penrose Pseudoinverse 令 $B = A^+$，可以把任務拆成三種 Case：
+
+1. **$m = n$**:
+
+   - 有唯一解 (如果 $A$ 是 invertible 的)
+   - 解為 $A^+ = A^{-1}$
+
+2. **$m < n$**:
+
+   - 有無限多解
+   - 目標是找到一個 $x$，使得 $\|x\|_2$ 最小，找一個最小範數解
+
+3. **$m > n$**:
+
+   - 沒有精確解
+   - 目標是找到一個 $x$，使得 $\|Ax - y\|_2$ 最小，找一個最佳近似解
+
+Moore-Penrose Pseudoinverse 定義為
+
+$$
+A^+ = \text{lim}_{\lambda \to 0^+} (A^TA + \lambda I)^{-1} A^T
+$$
+
+其中 $\lambda$ 是一個非常小的正數，用來確保 $A^TA + \lambda I$ 是 Full Rank 的，因此可以被反轉
+
+實際上計算時，可以直接用 SVD 來計算，先把 $A$ 分解成 $A = U \Sigma V^T$，則
+
+$$
+A^+ = V \Sigma^+ U^T
+$$
+
+其中 $\Sigma^+$ 是把 $\Sigma$ 的非零奇異值取倒數後，再轉置得到的矩陣
+
 ### Maximum Likelihood Estimation (MLE)
 
 - 假設資料是獨立同分佈 (i.i.d)
