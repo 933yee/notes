@@ -376,6 +376,231 @@ $$
 \text{Cov}(aX + bZ, cY + dW) = ac \text{Cov}(X, Y) + ad \text{Cov}(X, W) + bc \text{Cov}(Z, Y) + bd \text{Cov}(Z, W)
 $$
 
+### Multivariate Random Variables
+
+$x = [x_1, x_2, \ldots, x_n]^T$ 是一個 n 維隨機向量 (random vector)
+
+- 每個 $x_i$ 都是隨機變數，且彼此是 dependent 的
+- $P(x)$ 就是 $x_1, x_2, \ldots, x_n$ 的 joint distribution
+
+- Expectation Vector:
+
+  $$
+   \mathbb{E}[x] = \begin{bmatrix}
+        \mathbb{E}[x_1] \newline
+        \mathbb{E}[x_2] \newline
+        \vdots \newline
+        \mathbb{E}[x_n]
+   \end{bmatrix} = \begin{bmatrix}
+        \mathbb{\mu}_{x_1} \newline
+        \mathbb{\mu}_{x_2} \newline
+        \vdots \newline
+        \mathbb{\mu}_{x_n}
+   \end{bmatrix} = \mu_x
+  $$
+
+- Covariance Matrix:
+
+  $$
+    \begin{aligned}
+   \text{Cov}(x) &= \begin{bmatrix}
+        \text{Var}(x_1) & \text{Cov}(x_1, x_2) & \ldots & \text{Cov}(x_1, x_n) \newline
+        \text{Cov}(x_2, x_1) & \text{Var}(x_2) & \ldots & \text{Cov}(x_2, x_n) \newline
+        \vdots & \vdots & \ddots & \vdots \newline
+        \text{Cov}(x_n, x_1) & \text{Cov}(x_n, x_2) & \ldots & \text{Var}(x_n)
+   \end{bmatrix}  \newline
+   &= \Sigma_x \newline
+   &= \mathbb{E}[(x - \mu_x)(x - \mu_x)^T] \newline
+   &= \mathbb{E}[xx^T] - \mu_x \mu_x^T
+    \end{aligned}
+  $$
+
+  - 性質:
+    - $\Sigma_x$ 是 symmetric
+    - $\Sigma_x$ 是 positive semi-definite
+
+### Derived Random Variables
+
+令 $y = f(x;w) = w^T x$，其中 $y$ 是一個由隨機向量 $x$ 經過線性轉換得到的隨機變數，稱為 derived random variable
+
+- 性質
+  - $\mathbb{E}[y] = w^T \mathbb{E}[x]$
+  - $\text{Var}(y) = w^T \text{Cov}(x) w = w^T \Sigma_x w$
+  - 如果 $x$ 是 centralized 的 (mean zero)，則 $\mathbb{E}[y] = 0$
+
+### Bayes' Rule
+
+$$
+P(A | B) = \frac{P(B | A) P(A)}{P(B)} = \frac{P(B | A) P(A)}{\sum_i P(B | A_i) P(A_i)}
+$$
+
+Bayes' Rule 可以用來反轉條件機率，例如從 $P(B | A)$ 推斷 $P(A | B)$，每一項都有自己的名字：
+
+$$
+P(A | B): \text{Posterior} = \frac{P(B | A): \text{Likelihood} \times P(A): \text{Prior}}{P(B): \text{Evidence}}
+$$
+
+### Point Estimation
+
+用樣本資料計算一個單一數值，用來估計未知的母體參數，例如：
+
+- 取樣本平均數作為母體平均數的估計
+
+  $$
+  \hat{\mu} = \frac{1}{N} \sum_{i=1}^{N} x_i
+  $$
+
+- 取樣本比例作為母體比例的估計
+
+  $$
+  \hat{p} = \frac{1}{N} \sum_{i=1}^{N} I(x_i \in A)
+  $$
+
+- 取樣本協方差作為母體協方差的估計
+
+  $$
+  \hat{\Sigma}_x = \frac{1}{N} \sum_{i=1}^{N} (x_i - \hat{\mu})(x_i - \hat{\mu})^T
+  $$
+
+  - 如果 $x$ 是 centralized 的 (mean zero)，則 $\hat{\Sigma}_x = \frac{1}{N} \sum_{i=1}^{N} x_i x_i^T$
+
+### Principal Component Analysis (PCA)
+
+#### 壓縮資訊
+
+- 給定資料集 $X = {x_1, x_2, \ldots, x_N}$，每個 $x_i \in \mathbb{R}^D$
+- 找到一個 function $f: \mathbb{R}^D \to \mathbb{R}^K$，其中 $K < D$，使得 $f(x_i)$ 能夠保留 $x_i$ 的大部分資訊
+- 目標是最小化重建誤差 (reconstruction error)，保留最大的資訊量
+
+#### 方法
+
+- 假設 $x^{(i)}$ 為 randome variable $x$ 的 i.i.d. sample
+- 假設 $f$ 是 Linear function，即 $f(x) = W^T x$，其中 $W \in \mathbb{R}^{D \times K}$
+- PCA 的目標是找到 $K$ 個 orthonormal vectors $w_1, w_2, \ldots, w_K$ (principal components)，使得投影後的資料變異數 (variance) 最大化
+- 為什麼 $w_1, w_2, \ldots, w_K$ 要是 orthonormal 的？
+  - 避免 redundant information
+- 為什麼 $\|w_i\| = 1$？
+  - 避免 scale 的影響，不然可以無限放大 $w_i$ 來增加變異數的值
+
+#### Optimization Problem
+
+為了簡化，先考慮 $K = 1$ 的情況，我們要求最大的 $\text{Var}(z_1)$，其中 $z_1 = w_1^T x$
+
+而 $\text{Var}(z_1)$ 又可以寫成
+
+$$
+\text{Var}(z_1) = \sigma_{z_1}^2 = w_1^T \Sigma_x w_1
+$$
+
+如果先把 $x$ centralized (mean zero)，則
+
+$$
+\hat{\Sigma}_x = \frac{1}{N} \sum_{i=1}^{N} x_i x_i^T = \frac{1}{N} X^TX
+$$
+
+接著，PCA 的目標可以寫成以下的優化問題：
+
+$$
+\begin{aligned}
+\text{arg max}_{w_1 \in \mathbb{R}^D} \quad & w_1^T X^T X w_1, \text{ subject to } \|w_1\|_2 = 1 \newline
+\end{aligned}
+$$
+
+又因為 $X^TX$ 是一個 real symmetric matrix，可以被 eigendecomposition 分解成
+
+$$
+X^TX = W \Lambda W^T
+$$
+
+套用 Rayleigh's Quotient 的結果，知道最大值會出現在最大的 eigen value 上，$w_1$ 就是其對應的 eigen vector
+
+再來考慮 $w_2$，可以寫成以下的優化問題：
+
+$$
+\begin{aligned}
+\text{arg max}_{w_2 \in \mathbb{R}^D} \quad & w_2^T X^T X w_2, \newline
+\text{ subject to } & \|w_2\|_2 = 1, & w_2^T w_1 = 0 \newline
+\end{aligned}
+$$
+
+所以，對於一般情況， $w_1, w_2, \ldots, w_K$ 就是 $X^TX$ 前 $K$ 個最大的 eigen values 所對應的 eigen vectors
+
+### Technical Details
+
+#### Sure & Almost Sure Events
+
+- Sure Event: 發生機率為 1 的事件，沒有任何例外情況
+  - 擲一個公平的六面骰子，得到的點數一定在 1 到 6 之間
+- Almost Sure Event: 發生機率為 1 的事件，但可能包含一些 measure zero 的例外情況
+  - 在連續隨機變數中，取到某個特定值的機率為 0，但這並不代表該事件不可能發生
+
+#### Equality of Random Variables
+
+感覺沒那麼重要，之後再補充
+
+- Equality in Distribution
+- Almost Sure Equality
+- Equality
+
+#### Convergence of Random Variables
+
+感覺沒那麼重要，之後再補充
+
+- Convergence in Distribution
+- Convergence in Probability
+- Almost Sure Convergence
+
+#### Distribution of Derived Variables
+
+令 $y = f(x)$ 且 $f^{-1}$ 存在，那 $P(y = y) = P(x = f^{-1}(y))$ 一定成立嗎？
+
+如果 $x$ 和 $y$ 都是連續的，**不成立**
+
+令 $x \sim \text{Uniform}(0, 1)$ 是連續的，且 $p(x) = c$ for $x \in [0, 1]$
+
+令 $y = \frac{x}{2}$，則 $y \sim \text{Uniform}(0, 0.5)$
+
+如果 $p_y(y) = p_x(f^{-1}(y)) = p_x(2y) = c$，則
+
+$$
+\int_{0}^{0.5} p_y(y) dy = \int_{0}^{0.5} c dy = 0.5c =  0.5 \ne 1
+$$
+
+不符合 PDF 的定義，所以不成立
+
+#### Jacobian Adjustment
+
+我們知道 $Pr(y = y) = p_y(y) dy$，且 $Pr(x = x) = p_x(x) dx$ 且
+
+$$
+\|p_y(y) dy\| = \|p_x(x) dx\|
+$$
+
+可以得到
+
+$$
+p_y(y) = p_x(f^{-1}(y)) \left| \frac{d f^{-1}(y)}{dy} \right|
+$$
+
+而在 multivariate 的情況下，Jacobian matrix $J_{f^{-1}}(y)$ 的行列式 (determinant) 就是我們要的調整因子
+
+$$
+p_y(y) = p_x(f^{-1}(y)) \left| \det(J_{f^{-1}}(y)) \right|
+$$
+
+其中
+
+$$
+J_{f^{-1}}(y) = \begin{bmatrix}
+    \frac{\partial f_1^{-1}(y)}{\partial y_1} & \frac{\partial f_1^{-1}(y)}{\partial y_2} & \ldots & \frac{\partial f_1^{-1}(y)}{\partial y_n} \newline
+    \frac{\partial f_2^{-1}(y)}{\partial y_1} & \frac{\partial f_2^{-1}(y)}{\partial y_2} & \ldots & \frac{\partial f_2^{-1}(y)}{\partial y_n} \newline
+    \vdots & \vdots & \ddots & \vdots \newline
+    \frac{\partial f_n^{-1}(y)}{\partial y_1} & \frac{\partial f_n^{-1}(y)}{\partial y_2} & \ldots & \frac{\partial f_n^{-1}(y)}{\partial y_n} \newline
+\end{bmatrix}
+$$
+
+因為 function $f$ 在計算時可能會 distort 空間的體積，Jacobian determinant 就是用來調整這個體積變化的因子，在一維的情況下，就是導數的絕對值
+
 ## Maximum Likelihood Estimation (MLE)
 
 - 假設資料是獨立同分佈 (i.i.d)
