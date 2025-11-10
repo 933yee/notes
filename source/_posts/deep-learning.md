@@ -601,56 +601,169 @@ $$
 
 因為 function $f$ 在計算時可能會 distort 空間的體積，Jacobian determinant 就是用來調整這個體積變化的因子，在一維的情況下，就是導數的絕對值
 
+### Probability Distributions
+
+#### Bernoulli Distribution (Discrete)
+
+給定一個參數 $p$，表示事件發生的機率，則 Bernoulli 分佈的 PMF 為
+
+$$
+P(X = x) = p^x (1-p)^{1-x}, \quad x \in \{0, 1\}
+$$
+
+- Expectation: $\mathbb{E}[X] = p$
+
+  $$
+  \begin{aligned}
+  \mathbb{E}[X] &= \sum_{x \in \{0, 1\}} x P(X = x) \newline
+  &= 0 \cdot P(X = 0) + 1 \cdot P(X = 1) \newline
+  &= 0 \cdot (1-p) + 1 \cdot p \newline
+  &= p \newline
+  \end{aligned}
+  $$
+
+- Variance: $\text{Var}(X) = p(1-p)$
+
+  $$
+  \begin{aligned}
+  \text{Var}(X) &= \mathbb{E}[X^2] - (\mathbb{E}[X])^2 \newline
+  &= \sum_{x \in \{0, 1\}} x^2 P(X = x) - p^2 \newline
+  &= 0^2 \cdot P(X = 0) + 1^2 \cdot P(X = 1) - p^2 \newline
+  &= 0^2 \cdot (1-p) + 1^2 \cdot p - p^2 \newline
+  &= p - p^2 \newline
+  &= p(1-p) \newline
+  \end{aligned}
+  $$
+
+#### Categorical Distribution (Discrete)
+
+給定一個參數向量 $p = [p_1, p_2, \ldots, p_K]$，表示 $K$ 個類別的機率，則 Categorical 分佈的 PMF 為
+
+$$
+P(X = k) = p_k, \quad k \in \{1, 2, \ldots, K\}
+$$
+
+or
+
+$$
+P(X = k) = \prod_{i=1}^{K} p_i^{I(X = i)}
+$$
+
+- $I(X = i)$: indicator function，當 $X = i$ 時為 1，否則為 0
+
+#### Multinomial Distribution (Discrete)
+
+給定一個參數向量 $p = [p_1, p_2, \ldots, p_K]$，表示 $K$ 個類別的機率，且有 $n$ 次獨立試驗，則 Multinomial 分佈的 PMF 為
+
+$$
+P(X_1 = x_1, X_2 = x_2, \ldots, X_K = x_K) = \frac{n!}{x_1! x_2! \ldots x_K!} p_1^{x_1} p_2^{x_2} \ldots p_K^{x_K}
+$$
+
+- $x_i$: 第 $i$ 類別的次數，且 $\sum_{i=1}^{K} x_i = n$
+
+#### Normal/Gaussian Distribution (Continuous)
+
+給定一個參數 $\mu$ 和 $\sigma^2$，表示平均數和變異數，則 Normal 分佈的 PDF 為
+
+$$
+p(x) = \frac{1}{\sqrt{2 \pi \sigma^2}} \exp \left( -\frac{(x - \mu)^2}{2 \sigma^2} \right)
+$$
+
+- Expectation: $\mathbb{E}[X] = \mu$
+- Variance: $\text{Var}(X) = \sigma^2$
+
+好處：
+
+- 提供最多的 Uncertainty (最大熵)
+- 數學上很好處理 (continuous, differentiable)
+
+性質
+
+- 如果 $X \sim \mathcal{N}(\mu, \sigma^2)$，則 $Y = aX + b \sim \mathcal{N}(a\mu + b, a^2 \sigma^2)$
+
+  $$
+  \begin{aligned}
+  \mathbb{E}[Y] &= \mathbb{E}[aX + b] = a \mathbb{E}[X] + b = a\mu + b \newline
+  \text{Var}(Y) &= \text{Var}(aX + b) = a^2 \text{Var}(X) = a^2 \sigma^2 \newline
+  \end{aligned}
+  $$
+
+  - 所以做了 `z-normalization (standardization)` 後，$Z = \frac{X - \mu}{\sigma} \sim \mathcal{N}(0, 1)$
+
+- 如果 $X_1 \sim \mathcal{N}(\mu_1, \sigma_1^2)$，$X_2 \sim \mathcal{N}(\mu_2, \sigma_2^2)$，且 $X_1$ 和 $X_2$ 獨立，則 $Y = X_1 + X_2 \sim \mathcal{N}(\mu_1 + \mu_2, \sigma_1^2 + \sigma_2^2)$
+  $$
+  \begin{aligned}
+  \mathbb{E}[Y] &= \mathbb{E}[X_1 + X_2] = \mathbb{E}[X_1] + \mathbb{E}[X_2] = \mu_1 + \mu_2 \newline
+  \text{Var}(Y) &= \text{Var}(X_1 + X_2) = \text{Var}(X_1) + \text{Var}(X_2) = \sigma_1^2 + \sigma_2^2 \newline
+  \end{aligned}
+  $$
+
+#### Multivariate Normal/Gaussian Distribution
+
+給定一個參數向量 $\mu \in \mathbb{R}^D$ 和協方差矩陣 $\Sigma \in \mathbb{R}^{D \times D}$，則 Multivariate Normal 分佈的 PDF 為
+
+$$
+p(x) = \frac{1}{(2 \pi)^{D/2} |\Sigma|^{1/2}} \exp \left( -\frac{1}{2} (x - \mu)^T \Sigma^{-1} (x - \mu) \right)
+$$
+
+有空補
+
 ## Maximum Likelihood Estimation (MLE)
 
 - 假設資料是獨立同分佈 (i.i.d)
 - 給定資料集 $D = {x_1, x_2, \ldots, x_N}$，假設資料來自某個參數化的分佈 $p(x|\theta)$
 - 目標是找到參數 $\theta$，使得在該參數下，資料出現的機率最大
 - 定義似然函數 (Likelihood Function) 為資料在參數 $\theta$ 下的聯合機率
-  - $L(\theta; D) = p(D|\theta) = \prod_{i=1}^{N} p(x_i|\theta)$
+- $L(\theta; D) = p(D|\theta) = \prod_{i=1}^{N} p(x_i|\theta)$
 - 最大化似然函數等價於最大化對數似然函數 (Log-Likelihood Function)
-  - $\ell(\theta; D) = \log L(\theta; D) = \sum_{i=1}^{N} \log p(x_i|\theta)$
+- $\ell(\theta; D) = \log L(\theta; D) = \sum_{i=1}^{N} \log p(x_i|\theta)$
 - 最大化對數似然函數的參數 $\theta$ 即為 MLE
-  - $\hat{\theta}_{MLE} = \arg\max_{\theta} \ell(\theta; D)$
+- $\hat{\theta}_{MLE} = \arg\max_{\theta} \ell(\theta; D)$
 
 ## Large-Scale Machine Learning
 
 Solve problems by leveraging the posteriror knowledge learned from the big data.
 
 - Characteristics of Big Data:
-  - Volume: 大量的資料
-  - Variety: 多樣化的資料類型和來源
-  - Velocity: 單位時間的資料量
-  - Veracity: 資料的真實性和可靠性
+- Volume: 大量的資料
+- Variety: 多樣化的資料類型和來源
+- Velocity: 單位時間的資料量
+- Veracity: 資料的真實性和可靠性
 
 ## Neural Networks: Design
 
 - Feedforward neural networks (FNN) 又稱 multi-layer perceptron (MLP)
 
-  $$
-   \begin{aligned}
-        \hat{y} = f^{(L)}(\ldots f^{(2)}(f^{(1)}(x; \theta^{(1)}); \theta^{(2)}) \ldots; \theta^{(L)})
-   \end{aligned}
-  $$
+$$
 
-  - $L$: number of layers
-  - $f^{(l)}$: nonlinear function of layer $l$
-  - $\theta^{(l)}$: parameters of layer $l$
-  - $x$: input vector
+\begin{aligned}
+\hat{y} = f^{(L)}(\ldots f^{(2)}(f^{(1)}(x; \theta^{(1)}); \theta^{(2)}) \ldots; \theta^{(L)})
+\end{aligned}
+
+
+$$
+
+- $L$: number of layers
+- $f^{(l)}$: nonlinear function of layer $l$
+- $\theta^{(l)}$: parameters of layer $l$
+- $x$: input vector
 
 - $f^{(k)}$ outputs value $a^{(k)}$, where
 
-  $$
-   \begin{aligned}
-        a^{(k)} &= f^{(k)}(a^{(k-1)}; \theta^{(k)}) \newline
-        &= \text{act}^{(k)}(W^{(k)\top} a^{(k-1)} + b^{(k)}) \newline
-   \end{aligned}
-  $$
+$$
 
-  - $W^{(k)}$: weight matrix of layer $k$
-  - $b^{(k)}$: bias vector of layer $k$
-  - $\text{act}^{(k)}$: activation function of layer $k$
-  - $a^{(0)} = x$
+\begin{aligned}
+a^{(k)} &= f^{(k)}(a^{(k-1)}; \theta^{(k)}) \newline
+&= \text{act}^{(k)}(W^{(k)\top} a^{(k-1)} + b^{(k)}) \newline
+\end{aligned}
+
+
+$$
+
+- $W^{(k)}$: weight matrix of layer $k$
+- $b^{(k)}$: bias vector of layer $k$
+- $\text{act}^{(k)}$: activation function of layer $k$
+- $a^{(0)} = x$
 
 沒有非線性，模型就沒有深度，等價於單層線性模型而已。
 
@@ -659,13 +772,16 @@ Solve problems by leveraging the posteriror knowledge learned from the big data.
 - Most NNs are trained using the **maximum likelihood** by default.
 
 $$
+
 \begin{aligned}
-    \text{argmax}_{\Theta} \text{log } P(X | \Theta) &= \text{argmin}_{\Theta} -\text{log } P(X | \Theta) \newline
-    &= \text{argmin}_{\Theta} \Sigma_i -\text{log } P(x_i, y_i | \Theta) \newline
-    &= \text{argmin}_{\Theta} \Sigma_i [-\text{log } P(y_i | x_i, \Theta) - \text{log } P(x_i | \Theta)] \newline
-    &= \text{argmin}_{\Theta} \Sigma_i -\text{log } P(y_i | x_i, \Theta) \quad \text{(if we ignore } P(x_i | \Theta)) \newline
-    &= \text{argmin}_{\Theta} \Sigma_i C_i (\Theta)
+\text{argmax}_{\Theta} \text{log } P(X | \Theta) &= \text{argmin}_{\Theta} -\text{log } P(X | \Theta) \newline
+&= \text{argmin}_{\Theta} \Sigma_i -\text{log } P(x_i, y_i | \Theta) \newline
+&= \text{argmin}_{\Theta} \Sigma*i [-\text{log } P(y_i | x_i, \Theta) - \text{log } P(x_i | \Theta)] \newline
+&= \text{argmin}*{\Theta} \Sigma*i -\text{log } P(y_i | x_i, \Theta) \quad \text{(if we ignore } P(x_i | \Theta)) \newline
+&= \text{argmin}*{\Theta} \Sigma_i C_i (\Theta)
 \end{aligned}
+
+
 $$
 
 - 通常 $P(x_i | \Theta)$ 不依賴於模型參數 $\Theta$，可以把他想像成常數，最小化時不會影響結果，所以可以忽略
@@ -676,3 +792,4 @@ $$
 - rnn
 - lstm
   https://blog.nbswords.com/2020/12/xgboostlightgbmcatboost.html
+  $$
