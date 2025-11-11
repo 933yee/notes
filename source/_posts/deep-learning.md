@@ -708,6 +708,178 @@ $$
 
 有空補
 
+### Parametrizing Functions
+
+用參數化的函數來描述資料的生成過程，例如：
+
+- 線性模型: $y = w^T x + b$
+- 決策樹: $y = f(x; \theta)$，其中 $\theta$ 是樹的結構和分裂規則
+- 神經網路: $y = f(x; \Theta)$，其中 $\Theta$ 是網路的權重和偏差
+
+#### Logistic Function
+
+$$
+\sigma(z) = \frac{1}{1 + \exp(-z)}
+$$
+
+- 將實數映射到 (0, 1) 之間
+- 常用於二元分類問題的輸出層
+
+#### Softplus Function
+
+$$
+\zeta(z) = \log(1 + \exp(z))
+$$
+
+- soft 版本的 ReLU 函數
+
+#### Softmax Function
+
+$$
+\text{softmax}(z_i) = \frac{\exp(z_i)}{\sum_{j} \exp(z_j)}
+$$
+
+- 將實數向量映射到機率分佈
+- 常用於多元分類問題的輸出層
+
+### Information Theory
+
+**Probability** 能夠在不確定的情況下，量化我們對事件發生的信心程度
+
+而 **Information Theory** 則是量化不確定性本身，以及我們從觀察事件中獲得的資訊量
+
+#### Self-Information
+
+事件 $x$ 發生所帶來的資訊量
+
+$$
+ I(x) = -\log P(x)
+$$
+
+- 如果 $P(x)$ 越小，則 $I(x)$ 越大，表示罕見事件帶來更多資訊
+- 如果 $P(x) = 1$，則 $I(x) = 0$，表示確定事件不帶來任何資訊
+
+#### Entropy
+
+隨機變數 $X$ 的不確定性
+
+##### Shannon Entropy:
+
+$$
+H(X) = -\sum_{x} P(x) \log P(x)
+$$
+
+##### Differential Entropy (Continuous):
+
+$$
+H(X) = -\int p(x) \log p(x) dx
+$$
+
+- Entropy 衡量一個隨機變數的不確定性或資訊量
+- Entropy 越大，表示不確定性越高
+- $0 \log 0$ 被定義為 $\text{lim}_{p \to 0^+} -p \log p = 0$
+
+#### Average Code Length
+
+Shannon Entropy 是最小平均編碼長度的下界，表示在最佳編碼方案下，平均每個符號所需的位元數
+
+- Example:
+
+  假設有四個符號 $A, B, C, D$，其機率分別為 $P(A) = 0.5, P(B) = 0.25, P(C) = 0.15, P(D) = 0.1$
+
+  - Shannon Entropy 為
+
+    $$
+     H(X) = -\sum_{x \in \{A, B, C, D\}} P(x) \log_2 P(x) = 1.7427 \text{ bits}
+    $$
+
+  - 一種可能的編碼方案為:
+
+    - $A$: 0
+    - $B$: 10
+    - $C$: 110
+    - $D$: 111
+
+  - 平均編碼長度為
+
+    $$
+     L = \sum_{x \in \{A, B, C, D\}} P(x) \cdot \text{length}(code(x)) = 1.75 \text{ bits}
+    $$
+
+  雖然平均編碼長度 $L = 1.75$ bits 大於 Shannon Entropy $H(X) = 1.7427$ bits，但已經非常接近，表示這是一個有效的編碼方案
+
+#### Kullback-Leibler (KL) Divergence
+
+用來衡量兩個機率分佈 $P$ 和 $Q$ 之間的差異
+
+當 $P$ 是真實分佈，$Q$ 是近似分佈時，KL Divergence 衡量使用 $Q$ 來近似 $P$ 所帶來的資訊損失
+
+$$
+\begin{aligned}
+D_{KL}(P || Q) &= \sum_{x} P(x) \log \frac{P(x)}{Q(x)} \newline
+&= \mathbb{E}_{x \sim P} \left[ \log \frac{P(x)}{Q(x)} \right] \newline
+&= \mathbb{E}_{x \sim P} [\log P(x) - \log Q(x)] \newline
+&= -H(P) - \mathbb{E}_{x \sim P} [\log Q(x)] \newline
+\end{aligned}
+$$
+
+其中 $\mathbb{E}_{x \sim P} [\log Q(x)]$ 是 **cross-entropy**
+
+如果 $P$ 和 $Q$ 是 Independent 的，$H(P)$ 不依賴於 $Q$，所以可以忽略，則
+
+$$
+\begin{aligned}
+\arg\min_Q D_{KL}(P || Q) &= \arg\min_Q -\mathbb{E}_{x \sim P} [\log Q(x)] \newline
+&= \arg\max_Q \mathbb{E}_{x \sim P} [\log Q(x)] \newline
+\end{aligned}
+$$
+
+- 性質
+  - $D_{KL}(P || Q) \geq 0$，且當且僅當 $P = Q$ 時，等號成立
+  - $D_{KL}(P || Q) \ne D_{KL}(Q || P)$，不對稱
+
+##### Minimizer of KL Divergence
+
+給定分布 $P$，尋找分布 $Q^*$ 使得 $D_{KL}(P || Q^*)$ 最小化
+
+因為 KL Divergence 是不對稱的，我們有兩種方法：
+
+1. Forward KL Divergence: $\arg\min_Q D_{KL}(P || Q)$
+2. Reverse KL Divergence: $\arg\min_Q D_{KL}(Q || P)$
+
+### Decision Trees
+
+Decision Trees 是一種監督式學習演算法，用於分類和迴歸問題
+
+- Information Gain
+
+  $$
+  IG(D, A) = H(D) - \sum_{v \in \text{Values}(A)} \frac{|D_v|}{|D|} H(D_v)
+  $$
+
+  - $D$: 資料集
+  - $A$: 特徵
+  - $D_v$: 在特徵 $A$ 上取值為 $v$ 的子集
+  - $H(D)$: 資料集 $D$ 的熵
+  - $\text{Values}(A)$: 特徵 $A$ 的所有可能取值
+
+  選擇 Information Gain 最大的特徵來分裂節點，可以把 $H$ 看成是 Impurity 的量度，Impurity 越低，表示資料越純淨，$H$ 也越低
+
+1. 選擇 Information Gain 最大的特徵 $A^*$ 來分裂節點
+2. 對每個可能的取值 $v$，創建一個子節點 $D_v$
+3. 重複以上步驟，直到滿足停止條件 (例如，節點中的樣本數小於某個閾值，或所有樣本屬於同一類別)
+
+### Random Forests
+
+Decision Tree 通常非常深，越深的節點越少經過訓練資料，容易 overfitting
+
+Random Forests 是一種集成學習方法，通過結合多個 Decision Trees 來提高模型的泛化能力
+
+1. Bootstrap Aggregating (Bagging): 從原始資料集中有放回地抽取多個子集，對每個子集訓練一棵 Decision Tree
+2. Feature Randomness: 在每個節點分裂時，隨機選擇 $k$ 個特徵來考慮，找出 Information Gain 最大的特徵來分裂節點
+3. 重複以上步驟，直到生成 $N$ 棵 Decision Trees
+4. 預測時，對所有 Decision Trees 的預測結果進行投票 (分類) 或平均 (迴歸)
+
 ## Maximum Likelihood Estimation (MLE)
 
 - 假設資料是獨立同分佈 (i.i.d)
