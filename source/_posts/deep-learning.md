@@ -880,6 +880,182 @@ Random Forests 是一種集成學習方法，通過結合多個 Decision Trees �
 3. 重複以上步驟，直到生成 $N$ 棵 Decision Trees
 4. 預測時，對所有 Decision Trees 的預測結果進行投票 (分類) 或平均 (迴歸)
 
+## Numerical Optimization
+
+### Numerical Computation
+
+在機器學習中，會有大量的浮點數計算，受限於浮點數儲存的精度，有時候會產生 **numeric errors**
+
+#### Overflow & Underflow
+
+對於 Softmax 函數來說
+
+$$
+\text{softmax}(z_i) = \frac{\exp(z_i)}{\sum_{j} \exp(z_j)}
+$$
+
+如果對於 $z_i = c \ \forall i$，如果 $|c|$ 很大
+
+- 如果 $c$ 是正數，則 $\exp(c)$ 會 overflow
+- 如果 $c$ 是負數，則 $\exp(c)$ 會 underflow，還有可能導致分母為 0
+
+為了解決這個問題，可以對 $z$ 進行平移 (shift)：
+
+$$
+\text{softmax}(z_i) = \frac{\exp(z_i - z_{\max})}{\sum_{j} \exp(z_j - z_{\max})}
+$$
+
+這樣的計算結果會和原本的 softmax 函數相同，但可以避免 overflow 和 underflow 的問題
+
+- 分子最多是 $\exp(0) = 1$，不會 overflow
+- 分母至少有一項是 $\exp(0) = 1$，不會為 0
+
+$$
+\begin{aligned}
+\text{softmax}(z_i) &= \frac{\exp(z_i - z_{\max})}{\sum_{j} \exp(z_j - z_{\max})} \newline
+&= \frac{\exp(z_i) \exp(-z_{\max})}{\sum_{j} \exp(z_j) \exp(-z_{\max})} \newline
+&= \frac{\exp(z_i)}{\sum_{j} \exp(z_j)} \newline
+\end{aligned}
+$$
+
+#### Poor Conditioning
+
+**Condition number** 是用來衡量一個函數對輸入變化的敏感度
+
+像是我們有 $f(x) = Ax = y$，其中 $A$ 是一個矩陣，且 $A^{-1}$ 存在
+
+那麼其 condition number 定義為
+
+$$
+\kappa(A) = \max_{i, j} \frac{|\lambda_i|}{|\lambda_j|}
+$$
+
+- $\lambda_i$: $A$ 的第 $i$ 個 eigen value，如前面所述，可以想成是對某個方向的伸縮最大值和最小值的比值
+- 當 $\kappa(A)$ 很大時，對 $x$ 的微小變化會導致 $y$ 有很大的變化，這會影響到優化算法的收斂速度和穩定性，稱為 **ill-conditioned**
+  - 在解 $x = A^{-1} y$ 時，會放大 $y$ 的 numeric errors，導致 $x$ 有很大的誤差
+
+### Optimization Problems
+
+Optimization problem 的目標是去最小化一個 **cost function** $f: \mathbb{R}^d \to \mathbb{R}$
+
+$$
+\text{argmin}_{x \in \mathbb{R}^d} f(x) \newline
+\text{subject to } x \in \mathcal{C}
+$$
+
+$\mathcal{C} \subseteq \mathbb{R}^d$: constraint set，表示 $x$ 必須滿足的約束條件，又稱 為 feasible set，$x$ 稱為 feasible point
+
+- 例如: $\mathcal{C} = \{x : g_i(x) \leq 0, h_j(x) = 0\}$
+- 如果 $\mathcal{C} = \mathbb{R}^d$，稱為 unconstrained optimization problem
+- 如果是最大化 objective function 問題，可以把目標改成最小化 $-f(x)$
+
+#### Examples
+
+- Critical Point: $\mathbf{C} = \{x : \nabla f(x) = 0\}$
+  - Minima: $\mathbf{C} = \{x : \nabla f(x) = 0, H(f)(x) \succ 0\}$
+  - Maxima: $\mathbf{C} = \{x : \nabla f(x) = 0, H(f)(x) \prec 0\}$
+  - Plateau/Saddle Point: $\mathbf{C} = \{x : \nabla f(x) = 0, H(f)(x) = \mathbf{O} \ \text{or} \text{ indefinite}\}$
+- Global Minimum: $\min_{x \in \mathcal{C}} f(x) \in \mathbf{R}$
+- Optimal Point: $x^* \in \mathcal{C}$ such that $f(x^*) = \min_{x \in \mathcal{C}} f(x)$
+
+#### Convex Optimization
+
+滿足以下條件的 optimization problem，稱為 convex optimization problem
+
+1. $H(f)(x) \succeq 0$ for all $x \in \mathcal{C}$
+2. $g_i(x)$ 是 convex function for all $i$
+3. $h_j(x)$ 是 affine function for all $j$
+   - affine function: $h(x) = Ax + b$，就是 Linear + Constant shift
+
+### Gradient Descent
+
+根據 Taylor expansion，可以用函數 $\tilde{f}(x)$ 的多項式
+近似來描述函數在某一點附近的行為，例如在點 $a$ 附近，可以用一階 Taylor expansion 來近似函數：
+
+$$
+f(x) \approx \tilde{f}(x) = f(a) + \nabla f(a)^T (x - a)
+$$
+
+當我們選擇 $x = a - \eta \nabla f(a)$ for some $\eta > 0$ 時，可以得到
+
+$$
+\tilde{f}(x) = f(a) - \eta \|\nabla f(a)\|^2 \leq \tilde{f}(a)
+$$
+
+#### Negative Gradient is the Direction of Steepest Descent
+
+給定一個 function $f$，一個方向 $u$ 和點 $a$
+
+Directional Derivative:
+
+$$
+D_u f(a) = \lim_{h \to 0} \frac{f(a + h u) - f(a)}{h} = \nabla f(a)^T u
+$$
+
+我們想找到一個單位向量 $u$，使得 $D_u f(a)$ 最小化
+
+$$
+\begin{aligned}
+\arg\min_{u, \|u\| = 1} D_u f(a) &= \arg\min_{u, \|u\| = 1} \nabla f(a)^T u \newline
+&= \arg\min_{u, \|u\| = 1} \|\nabla f(a)\| \|u\| \cos \theta \newline
+&= \arg\min_{u} \cos \theta \newline
+\end{aligned}
+$$
+
+所以，當 $u = -\frac{\nabla f(a)}{\|\nabla f(a)\|}$ 時，也就是負梯度方向，Directional Derivative 會達到最小值
+
+#### Set Learning Rate
+
+有空再補
+
+#### Problems of Gradient Descent
+
+沒有考慮到 $H(f)(x)$ 的 Conditioning 的問題，可能在某個方向下降很快，但在另一個方向下降很慢，導致整體收斂速度變慢
+
+- Zig-Zags
+
+### Newton's Method
+
+根據二維 Taylor expansion，可以用函數 $\tilde{f}(x)$ 的多項式近似來描述函數在某一點附近的行為，例如在點 $a$ 附近，可以用二階 Taylor expansion 來近似函數：
+
+$$
+f(x) \approx \tilde{f}(x) = f(a) + \nabla f(a)^T (x - a) + \frac{1}{2} (x - a)^T H(f)(a) (x - a)
+$$
+
+當 $f$ 是 strictly convex 時，我們可以去解 $\nabla \tilde{f}(x) = 0$，來找到 $\tilde{f}(x)$ 的最小值，得到
+
+$$
+ a - H(f)(a)^{-1} \nabla f(a)
+$$
+
+- $H(f)(a)$ 就是 gradient 的 corrector
+
+在這種情況下，只要不斷找
+
+$$
+x^{(k+1)} = x^{(k)} - \eta H(f)(x^{(k)})^{-1} \nabla f(x^{(k)})
+$$
+
+就可以快速收斂
+
+當 $f$ 不是 strictly convex 時，$H(f)(x) \preceq 0$ 或 indefinite，會導致找出來的方向不是下降方向，因此會需要 **Levenberg-Marquardt adjustment**
+
+$$
+x^{(k+1)} = x^{(k)} - \eta (H(f)(x^{(k)}) + \lambda I)^{-1} \nabla f(x^{(k)})
+$$
+
+選一個足夠大的 $\lambda$，可以確保 $H(f)(x^{(k)}) + \lambda I \succ 0$，使得方向為下降方向
+
+#### Problems of Newton's Method
+
+- 計算 $H(f)(x)$ 和 $H(f)(x)^{-1}$ 的時間和空間複雜度都很高，尤其是在高維度的情況下
+  - 時間複雜度: $O(d^3)$
+  - 空間複雜度: $O(d^2)$
+- $H(f)(x)$ 可能有很大的 Condition Number
+  - 當 gradient 有 numeric errors 時，會被放大，導致方向不正確，越往後誤差越大
+- 可能會收斂到 Saddle Point
+  - 因為在 Saddle Point 處，$H(f)(x)$ 是 indefinite，可能會導致找出來的方向不是下降方向
+
 ## Maximum Likelihood Estimation (MLE)
 
 - 假設資料是獨立同分佈 (i.i.d)
