@@ -66,67 +66,137 @@ public:
 
 ```cpp
 class Solution {
-    // 輾轉相除法求最大公因數
-    long long gcd(long long a, long long b) {
-        while (b) {
+public:
+    long long gcd(long long a, long long b){
+        while(b){
             a %= b;
             swap(a, b);
         }
         return a;
     }
 
-    // 求最小公倍數
-    long long lcm(long long a, long long b) {
-        if (a == 0 || b == 0) return 0;
-        return (a / gcd(a, b)) * b;
+    long long lcm(long long a, long long b){
+        if(a == 0 || b == 0) return 0;
+        return a / gcd(a, b) * b;
     }
 
-     bool check(long long T, long long d0, long long d1, long long r0, long long r1, long long r_lcm) {
-        long long recharge_0 = T / r0;
-        long long recharge_1 = T / r1;
-        long long recharge_both = T / r_lcm;
+    bool valid(long long t, vector<long long>& lld, vector<long long>& llr, long long rlcm){
+        long long r0 = t / llr[0];
+        long long r1 = t / llr[1];
+        long long r_both = t / rlcm;
 
-        long long slots_0 = recharge_1 - recharge_both;
-        long long slots_1 = recharge_0 - recharge_both;
-        long long slots_both = T - recharge_0 - recharge_1 + recharge_both;
+        long long slot0 = r1 - r_both;
+        long long slot1 = r0 - r_both;
+        long long slot_both = t - r0 - r1 + r_both;
 
-        long long remaining_0 = (d0 > slots_0) ? (d0 - slots_0) : 0;
-
-        long long remaining_1 = (d1 > slots_1) ? (d1 - slots_1) : 0;
-
-        return (remaining_0 + remaining_1) <= slots_both;
+        long long remaining0 = max(lld[0] - slot0, (long long) 0);
+        long long remaining1 = max(lld[1] - slot1, (long long) 0);
+        return (remaining0 + remaining1) <= slot_both;
     }
-
-public:
 
     long long minimumTime(vector<int>& d, vector<int>& r) {
-        long long d0_ll = d[0];
-        long long d1_ll = d[1];
-        long long r0_ll = r[0];
-        long long r1_ll = r[1];
+        vector<long long> lld(d.begin(), d.end());
+        vector<long long> llr(r.begin(), r.end());
 
-        long long r_lcm = lcm(r0_ll, r1_ll);
+        long long left = d[0] + d[1];
+        long long right = 2 * left;
 
-        long long low = d0_ll + d1_ll;
-        long long high = 2LL * (d0_ll + d1_ll);
+        long long ans = right;
+        long long rlcm = lcm(llr[0], llr[1]);
+        while(left <= right){
+            long long m = left + (right - left) / 2;
+            if(valid(m, lld, llr, rlcm)){
+                right = m - 1;
+                ans = m;
+            }else
+                left = m + 1;
+        }
+        return ans;
+    }
+};
+```
 
-        long long ans = high;
+### 3734. Lexicographically Smallest Palindromic Permutation Greater Than Target
 
-        // 用二分搜尋找出最小可行時間
-        while (low <= high) {
-            long long mid = low + (high - low) / 2;
+給定一個字串 s 和 target，找出 s 的所有回文排列中，比 target 字典序更大的最小回文排列，若無則回傳空字串。
 
-            long long f = mid;
+```c++
+class Solution {
+public:
+    string lexPalindromicPermutation(string s, string target) {
+        int left[26]{};
+        for (char b : s) {
+            left[b - 'a']++;
+        }
+        auto valid = [&]() -> bool {
+            for (int c : left) {
+                if (c < 0) {
+                    return false;
+                }
+            }
+            return true;
+        };
 
-            if (check(f, d0_ll, d1_ll, r0_ll, r1_ll, r_lcm)) {
-                ans = f;
-                high = f - 1;
-            } else {
-                low = f + 1;
+        string mid_ch;
+        // 先檢查 s 能不能組成回文，順便把中間字元找出來
+        for (int i = 0; i < 26; i++) {
+            int c = left[i];
+            if (c % 2 == 0) {
+                continue;
+            }
+            if (!mid_ch.empty()) {
+                return "";
+            }
+            mid_ch = 'a' + i;
+            left[i]--;
+        }
+
+        int n = s.size();
+        // 先假設能夠組成和 target 左半邊相同的字串 (不含中間字元)
+        for (int i = 0; i < n / 2; i++) {
+            left[target[i] - 'a'] -= 2;
+        }
+
+        if (valid()) {
+            // 特殊情況，如果合理且 s 右半邊 (包含中間字元) 比 target 大，直接回傳
+            string right_s = target.substr(0, n / 2);
+            ranges::reverse(right_s);
+            right_s = mid_ch + right_s;
+            if (right_s > target.substr(n / 2)) {
+                return target.substr(0, n / 2) + right_s;
             }
         }
 
-        return ans;
+        // 不能的話就從中間開始往前找，嘗試把字元換成更大的字元
+        for (int i = n / 2 - 1; i >= 0; i--) {
+            int b = target[i] - 'a';
+            left[b] += 2;
+            if (!valid()) {
+                continue;
+            }
+
+            for (int j = b + 1; j < 26; j++) {
+                if (left[j] == 0) {
+                    continue;
+                }
+
+                left[j] -= 2;
+                target.resize(i + 1);
+                target[i] = 'a' + j;
+
+                for (int k = 0; k < 26; k++) {
+                    target += string(left[k] / 2, 'a' + k);
+                }
+
+                string right_s = target;
+                ranges::reverse(right_s);
+                target += mid_ch;
+                target += right_s;
+
+                return target;
+            }
+        }
+        return "";
     }
 };
 ```

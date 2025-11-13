@@ -16,20 +16,22 @@
   <meta name="author" content="Kevin Lee">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Maximum Likelihood Estimation (MLE) 假設資料是獨立同分佈 (i.i.d) 給定資料集 $D &#x3D; {x_1, x_2, \ldots, x_N}$，假設資料來自某個參數化的分佈 $p(x|\theta)$ 目標是找到參數 $\theta$，使得在該參數下，資料出現的機率最大 定義似然函數 (Likelihood Function) 為資料在參數 $\th">
+    <meta name="description" content="Linear AlgebraSpan &amp; Linear Dependence在 Machine Learning 裡面，不管原本的 function 是不是 Linear，我們都會試著用 Linear function 來 Approximate 它。  $\text{span}(A_{:,1}, A_{:,2}, \ldots, A_{:,n})$ 被稱為 column space of">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Deep Learning">
-<meta property="og:url" content="https://933yee.github.io/notes/2025/10/07/deep-learning/index.html">
+<meta property="og:url" content="https://933yee.github.io/notes/2025/11/06/deep-learning/index.html">
 <meta property="og:site_name" content="933yee&#39;s Notes">
-<meta property="og:description" content="Maximum Likelihood Estimation (MLE) 假設資料是獨立同分佈 (i.i.d) 給定資料集 $D &#x3D; {x_1, x_2, \ldots, x_N}$，假設資料來自某個參數化的分佈 $p(x|\theta)$ 目標是找到參數 $\theta$，使得在該參數下，資料出現的機率最大 定義似然函數 (Likelihood Function) 為資料在參數 $\th">
+<meta property="og:description" content="Linear AlgebraSpan &amp; Linear Dependence在 Machine Learning 裡面，不管原本的 function 是不是 Linear，我們都會試著用 Linear function 來 Approximate 它。  $\text{span}(A_{:,1}, A_{:,2}, \ldots, A_{:,n})$ 被稱為 column space of">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2025-10-07T04:09:09.000Z">
-<meta property="article:modified_time" content="2025-10-11T05:41:26.083Z">
+<meta property="og:image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9qejWx2-LxS3zRwd4QcDk7cob7ZWCQJhRoxOjFTb5kmmPzmFDrMYrEEkpc5OwNYNJhPY&usqp=CAU">
+<meta property="article:published_time" content="2025-11-06T04:09:09.000Z">
+<meta property="article:modified_time" content="2025-11-06T11:29:20.377Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="deep learning">
 <meta property="article:tag" content="ai">
 <meta property="article:tag" content="machine learning">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9qejWx2-LxS3zRwd4QcDk7cob7ZWCQJhRoxOjFTb5kmmPzmFDrMYrEEkpc5OwNYNJhPY&usqp=CAU">
   
   
   
@@ -210,8 +212,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-10-07 12:09" pubdate>
-          October 7, 2025 pm
+        <time datetime="2025-11-06 12:09" pubdate>
+          November 6, 2025 pm
         </time>
       </span>
     
@@ -222,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          452 words
+          2.6k words
         
       </span>
     
@@ -233,7 +235,7 @@
         
         
         
-          4 mins
+          22 mins
         
       </span>
     
@@ -275,7 +277,275 @@
             
               <div class="markdown-body">
                 
-                <h3 id="Maximum-Likelihood-Estimation-MLE"><a href="#Maximum-Likelihood-Estimation-MLE" class="headerlink" title="Maximum Likelihood Estimation (MLE)"></a>Maximum Likelihood Estimation (MLE)</h3><ul>
+                <h2 id="Linear-Algebra"><a href="#Linear-Algebra" class="headerlink" title="Linear Algebra"></a>Linear Algebra</h2><h3 id="Span-Linear-Dependence"><a href="#Span-Linear-Dependence" class="headerlink" title="Span &amp; Linear Dependence"></a>Span &amp; Linear Dependence</h3><p>在 Machine Learning 裡面，不管原本的 function 是不是 Linear，我們都會試著用 Linear function 來 Approximate 它。</p>
+<ul>
+<li><p>$\text{span}(A_{:,1}, A_{:,2}, \ldots, A_{:,n})$ 被稱為 column space of A，記作 $\text{Col}(A)$</p>
+</li>
+<li><p>$\text{rank}(A)$ 是 $\text{Col}(A)$ 的維度 (dimension)</p>
+</li>
+<li><p>給定 $A$ 和 $y$，解方程式 $Ax &#x3D; y$，其中 $A$ 是 $m \times n$ 矩陣，$x$ 是 $n \times 1$ 向量，$y$ 是 $m \times 1$ 向量</p>
+<ul>
+<li><p><strong>一定至少有一個解</strong></p>
+<p>因為 $Ax &#x3D; \Sigma_{i} x_i A_{:,i}$，所以 $Ax$ 只不過是 $A$ 的 column vectors 的 linear combination，只要 $y$ 能寫成 $A$ 的 column vectors 的 linear combination，就一定有解</p>
+<p>因此，$\text{span}(A_{:,1}, A_{:,2}, \ldots, A_{:,n}) \ni \mathbb{R}^m$，也代表 $n \geq m$</p>
+</li>
+<li><p><strong>唯一解</strong></p>
+<p>$A$ 最多只能有 $m$ 個 Column，也代表 $n &#x3D; m$，且 $A$ 的 column vectors 必須是線性獨立 linearly independent 的</p>
+<p>在這種情況下，$A$ 是 full rank 的，且為 invertible，因此 $x &#x3D; A^{-1}y$ 是唯一解</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Norms"><a href="#Norms" class="headerlink" title="Norms"></a>Norms</h3><p>norm 是一個 function ($|\cdot|$)，能夠把 vector 映射到非負實數 (non-negative real number)</p>
+<h4 id="L-p-norm"><a href="#L-p-norm" class="headerlink" title="$L^p$ norm:"></a>$L^p$ norm:</h4><p>$$<br>|x|_p &#x3D; \left( \sum_i |x_i|^p \right)^{1&#x2F;p}<br>$$</p>
+<ul>
+<li><p>$p&#x3D;1$: Manhattan norm</p>
+</li>
+<li><p>$p&#x3D;2$: Euclidean norm (通常直接寫成 $|x|$)</p>
+<p>$$<br> |x| &#x3D; (x^Tx)^{1&#x2F;2} &#x3D; \sqrt{\sum_i x_i^2}<br>$$</p>
+</li>
+<li><p>$p \to \infty$: Maximum norm</p>
+<p>$$<br> |x|_{\infty} &#x3D; \max_i |x_i|<br>$$</p>
+</li>
+<li><p>$x^Ty &#x3D; |x| |y| \cos \theta$，其中 $\theta$ 是 $x$ 和 $y$ 之間的夾角</p>
+<ul>
+<li>當 $x \perp y$ 時，$x^Ty &#x3D; 0$，稱為 orthogonal。且如果 $|x| &#x3D; |y| &#x3D; 1$ (unit vectors)，則 $x$ 和 $y$ 是 orthonormal 的</li>
+</ul>
+</li>
+</ul>
+<h4 id="Matrix-Norms"><a href="#Matrix-Norms" class="headerlink" title="Matrix Norms"></a>Matrix Norms</h4><ul>
+<li><p>Frobenius norm:</p>
+<p>$$<br>|A|<em>F &#x3D; \sqrt{\sum</em>{i,j} A_{i,j}^2} &#x3D; \sqrt{\operatorname{tr}(A^\top A)}<br>$$</p>
+</li>
+<li><p>Orthogonal matrix:</p>
+<p>每個 column vector 都是 unit vector，且彼此 orthogonal，通常不會特別去區分 orthogonal matrix 和 orthonormal matrix，都稱為 orthogonal matrix</p>
+<p>$$<br> Q^TQ &#x3D; QQ^T &#x3D; I<br>$$</p>
+<ul>
+<li>也代表 $Q^{-1} &#x3D; Q^T$</li>
+</ul>
+</li>
+</ul>
+<h3 id="Eigendecomposition"><a href="#Eigendecomposition" class="headerlink" title="Eigendecomposition"></a>Eigendecomposition</h3><p>Decomposition 可以幫助我們快速了解矩陣的性質</p>
+<h4 id="Eigen-vectors-Eigen-values"><a href="#Eigen-vectors-Eigen-values" class="headerlink" title="Eigen vectors &amp; Eigen values"></a>Eigen vectors &amp; Eigen values</h4><ul>
+<li><p>給定一個方陣 $A$，如果存在一個非零向量 $v$ 和一個純量 $\lambda$，使得</p>
+<p>$$<br> Av &#x3D; \lambda v<br>$$</p>
+<p>則稱 $v$ 為 $A$ 的 <strong>eigen vector</strong>，$\lambda$ 為對應的 <strong>eigen value</strong></p>
+<p>可以想像成，某個 function A 遇到 eigen vector 時，只會對其進行伸縮 (scaling)，不會改變方向</p>
+</li>
+<li><p>如果 $v$ 是一個 eigen vector，則 $cv$ (c 為非零常數) 也是 eigen vector，對應的 eigen value 不變，所以一般只會討論 unit eigen vectors</p>
+</li>
+</ul>
+<h4 id="Eigendecomposition-1"><a href="#Eigendecomposition-1" class="headerlink" title="Eigendecomposition"></a>Eigendecomposition</h4><ul>
+<li><p>任何 <strong>real symmetric matrix</strong> $A \in \mathbb{R}^{n \times n}$ 都可以被分解成</p>
+<p>$$<br>A &#x3D; Q \text{diag}(\lambda) Q^T<br>$$</p>
+<ul>
+<li>$\lambda \in \mathbb{R}^n$: eigen values of $A$，通常會由大到小排序</li>
+<li>$Q &#x3D; [v_1, v_2, \ldots, v_n]$: 由 $A$ 的 eigen vectors 組成的 orthogonal matrix</li>
+</ul>
+</li>
+<li><p>Eigendecomposition 不是唯一的</p>
+</li>
+</ul>
+<p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9qejWx2-LxS3zRwd4QcDk7cob7ZWCQJhRoxOjFTb5kmmPzmFDrMYrEEkpc5OwNYNJhPY&usqp=CAU" srcset="/notes/info/loading.gif" lazyload alt="eigendecomposition"></p>
+<p>可以想成把矩陣 A 當作一個線性轉換 (linear transformation)，先把空間旋轉到 eigen vector 的方向 (由 Q 決定)，再沿著各個 eigen vector 方向進行伸縮 (由 $\lambda$ 決定)，最後再把空間旋轉回來 (由 $Q^T$ 決定)</p>
+<h4 id="Rayleigh’s-Quotient"><a href="#Rayleigh’s-Quotient" class="headerlink" title="Rayleigh’s Quotient"></a>Rayleigh’s Quotient</h4><p>給定一個 real symmetric matrix $A \in \mathbb{R}^{n \times n}$，對任意非零向量 $x \in \mathbb{R}^n$，定義 Rayleigh’s Quotient 為</p>
+<p>$$<br>R(x) &#x3D; \frac{x^T A x}{x^T x}<br>$$</p>
+<p>且</p>
+<p>$$<br>\lambda_{\min} \leq R(x) \leq \lambda_{\max}<br>$$</p>
+<ul>
+<li>$\lambda_{\min}$: $A$ 的最小 eigen value</li>
+<li>$\lambda_{\max}$: $A$ 的最大 eigen value</li>
+<li>當且僅當 $x$ 是對應於 $\lambda_{\min}$ 或 $\lambda_{\max}$ 的 eigen vector 時，等號成立</li>
+</ul>
+<h4 id="Singularity"><a href="#Singularity" class="headerlink" title="Singularity"></a>Singularity</h4><p>若 $A &#x3D; Q \text{diag}(\lambda) Q^T$，則 $A^{-1} &#x3D; Q \text{diag}(\lambda)^{-1} Q^T$</p>
+<p>因為 Diagonal matrix 的反矩陣是把對角線元素取倒數，所以當 $\lambda_i &#x3D; 0$ 時，$A$ 就沒有反矩陣，稱為 singular matrix</p>
+<h4 id="Positive-Definiteness"><a href="#Positive-Definiteness" class="headerlink" title="Positive Definiteness"></a>Positive Definiteness</h4><ul>
+<li><p>Positive Definite:</p>
+<p>對所有非零向量 $x$，都有 $x^T A x &gt; 0$，等價於所有的 eigen values 都是正的</p>
+</li>
+<li><p>Positive Semi-Definite:</p>
+<p>對所有非零向量 $x$，都有 $x^T A x \geq 0$，等價於所有的 eigen values 都是非負的</p>
+</li>
+</ul>
+<p>對於一個 Quadratic Function $f(x) &#x3D; \frac{1}{2} x^T A x - b^T x + c$，可以藉由檢查 $A$ 是否為 <code>Positive Definite</code>、<code>Positive Semi-Definite</code>、<code>Negative Definite</code>、<code>Negative Semi-Definite</code> 來判斷其凸性 (convexity)：</p>
+<table>
+<thead>
+<tr>
+<th>Definiteness</th>
+<th>Convexity</th>
+<th>Condition on Eigenvalues</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Positive Definite</td>
+<td>Strictly Convex</td>
+<td>All eigenvalues &gt; 0</td>
+</tr>
+<tr>
+<td>Positive Semi-Definite</td>
+<td>Convex</td>
+<td>All eigenvalues ≥ 0</td>
+</tr>
+<tr>
+<td>Negative Definite</td>
+<td>Strictly Concave</td>
+<td>All eigenvalues &lt; 0</td>
+</tr>
+<tr>
+<td>Negative Semi-Definite</td>
+<td>Concave</td>
+<td>All eigenvalues ≤ 0</td>
+</tr>
+<tr>
+<td>Indefinite</td>
+<td>Neither</td>
+<td>Eigenvalues of mixed signs</td>
+</tr>
+</tbody></table>
+<h3 id="Singular-Value-Decomposition-SVD"><a href="#Singular-Value-Decomposition-SVD" class="headerlink" title="Singular Value Decomposition (SVD)"></a>Singular Value Decomposition (SVD)</h3><p>Eigendecomposition 要求矩陣是方陣 (square matrix) 且為 symmetric matrix，但 SVD 不需要這些限制</p>
+<p>任何一個矩陣 $A \in \mathbb{R}^{m \times n}$ 都可以被分解成</p>
+<p>$$<br>A &#x3D; U \Sigma V^T<br>$$</p>
+<ul>
+<li>$U \in \mathbb{R}^{m \times m}$: 左奇異向量 (left singular vectors)，為 $AA^T$ 的 eigen vectors 組成的 orthogonal matrix</li>
+<li>$\Sigma \in \mathbb{R}^{m \times n}$: 對角矩陣 (diagonal matrix)，對角線上的元素為 $AA^T$ 或 $A^TA$ 的 eigen values 的平方根，稱為 singular values，且通常會由大到小排序</li>
+<li>$V \in \mathbb{R}^{n \times n}$: 右奇異向量 (right singular vectors)，為 $A^TA$ 的 eigen vectors 組成的 orthogonal matrix</li>
+</ul>
+<h3 id="Moore-Penrose-Pseudoinverse"><a href="#Moore-Penrose-Pseudoinverse" class="headerlink" title="Moore-Penrose Pseudoinverse"></a>Moore-Penrose Pseudoinverse</h3><p>對於一般情況，一個非方陣 $A \in \mathbb{R}^{m \times n}$，我們無法計算其反矩陣 $A^{-1}$，但我們可以用另一個矩陣 $B \in \mathbb{R}^{n \times m}$ ，用來解出 $Ax &#x3D; y$，即 $x &#x3D; By$</p>
+<p>Moore-Penrose Pseudoinverse 令 $B &#x3D; A^+$，可以把任務拆成三種 Case：</p>
+<ol>
+<li><p><strong>$m &#x3D; n$</strong>:</p>
+<ul>
+<li>有唯一解 (如果 $A$ 是 invertible 的)</li>
+<li>解為 $A^+ &#x3D; A^{-1}$</li>
+</ul>
+</li>
+<li><p><strong>$m &lt; n$</strong>:</p>
+<ul>
+<li>有無限多解</li>
+<li>目標是找到一個 $x$，使得 $|x|_2$ 最小，找一個最小範數解</li>
+</ul>
+</li>
+<li><p><strong>$m &gt; n$</strong>:</p>
+<ul>
+<li>沒有精確解</li>
+<li>目標是找到一個 $x$，使得 $|Ax - y|_2$ 最小，找一個最佳近似解</li>
+</ul>
+</li>
+</ol>
+<p>Moore-Penrose Pseudoinverse 定義為</p>
+<p>$$<br>A^+ &#x3D; \text{lim}_{\lambda \to 0^+} (A^TA + \lambda I)^{-1} A^T<br>$$</p>
+<p>其中 $\lambda$ 是一個非常小的正數，用來確保 $A^TA + \lambda I$ 是 Full Rank 的，因此可以被反轉</p>
+<p>實際上計算時，可以直接用 SVD 來計算，先把 $A$ 分解成 $A &#x3D; U \Sigma V^T$，則</p>
+<p>$$<br>A^+ &#x3D; V \Sigma^+ U^T<br>$$</p>
+<p>其中 $\Sigma^+$ 是把 $\Sigma$ 的非零奇異值取倒數後，再轉置得到的矩陣</p>
+<h3 id="Traces"><a href="#Traces" class="headerlink" title="Traces"></a>Traces</h3><ul>
+<li><p>trace 的定義是矩陣對角線元素的和</p>
+<p>$$<br> \text{trace}(A) &#x3D; \sum_{i} A_{i,i}<br>$$</p>
+</li>
+<li><p>$|A|^2_F &#x3D; \text{trace}(A^TA)$</p>
+</li>
+<li><p>$\text{trace}(ABC) &#x3D; \text{trace}(BCA) &#x3D; \text{trace}(CAB)$ (cyclic property)</p>
+</li>
+</ul>
+<h3 id="Determinant"><a href="#Determinant" class="headerlink" title="Determinant"></a>Determinant</h3><p>$$<br>\text{det}(A) &#x3D; \sum_i (-1)^{i+1} A_{1,i} \text{det}(A_{-1,-i})<br>$$</p>
+<p>其中 $A_{-1,-i}$: 去掉第 1 列和第 i 行後的子矩陣 (submatrix)</p>
+<ul>
+<li>$\text{det}(A^T) &#x3D; \text{det}(A)$</li>
+<li>$\text{det}(AB) &#x3D; \text{det}(A) \text{det}(B)$</li>
+<li>$\text{det}(A^{-1}) &#x3D; \frac{1}{\text{det}(A)}$</li>
+<li>$\text{det}(A) &#x3D; \prod_i \lambda_i$，其中 $\lambda_i$ 是 $A$ 的 eigen values</li>
+</ul>
+<p>Determinant 可以被解釋為線性轉換後，空間體積的伸縮比例，也就是 Image of Unit Square (or Cube) 的體積。</p>
+<ul>
+<li><p>$\text{det}(A) &#x3D; 0$，代表它在某一個維度被壓縮成 0，整個空間就會被壓縮成一個低維度的子空間 (subspace)</p>
+</li>
+<li><p>$\text{det}(A) &#x3D; 1$，代表形狀可能會被改變，但體積不變</p>
+</li>
+</ul>
+<h2 id="Probability-Information-Theory"><a href="#Probability-Information-Theory" class="headerlink" title="Probability &amp; Information Theory"></a>Probability &amp; Information Theory</h2><h3 id="Random-Variables"><a href="#Random-Variables" class="headerlink" title="Random Variables"></a>Random Variables</h3><ul>
+<li><p>Discrete Random Variable: 只能取有限或可數無限個值的隨機變數</p>
+</li>
+<li><p>Continuous Random Variable: 可以取無限多個值的隨機變數，通常是區間上的所有值</p>
+</li>
+<li><p>必須有一個對應的 Probability Measure 來描述 Random Variable 的分佈情況</p>
+<ul>
+<li>Probability Mass Function (PMF)</li>
+<li>Probability Density Function (PDF)</li>
+</ul>
+</li>
+</ul>
+<h3 id="Probability-Mass-and-Density-Functions"><a href="#Probability-Mass-and-Density-Functions" class="headerlink" title="Probability Mass and Density Functions"></a>Probability Mass and Density Functions</h3><ul>
+<li><p>PMF: 定義在離散隨機變數上，描述每個可能取值的機率</p>
+<p>$$<br> P(X &#x3D; x_i) &#x3D; p_i<br>$$</p>
+<ul>
+<li>$\sum_i p_i &#x3D; 1$</li>
+</ul>
+</li>
+<li><p>PDF: 定義在連續隨機變數上，描述在某個區間內取值的機率密度</p>
+<p>$$<br> P(a &lt; X &lt; b) &#x3D; \int_{a}^{b} p(x) dx<br>$$</p>
+<ul>
+<li>$\int_{-\infty}^{\infty} p(x) dx &#x3D; 1$</li>
+<li>$p(x) \geq 0$，但 $p(x)$ 本身不代表機率</li>
+<li>$p(x) &gt; 1$ 是可能的，只要積分結果不超過 1 即可<ul>
+<li>例如，$p(x) &#x3D; 2$ 在區間 $[0, 0.5]$ 上是合法的 PDF，因為 $\int_{0}^{0.5} 2 dx &#x3D; 1$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Marginal-Probability"><a href="#Marginal-Probability" class="headerlink" title="Marginal Probability"></a>Marginal Probability</h3><p>$$<br>P(X &#x3D; x) &#x3D; \sum_y P(X &#x3D; x, Y &#x3D; y)<br>$$</p>
+<p>or</p>
+<p>$$<br>P(X &#x3D; x) &#x3D; \int p(X &#x3D; x, Y &#x3D; y) dy<br>$$</p>
+<h3 id="Conditional-Probability"><a href="#Conditional-Probability" class="headerlink" title="Conditional Probability"></a>Conditional Probability</h3><p>$$<br>P(X &#x3D; x | Y &#x3D; y) &#x3D; \frac{P(X &#x3D; x, Y &#x3D; y)}{P(Y &#x3D; y)}<br>$$</p>
+<h3 id="Indenpendence-Conditional-Independence"><a href="#Indenpendence-Conditional-Independence" class="headerlink" title="Indenpendence &amp; Conditional Independence"></a>Indenpendence &amp; Conditional Independence</h3><ul>
+<li><p>Indenpendence:</p>
+<p>$X$ 和 $Y$ 是獨立的，當且僅當</p>
+<p>$$<br> P(X &#x3D; x, Y &#x3D; y) &#x3D; P(X &#x3D; x) P(Y &#x3D; y)<br>$$</p>
+<p>$$<br> P(X &#x3D; x | Y &#x3D; y) &#x3D; P(X &#x3D; x)<br>$$</p>
+</li>
+<li><p>Conditional Independence:</p>
+<p>$X$ 和 $Y$ 在給定 $Z$ 的條件下是獨立的，當且僅當</p>
+<p>$$<br> P(X &#x3D; x, Y &#x3D; y | Z &#x3D; z) &#x3D; P(X &#x3D; x | Z &#x3D; z) P(Y &#x3D; y | Z &#x3D; z)<br>$$</p>
+<p>$$<br> P(X &#x3D; x | Y &#x3D; y, Z &#x3D; z) &#x3D; P(X &#x3D; x | Z &#x3D; z)<br>$$</p>
+</li>
+</ul>
+<h3 id="Expectation"><a href="#Expectation" class="headerlink" title="Expectation"></a>Expectation</h3><ul>
+<li><p>Discrete Random Variable:</p>
+<p>$$<br> \mathbb{E}[X] &#x3D; \sum_i x_i P(X &#x3D; x_i)<br>$$</p>
+</li>
+<li><p>Continuous Random Variable:</p>
+<p>$$<br> \mathbb{E}[X] &#x3D; \int_{-\infty}^{\infty} x p(x) dx<br>$$</p>
+</li>
+<li><p>線性性質:</p>
+</li>
+</ul>
+<p>$$<br>\mathbb{E}[aX + bY] &#x3D; a \mathbb{E}[X] + b \mathbb{E}[Y]<br>$$</p>
+<p>$$<br>\mathbb{E}[\mathbb{E}[f(x)]] &#x3D; \mathbb{E}[f(x)]<br>$$</p>
+<p>$$<br>\mathbb{E}[f(x) g(y)] &#x3D; \mathbb{E}[f(x)] \mathbb{E}[g(y)] \quad \text{if } x \perp y<br>$$</p>
+<h3 id="Variance"><a href="#Variance" class="headerlink" title="Variance"></a>Variance</h3><ul>
+<li><p>定義: 隨機變數 $X$ 的方差是其期望值的平方差的期望值</p>
+<p>$$<br> \text{Var}(X) &#x3D; \mathbb{E}[(X - \mathbb{E}[X])^2] &#x3D; \mathbb{E}[X^2] - (\mathbb{E}[X])^2<br>$$</p>
+</li>
+<li><p>性質:</p>
+</li>
+</ul>
+<p>$$<br>\text{Var}(aX + b) &#x3D; a^2 \text{Var}(X)<br>$$</p>
+<h3 id="Covariance"><a href="#Covariance" class="headerlink" title="Covariance"></a>Covariance</h3><ul>
+<li><p>定義: 隨機變數 $X$ 和 $Y$ 的協方差是它們偏離各自期望值的乘積的期望值</p>
+<p>$$<br> \text{Cov}(X, Y) &#x3D; \mathbb{E}[(X - \mathbb{E}[X])(Y - \mathbb{E}[Y])] &#x3D; \mathbb{E}[XY] - \mathbb{E}[X] \mathbb{E}[Y]<br>$$</p>
+</li>
+</ul>
+<p>可以用來衡量兩個隨機變數之間的線性關係，如果 $\text{Cov}(X, Y) &gt; 0$，表示 $X$ 和 $Y$ 傾向於同時增加或減少；如果 $\text{Cov}(X, Y) &lt; 0$，表示當 $X$ 增加時，$Y$ 傾向於減少，反之亦然</p>
+<ul>
+<li><p>如果 $X$ 和 $Y$ 是獨立的，則 $\text{Cov}(X, Y) &#x3D; 0$，但反之不一定成立</p>
+</li>
+<li><p>性質:</p>
+</li>
+</ul>
+<p>$$<br>\text{Var}(aX + bY) &#x3D; a^2 \text{Var}(X) + b^2 \text{Var}(Y) + 2ab \text{Cov}(X, Y)<br>$$</p>
+<p>$$<br>\text{Cov}(aX + b, cY + d) &#x3D; ac \text{Cov}(X, Y)<br>$$</p>
+<p>$$<br>\text{Cov}(aX + bZ, cY + dW) &#x3D; ac \text{Cov}(X, Y) + ad \text{Cov}(X, W) + bc \text{Cov}(Z, Y) + bd \text{Cov}(Z, W)<br>$$</p>
+<h2 id="Maximum-Likelihood-Estimation-MLE"><a href="#Maximum-Likelihood-Estimation-MLE" class="headerlink" title="Maximum Likelihood Estimation (MLE)"></a>Maximum Likelihood Estimation (MLE)</h2><ul>
 <li>假設資料是獨立同分佈 (i.i.d)</li>
 <li>給定資料集 $D &#x3D; {x_1, x_2, \ldots, x_N}$，假設資料來自某個參數化的分佈 $p(x|\theta)$</li>
 <li>目標是找到參數 $\theta$，使得在該參數下，資料出現的機率最大</li>
@@ -391,7 +661,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Deep Learning</div>
-      <div>https://933yee.github.io/notes/2025/10/07/deep-learning/</div>
+      <div>https://933yee.github.io/notes/2025/11/06/deep-learning/</div>
     </div>
     <div class="license-meta">
       
@@ -403,7 +673,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>October 7, 2025</div>
+          <div>November 6, 2025</div>
         </div>
       
       
@@ -435,18 +705,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/notes/2025/10/11/deep-learning-lab/" title="Deep Learning Lab">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Deep Learning Lab</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/notes/2025/09/29/toeic/" title="TOEIC">
-                        <span class="hidden-mobile">TOEIC</span>
+                      <a href="/notes/2025/11/02/leetcode-contest/" title="LeetCode Contest">
+                        <span class="hidden-mobile">LeetCode Contest</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
