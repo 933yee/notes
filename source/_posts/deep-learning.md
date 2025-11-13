@@ -1056,6 +1056,88 @@ $$
 - 可能會收斂到 Saddle Point
   - 因為在 Saddle Point 處，$H(f)(x)$ 是 indefinite，可能會導致找出來的方向不是下降方向
 
+### Optimization in Machine Learning
+
+大部分的機器學習模型都有 convex function，e.g. Linear Regression, Logistic Regression, SVM...
+
+但是在深度學習中，通常都是 non-convex function，e.g. Neural Networks
+
+#### Lipschitz Continuity
+
+我們通常會假設 Cost Function $C$ 是 Lipschitz Continuous 的，表示存在一個常數 $K > 0$，使得：
+
+$$
+\|C(w^1) - C(w^2)\| \leq K \|w^1 - w^2\|, \quad \forall w^1, w^2 \in \mathbb{R}^d
+$$
+
+這個條件保證了函數的變化不會太劇烈，有助於優化算法的收斂性分析
+
+![Lipschitz Continuity](https://upload.wikimedia.org/wikipedia/commons/8/8d/Lipschitz_continuity.png)
+
+#### Perceptron Learning Algorithm
+
+Binary Classification 問題
+
+假設資料集 $D = {(x_1, y_1), (x_2, y_2), \ldots, (x_N, y_N)}$，其中 $x_i \in \mathbb{R}^d$ 是特徵向量，$y_i \in \{-1, 1\}$ 是標籤
+
+定義線性分類器 $f(x) = sign(w^T x + b)$
+
+- 其中 $w \in \mathbb{R}^d$ 是權重向量，$b \in \mathbb{R}$ 是偏差
+- 也可以把 $b$ 合併到 $w$ 中，令 $\tilde{x} = [x; 1]$，$\tilde{w} = [w; b]$，則 $f(x) = \tilde{w}^T \tilde{x}$
+
+訓練時，每個 Epoch 會根據每筆資料 $(x^t, y^t)$ 來更新權重 $w$
+
+$$
+w^{(t+1)} = w^{(t)} + \eta (y^t - \hat{y}^t) x^t
+$$
+
+- 如果 $\hat{y}^t = y^t$，則不更新
+- 如果 $\hat{y}^t \ne y^t$，得到 $w^{(t+1)} = w^{(t)} + 2 \eta y^t x^t$
+
+  - $y^t = 1$
+    $$
+    \begin{aligned}
+    \text{sign}(w^{(t+1)T} x^t) &= \text{sign}((w^{(t)}  + 2 \eta x^t)^T x^t) \newline
+    &= \text{sign}(w^{(t)T} x^t + 2 \eta \|x^t\|^2) \newline
+    &= \text{sign}(w^{(t)T} x^t + c)
+    \end{aligned}
+    $$
+    因為 $c > 0$，所以 $\text{sign}(w^{(t+1)T} x^t)$ 會傾向於變成 1
+
+如果資料沒辦法線性可分，則 Perceptron Learning Algorithm 可能無法收斂
+
+#### ADAptive LInear NEuron (Adaline)
+
+Adaline 是一種線性分類器，與 Perceptron 類似，但使用連續的輸出值來進行學習
+
+Cost Function:
+
+$$
+\arg\min_{w} \frac{1}{2} \sum_{i=1}^{N} (y_i - w^T x_i)^2
+$$
+
+訓練完之後，使用 $f(x) = sign(w^T x)$ 來進行分類
+
+Update Rule:
+
+$$
+w^{(t+1)} = w^{(t)} + \eta \sum_{i=1}^{N} (y_i - w^{(t)T} x_i) x_i
+$$
+
+因為 Cost function 是 Convex 的，所以可以保證可以收斂到全域最小值
+
+#### Stochastic Gradient Descent (SGD)
+
+把資料集 $D$ 分成多個 mini-batch，每次只使用一個 mini-batch 來更新權重
+
+$$
+w^{(t+1)} = w^{(t)} - \eta \nabla C_{MB}(w^{(t)})
+$$
+
+- $C_{MB}(w)$: mini-batch 上的 Cost Function
+- 每次更新只需要計算 mini-batch 的 gradient，計算量較小，適合大規模資料集
+- 支援 Online Learning
+
 ## Maximum Likelihood Estimation (MLE)
 
 - 假設資料是獨立同分佈 (i.i.d)
