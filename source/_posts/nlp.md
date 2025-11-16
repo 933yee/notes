@@ -404,3 +404,333 @@ InstructGPT 是在 GPT-3 的基礎上，透過 **人類標註與反饋** 進行�
 將 SFT 模型（在 RL 術語中稱為「策略 Policy」）複製一份。讓 Policy 針對新的指令產生回應。讓獎勵模型 (RM) 為這個「指令-回應」組合打分 (reward)。使用這個 reward 分數，透過 RL 演算法 (PPO, Proximal Policy Optimization) 來更新 Policy 模型的參數。
 
 產生最終的 InstructGPT 模型。這個模型被訓練成傾向於產生那些「RM 會給高分」的回應，而 RM 的評分標準又來自於人類的偏好。
+
+## HW3: Multi-output learning
+
+### 標點符號轉換
+
+把中文標點符號轉換成英文標點符號
+
+```py
+token_replacement = [
+    ["：" , ":"],
+    ["，" , ","],
+    ["“" , "\""],
+    ["”" , "\""],
+    ["？" , "?"],
+    ["……" , "..."],
+    ["！" , "!"]
+]
+```
+
+### 載入 BERT tokenizer
+
+`bert-base-uncased` 是 Google 原版 BERT 模型的一個預訓練版本名稱，只用小寫字母，不區分大小寫。
+
+```py
+tokenizer = BertTokenizer.from_pretrained("google-bert/bert-base-uncased", cache_dir="./cache/")
+```
+
+### 建立 SemevalDataset 類別
+
+一個自訂的 Dataset 類別，告訴 PyTorch 怎麼讀取資料。
+
+- **init**：用 `load_dataset` 從 Hugging Face 下載 `sem_eval_2014_task_1` 資料集，並指定要載入 `train`、`validation` 還是 `test` 部分。
+
+- **len**：讓 PyTorch 知道這個資料集總共有多少筆資料。
+
+- **getitem**：當 DataLoader 需要資料時，它會呼叫這個函式。它會取得第 `index` 筆資料，對 `premise` 和 `hypothesis` 進行標點替換，然後回傳這個處理過的字典。
+
+```py
+class SemevalDataset(Dataset):
+    def __init__(self, split="train") -> None:
+        super().__init__()
+        assert split in ["train", "validation", "test"]
+        self.data = load_dataset(
+            "sem_eval_2014_task_1",
+            split=split,  # 只載入指定的資料集部分
+            trust_remote_code=True,  # 允許執行該資料集 repo 裡的自定義程式碼
+            cache_dir="./cache/"  # 指定快取目錄
+        ).to_list()
+
+    def __getitem__(self, index):
+        d = self.data[index]
+        # Replace Chinese punctuations with English ones
+        for k in ["premise", "hypothesis"]:
+            for tok in token_replacement:
+                d[k] = d[k].replace(tok[0], tok[1])
+        return d
+
+    def __len__(self):
+        return len(self.data)
+```
+
+### 資料 batch 處理函式
+
+`DataLoader` 會一次抓好幾筆資料 (`batch_size`)，然後把這些資料丟給 `collate_fn` 來打包。
+
+- `tokenizer(...)`：
+
+- 它會把 `premise` 和 `hypothesis` 兩個句子打包成 BERT 喜歡的格式：`[CLS] 句子 A [SEP] 句子 B [SEP]`。
+
+  - padding=True：把這 8 筆資料補到一樣長。
+  - truncation=True：句子太長就咖掉。
+  - return_tensors="pt"：轉成 PyTorch Tensors。
+
+- 打包標籤 (Labels)：
+  - 程式會先檢查一下 (if ... in ...)，看看這批資料有沒有 relatedness_score 和 entailment_judgment 這兩個答案。
+  - 如果有 (像 train 和 validation 資料集)，就把它們收集起來轉成 Tensors。
+  - 如果沒有 (像 test 資料集)，那就回傳 None (代表「沒答案」)。
+  - return：回傳一個字典，裡面有模型要吃的 inputs 和 labels。
+
+```py
+def collate_fn(batch):
+    premises = [d['premise'] for d in batch]
+    hypotheses = [d['hypothesis'] for d in batch]
+
+    # Tokenize the sentence pairs
+    inputs = tokenizer(
+        premises,
+        hypotheses,
+        padding=True, # 對齊到本 batch 中最長序列（動態 padding）
+        truncation=True, # 若超過 max_length 會截斷
+        return_tensors="pt", # 讓輸出直接是 PyTorch tensors
+        max_length=512 # 序列最長 512 token
+    )
+
+    # 取出語義相似度分數（連續值，迴歸任務）組成 FloatTensor
+    relatedness_score = torch.tensor([d['relatedness_score'] for d in batch], dtype=torch.float)
+    # 取出蘊含關係標籤（分類任務）組成 LongTensor
+    entailment_judgment = torch.tensor([d['entailment_judgment'] for d in batch], dtype=torch.long)
+
+    return {
+        "inputs": inputs,
+        "relatedness_score": relatedness_score,
+        "entailment_judgment": entailment_judgment
+    }
+```
+
+### 載入資料集和 DataLoader
+
+```py
+ds_train = SemevalDataset(split="train")
+ds_validation = SemevalDataset(split="validation")
+ds_test = SemevalDataset(split="test")
+
+dl_train = DataLoader(ds_train, batch_size=train_batch_size, shuffle=True, collate_fn=collate_fn)
+dl_validation = DataLoader(ds_validation, batch_size=validation_batch_size, shuffle=False, collate_fn=collate_fn)
+dl_test = DataLoader(ds_test, batch_size=validation_batch_size, shuffle=False, collate_fn=collate_fn)
+```
+
+### 建立多輸出模型
+
+- `__init__`：
+
+  - `self.bert`：去 Hugging Face 把預訓練好的 BERT 模型載下來。
+
+  - `self.classification_head`：蓋一個簡單的線性層，專門負責「分類」任務。
+
+  - `self.regression_head`：蓋另一個線性層，專門負責「迴歸」任務。
+
+- `forward`：
+
+  1. `kwargs` 會是 tokenizer 產生的輸入字典（`input_ids`, `attention_mask`, `token_type_ids`），直接解包丟進 BERT。
+
+  2. BERT 吐出 pooler_output，一份丟給分類頭、一份丟給迴歸頭。
+
+  3. 最後把兩個頭算出來的答案 (`classification_logits` 和 `regression_output`) 一起回傳出去。
+
+```py
+# TODO2: Construct your model
+class MultiLabelModel(torch.nn.Module):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Load the base BERT model
+        self.bert = BertModel.from_pretrained("google-bert/bert-base-uncased", cache_dir="./cache/")
+
+        # BERT base hidden size is 768
+        bert_hidden_size = self.bert.config.hidden_size
+
+        # We will use the [CLS] token output (pooler_output) for both tasks
+        # 1. A regression head for similarity (output 1 value)
+        self.regression_head = torch.nn.Linear(bert_hidden_size, 1)
+
+        # 2. A classification head for entailment (output 3 values for 3 classes)
+        self.classification_head = torch.nn.Linear(bert_hidden_size, 3)
+
+        # Dropout for regularization
+        self.dropout = torch.nn.Dropout(0.1)
+
+    def forward(self, **kwargs):
+        # Write your code here
+        # Forward pass
+        # kwargs will contain input_ids, token_type_ids, attention_mask
+        outputs = self.bert(**kwargs)
+
+        # Get the pooler_output, which is the [CLS] token's representation
+        # passed through a Linear layer and Tanh activation. Shape: (batch_size, 768)
+        # 專門給句子分類用的 pooled 向量（來自 [CLS] token 經線性層與 tanh
+        cls_output = outputs.pooler_output
+        cls_output = self.dropout(cls_output)
+
+        # Pass the [CLS] output to both heads
+        # (batch_size, 3)
+        classification_logits = self.classification_head(cls_output)
+
+        # (batch_size, 1)
+        regression_output = self.regression_head(cls_output)
+
+        return classification_logits, regression_output
+```
+
+### 設定模型、優化器、損失函數和評分工具
+
+```py
+model = MultiLabelModel().to(device)
+optimizer = AdamW(model.parameters(), lr=lr)
+
+# 分類用的損失函數 (CrossEntropy)
+loss_fn_classification = torch.nn.CrossEntropyLoss()
+# 迴歸用的損失函數 (MSE，均方誤差)
+loss_fn_regression = torch.nn.MSELoss()
+
+# 載入評分工具
+psr = load("pearsonr")
+acc = load("accuracy")
+best_score = 0.0
+```
+
+### 訓練與評估
+
+```py
+import os
+
+best_score = 0.0
+os.makedirs('./saved_models', exist_ok=True)
+
+for ep in range(epochs):
+    pbar = tqdm(dl_train)
+    pbar.set_description(f"Training epoch [{ep+1}/{epochs}]")
+    model.train()
+
+    total_train_loss = 0.0
+
+    # TODO4: Write the training loop
+    for batch in pbar:
+        # Move data to device
+        inputs = batch["inputs"].to(device)
+        relatedness_score = batch["relatedness_score"].to(device)
+        entailment_judgment = batch["entailment_judgment"].to(device)
+
+        # clear gradient
+        optimizer.zero_grad()
+
+        # forward pass
+        classification_logits, regression_output = model(**inputs)
+
+        # compute loss
+        # Squeeze regression output from (batch_size, 1) to (batch_size) to match labels
+        loss_reg = loss_fn_regression(regression_output.squeeze(), relatedness_score)
+        loss_class = loss_fn_classification(classification_logits, entailment_judgment)
+
+        # Combine losses (simple addition)
+        total_loss = loss_reg + loss_class
+
+        # back-propagation
+        total_loss.backward()
+
+        # model optimization
+        optimizer.step()
+
+        total_train_loss += total_loss.item()
+        pbar.set_postfix({"loss": total_loss.item()})
+
+    print(f"Epoch {ep+1} Average Training Loss: {total_train_loss / len(dl_train)}")
+
+    pbar = tqdm(dl_validation)
+    pbar.set_description(f"Validation epoch [{ep+1}/{epochs}]")
+    model.eval()
+
+    all_sim_preds = []
+    all_sim_labels = []
+    all_ent_preds = []
+    all_ent_labels = []
+
+    # TODO5: Write the evaluation loop
+    with torch.no_grad():
+        for batch in pbar:
+            # Move data to device
+            inputs = batch["inputs"].to(device)
+            relatedness_score = batch["relatedness_score"].to(device)
+            entailment_judgment = batch["entailment_judgment"].to(device)
+
+            # forward pass
+            classification_logits, regression_output = model(**inputs)
+
+            # Get predictions
+            # Similarity predictions (regression)
+            sim_preds = regression_output.squeeze().cpu().numpy()
+
+            # Entailment predictions (classification)
+            ent_preds = torch.argmax(classification_logits, dim=-1).cpu().numpy()
+
+            # Collect all predictions and labels
+            all_sim_preds.extend(sim_preds)
+            all_sim_labels.extend(relatedness_score.cpu().numpy())
+            all_ent_preds.extend(ent_preds)
+            all_ent_labels.extend(entailment_judgment.cpu().numpy())
+
+    # Compute metrics
+    pearson_corr = psr.compute(predictions=all_sim_preds, references=all_sim_labels)['pearsonr']
+    accuracy = acc.compute(predictions=all_ent_preds, references=all_ent_labels)['accuracy']
+
+    print(f"Validation PearsonCorr: {pearson_corr:.4f}, Accuracy: {accuracy:.4f}")
+
+    current_score = pearson_corr + accuracy
+    if current_score > best_score:
+        print(f"New best score ({current_score:.4f})! Saving model...")
+        best_score = current_score
+        torch.save(model.state_dict(), f'./saved_models/best_model.ckpt')
+```
+
+### 測試
+
+```py
+# Load the model
+model = MultiLabelModel().to(device)
+model.load_state_dict(torch.load(f"./saved_models/best_model.ckpt", weights_only=True))
+
+# Test Loop
+pbar = tqdm(dl_test, desc="Test")
+model.eval()
+
+# Reset lists for test evaluation
+all_sim_preds = []
+all_sim_labels = []
+all_ent_preds = []
+all_ent_labels = []
+
+with torch.no_grad():
+    for batch in pbar:
+        # Move data to device
+        inputs = batch["inputs"].to(device)
+        relatedness_score = batch["relatedness_score"].to(device)
+        entailment_judgment = batch["entailment_judgment"].to(device)
+
+        # forward pass
+        classification_logits, regression_output = model(**inputs)
+
+        # Get predictions
+        sim_preds = regression_output.squeeze().cpu().numpy()
+        ent_preds = torch.argmax(classification_logits, dim=-1).cpu().numpy()
+
+        # Collect all predictions and labels
+        all_sim_preds.extend(sim_preds)
+        all_sim_labels.extend(relatedness_score.cpu().numpy())
+        all_ent_preds.extend(ent_preds)
+        all_ent_labels.extend(entailment_judgment.cpu().numpy())
+
+# Compute final test metrics
+test_pearson_corr = psr.compute(predictions=all_sim_preds, references=all_sim_labels)['pearsonr']
+test_accuracy = acc.compute(predictions=all_ent_preds, references=all_ent_labels)['accuracy']
+```
