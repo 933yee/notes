@@ -1138,6 +1138,158 @@ $$
 - 每次更新只需要計算 mini-batch 的 gradient，計算量較小，適合大規模資料集
 - 支援 Online Learning
 
+### Constrained Optimization
+
+Problem:
+
+$$
+\text{min}_{x} f(x) \newline
+\text{subject to } x \in \{x : g_i(x) \leq 0, h_j(x) = 0\}
+$$
+
+#### Karush-Kuhn-Tucker (KKT) Methods
+
+可以把問題轉成
+
+$$
+\text{min}_x\text{max}_{\alpha, \beta, \alpha \geq 0} \mathcal{L}(x, \alpha, \beta) = \newline
+\text{min}_x\text{max}_{\alpha, \beta, \alpha \geq 0} f(x) + \sum_{i} \alpha_i g_i(x) + \sum_{j} \beta_j h_j(x) \newline
+$$
+
+當 $x$ 是 Feasible Point 時，$\mathcal{L}(x, \alpha, \beta) = f(x)$，因為 $g_i(x) \leq 0$ 和 $h_j(x) = 0$，會選 $\alpha_i = 0$ 和任意 $\beta_j$ 來 maximize $\mathcal{L}(x, \alpha, \beta)$
+
+當 $x$ 不是 Feasible Point 時，會有某些 $g_i(x) > 0$ 或 $h_j(x) \ne 0$，這時候可以選擇很大的 $\alpha_i$ 或 $\beta_j$ 來讓 $\mathcal{L}(x, \alpha, \beta)$ 變無限大，這樣就不會選擇這些 $x$ 來 minimize $\mathcal{L}(x, \alpha, \beta)$
+
+#### KKT Conditions
+
+假設 $f, g_i, h_j$ 都是可微分的，且 $x^*$ 是問題的最優解，則存在 $\alpha^*, \beta^*$，使得以下條件成立：
+
+1. Primal Feasibility: $g_i(x^*) \leq 0$ for all $i$, $h_j(x^*) = 0$ for all $j$
+2. Dual Feasibility: $\alpha_i^* \geq 0$ for all $i$
+3. Stationarity: $\nabla f(x^*) + \sum_{i} \alpha_i^* \nabla g_i(x^*) + \sum_{j} \beta_j^* \nabla h_j(x^*) = 0$
+4. Complementary Slackness: $\alpha_i^* g_i(x^*) = 0$ for all $i$
+
+#### Complementary Slackness
+
+- 如果 $g_i(x^*) = 0$，稱為 active，$\alpha_i^* g_i(x^*) = 0$
+
+- 如果 $g_i(x^*) < 0$，稱為 inactive，為了 maximize $\mathcal{L}(x^*, \alpha^*, \beta^*)$，必須有 $\alpha_i^* = 0$
+
+今天我有一個 $\alpha_i^* > 0$，我就可以知道 $g_i(x^*)$ 一定是 0，可以快速找到 active constraints，就可以確定最優解真正被哪些限制所決定
+
+### The Regression Problem
+
+給定資料集 $D = {(x_1, y_1), (x_2, y_2), \ldots, (x_N, y_N)}$，其中 $x_i \in \mathbb{R}^d$ 是特徵向量，$y_i \in \mathbb{R}$ 是目標值
+
+目標是找到一個函數 $f: \mathbb{R}^d \to \mathbb{R}$，使得對於所有的 $(x_i, y_i)$，$f(x_i)$ 盡可能接近 $y_i$
+
+#### Sum of Squared Errors (SSE):
+
+$$
+SSE(f; D) = \sum_{i=1}^{N} (y_i - f(x_i))^2
+$$
+
+#### Mean Squared Error (MSE):
+
+$$
+MSE(f; D) = \frac{1}{N} \sum_{i=1}^{N} (y_i - f(x_i))^2
+$$
+
+#### Relative Squared Error (RSE):
+
+$$
+RSE(f; D) = \frac{\sum_{i=1}^{N} (y_i - f(x_i))^2}{\sum_{i=1}^{N} (y_i - \bar{y})^2}
+$$
+
+- $\bar{y} = \frac{1}{N} \sum_{i=1}^{N} y_i$: 目標值的平均值
+- 一般來說，RSE 越小表示模型越好，如果算出來大於 1，表示模型比直接用平均值來預測還差，你乾脆直接用平均值算就好
+- R-squared ($R^2$) 是用來衡量模型解釋變異的比例
+  $$
+  R^2 = 1 - RSE
+  $$
+  - $R^2$ 越接近 1，表示模型解釋變異的能力越強
+
+#### Data Augmentation
+
+在機器學習中，可以把 Linear model 轉換成多項式特徵，或是加入其他變換，以增加模型的表達能力
+
+[HW] How many variables to solve in $w$ for a polynomial regression problem with degree $P$
+
+### Regularization
+
+為了 Generalization ，而不是只在訓練資料上表現好，可以在 Cost Function 中加入 Regularization term，來懲罰過於複雜的模型
+
+$$
+\text{argmin}_{w \in \mathbb{R}^d} \frac{1}{2} \| y - (Xw - b)\|^2 \newline
+\text{subject to } \|w\|^2 \leq R
+$$
+
+可以寫成
+
+$$
+\text{argmin}_{w \in \mathbb{R}^{d+1}} \frac{1}{2} \| y - (Xw )\|^2 \newline
+\text{subject to } w^T S w \leq R
+$$
+
+其中 $S = \begin{bmatrix} 0 & 0 \\ 0 & I_d \end{bmatrix}$
+
+By KKT，可以轉成 unconstrained problem
+
+$$
+\text{argmin}_w \text{max}_{\alpha, \alpha \ge 0} \frac{1}{2} (\| y - (Xw )\|^2 + \alpha(  w^T S w - R))
+$$
+
+### Dual Problem
+
+給定 primal problem:
+
+$$
+p^* = \text{min}_x \text{max}_{\alpha, \beta, \alpha \geq 0}  \mathcal{L}(x, \alpha, \beta)
+$$
+
+dual problem 定義為:
+
+$$
+d^* = \text{max}_{\alpha, \beta, \alpha \geq 0} \text{min}_x  \mathcal{L}(x, \alpha, \beta)
+$$
+
+[HW] By max-min inequality, we have
+
+$$
+d^* \leq p^*
+$$
+
+當 primal problem 是 convex，且有解，則 strong duality 成立，$d^* = p^*$，有時候解問題會更有效率
+
+#### Example
+
+考慮
+
+$$
+\text{argmin}_{w \in \mathbb{R}^d} \frac{1}{2} \|x\|^2 \newline
+\text{subject to } Ax \geq b, A \in \mathbb{R}^{n \times d}, b \in \mathbb{R}^n
+$$
+
+By KKT，可以寫成
+
+$$
+\text{argmin}_x \text{max}_{\alpha, \alpha \geq 0} \frac{1}{2} \|x\|^2 + \alpha^T (b - Ax)
+$$
+
+因為是 Convex problem，滿足 Strong Duality，可以交換 min 和 max
+
+$$
+\text{argmax}_{\alpha, \alpha \geq 0} \text{min}_x \frac{1}{2} \|x\|^2 + \alpha^T (b - Ax)
+$$
+
+對 $x$ 求導並設為 0，得到 $x = A^T \alpha$，帶回上式，得到
+
+$$
+\text{argmax}_{\alpha, \alpha \geq 0} -\frac{1}{2} \|A^T \alpha\|^2 + b^T \alpha
+$$
+
+現在只需要解 $n$ 維的問題，而不是 $d$ 維的問題，當 $n \ll d$ 時，會更有效率
+
 ## Maximum Likelihood Estimation (MLE)
 
 - 假設資料是獨立同分佈 (i.i.d)
