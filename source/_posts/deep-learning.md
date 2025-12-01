@@ -1290,6 +1290,52 @@ $$
 
 現在只需要解 $n$ 維的問題，而不是 $d$ 維的問題，當 $n \ll d$ 時，會更有效率
 
+## Learning Theory
+
+#### Empirical Error / risk
+
+Empirical Error 是在訓練資料集上計算的平均 Loss
+
+$$
+E_N[f] = \frac{1}{N} \sum_{i=1}^{N} \text{loss}(f(x_i; w), y_i)
+$$
+
+#### Generalization Error / risk
+
+Generalization Error 是在整個資料分佈上計算的平均 Loss，代表模型在未見過的資料上的表現
+
+$$
+C[f] = \int \text{loss}(f(x; w), y) dP(x, y)
+$$
+
+Learining Theory 就是在理解怎麼去 Characterize
+
+$$
+C[f_N] = \int \text{loss}(f_N(x; w), y) dP(x, y)
+$$
+
+- $f_N$: model learned from training data of size $N$
+- $C[f_N]$: generalization error
+
+### Bounding Methods
+
+$min_fC[f] = C[f^*]$ 稱為 Bayes Error，表示在給定資料分佈下，最佳模型的誤差下限
+
+- 如果 $P(y|x)$ 有隨機性，則 Bayes Error > 0
+- 目標是讓 $C[f_N]$ 越接近 $C[f^*]$ 越好
+
+$\Epsilon = C(f_N) - C(f^*)$ 稱為 Excess Error，又可以寫成
+
+$$
+\Epsilon = (C(f_F^*) - C(f^*)) + (C(f_N) - C(f_F^*))
+$$
+
+其中前項稱為 Approximation Error，後項稱為 Estimation Error
+
+- 選越複雜的 $F$，Approximation Error 越小，但 Estimation Error 越大
+
+###
+
 ## Maximum Likelihood Estimation (MLE)
 
 - 假設資料是獨立同分佈 (i.i.d)
