@@ -127,3 +127,7 @@ Grasping with On-Generator Training](https://arxiv.org/pdf/2507.13097)
   5. **最終結果**： 經過 10 步驟後，那個「完全隨機的噪聲」就被模型一步步「雕刻」或「還原」成一個針對該物體、看起來非常合理的抓取姿勢。
 
 簡單總結訓練時： 學習「如何把一個壞的抓取姿勢 (加了噪聲的好姿勢) 還原成一個好的姿勢」。生成時： 從一個最壞的姿勢 (純噪聲) 出發，一步步將其還原成一個好的姿勢。這整個過程都是以物體的 3D 點雲為條件，這就確保了它生成的抓取姿勢是專門為那個物體量身打造的。
+
+## M2T2: Multi-Task Masked Transformer for Object-centric Pick and Place
+
+action primitives: 抓取、放置

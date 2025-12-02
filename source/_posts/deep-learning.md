@@ -1334,19 +1334,289 @@ $$
 
 - 選越複雜的 $F$，Approximation Error 越小，但 Estimation Error 越大
 
-###
+### Properties of Estimators
+
+#### Bias
+
+- Bias 衡量估計值的期望與真實值之間的差異，來看這個 estimator 準不準
+- 定義為
+  $$
+  \text{Bias}(\hat{\theta}) = \mathbb{E}[\hat{\theta}] - \theta
+  $$
+- 如果 $\text{Bias}(\hat{\theta}) = 0$，則稱為無偏估計 (Unbiased Estimator)
+
+#### Variance
+
+- Variance 衡量估計值的變異程度，來看這個 estimator 穩不穩定
+- 定義為
+  $$
+  \text{Var}(\hat{\theta}) = \mathbb{E}[(\hat{\theta} - \mathbb{E}[\hat{\theta}])^2]
+  $$
+- Variance 越小，表示估計值越穩定
+
+#### Sample Mean Estimator
+
+- 給定資料集 $D = {x_1, x_2, \ldots, x_N}$，樣本均值估計量定義為
+
+  $$
+  \hat{\mu} = \frac{1}{N} \sum_{i=1}^{N} x_i
+  $$
+
+- Bias:
+
+  $$
+  \begin{aligned}
+  \mathbb{E}[\hat{\mu}] &= \mathbb{E}\left[\frac{1}{N} \sum_{i=1}^{N} x_i\right] \newline
+  &= \frac{1}{N} \sum_{i=1}^{N} \mathbb{E}[x_i] \newline
+  &= \frac{1}{N} \sum_{i=1}^{N} \mu \newline
+  &= \mu \newline
+  \end{aligned}
+  $$
+
+  - 因此，$\text{Bias}(\hat{\mu}) = \mathbb{E}[\hat{\mu}] - \mu = 0$，樣本均值估計量是無偏的
+
+- Variance:
+  $$
+  \begin{aligned}
+  \text{Var}_{\mathbb{X}}(\hat{\mu})
+  &= \mathbb{E}_{\mathbb{X}}[(\hat{\mu} - \mathbb{E}_{\mathbb{X}}[\hat{\mu}])^2] = \mathbb{E}[\hat{\mu}^2 - 2\hat{\mu}\mu + \mu^2] = \mathbb{E}[\hat{\mu}^2] - \mu^2 \\
+  &= \mathbb{E}\left[\frac{1}{n^2} \sum_{i,j} x^{(i)}x^{(j)}\right] - \mu^2 = \frac{1}{n^2} \sum_{i,j} \mathbb{E}[x^{(i)}x^{(j)}] - \mu^2 \\
+  &= \frac{1}{n^2} \left( \sum_{i=j} \mathbb{E}[x^{(i)}x^{(j)}] + \sum_{i \neq j} \mathbb{E}[x^{(i)}x^{(j)}] \right) - \mu^2 \\
+  &= \frac{1}{n^2} \left( \sum_{i} \mathbb{E}[x^{(i)2}] + n(n-1)\mathbb{E}[x^{(i)}]\mathbb{E}[x^{(j)}] \right) - \mu^2 \\
+  &= \frac{1}{n} \mathbb{E}[x^2] + \frac{(n-1)}{n} \mu^2 - \mu^2 = \frac{1}{n} (\mathbb{E}[x^2] - \mu^2) = \frac{1}{n} \sigma_{\text{x}}^2
+  \end{aligned}
+  $$
+  - 因此，$\text{Var}(\hat{\mu}) = \frac{1}{N} \sigma_{\text{x}}^2$，樣本均值估計量的變異程度隨著樣本數增加而減少
+
+#### Sample Variance Estimator
+
+- 樣本變異數估計量定義為
+
+  $$
+  \hat{\sigma}^2 = \frac{1}{N} \sum_{i=1}^{N} (x_i - \hat{\mu})^2
+  $$
+
+- Bias:
+
+$$
+\begin{aligned}
+\text{E}_{\mathbb{X}}[\hat{\sigma}]
+&= \text{E}\left[\frac{1}{n} \sum_i (x^{(i)} - \hat{\mu})^2 \right] = \text{E}\left[ \frac{1}{n} (\sum_i x^{(i)2} - 2\sum_i x^{(i)}\hat{\mu} + \sum_i \hat{\mu}^2) \right] \\
+&= \text{E}\left[ \frac{1}{n} (\sum_i x^{(i)2} - n\hat{\mu}^2) \right] = \frac{1}{n} \left( \sum_i \text{E}[x^{(i)2}] - n\text{E}[\hat{\mu}^2] \right) \\
+&= \text{E}[x^2] - \text{E}[\hat{\mu}^2] = \text{E}[(x-\mu)^2 + 2x\mu - \mu^2] - \text{E}[\hat{\mu}^2] \\
+&= (\sigma^2 + \mu^2) - (\text{Var}[\hat{\mu}] + \text{E}[\hat{\mu}]^2) \\
+&= \sigma^2 + \mu^2 - \frac{1}{n}\sigma^2 - \mu^2 = \frac{n-1}{n}\sigma^2 \neq \sigma^2
+\end{aligned}
+$$
+
+- 因此，$\text{Bias}(\hat{\sigma}^2) = \mathbb{E}[\hat{\sigma}^2] - \sigma^2 = -\frac{1}{N} \sigma^2$，樣本變異數估計量是有偏的
+- 如果要 unbiased，可以改成
+
+  $$
+  \hat{\sigma}^2 = \frac{1}{N-1} \sum_{i=1}^{N} (x_i - \hat{\mu})^2
+  $$
+
+#### Consistency
+
+- Consistency 衡量估計值隨著樣本數增加而收斂到真實值的能力
+- 定義為
+  $$
+  \lim_{N \to \infty} P(|\hat{\theta}_N - \theta| > \epsilon) = 0, \quad \forall \epsilon > 0
+  $$
+
+### Decomposing Generalization Error
+
+前面提到，我們有一個模型 $f_N$，把它看作是一個 estimator，可以用上述方法分析這個 estimator 的 Bias 和 Variance
+
+$$
+\begin{aligned}
+E_\mathbb{X}(C[f_N]) &= E_\mathbb{X}\left( \int (y - f_N(x))^2 P(x, y) dx dy \right) \newline
+&= E_{\mathbb{X}, x, y}[\text{loss}(f_N(x) - y)] \newline
+&= E_{x}(E_{\mathbb{X}, y}[\text{loss}(f_N(x) - y) | x = x]) \newline
+\end{aligned}
+$$
+
+在 Linear/ Polynomial Regression 的情況下
+
+- $\text{loss}$ 是平方誤差
+- $y = f^*(x) + \epsilon$，其中 $\epsilon$ 是高斯雜訊，$\epsilon \sim \mathcal{N}(0, \sigma^2)$
+
+  - $E_y[y|x] = f^*(x)$
+  - $\text{Var}_y[y|x] = \sigma^2$
+
+則
+
+$$
+\begin{aligned}
+E_{\mathbb{X}, y}[\text{loss}(f_N(x) - y) | x] &= E_{\mathbb{X}, y}[(f_N(x) - y)^2 | x] \newline
+&= E_{\mathbb{X}, y}[y^2 + f_N(x)^2 - 2y f_N(x) | x] \newline
+&= E_{\mathbb{X}}[f_N(x)^2 | x] + E_y[y^2 | x] - 2 E_{\mathbb{X}, y}[yf_N(x) | x] \newline
+&= (Var_\mathbb{X}[f_N(x) | x] + (E_{\mathbb{X}}[f_N(x) | x])^2) + (Var_y[y|x] + (E_y[y|x])^2) - 2 E_{\mathbb{X}}[f_N(x) | x] E_y[y|x] \newline
+&= \text{Var}_y[y|x] + Var_\mathbb{X}[f_N(x) | x] + (E_{\mathbb{X}}[f_N(x) | x] - E_y[y|x])^2 \newline
+&= \text{Var}_y[y|x] + Var_\mathbb{X}[f_N(x) | x] + (E_{\mathbb{X}}[f_N(x) - f^*(x) | x])^2 \newline
+&= \sigma^2 + Var_\mathbb{X}[f_N(x) | x] + \text{Bias}[f_N(x) | x]^2 \newline
+\end{aligned}
+$$
+
+得到
+
+$$
+\begin{aligned}
+E_\mathbb{X}(C[f_N]) &= E_x\left( \sigma^2 + Var_\mathbb{X}[f_N(x) | x] + \text{Bias}[f_N(x) | x]^2 \right) \newline
+\end{aligned}
+$$
+
+- $\sigma^2$: Irreducible Error，無法避免的誤差，因為資料本身有雜訊
+- $E_x(Var_\mathbb{X}[f_N(x) | x])$: Variance，模型對於不同訓練資料集的敏感度
+- $E_x(\text{Bias}[f_N(x) | x]^2)$: Bias，模型預測值與真實值的差異
+
+## Regularization
+
+前面有提到，為了避免 Overfitting，任何能夠讓 $f_N$ 更穩定的方式，都可以視為 Regularization
+
+### Weight Decay
+
+#### Occam's razor
+
+根據前面的 Learning Theory 的結果，兩個模型如果有一樣的 empirical error，應該選擇較簡單的模型，因為較簡單的模型通常有較低的 Variance，能夠更好地 Generalize 到未見過的資料
+
+所以可以加上一個 Term 來去程罰複雜的模型
+
+#### Model Complexity
+
+- 模型的 degree 不能直接拿來當作複雜度的衡量，因為它是固定的，不會隨著參數的改變而改變
+- 可以用參數的範數 (norm) 來衡量模型的複雜度
+
+所以我們使用 $w$ 的 norm 作為正則化項，在 $w = 0$ 時，模型最簡單
+
+#### Ridge Regression (L2 Regularization)
+
+$$
+\text{argmin}_{w \in \mathbb{R}^d} \frac{1}{2} \| y - (Xw - b)\|^2 \text{subject to } \|w\|^2 \leq T
+$$
+
+一般會轉成 unconstrained problem
+
+$$
+\text{argmin}_{w \in \mathbb{R}^d} \frac{1}{2} \| y - (Xw - b)\|^2 + \frac{\alpha}{2} \|w\|^2
+$$
+
+- $\alpha$: regularization parameter，控制正則化項的權重，$\alpha$ 越大，模型越簡單
+- $b$ 通常不會被正則化，因為 $y$ 的平均值不一定是 0，所以 $b$ 不應該被懲罰
+
+#### Lasso Regression (L1 Regularization)
+
+$$
+\text{argmin}_{w \in \mathbb{R}^d} \frac{1}{2} \| y - (Xw - b)\|^2 + \alpha \|w\|_1
+$$
+
+- $\|w\|_1 = \sum_{i=1}^{d} |w_i|$
+- L1 regularization 會導致參數稀疏化，很多參數會被壓縮到 0，適合用於特徵選擇
+  - 因為 L1 norm 的區域是菱形，會傾向於在坐標軸上取交點，把不重要的參數壓縮到 0
+
+##### Elastic Net
+
+LASSO 在某些情況下會有限制
+
+- No Group Selection: 當有一組高度相關的特徵時，LASSO 可能只會選擇其中一個，而忽略其他相關特徵
+- 最大選擇數量: LASSO 最多只能選擇 $N$ 個特徵，當特徵數量 $d$ 遠大於樣本數量 $N$ 時，LASSO 可能無法選擇足夠的特徵來建構模型
+
+Elastic Net 結合了 L1 和 L2 正則化的優點，可以同時達到稀疏化和穩定性的效果
+
+$$
+\text{argmin}_{w \in \mathbb{R}^d} \frac{1}{2} \| y - (Xw - b)\|^2 + \alpha(\beta \|w\|_1 + (1 - \beta) \|w\|^2)
+$$
+
+- $\beta \in [0, 1]$: 控制 L1 和 L2 正則化的權重比例，當 $\beta = 1$ 時，等同於 LASSO；當 $\beta = 0$ 時，等同於 Ridge Regression
+
+### Validation
+
+- 調整各種 hyperparameter (e.g. regularization parameter $\alpha$) 可以來控制模型的複雜度，以達到最佳的 Generalization Performance
+- 通常會使用 Cross-Validation 來評估不同 hyperparameter 下模型的表現，選擇在驗證集上表現最好的參數組合
 
 ## Maximum Likelihood Estimation (MLE)
 
-- 假設資料是獨立同分佈 (i.i.d)
-- 給定資料集 $D = {x_1, x_2, \ldots, x_N}$，假設資料來自某個參數化的分佈 $p(x|\theta)$
-- 目標是找到參數 $\theta$，使得在該參數下，資料出現的機率最大
-- 定義似然函數 (Likelihood Function) 為資料在參數 $\theta$ 下的聯合機率
-- $L(\theta; D) = p(D|\theta) = \prod_{i=1}^{N} p(x_i|\theta)$
-- 最大化似然函數等價於最大化對數似然函數 (Log-Likelihood Function)
-- $\ell(\theta; D) = \log L(\theta; D) = \sum_{i=1}^{N} \log p(x_i|\theta)$
-- 最大化對數似然函數的參數 $\theta$ 即為 MLE
-- $\hat{\theta}_{MLE} = \arg\max_{\theta} \ell(\theta; D)$
+### Linear Regression via MLE
+
+假設 $y = f^*(x) + \epsilon$，其中 $\epsilon$ 是高斯雜訊，$\epsilon \sim \mathcal{N}(0, \beta^{-1})$，則 $f^*(x)$ 可以寫成
+
+$$
+f^*(x; w^*) = w^{*\top} x
+$$
+
+其中所有資料已經經過 z-normalization，平均值為 0，則
+
+$$
+(y | x) \sim \mathcal{N}(w^{*\top} x, \beta^{-1})
+$$
+
+所以目標會是找到一個 $w$ 接近 $w^*$
+
+$$
+\hat{y} = \argmax_y P(y | x, w) = w^{\top} x
+$$
+
+- $\beta^{-1}$ 跟 $w$ 無關，可以忽略
+
+MLE 的目標是最大化在所有資料點上的似然函數
+
+$$
+\text{argmax}_w P(\mathbf{X} | w)
+$$
+
+其中
+
+$$
+\begin{aligned}
+P(\mathbf{X} | w) &= \prod_{i=1}^{N} P(x_i, y_i | w) \newline
+&= \prod_{i=1}^{N} P(y_i | x_i, w) P(x_i | w) \newline
+&= \prod_{i=1}^{N} P(y_i | x_i, w) P(x_i) \newline
+&= \prod_{i=1}^{N} \mathcal{N}(y_i | w^{\top} x_i, \beta^{-1}) P(x_i) \newline
+&= \prod_{i=1}^{N}  \sqrt{\frac{\beta}{2\pi}} \exp\left( -\frac{\beta}{2} (y_i - w^{\top} x_i)^2 \right)  P(x_i) \newline
+\end{aligned}
+$$
+
+先取 log，可以把乘法轉成加法，且 log 是單調遞增函數，不會影響最大值的位置
+
+$$
+\begin{aligned}
+&\text{argmax}_w \log P(\mathbf{X} | w) \newline
+&= \text{argmax}_w \sum_{i=1}^{N} \log  \prod_{i=1}^{N} \left( \sqrt{\frac{\beta}{2\pi}} \exp\left( -\frac{\beta}{2} (y_i - w^{\top} x_i)^2 \right) \right) P(x_i)  \newline
+&= \text{argmax}_w N \sqrt{\frac{\beta}{2\pi}} + \sum_{i=1}^{N} P(x_i) - \frac{\beta}{2} \sum_{i=1}^{N} (y_i - w^{\top} x_i)^2 \newline
+\end{aligned}
+$$
+
+因為前兩項不依賴於 $w$，可以忽略，且 maximize 等同於 minimize 負的東西，所以可以寫成
+
+$$
+\text{argmin}_w \sum_{i=1}^{N} (y_i - w^{\top} x_i)^2
+$$
+
+- 這就是我們之前提到的 Sum of Squared Errors (SSE)
+- 所以 MLE 在這個情況下等同於最小化 SSE，可以讓我們知道為什麼要最小化 SSE
+
+### Logistic Regression via MLE
+
+假設 $y \in {0, 1}$，且
+$$P(y=1 | x, w) = \sigma(w^{\top} x) = \frac{1}{1 + \exp(-w^{\top} x)}$$
+
+則
+
+$$
+P(y=0 | x, w) = 1 - \sigma(w^{\top} x) = \frac{\exp(-w^{\top} x)}{1 + \exp(-w^{\top} x)}
+$$
+
+機率可以寫成
+
+$$
+P(y | x, w) = \sigma(w^{\top} x)^y (1 - \sigma(w^{\top} x))^{1-y}
+$$
+
+MLE 的目標是最大化在所有資料點上的似然函數
+
+$$
+\text{argmax}_w P(y | x;w) = \text{argmax}_w \prod_{i=1}^{N} P(y_i | x_i, w)
+$$
 
 ## Large-Scale Machine Learning
 
@@ -1413,11 +1683,3 @@ $$
 $$
 
 - 通常 $P(x_i | \Theta)$ 不依賴於模型參數 $\Theta$，可以把他想像成常數，最小化時不會影響結果，所以可以忽略
-
-- decision
-- xgboost
-- lightgbm
-- rnn
-- lstm
-  https://blog.nbswords.com/2020/12/xgboostlightgbmcatboost.html
-  $$
