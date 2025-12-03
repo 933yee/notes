@@ -1,0 +1,843 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/notes/info/fluid.png">
+  <link rel="icon" href="/notes/info/avatar.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Kevin Lee">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="GraspGenGraspGen: A Diffusion-based Framework for 6-DOFGrasping with On-Generator Training 這篇論文介紹了一個名為 GraspGen 的新型機器人抓取框架。這是一個基於 AI（擴散模型）的系統，用於解決 6 自由度（6-DOF）的機器人抓取問題，讓機器人能以任意角度和位置抓取物體。 這篇論文的核心貢獻是提出了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Robotic Arm Research">
+<meta property="og:url" content="https://933yee.github.io/notes/2025/11/14/robotic_arm/index.html">
+<meta property="og:site_name" content="933yee&#39;s Notes">
+<meta property="og:description" content="GraspGenGraspGen: A Diffusion-based Framework for 6-DOFGrasping with On-Generator Training 這篇論文介紹了一個名為 GraspGen 的新型機器人抓取框架。這是一個基於 AI（擴散模型）的系統，用於解決 6 自由度（6-DOF）的機器人抓取問題，讓機器人能以任意角度和位置抓取物體。 這篇論文的核心貢獻是提出了">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-11-14T02:44:31.000Z">
+<meta property="article:modified_time" content="2025-12-03T04:46:57.721Z">
+<meta property="article:author" content="Kevin Lee">
+<meta property="article:tag" content="Robotic Arm">
+<meta property="article:tag" content="Engineering">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Robotic Arm Research - 933yee&#39;s Notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/notes/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/notes/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/notes/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"933yee.github.io","root":"/notes/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/info/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/notes/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/notes/js/utils.js" ></script>
+  <script  src="/notes/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/notes/">
+      <strong>933yee&#39;s Notes</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/notes/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/notes/info/default.gif') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.7)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Robotic Arm Research"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-11-14 10:44" pubdate>
+          November 14, 2025 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.8k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          16 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Robotic Arm Research</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="GraspGen"><a href="#GraspGen" class="headerlink" title="GraspGen"></a>GraspGen</h2><p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2507.13097">GraspGen: A Diffusion-based Framework for 6-DOF<br>Grasping with On-Generator Training</a></p>
+<p>這篇論文介紹了一個名為 GraspGen 的新型機器人抓取框架。這是一個基於 AI（擴散模型）的系統，用於解決 6 自由度（6-DOF）的機器人抓取問題，讓機器人能以任意角度和位置抓取物體。</p>
+<p>這篇論文的核心貢獻是提出了一種稱為 「On-Generator Training」（基於生成器的訓練）的訓練方法，大幅提高了抓取的成功率和泛化能力。</p>
+<ol>
+<li><p>核心問題：為什麼抓取很難？</p>
+<ul>
+<li><p><strong>泛化能力差</strong>：過去的 AI 抓取模型雖然在模擬中表現不錯，但很難泛化到不同的機器人夾爪、不同的物體，或是在充滿雜物的真實世界場景中 。</p>
+</li>
+<li><p><strong>基準測試（Benchmark）成績低</strong>： 論文指出，在一些困難的抓取基準測試（如 FetchBench）上，SOTA（最先進的）模型的成功率甚至低於 20% 。這表明現有方法遠未達到「開箱即用」的程度。</p>
+</li>
+<li><p><strong>模型限制</strong>： 許多舊方法要麼需要精確的物體模型 ，要麼需要多角度掃描 （這在雜亂場景中不可行），要麼難以適應不同形狀的夾爪 。</p>
+</li>
+</ul>
+</li>
+<li><p>GraspGen 的雙重架構<br>GraspGen 框架由兩個主要部分組成：</p>
+<ol>
+<li><p>**抓取生成器 (Generator)**：</p>
+<ul>
+<li><p>這是一個 Diffusion-Transformer 架構，使用 PointTransformerV3 作為其骨幹。</p>
+</li>
+<li><p>作用： 它的任務是「產生」大量可能的抓取姿勢。它以物體的點雲（3D 掃描）為輸入，然後像 DALL-E 生成圖片一樣，從噪聲中「去噪」並生成數百個潛在的抓取點 。</p>
+</li>
+</ul>
+</li>
+<li><p>**抓取評估器 (Discriminator)**：</p>
+<ul>
+<li><p>這是一個高效的分類器（一個 MLP 神經網路）。</p>
+</li>
+<li><p>作用： 它的任務是「評分」。它會檢視生成器提供的每一個抓取姿勢，並給出一個成功率分數（例如 0 到 1 分）。最後，系統只會選擇分數最高的抓取姿勢去執行。</p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>關鍵創新：<strong>On-Generator Training</strong></p>
+<ul>
+<li><p><strong>傳統訓練的缺陷</strong>： 傳統上，評估器（Discriminator）是使用一個「離線」（Offline）數據集來訓練的。這個數據集包含手動標記的「好抓取」和「壞抓取」。但論文作者發現，AI 生成器（Generator）實際會犯的錯誤，與離線數據集中的「壞抓取」範例分布並不相同 。</p>
+</li>
+<li><p><strong>GraspGen 的解決方案</strong>： 他們設計了一種新的訓練流程 (Algorithm 1) ：</p>
+<ol>
+<li><p>先訓練好抓取生成器（Generator）。</p>
+</li>
+<li><p>讓這個訓練好的生成器去產生一個全新的數據集（稱為 On-Generator Dataset）。這個新數據集裡充滿了生成器「認為」的好抓取（但其中包含許多它特有的錯誤和假陽性）。</p>
+</li>
+<li><p>將這個新數據集拿到模擬器中去標註，找出哪些抓取真的成功、哪些失敗了 。</p>
+</li>
+<li><p>只使用這個新數據集來訓練評估器（Discriminator）。</p>
+</li>
+</ol>
+</li>
+<li><p>效果： 經過這個流程，評估器變得「非常了解生成器會犯什麼樣的錯」，因此它能更精準地過濾掉那些「看起來很好，但實際會失敗」的假陽性抓取。實驗證明，這種方法訓練出的評估器，性能（AUC）比使用離線數據訓練的要高 。</p>
+</li>
+</ul>
+</li>
+<li><p>主要實驗結果<br>GraspGen 在模擬和真實世界中都取得了頂尖的成果。</p>
+<ul>
+<li><p>模擬（單一物體）：</p>
+<ul>
+<li>在 Franka 夾爪的測試中，GraspGen 的抓取評分準確度（AUC）達到了 0.947 。</li>
+<li>相比之下，其他 SOTA 方法如 M2T2 (0.636)、DexDiffuser (0.344) 和 SE3-Diff (0.200) 遠遠落後 。這證明了 GraspGen 評估器的卓越性能。</li>
+</ul>
+</li>
+<li><p>模擬（雜亂場景 - FetchBench）：</p>
+<ul>
+<li>GraspGen 取得了 SOTA（最先進） 成果，抓取成功率比 M2T2 高出 7.8%，比 Contact-GraspNet 高出 16.9% 。</li>
+</ul>
+</li>
+<li><p>真實機器人測試（Table 1）：</p>
+<ul>
+<li><p>在包含桌子、籃子、架子等複雜場景的真實測試中：</p>
+</li>
+<li><p>GraspGen 總體成功率為 81.3% 。</p>
+</li>
+<li><p>AnyGrasp (先前的方法) 成功率為 63.7% 。</p>
+</li>
+<li><p>M2T2 (先前的方法) 成功率為 52.6% 。</p>
+</li>
+<li><p>尤其在困難的「架子」和「籃子」場景中，GraspGen 的成功率遠超對手，顯示了其強大的泛化能力。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>總結與限制</p>
+<ul>
+<li><p>貢獻：</p>
+<ol>
+<li><p>提出了 GraspGen，一個結合了擴散生成器和高效評估器的 SOTA 框架 。</p>
+</li>
+<li><p>發明了 On-Generator Training，一種新穎的訓練方法，讓評估器能學習到生成器獨特的失敗模式 。</p>
+</li>
+<li><p>發布了一個包含 3 種夾爪、超過 5300 萬次抓取的新數據集 。</p>
+</li>
+</ol>
+</li>
+<li><p>限制：</p>
+<ol>
+<li><p>計算成本高： 整個訓練流程需要約 3000 個 V100 GPU 小時 。</p>
+</li>
+<li><p>依賴分割： 性能依賴於上游的實例分割模型（如 SAM2）的準確性。</p>
+</li>
+<li><p>特定物體失敗： 論文提到，GraspGen 在抓取長方體（Cuboids）（如盒子）時表現不佳，這可能是因為訓練數據中缺乏足夠的盒狀物體。</p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><p>補充方法細節：GraspGen 的訓練與推論過程</p>
+<p><strong>訓練階段 (學習如何「去噪」)目標</strong>： 教會 AI 模型「一個好的抓取姿勢是什麼樣子」。</p>
+<ol>
+<li><p>選取樣本： 從數據集中拿出一個「好的、成功的」抓取姿勢 $g$。</p>
+</li>
+<li><p>添加噪聲： 在這個好姿勢 $g$ 上隨機加入一定程度的「噪聲」 $\epsilon$，得到一個「被污染的、不完美的」姿勢 $\hat{g}$。</p>
+</li>
+<li><p>條件預測： 要求 AI 模型 (即 Diffusion-Transformer) 進行預測。但這個預測是有條件的 (conditional)。模型會同時看到：</p>
+<ol>
+<li>物體的 3D 點雲 (Object Point Cloud)。</li>
+<li>這個「被污染的」姿勢 $\hat{g}$。</li>
+<li>噪聲的程度 (Diffusion Timestep $t$)。</li>
+</ol>
+</li>
+<li><p>學習： 模型的任務是預測出它在步驟 2 中加入的「噪聲」 $\epsilon$ 究竟是多少。</p>
+</li>
+</ol>
+</li>
+<li><p>訓練的結果： 透過不斷重複這個過程，AI 模型學會了：「對於這個特定形狀的物體，如果我看到一個像 $\hat{g}$ 這樣不完美的抓取，我該如何『修正』它 (即預測出噪聲) 才能讓它變回完美的 $g$」。</p>
+<p><strong>推論&#x2F;生成階段 (從噪聲中「創造」)目標</strong>： 為一個全新的物體「憑空」生成一堆好的抓取姿勢。</p>
+<ol>
+<li><p><strong>給定條件</strong>： 向模型提供新物體的 3D 點雲。</p>
+</li>
+<li><p><strong>起始點</strong>： 產生一個完全隨機的噪聲，這代表一個隨機、無意義的 6-DOF 姿勢 (可以想像成一張電視雪花圖)。</p>
+</li>
+<li><p><strong>迭代去噪</strong>： 模型開始反向執行訓練時的過程。它會看著物體的 3D 點雲，然後預測這個噪聲中「看起來最不像噪聲、最像抓取姿勢」的部分，並將其減去一點點。</p>
+</li>
+<li><p><strong>重複</strong>： 這個「去噪」過程會被迭代執行。論文中提到，他們發現只需要 10 個去噪步驟 ($T&#x3D;10$) 就足夠了。</p>
+</li>
+<li><p><strong>最終結果</strong>： 經過 10 步驟後，那個「完全隨機的噪聲」就被模型一步步「雕刻」或「還原」成一個針對該物體、看起來非常合理的抓取姿勢。</p>
+</li>
+</ol>
+</li>
+</ul>
+<p>簡單總結訓練時： 學習「如何把一個壞的抓取姿勢 (加了噪聲的好姿勢) 還原成一個好的姿勢」。生成時： 從一個最壞的姿勢 (純噪聲) 出發，一步步將其還原成一個好的姿勢。這整個過程都是以物體的 3D 點雲為條件，這就確保了它生成的抓取姿勢是專門為那個物體量身打造的。</p>
+<h2 id="M2T2-Multi-Task-Masked-Transformer-for-Object-centric-Pick-and-Place"><a href="#M2T2-Multi-Task-Masked-Transformer-for-Object-centric-Pick-and-Place" class="headerlink" title="M2T2: Multi-Task Masked Transformer for Object-centric Pick and Place"></a>M2T2: Multi-Task Masked Transformer for Object-centric Pick and Place</h2><p>action primitives: 抓取、放置</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/notes/categories/Robotics/" class="category-chain-item">Robotics</a>
+  
+  
+    <span>></span>
+    
+  <a href="/notes/categories/Robotics/Engineering/" class="category-chain-item">Engineering</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/notes/tags/Robotic-Arm/" class="print-no-link">#Robotic Arm</a>
+      
+        <a href="/notes/tags/Engineering/" class="print-no-link">#Engineering</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Robotic Arm Research</div>
+      <div>https://933yee.github.io/notes/2025/11/14/robotic_arm/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Kevin Lee</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>November 14, 2025</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/notes/2025/11/13/paper/" title="Paper">
+                        <span class="hidden-mobile">Paper</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/notes/js/events.js" ></script>
+<script  src="/notes/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/notes/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/notes/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/notes/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

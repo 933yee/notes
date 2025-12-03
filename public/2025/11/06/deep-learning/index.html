@@ -26,7 +26,7 @@
 <meta property="og:image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9qejWx2-LxS3zRwd4QcDk7cob7ZWCQJhRoxOjFTb5kmmPzmFDrMYrEEkpc5OwNYNJhPY&usqp=CAU">
 <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/8/8d/Lipschitz_continuity.png">
 <meta property="article:published_time" content="2025-11-06T04:09:09.000Z">
-<meta property="article:modified_time" content="2025-11-13T12:41:56.810Z">
+<meta property="article:modified_time" content="2025-12-03T04:46:57.718Z">
 <meta property="article:author" content="Kevin Lee">
 <meta property="article:tag" content="deep learning">
 <meta property="article:tag" content="ai">
@@ -225,7 +225,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7.5k words
+          11k words
         
       </span>
     
@@ -236,7 +236,7 @@
         
         
         
-          63 mins
+          90 mins
         
       </span>
     
@@ -950,17 +950,217 @@
 <li>每次更新只需要計算 mini-batch 的 gradient，計算量較小，適合大規模資料集</li>
 <li>支援 Online Learning</li>
 </ul>
-<h2 id="Maximum-Likelihood-Estimation-MLE"><a href="#Maximum-Likelihood-Estimation-MLE" class="headerlink" title="Maximum Likelihood Estimation (MLE)"></a>Maximum Likelihood Estimation (MLE)</h2><ul>
-<li>假設資料是獨立同分佈 (i.i.d)</li>
-<li>給定資料集 $D &#x3D; {x_1, x_2, \ldots, x_N}$，假設資料來自某個參數化的分佈 $p(x|\theta)$</li>
-<li>目標是找到參數 $\theta$，使得在該參數下，資料出現的機率最大</li>
-<li>定義似然函數 (Likelihood Function) 為資料在參數 $\theta$ 下的聯合機率</li>
-<li>$L(\theta; D) &#x3D; p(D|\theta) &#x3D; \prod_{i&#x3D;1}^{N} p(x_i|\theta)$</li>
-<li>最大化似然函數等價於最大化對數似然函數 (Log-Likelihood Function)</li>
-<li>$\ell(\theta; D) &#x3D; \log L(\theta; D) &#x3D; \sum_{i&#x3D;1}^{N} \log p(x_i|\theta)$</li>
-<li>最大化對數似然函數的參數 $\theta$ 即為 MLE</li>
-<li>$\hat{\theta}<em>{MLE} &#x3D; \arg\max</em>{\theta} \ell(\theta; D)$</li>
+<h3 id="Constrained-Optimization"><a href="#Constrained-Optimization" class="headerlink" title="Constrained Optimization"></a>Constrained Optimization</h3><p>Problem:</p>
+<p>$$<br>\text{min}_{x} f(x) \newline<br>\text{subject to } x \in {x : g_i(x) \leq 0, h_j(x) &#x3D; 0}<br>$$</p>
+<h4 id="Karush-Kuhn-Tucker-KKT-Methods"><a href="#Karush-Kuhn-Tucker-KKT-Methods" class="headerlink" title="Karush-Kuhn-Tucker (KKT) Methods"></a>Karush-Kuhn-Tucker (KKT) Methods</h4><p>可以把問題轉成</p>
+<p>$$<br>\text{min}<em>x\text{max}</em>{\alpha, \beta, \alpha \geq 0} \mathcal{L}(x, \alpha, \beta) &#x3D; \newline<br>\text{min}<em>x\text{max}</em>{\alpha, \beta, \alpha \geq 0} f(x) + \sum_{i} \alpha_i g_i(x) + \sum_{j} \beta_j h_j(x) \newline<br>$$</p>
+<p>當 $x$ 是 Feasible Point 時，$\mathcal{L}(x, \alpha, \beta) &#x3D; f(x)$，因為 $g_i(x) \leq 0$ 和 $h_j(x) &#x3D; 0$，會選 $\alpha_i &#x3D; 0$ 和任意 $\beta_j$ 來 maximize $\mathcal{L}(x, \alpha, \beta)$</p>
+<p>當 $x$ 不是 Feasible Point 時，會有某些 $g_i(x) &gt; 0$ 或 $h_j(x) \ne 0$，這時候可以選擇很大的 $\alpha_i$ 或 $\beta_j$ 來讓 $\mathcal{L}(x, \alpha, \beta)$ 變無限大，這樣就不會選擇這些 $x$ 來 minimize $\mathcal{L}(x, \alpha, \beta)$</p>
+<h4 id="KKT-Conditions"><a href="#KKT-Conditions" class="headerlink" title="KKT Conditions"></a>KKT Conditions</h4><p>假設 $f, g_i, h_j$ 都是可微分的，且 $x^*$ 是問題的最優解，則存在 $\alpha^*, \beta^*$，使得以下條件成立：</p>
+<ol>
+<li>Primal Feasibility: $g_i(x^*) \leq 0$ for all $i$, $h_j(x^*) &#x3D; 0$ for all $j$</li>
+<li>Dual Feasibility: $\alpha_i^* \geq 0$ for all $i$</li>
+<li>Stationarity: $\nabla f(x^*) + \sum_{i} \alpha_i^* \nabla g_i(x^*) + \sum_{j} \beta_j^* \nabla h_j(x^*) &#x3D; 0$</li>
+<li>Complementary Slackness: $\alpha_i^* g_i(x^*) &#x3D; 0$ for all $i$</li>
+</ol>
+<h4 id="Complementary-Slackness"><a href="#Complementary-Slackness" class="headerlink" title="Complementary Slackness"></a>Complementary Slackness</h4><ul>
+<li><p>如果 $g_i(x^*) &#x3D; 0$，稱為 active，$\alpha_i^* g_i(x^*) &#x3D; 0$</p>
+</li>
+<li><p>如果 $g_i(x^*) &lt; 0$，稱為 inactive，為了 maximize $\mathcal{L}(x^*, \alpha^*, \beta^*)$，必須有 $\alpha_i^* &#x3D; 0$</p>
+</li>
 </ul>
+<p>今天我有一個 $\alpha_i^* &gt; 0$，我就可以知道 $g_i(x^*)$ 一定是 0，可以快速找到 active constraints，就可以確定最優解真正被哪些限制所決定</p>
+<h3 id="The-Regression-Problem"><a href="#The-Regression-Problem" class="headerlink" title="The Regression Problem"></a>The Regression Problem</h3><p>給定資料集 $D &#x3D; {(x_1, y_1), (x_2, y_2), \ldots, (x_N, y_N)}$，其中 $x_i \in \mathbb{R}^d$ 是特徵向量，$y_i \in \mathbb{R}$ 是目標值</p>
+<p>目標是找到一個函數 $f: \mathbb{R}^d \to \mathbb{R}$，使得對於所有的 $(x_i, y_i)$，$f(x_i)$ 盡可能接近 $y_i$</p>
+<h4 id="Sum-of-Squared-Errors-SSE"><a href="#Sum-of-Squared-Errors-SSE" class="headerlink" title="Sum of Squared Errors (SSE):"></a>Sum of Squared Errors (SSE):</h4><p>$$<br>SSE(f; D) &#x3D; \sum_{i&#x3D;1}^{N} (y_i - f(x_i))^2<br>$$</p>
+<h4 id="Mean-Squared-Error-MSE"><a href="#Mean-Squared-Error-MSE" class="headerlink" title="Mean Squared Error (MSE):"></a>Mean Squared Error (MSE):</h4><p>$$<br>MSE(f; D) &#x3D; \frac{1}{N} \sum_{i&#x3D;1}^{N} (y_i - f(x_i))^2<br>$$</p>
+<h4 id="Relative-Squared-Error-RSE"><a href="#Relative-Squared-Error-RSE" class="headerlink" title="Relative Squared Error (RSE):"></a>Relative Squared Error (RSE):</h4><p>$$<br>RSE(f; D) &#x3D; \frac{\sum_{i&#x3D;1}^{N} (y_i - f(x_i))^2}{\sum_{i&#x3D;1}^{N} (y_i - \bar{y})^2}<br>$$</p>
+<ul>
+<li>$\bar{y} &#x3D; \frac{1}{N} \sum_{i&#x3D;1}^{N} y_i$: 目標值的平均值</li>
+<li>一般來說，RSE 越小表示模型越好，如果算出來大於 1，表示模型比直接用平均值來預測還差，你乾脆直接用平均值算就好</li>
+<li>R-squared ($R^2$) 是用來衡量模型解釋變異的比例<br>$$<br>R^2 &#x3D; 1 - RSE<br>$$<ul>
+<li>$R^2$ 越接近 1，表示模型解釋變異的能力越強</li>
+</ul>
+</li>
+</ul>
+<h4 id="Data-Augmentation"><a href="#Data-Augmentation" class="headerlink" title="Data Augmentation"></a>Data Augmentation</h4><p>在機器學習中，可以把 Linear model 轉換成多項式特徵，或是加入其他變換，以增加模型的表達能力</p>
+<p>[HW] How many variables to solve in $w$ for a polynomial regression problem with degree $P$</p>
+<h3 id="Regularization"><a href="#Regularization" class="headerlink" title="Regularization"></a>Regularization</h3><p>為了 Generalization ，而不是只在訓練資料上表現好，可以在 Cost Function 中加入 Regularization term，來懲罰過於複雜的模型</p>
+<p>$$<br>\text{argmin}_{w \in \mathbb{R}^d} \frac{1}{2} | y - (Xw - b)|^2 \newline<br>\text{subject to } |w|^2 \leq R<br>$$</p>
+<p>可以寫成</p>
+<p>$$<br>\text{argmin}_{w \in \mathbb{R}^{d+1}} \frac{1}{2} | y - (Xw )|^2 \newline<br>\text{subject to } w^T S w \leq R<br>$$</p>
+<p>其中 $S &#x3D; \begin{bmatrix} 0 &amp; 0 \ 0 &amp; I_d \end{bmatrix}$</p>
+<p>By KKT，可以轉成 unconstrained problem</p>
+<p>$$<br>\text{argmin}<em>w \text{max}</em>{\alpha, \alpha \ge 0} \frac{1}{2} (| y - (Xw )|^2 + \alpha(  w^T S w - R))<br>$$</p>
+<h3 id="Dual-Problem"><a href="#Dual-Problem" class="headerlink" title="Dual Problem"></a>Dual Problem</h3><p>給定 primal problem:</p>
+<p>$$<br>p^* &#x3D; \text{min}<em>x \text{max}</em>{\alpha, \beta, \alpha \geq 0}  \mathcal{L}(x, \alpha, \beta)<br>$$</p>
+<p>dual problem 定義為:</p>
+<p>$$<br>d^* &#x3D; \text{max}_{\alpha, \beta, \alpha \geq 0} \text{min}_x  \mathcal{L}(x, \alpha, \beta)<br>$$</p>
+<p>[HW] By max-min inequality, we have</p>
+<p>$$<br>d^* \leq p^*<br>$$</p>
+<p>當 primal problem 是 convex，且有解，則 strong duality 成立，$d^* &#x3D; p^*$，有時候解問題會更有效率</p>
+<h4 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h4><p>考慮</p>
+<p>$$<br>\text{argmin}_{w \in \mathbb{R}^d} \frac{1}{2} |x|^2 \newline<br>\text{subject to } Ax \geq b, A \in \mathbb{R}^{n \times d}, b \in \mathbb{R}^n<br>$$</p>
+<p>By KKT，可以寫成</p>
+<p>$$<br>\text{argmin}<em>x \text{max}</em>{\alpha, \alpha \geq 0} \frac{1}{2} |x|^2 + \alpha^T (b - Ax)<br>$$</p>
+<p>因為是 Convex problem，滿足 Strong Duality，可以交換 min 和 max</p>
+<p>$$<br>\text{argmax}_{\alpha, \alpha \geq 0} \text{min}_x \frac{1}{2} |x|^2 + \alpha^T (b - Ax)<br>$$</p>
+<p>對 $x$ 求導並設為 0，得到 $x &#x3D; A^T \alpha$，帶回上式，得到</p>
+<p>$$<br>\text{argmax}_{\alpha, \alpha \geq 0} -\frac{1}{2} |A^T \alpha|^2 + b^T \alpha<br>$$</p>
+<p>現在只需要解 $n$ 維的問題，而不是 $d$ 維的問題，當 $n \ll d$ 時，會更有效率</p>
+<h2 id="Learning-Theory"><a href="#Learning-Theory" class="headerlink" title="Learning Theory"></a>Learning Theory</h2><h4 id="Empirical-Error-risk"><a href="#Empirical-Error-risk" class="headerlink" title="Empirical Error &#x2F; risk"></a>Empirical Error &#x2F; risk</h4><p>Empirical Error 是在訓練資料集上計算的平均 Loss</p>
+<p>$$<br>E_N[f] &#x3D; \frac{1}{N} \sum_{i&#x3D;1}^{N} \text{loss}(f(x_i; w), y_i)<br>$$</p>
+<h4 id="Generalization-Error-risk"><a href="#Generalization-Error-risk" class="headerlink" title="Generalization Error &#x2F; risk"></a>Generalization Error &#x2F; risk</h4><p>Generalization Error 是在整個資料分佈上計算的平均 Loss，代表模型在未見過的資料上的表現</p>
+<p>$$<br>C[f] &#x3D; \int \text{loss}(f(x; w), y) dP(x, y)<br>$$</p>
+<p>Learining Theory 就是在理解怎麼去 Characterize</p>
+<p>$$<br>C[f_N] &#x3D; \int \text{loss}(f_N(x; w), y) dP(x, y)<br>$$</p>
+<ul>
+<li>$f_N$: model learned from training data of size $N$</li>
+<li>$C[f_N]$: generalization error</li>
+</ul>
+<h3 id="Bounding-Methods"><a href="#Bounding-Methods" class="headerlink" title="Bounding Methods"></a>Bounding Methods</h3><p>$min_fC[f] &#x3D; C[f^*]$ 稱為 Bayes Error，表示在給定資料分佈下，最佳模型的誤差下限</p>
+<ul>
+<li>如果 $P(y|x)$ 有隨機性，則 Bayes Error &gt; 0</li>
+<li>目標是讓 $C[f_N]$ 越接近 $C[f^*]$ 越好</li>
+</ul>
+<p>$\Epsilon &#x3D; C(f_N) - C(f^*)$ 稱為 Excess Error，又可以寫成</p>
+<p>$$<br>\Epsilon &#x3D; (C(f_F^*) - C(f^*)) + (C(f_N) - C(f_F^*))<br>$$</p>
+<p>其中前項稱為 Approximation Error，後項稱為 Estimation Error</p>
+<ul>
+<li>選越複雜的 $F$，Approximation Error 越小，但 Estimation Error 越大</li>
+</ul>
+<h3 id="Properties-of-Estimators"><a href="#Properties-of-Estimators" class="headerlink" title="Properties of Estimators"></a>Properties of Estimators</h3><h4 id="Bias"><a href="#Bias" class="headerlink" title="Bias"></a>Bias</h4><ul>
+<li>Bias 衡量估計值的期望與真實值之間的差異，來看這個 estimator 準不準</li>
+<li>定義為<br>$$<br>\text{Bias}(\hat{\theta}) &#x3D; \mathbb{E}[\hat{\theta}] - \theta<br>$$</li>
+<li>如果 $\text{Bias}(\hat{\theta}) &#x3D; 0$，則稱為無偏估計 (Unbiased Estimator)</li>
+</ul>
+<h4 id="Variance-1"><a href="#Variance-1" class="headerlink" title="Variance"></a>Variance</h4><ul>
+<li>Variance 衡量估計值的變異程度，來看這個 estimator 穩不穩定</li>
+<li>定義為<br>$$<br>\text{Var}(\hat{\theta}) &#x3D; \mathbb{E}[(\hat{\theta} - \mathbb{E}[\hat{\theta}])^2]<br>$$</li>
+<li>Variance 越小，表示估計值越穩定</li>
+</ul>
+<h4 id="Sample-Mean-Estimator"><a href="#Sample-Mean-Estimator" class="headerlink" title="Sample Mean Estimator"></a>Sample Mean Estimator</h4><ul>
+<li><p>給定資料集 $D &#x3D; {x_1, x_2, \ldots, x_N}$，樣本均值估計量定義為</p>
+<p>$$<br>\hat{\mu} &#x3D; \frac{1}{N} \sum_{i&#x3D;1}^{N} x_i<br>$$</p>
+</li>
+<li><p>Bias:</p>
+<p>$$<br>\begin{aligned}<br>\mathbb{E}[\hat{\mu}] &amp;&#x3D; \mathbb{E}\left[\frac{1}{N} \sum_{i&#x3D;1}^{N} x_i\right] \newline<br>&amp;&#x3D; \frac{1}{N} \sum_{i&#x3D;1}^{N} \mathbb{E}[x_i] \newline<br>&amp;&#x3D; \frac{1}{N} \sum_{i&#x3D;1}^{N} \mu \newline<br>&amp;&#x3D; \mu \newline<br>\end{aligned}<br>$$</p>
+<ul>
+<li>因此，$\text{Bias}(\hat{\mu}) &#x3D; \mathbb{E}[\hat{\mu}] - \mu &#x3D; 0$，樣本均值估計量是無偏的</li>
+</ul>
+</li>
+<li><p>Variance:<br>$$<br>\begin{aligned}<br>\text{Var}<em>{\mathbb{X}}(\hat{\mu})<br>&amp;&#x3D; \mathbb{E}</em>{\mathbb{X}}[(\hat{\mu} - \mathbb{E}<em>{\mathbb{X}}[\hat{\mu}])^2] &#x3D; \mathbb{E}[\hat{\mu}^2 - 2\hat{\mu}\mu + \mu^2] &#x3D; \mathbb{E}[\hat{\mu}^2] - \mu^2 \<br>&amp;&#x3D; \mathbb{E}\left[\frac{1}{n^2} \sum</em>{i,j} x^{(i)}x^{(j)}\right] - \mu^2 &#x3D; \frac{1}{n^2} \sum_{i,j} \mathbb{E}[x^{(i)}x^{(j)}] - \mu^2 \<br>&amp;&#x3D; \frac{1}{n^2} \left( \sum_{i&#x3D;j} \mathbb{E}[x^{(i)}x^{(j)}] + \sum_{i \neq j} \mathbb{E}[x^{(i)}x^{(j)}] \right) - \mu^2 \<br>&amp;&#x3D; \frac{1}{n^2} \left( \sum_{i} \mathbb{E}[x^{(i)2}] + n(n-1)\mathbb{E}[x^{(i)}]\mathbb{E}[x^{(j)}] \right) - \mu^2 \<br>&amp;&#x3D; \frac{1}{n} \mathbb{E}[x^2] + \frac{(n-1)}{n} \mu^2 - \mu^2 &#x3D; \frac{1}{n} (\mathbb{E}[x^2] - \mu^2) &#x3D; \frac{1}{n} \sigma_{\text{x}}^2<br>\end{aligned}<br>$$</p>
+<ul>
+<li>因此，$\text{Var}(\hat{\mu}) &#x3D; \frac{1}{N} \sigma_{\text{x}}^2$，樣本均值估計量的變異程度隨著樣本數增加而減少</li>
+</ul>
+</li>
+</ul>
+<h4 id="Sample-Variance-Estimator"><a href="#Sample-Variance-Estimator" class="headerlink" title="Sample Variance Estimator"></a>Sample Variance Estimator</h4><ul>
+<li><p>樣本變異數估計量定義為</p>
+<p>$$<br>\hat{\sigma}^2 &#x3D; \frac{1}{N} \sum_{i&#x3D;1}^{N} (x_i - \hat{\mu})^2<br>$$</p>
+</li>
+<li><p>Bias:</p>
+</li>
+</ul>
+<p>$$<br>\begin{aligned}<br>\text{E}_{\mathbb{X}}[\hat{\sigma}]<br>&amp;&#x3D; \text{E}\left[\frac{1}{n} \sum_i (x^{(i)} - \hat{\mu})^2 \right] &#x3D; \text{E}\left[ \frac{1}{n} (\sum_i x^{(i)2} - 2\sum_i x^{(i)}\hat{\mu} + \sum_i \hat{\mu}^2) \right] \<br>&amp;&#x3D; \text{E}\left[ \frac{1}{n} (\sum_i x^{(i)2} - n\hat{\mu}^2) \right] &#x3D; \frac{1}{n} \left( \sum_i \text{E}[x^{(i)2}] - n\text{E}[\hat{\mu}^2] \right) \<br>&amp;&#x3D; \text{E}[x^2] - \text{E}[\hat{\mu}^2] &#x3D; \text{E}[(x-\mu)^2 + 2x\mu - \mu^2] - \text{E}[\hat{\mu}^2] \<br>&amp;&#x3D; (\sigma^2 + \mu^2) - (\text{Var}[\hat{\mu}] + \text{E}[\hat{\mu}]^2) \<br>&amp;&#x3D; \sigma^2 + \mu^2 - \frac{1}{n}\sigma^2 - \mu^2 &#x3D; \frac{n-1}{n}\sigma^2 \neq \sigma^2<br>\end{aligned}<br>$$</p>
+<ul>
+<li><p>因此，$\text{Bias}(\hat{\sigma}^2) &#x3D; \mathbb{E}[\hat{\sigma}^2] - \sigma^2 &#x3D; -\frac{1}{N} \sigma^2$，樣本變異數估計量是有偏的</p>
+</li>
+<li><p>如果要 unbiased，可以改成</p>
+<p>$$<br>\hat{\sigma}^2 &#x3D; \frac{1}{N-1} \sum_{i&#x3D;1}^{N} (x_i - \hat{\mu})^2<br>$$</p>
+</li>
+</ul>
+<h4 id="Consistency"><a href="#Consistency" class="headerlink" title="Consistency"></a>Consistency</h4><ul>
+<li>Consistency 衡量估計值隨著樣本數增加而收斂到真實值的能力</li>
+<li>定義為<br>$$<br>\lim_{N \to \infty} P(|\hat{\theta}_N - \theta| &gt; \epsilon) &#x3D; 0, \quad \forall \epsilon &gt; 0<br>$$</li>
+</ul>
+<h3 id="Decomposing-Generalization-Error"><a href="#Decomposing-Generalization-Error" class="headerlink" title="Decomposing Generalization Error"></a>Decomposing Generalization Error</h3><p>前面提到，我們有一個模型 $f_N$，把它看作是一個 estimator，可以用上述方法分析這個 estimator 的 Bias 和 Variance</p>
+<p>$$<br>\begin{aligned}<br>E_\mathbb{X}(C[f_N]) &amp;&#x3D; E_\mathbb{X}\left( \int (y - f_N(x))^2 P(x, y) dx dy \right) \newline<br>&amp;&#x3D; E_{\mathbb{X}, x, y}[\text{loss}(f_N(x) - y)] \newline<br>&amp;&#x3D; E_{x}(E_{\mathbb{X}, y}[\text{loss}(f_N(x) - y) | x &#x3D; x]) \newline<br>\end{aligned}<br>$$</p>
+<p>在 Linear&#x2F; Polynomial Regression 的情況下</p>
+<ul>
+<li><p>$\text{loss}$ 是平方誤差</p>
+</li>
+<li><p>$y &#x3D; f^*(x) + \epsilon$，其中 $\epsilon$ 是高斯雜訊，$\epsilon \sim \mathcal{N}(0, \sigma^2)$</p>
+<ul>
+<li>$E_y[y|x] &#x3D; f^*(x)$</li>
+<li>$\text{Var}_y[y|x] &#x3D; \sigma^2$</li>
+</ul>
+</li>
+</ul>
+<p>則</p>
+<p>$$<br>\begin{aligned}<br>E_{\mathbb{X}, y}[\text{loss}(f_N(x) - y) | x] &amp;&#x3D; E_{\mathbb{X}, y}[(f_N(x) - y)^2 | x] \newline<br>&amp;&#x3D; E_{\mathbb{X}, y}[y^2 + f_N(x)^2 - 2y f_N(x) | x] \newline<br>&amp;&#x3D; E_{\mathbb{X}}[f_N(x)^2 | x] + E_y[y^2 | x] - 2 E_{\mathbb{X}, y}[yf_N(x) | x] \newline<br>&amp;&#x3D; (Var_\mathbb{X}[f_N(x) | x] + (E_{\mathbb{X}}[f_N(x) | x])^2) + (Var_y[y|x] + (E_y[y|x])^2) - 2 E_{\mathbb{X}}[f_N(x) | x] E_y[y|x] \newline<br>&amp;&#x3D; \text{Var}<em>y[y|x] + Var_\mathbb{X}[f_N(x) | x] + (E</em>{\mathbb{X}}[f_N(x) | x] - E_y[y|x])^2 \newline<br>&amp;&#x3D; \text{Var}<em>y[y|x] + Var_\mathbb{X}[f_N(x) | x] + (E</em>{\mathbb{X}}[f_N(x) - f^*(x) | x])^2 \newline<br>&amp;&#x3D; \sigma^2 + Var_\mathbb{X}[f_N(x) | x] + \text{Bias}[f_N(x) | x]^2 \newline<br>\end{aligned}<br>$$</p>
+<p>得到</p>
+<p>$$<br>\begin{aligned}<br>E_\mathbb{X}(C[f_N]) &amp;&#x3D; E_x\left( \sigma^2 + Var_\mathbb{X}[f_N(x) | x] + \text{Bias}[f_N(x) | x]^2 \right) \newline<br>\end{aligned}<br>$$</p>
+<ul>
+<li>$\sigma^2$: Irreducible Error，無法避免的誤差，因為資料本身有雜訊</li>
+<li>$E_x(Var_\mathbb{X}[f_N(x) | x])$: Variance，模型對於不同訓練資料集的敏感度</li>
+<li>$E_x(\text{Bias}[f_N(x) | x]^2)$: Bias，模型預測值與真實值的差異</li>
+</ul>
+<h2 id="Regularization-1"><a href="#Regularization-1" class="headerlink" title="Regularization"></a>Regularization</h2><p>前面有提到，為了避免 Overfitting，任何能夠讓 $f_N$ 更穩定的方式，都可以視為 Regularization</p>
+<h3 id="Weight-Decay"><a href="#Weight-Decay" class="headerlink" title="Weight Decay"></a>Weight Decay</h3><h4 id="Occam’s-razor"><a href="#Occam’s-razor" class="headerlink" title="Occam’s razor"></a>Occam’s razor</h4><p>根據前面的 Learning Theory 的結果，兩個模型如果有一樣的 empirical error，應該選擇較簡單的模型，因為較簡單的模型通常有較低的 Variance，能夠更好地 Generalize 到未見過的資料</p>
+<p>所以可以加上一個 Term 來去程罰複雜的模型</p>
+<h4 id="Model-Complexity"><a href="#Model-Complexity" class="headerlink" title="Model Complexity"></a>Model Complexity</h4><ul>
+<li>模型的 degree 不能直接拿來當作複雜度的衡量，因為它是固定的，不會隨著參數的改變而改變</li>
+<li>可以用參數的範數 (norm) 來衡量模型的複雜度</li>
+</ul>
+<p>所以我們使用 $w$ 的 norm 作為正則化項，在 $w &#x3D; 0$ 時，模型最簡單</p>
+<h4 id="Ridge-Regression-L2-Regularization"><a href="#Ridge-Regression-L2-Regularization" class="headerlink" title="Ridge Regression (L2 Regularization)"></a>Ridge Regression (L2 Regularization)</h4><p>$$<br>\text{argmin}_{w \in \mathbb{R}^d} \frac{1}{2} | y - (Xw - b)|^2 \text{subject to } |w|^2 \leq T<br>$$</p>
+<p>一般會轉成 unconstrained problem</p>
+<p>$$<br>\text{argmin}_{w \in \mathbb{R}^d} \frac{1}{2} | y - (Xw - b)|^2 + \frac{\alpha}{2} |w|^2<br>$$</p>
+<ul>
+<li>$\alpha$: regularization parameter，控制正則化項的權重，$\alpha$ 越大，模型越簡單</li>
+<li>$b$ 通常不會被正則化，因為 $y$ 的平均值不一定是 0，所以 $b$ 不應該被懲罰</li>
+</ul>
+<h4 id="Lasso-Regression-L1-Regularization"><a href="#Lasso-Regression-L1-Regularization" class="headerlink" title="Lasso Regression (L1 Regularization)"></a>Lasso Regression (L1 Regularization)</h4><p>$$<br>\text{argmin}_{w \in \mathbb{R}^d} \frac{1}{2} | y - (Xw - b)|^2 + \alpha |w|_1<br>$$</p>
+<ul>
+<li>$|w|<em>1 &#x3D; \sum</em>{i&#x3D;1}^{d} |w_i|$</li>
+<li>L1 regularization 會導致參數稀疏化，很多參數會被壓縮到 0，適合用於特徵選擇<ul>
+<li>因為 L1 norm 的區域是菱形，會傾向於在坐標軸上取交點，把不重要的參數壓縮到 0</li>
+</ul>
+</li>
+</ul>
+<h5 id="Elastic-Net"><a href="#Elastic-Net" class="headerlink" title="Elastic Net"></a>Elastic Net</h5><p>LASSO 在某些情況下會有限制</p>
+<ul>
+<li>No Group Selection: 當有一組高度相關的特徵時，LASSO 可能只會選擇其中一個，而忽略其他相關特徵</li>
+<li>最大選擇數量: LASSO 最多只能選擇 $N$ 個特徵，當特徵數量 $d$ 遠大於樣本數量 $N$ 時，LASSO 可能無法選擇足夠的特徵來建構模型</li>
+</ul>
+<p>Elastic Net 結合了 L1 和 L2 正則化的優點，可以同時達到稀疏化和穩定性的效果</p>
+<p>$$<br>\text{argmin}_{w \in \mathbb{R}^d} \frac{1}{2} | y - (Xw - b)|^2 + \alpha(\beta |w|_1 + (1 - \beta) |w|^2)<br>$$</p>
+<ul>
+<li>$\beta \in [0, 1]$: 控制 L1 和 L2 正則化的權重比例，當 $\beta &#x3D; 1$ 時，等同於 LASSO；當 $\beta &#x3D; 0$ 時，等同於 Ridge Regression</li>
+</ul>
+<h3 id="Validation"><a href="#Validation" class="headerlink" title="Validation"></a>Validation</h3><ul>
+<li>調整各種 hyperparameter (e.g. regularization parameter $\alpha$) 可以來控制模型的複雜度，以達到最佳的 Generalization Performance</li>
+<li>通常會使用 Cross-Validation 來評估不同 hyperparameter 下模型的表現，選擇在驗證集上表現最好的參數組合</li>
+</ul>
+<h2 id="Maximum-Likelihood-Estimation-MLE"><a href="#Maximum-Likelihood-Estimation-MLE" class="headerlink" title="Maximum Likelihood Estimation (MLE)"></a>Maximum Likelihood Estimation (MLE)</h2><h3 id="Linear-Regression-via-MLE"><a href="#Linear-Regression-via-MLE" class="headerlink" title="Linear Regression via MLE"></a>Linear Regression via MLE</h3><p>假設 $y &#x3D; f^*(x) + \epsilon$，其中 $\epsilon$ 是高斯雜訊，$\epsilon \sim \mathcal{N}(0, \beta^{-1})$，則 $f^*(x)$ 可以寫成</p>
+<p>$$<br>f^*(x; w^*) &#x3D; w^{*\top} x<br>$$</p>
+<p>其中所有資料已經經過 z-normalization，平均值為 0，則</p>
+<p>$$<br>(y | x) \sim \mathcal{N}(w^{*\top} x, \beta^{-1})<br>$$</p>
+<p>所以目標會是找到一個 $w$ 接近 $w^*$</p>
+<p>$$<br>\hat{y} &#x3D; \argmax_y P(y | x, w) &#x3D; w^{\top} x<br>$$</p>
+<ul>
+<li>$\beta^{-1}$ 跟 $w$ 無關，可以忽略</li>
+</ul>
+<p>MLE 的目標是最大化在所有資料點上的似然函數</p>
+<p>$$<br>\text{argmax}_w P(\mathbf{X} | w)<br>$$</p>
+<p>其中</p>
+<p>$$<br>\begin{aligned}<br>P(\mathbf{X} | w) &amp;&#x3D; \prod_{i&#x3D;1}^{N} P(x_i, y_i | w) \newline<br>&amp;&#x3D; \prod_{i&#x3D;1}^{N} P(y_i | x_i, w) P(x_i | w) \newline<br>&amp;&#x3D; \prod_{i&#x3D;1}^{N} P(y_i | x_i, w) P(x_i) \newline<br>&amp;&#x3D; \prod_{i&#x3D;1}^{N} \mathcal{N}(y_i | w^{\top} x_i, \beta^{-1}) P(x_i) \newline<br>&amp;&#x3D; \prod_{i&#x3D;1}^{N}  \sqrt{\frac{\beta}{2\pi}} \exp\left( -\frac{\beta}{2} (y_i - w^{\top} x_i)^2 \right)  P(x_i) \newline<br>\end{aligned}<br>$$</p>
+<p>先取 log，可以把乘法轉成加法，且 log 是單調遞增函數，不會影響最大值的位置</p>
+<p>$$<br>\begin{aligned}<br>&amp;\text{argmax}<em>w \log P(\mathbf{X} | w) \newline<br>&amp;&#x3D; \text{argmax}<em>w \sum</em>{i&#x3D;1}^{N} \log  \prod</em>{i&#x3D;1}^{N} \left( \sqrt{\frac{\beta}{2\pi}} \exp\left( -\frac{\beta}{2} (y_i - w^{\top} x_i)^2 \right) \right) P(x_i)  \newline<br>&amp;&#x3D; \text{argmax}<em>w N \sqrt{\frac{\beta}{2\pi}} + \sum</em>{i&#x3D;1}^{N} P(x_i) - \frac{\beta}{2} \sum_{i&#x3D;1}^{N} (y_i - w^{\top} x_i)^2 \newline<br>\end{aligned}<br>$$</p>
+<p>因為前兩項不依賴於 $w$，可以忽略，且 maximize 等同於 minimize 負的東西，所以可以寫成</p>
+<p>$$<br>\text{argmin}<em>w \sum</em>{i&#x3D;1}^{N} (y_i - w^{\top} x_i)^2<br>$$</p>
+<ul>
+<li>這就是我們之前提到的 Sum of Squared Errors (SSE)</li>
+<li>所以 MLE 在這個情況下等同於最小化 SSE，可以讓我們知道為什麼要最小化 SSE</li>
+</ul>
+<h3 id="Logistic-Regression-via-MLE"><a href="#Logistic-Regression-via-MLE" class="headerlink" title="Logistic Regression via MLE"></a>Logistic Regression via MLE</h3><p>假設 $y \in {0, 1}$，且<br>$$P(y&#x3D;1 | x, w) &#x3D; \sigma(w^{\top} x) &#x3D; \frac{1}{1 + \exp(-w^{\top} x)}$$</p>
+<p>則</p>
+<p>$$<br>P(y&#x3D;0 | x, w) &#x3D; 1 - \sigma(w^{\top} x) &#x3D; \frac{\exp(-w^{\top} x)}{1 + \exp(-w^{\top} x)}<br>$$</p>
+<p>機率可以寫成</p>
+<p>$$<br>P(y | x, w) &#x3D; \sigma(w^{\top} x)^y (1 - \sigma(w^{\top} x))^{1-y}<br>$$</p>
+<p>MLE 的目標是最大化在所有資料點上的似然函數</p>
+<p>$$<br>\text{argmax}_w P(y | x;w) &#x3D; \text{argmax}<em>w \prod</em>{i&#x3D;1}^{N} P(y_i | x_i, w)<br>$$</p>
 <h2 id="Large-Scale-Machine-Learning"><a href="#Large-Scale-Machine-Learning" class="headerlink" title="Large-Scale Machine Learning"></a>Large-Scale Machine Learning</h2><p>Solve problems by leveraging the posteriror knowledge learned from the big data.</p>
 <ul>
 <li>Characteristics of Big Data:</li>
@@ -1004,18 +1204,7 @@
 <p>\begin{aligned}<br>\text{argmax}<em>{\Theta} \text{log } P(X | \Theta) &amp;&#x3D; \text{argmin}</em>{\Theta} -\text{log } P(X | \Theta) \newline<br>&amp;&#x3D; \text{argmin}<em>{\Theta} \Sigma_i -\text{log } P(x_i, y_i | \Theta) \newline<br>&amp;&#x3D; \text{argmin}</em>{\Theta} \Sigma<em>i [-\text{log } P(y_i | x_i, \Theta) - \text{log } P(x_i | \Theta)] \newline<br>&amp;&#x3D; \text{argmin}</em>{\Theta} \Sigma<em>i -\text{log } P(y_i | x_i, \Theta) \quad \text{(if we ignore } P(x_i | \Theta)) \newline<br>&amp;&#x3D; \text{argmin}</em>{\Theta} \Sigma_i C_i (\Theta)<br>\end{aligned}</p>
 <p>$$</p>
 <ul>
-<li><p>通常 $P(x_i | \Theta)$ 不依賴於模型參數 $\Theta$，可以把他想像成常數，最小化時不會影響結果，所以可以忽略</p>
-</li>
-<li><p>decision</p>
-</li>
-<li><p>xgboost</p>
-</li>
-<li><p>lightgbm</p>
-</li>
-<li><p>rnn</p>
-</li>
-<li><p>lstm<br><a target="_blank" rel="noopener" href="https://blog.nbswords.com/2020/12/xgboostlightgbmcatboost.html">https://blog.nbswords.com/2020/12/xgboostlightgbmcatboost.html</a><br>$$</p>
-</li>
+<li>通常 $P(x_i | \Theta)$ 不依賴於模型參數 $\Theta$，可以把他想像成常數，最小化時不會影響結果，所以可以忽略</li>
 </ul>
 
                 
