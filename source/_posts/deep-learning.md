@@ -1534,9 +1534,11 @@ $$
 - 調整各種 hyperparameter (e.g. regularization parameter $\alpha$) 可以來控制模型的複雜度，以達到最佳的 Generalization Performance
 - 通常會使用 Cross-Validation 來評估不同 hyperparameter 下模型的表現，選擇在驗證集上表現最好的參數組合
 
-## Maximum Likelihood Estimation (MLE)
+## Probabilistic Models
 
-### Linear Regression via MLE
+### Maximum Likelihood Estimation (MLE)
+
+#### Linear Regression via MLE
 
 假設 $y = f^*(x) + \epsilon$，其中 $\epsilon$ 是高斯雜訊，$\epsilon \sim \mathcal{N}(0, \beta^{-1})$，則 $f^*(x)$ 可以寫成
 
@@ -1595,28 +1597,104 @@ $$
 - 這就是我們之前提到的 Sum of Squared Errors (SSE)
 - 所以 MLE 在這個情況下等同於最小化 SSE，可以讓我們知道為什麼要最小化 SSE
 
-### Logistic Regression via MLE
+#### Logistic Regression via MLE
 
-假設 $y \in {0, 1}$，且
+假設 $y \in {-1, 1}$，且
 $$P(y=1 | x, w) = \sigma(w^{\top} x) = \frac{1}{1 + \exp(-w^{\top} x)}$$
 
 則
 
 $$
-P(y=0 | x, w) = 1 - \sigma(w^{\top} x) = \frac{\exp(-w^{\top} x)}{1 + \exp(-w^{\top} x)}
+P(y=-1 | x, w) = 1 - \sigma(w^{\top} x) = \frac{\exp(-w^{\top} x)}{1 + \exp(-w^{\top} x)}
 $$
 
 機率可以寫成
 
 $$
-P(y | x, w) = \sigma(w^{\top} x)^y (1 - \sigma(w^{\top} x))^{1-y}
+P(y | x, w) = \sigma(w^{\top} x)^{y^\prime} (1 - \sigma(w^{\top} x))^{1-y^\prime}
+$$
+
+- 其中 $y^\prime = \frac{y+1}{2} \in {0, 1}$
+
+預測的目標是
+
+$$
+\begin{aligned}
+\hat{y} &= \argmax_y P(y | x, w) \newline
+&= \argmax_y{\{\sigma(w^{\top} x), (1 - \sigma(w^{\top} x))}\} \newline
+&= \text{sign}(w^{\top} x) \newline
+\end{aligned}
 $$
 
 MLE 的目標是最大化在所有資料點上的似然函數
 
 $$
-\text{argmax}_w P(y | x;w) = \text{argmax}_w \prod_{i=1}^{N} P(y_i | x_i, w)
+\text{argmax}_w P(\mathbf{X} | w)
 $$
+
+一樣採用 log 來簡化計算
+
+$$
+\begin{aligned}
+\log P(\mathbf{X} | w)&= \log \prod_{i=1}^{N} P(x_i, y_i | w) \newline
+ &= \log \prod_{i=1}^{N} P(y_i | x_i, w) P(x_i | w) \newline
+&\propto \log \prod_{i=1}^{N} \sigma(w^{\top} x_i)^{y_i^\prime} (1 - \sigma(w^{\top} x_i))^{1-y_i^\prime} \newline
+&= \sum_{i=1}^{N} \left( y^\prime_i x_i - \log(1 + e^{-w^{\top} x_i})\right) \text{[HW]}
+\end{aligned}
+$$
+
+所以對 $w$ 做偏微並設為 0，可以找到 MLE 的解
+
+$$
+\begin{aligned}
+  \nabla_w \log P(\mathbf{X} | w) &= \sum_{i=1}^{N} [y^\prime_i - \sigma(w^{\top} x_i)]x_i \newline
+  &= 0 \newline
+\end{aligned}
+$$
+
+因為沒辦法直接解出來，所以通常會用 Gradient Ascent 來找到最大值
+
+### Maximum A Posteriori (MAP) Estimation
+
+在 MLE 的基礎上，加入 Prior knowledge 來進行估計
+
+$$
+\text{argmax}_w P(w | \mathbf{X}) = \text{argmax}_w P(\mathbf{X} | w) P(w)
+$$
+
+- $P(w)$: prior distribution over parameters $w$
+
+#### Linear Regression via MAP
+
+$$
+\argmax_w \log[P(\mathbf{X} | w) P(w)]
+$$
+
+如果假設 $w \sim \mathcal{N}(0, \lambda^{-1} I)$，則
+
+$$
+\begin{aligned}
+\log [P(\mathbf{X} | w) P(w)] &= \log P(\mathbf{X} | w) + \log P(w) \newline
+&\propto -\sum_i (y_i - w^{\top} x_i)^2  \newline
+& \quad + \sqrt{\frac{1}{(2\pi)^D \text{det}(\lambda^{-1} I)}} \exp\left( -\frac{1}{2} (w-0)^\top (\lambda^{-1}I)^{-1} (w-0) \right) \newline
+&\propto -\sum_i (y_i - w^{\top} x_i)^2 - \lambda \|w\|^2 \newline
+\end{aligned}
+$$
+
+所以 MAP 的目標變成
+
+$$
+\text{argmin}_w \sum_i (y_i - w^{\top} x_i)^2 + \lambda \|w\|^2
+$$
+
+- 這就是 Ridge Regression 的目標函數
+- $P(w)$ 就是 weight decay 的來源
+
+### ML and MAP estimation
+
+- ML estimator $\theta_{ML}$ 是 consistent 的，也就是說當樣本數 $N \to \infty$ 時，$\theta_{ML} \to \theta^*$，只要 $P(y|x; \theta^*)$ 是在我們假設的 $F$ 裡面
+- 在樣本數 ($N$) 足夠大的情況下，跟其他所有也是「準確（一致）」的估計方法相比，MLE 的均方誤差 (MSE) 是最小的。
+- MAP estimator 可以用在 $N$ 較小的情況下，因為它加入了 prior knowledge，可以幫助減少 overfitting 的風險，減少模型的 variance
 
 ## Large-Scale Machine Learning
 
