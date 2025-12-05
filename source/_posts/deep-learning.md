@@ -1696,68 +1696,91 @@ $$
 - 在樣本數 ($N$) 足夠大的情況下，跟其他所有也是「準確（一致）」的估計方法相比，MLE 的均方誤差 (MSE) 是最小的。
 - MAP estimator 可以用在 $N$ 較小的情況下，因為它加入了 prior knowledge，可以幫助減少 overfitting 的風險，減少模型的 variance
 
-## Large-Scale Machine Learning
+### Bayesian Estimation
 
-Solve problems by leveraging the posteriror knowledge learned from the big data.
+把 prediction 和 estimation 合在一起看，一次算出答案
 
-- Characteristics of Big Data:
-- Volume: 大量的資料
-- Variety: 多樣化的資料類型和來源
-- Velocity: 單位時間的資料量
-- Veracity: 資料的真實性和可靠性
+$$
+\hat{y} = \argmax_y P(y | x^\prime, \mathbf{X}) = \argmax_y \int P(y, \Theta | x^\prime, \mathbf{X}) d\Theta
+$$
+
+- 考慮所有的 $\Theta$ 來做預測
+- 適合在 $N$ 很小的時候，模型不會 Overfit
+- 不適合 在 $N$ 很大的時候，計算量會很大
 
 ## Neural Networks: Design
 
-- Feedforward neural networks (FNN) 又稱 multi-layer perceptron (MLP)
+Feedforward Neural Networks (FNN) 或 Multilayer Perceptrons (MLP)
+
+可以 Deompose 成：
 
 $$
-
 \begin{aligned}
 \hat{y} = f^{(L)}(\ldots f^{(2)}(f^{(1)}(x; \theta^{(1)}); \theta^{(2)}) \ldots; \theta^{(L)})
 \end{aligned}
-
-
 $$
 
-- $L$: number of layers
-- $f^{(l)}$: nonlinear function of layer $l$
-- $\theta^{(l)}$: parameters of layer $l$
-- $x$: input vector
-
-- $f^{(k)}$ outputs value $a^{(k)}$, where
+- 會假設 $f$ 是 Non-Linear Function，不然就只是線性模型而已，分那麼多層就沒意義了
+- 藉由 Training Set $\mathbf{X}$ 來學習參數 $\Theta = {\theta^{(1)}, \theta^{(2)}, \ldots, \theta^{(L)}}$，來逼近最佳函數 $f^*$
 
 $$
-
 \begin{aligned}
-a^{(k)} &= f^{(k)}(a^{(k-1)}; \theta^{(k)}) \newline
+a^{(k)}
 &= \text{act}^{(k)}(W^{(k)\top} a^{(k-1)} + b^{(k)}) \newline
 \end{aligned}
-
-
 $$
 
-- $W^{(k)}$: weight matrix of layer $k$
-- $b^{(k)}$: bias vector of layer $k$
-- $\text{act}^{(k)}$: activation function of layer $k$
-- $a^{(0)} = x$
+### Neurons
 
-沒有非線性，模型就沒有深度，等價於單層線性模型而已。
+每個 Neuron 的計算方式如下：
+
+$$
+f_j^{(k)} = \text{act}^{(k)}(W_{:, j}^{(k)\top} a^{(k-1)}) = \text{act}^{(k)}(z_j^{(k)})
+$$
+
+Hidden Layer $f^{(1)}, f^{(2)}, \ldots, f^{(L-1)}$ 的輸出分別是 $a^{(1)}, a^{(2)}, \ldots, a^{(L-1)}$，越深的 Layer 表示越高階的特徵，越抽象
+
+而最後一層 $f^{(L)}$ 的 $\text{act}$ 只是為了把輸出轉換成適合的形式 (e.g. regression, classification)
 
 ### Training an NN
 
-- Most NNs are trained using the **maximum likelihood** by default.
+- 大部分 NNs 是用 **maximum likelihood** 來訓練的
 
 $$
 
 \begin{aligned}
 \text{argmax}_{\Theta} \text{log } P(X | \Theta) &= \text{argmin}_{\Theta} -\text{log } P(X | \Theta) \newline
 &= \text{argmin}_{\Theta} \Sigma_i -\text{log } P(x_i, y_i | \Theta) \newline
-&= \text{argmin}_{\Theta} \Sigma*i [-\text{log } P(y_i | x_i, \Theta) - \text{log } P(x_i | \Theta)] \newline
-&= \text{argmin}*{\Theta} \Sigma*i -\text{log } P(y_i | x_i, \Theta) \quad \text{(if we ignore } P(x_i | \Theta)) \newline
-&= \text{argmin}*{\Theta} \Sigma_i C_i (\Theta)
+&= \text{argmin}_{\Theta} \Sigma_i [-\text{log } P(y_i | x_i, \Theta) - \text{log } P(x_i | \Theta)] \newline
+&= \text{argmin}_{\Theta} \Sigma_i -\text{log } P(y_i | x_i, \Theta) \quad \text{(if we ignore } P(x_i | \Theta)) \newline
+&= \text{argmin}_{\Theta} \Sigma_i C_i (\Theta)
 \end{aligned}
-
-
 $$
 
-- 通常 $P(x_i | \Theta)$ 不依賴於模型參數 $\Theta$，可以把他想像成常數，最小化時不會影響結果，所以可以忽略
+$$
+\begin{aligned}
+C_i(\Theta) &= -\text{log } P(y_i | x_i, \Theta) \newline
+&= -\text{log } [(a^{(L)})^{y^{(i)}} (1 - a^{(L)})^{1-y^{(i)}}] \newline
+&= -\text{log } [(\sigma(z^{(L)}))^{y^{(i)}} (1 - \sigma(z^{(L)}))^{1-y^{(i)}}] \newline
+&= -\log[\sigma(2y^{(i)} - 1) z^{(L)}] \newline
+&= \text{softplus}(- (2y^{(i)} - 1) z^{(L)}) \newline
+\end{aligned}
+$$
+
+### Backpropagation
+
+在用 Stochastic Gradient Descent (SGD) 訓練 NN 時，每次更新參數的方式如下：
+
+$$
+\Theta^{(t+1)} \leftarrow \Theta^{(t)} - \eta \nabla_{\Theta} \sum_i^M C_i(\Theta^{(t)})
+$$
+
+但是每次都要算 $\nabla_{\Theta} \sum_i^M C_i(\Theta^{(t)})$ 很麻煩
+
+令 $c_n = C_n(\Theta^{(t)})$，則會需要計算所有 $i, j, k, n$ 的偏微分
+
+$$
+\frac{\partial c_n}{\partial W_{i, j}^{(k)}}
+$$
+
+但其實計算過程中有很多重複的計算，所以可以用 Backpropagation 的方式，從最後一層開始往前算，節省計算量
